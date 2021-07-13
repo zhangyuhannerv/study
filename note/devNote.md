@@ -8,7 +8,393 @@
 # 前端
 ## layui
 
+### 开发
+
+#### 1.删除动态表格鼠标悬浮背景颜色变色的效果
+
+```css
+/*删除鼠标悬浮背景变色效果*/
+/*其中#cxDataQdTjSxDiv是数据表格table容器的id,格式如下*/
+#CxDataQdTjSxDiv .layui-table tbody tr:hover,
+#CxDataQdTjSxDiv .layui-table thead tr,
+#CxDataQdTjSxDiv .layui-table[lay-even] tr:nth-child(even) {
+    background-color: transparent !important;
+}
+```
+
+``` html
+<div id="CxDataQdTjSxDiv" class="tableContainer">
+    <label class="tableTitle">区段超限情况统计（上行）</label>
+    <table id="CxDataQdTjSxTab" class="layui-table"></table>
+</div>
+```
+
+### 学习
+
 # 后端
+
+## java
+
+### 开发
+
+#### 1.stream流处理将用','拼接的字符串转为Double集合
+
+```java
+// 将用','拼接的字符串转为Double集合
+List<Double> singlePoint = Arrays.asList(pointStr.split(","))
+                                .stream()
+                                .map(str -> Double.parseDouble(str.trim()))
+                                .collect(Collectors.toList());
+```
+
+#### 2.java使用lambda表达式建立子线程任务并阻塞主线程
+
+```java
+        // 阻塞主线程的计数器
+        CountDownLatch countDownLanch = new CountDownLatch(cycleNum);
+       	// 局部的线程池
+        ExecutorService executor = Executors.newFixedThreadPool(cycleNum > 4 ? 4 : cycleNum);
+      	// cycleNum是要执行子线程的次数
+        for (int i = 0; i < cycleNum; i++) {
+            int start = i * 10000;
+            int num = 10000;
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<Map<String, Double>> dataListTemp = dataShowMapper.getWaveEchartsCorrectDataNoSparse(csrwId, xb, "0", "0", start, num);
+                        for (Map<String, Double> dataMap : dataListTemp) {
+                            ZSetOperations.TypedTuple<Map<String, Double>> typedTuple = new DefaultTypedTuple<>(dataMap, dataMap.get("kms"));
+                            tuples.add(typedTuple);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+					// 每执行一次子线程（计数器减一）
+                   		countDownLanch.countDown();
+                    }
+
+                }
+            });
+        }
+
+        try {
+            // 阻塞主线程
+            countDownLanch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+      	// 子线程都执行完后，关闭局部线程池
+        executor.shutdown();
+
+```
+
+#### 3.spring向静态类注入bean
+
+```java
+@Component
+public class DtjcProjectGeneralReportUtil {
+    @Autowired
+    private IDataAnalysisService dataAnalysisService;
+
+    private static IDataAnalysisService staticDataAnalysisService;
+
+    @PostConstruct
+    public void init() {
+        staticDataAnalysisService = dataAnalysisService;
+    }
+
+   //  这里是静态方法，该方法请调用静态bean
+    public static String getDtcjGeneralReportTestTaskId(String projectId) {
+        String TestTaskId = "";
+        TestTaskId = staticDataAnalysisService.getReportDcjh(projectId);
+        if (TestTaskId == null || "".equals(TestTaskId)) {
+            List<Map<String, String>> list = staticDataAnalysisService.getFirstDcjh(projectId);
+            if (list == null || list.size() == 0) {
+                list = staticDataAnalysisService.getFirstDcjhNoData(projectId);
+            }
+            if (list != null && list.size() > 0) {
+                TestTaskId = list.get(list.size() - 1).get("id").toString();
+            }
+        }
+        return TestTaskId;
+    }
+}
+
+```
+
+#### 4.java中的各种日期时间类型的操作（包括映射mysql）
+
+mysql的DateTime对应着java中的timeStamp类型。存储的时候如何将java中的timeStamp转换为mysql中的DateTime
+
+```java
+ java.util.Date date = new java.util.Date();   // 获取一个Date对象
+ Timestamp timeStamp = new Timestamp(date.getTime());  // 给对象赋值该值插入就行了
+```
+
+[**Java：String和Date、Timestamp之间的转换**](https://www.cnblogs.com/mybloging/p/8067698.html)
+
+1. String与Date（java.util.Date）互转
+
+   1. String -> Date
+
+      ``` java
+      String dateStr = "2010/05/04 12:34:23";  
+      Date date = new Date();  
+      //注意format的格式要与日期String的格式相匹配  
+      DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
+      try {  
+          date = sdf.parse(dateStr);  
+          System.out.println(date.toString());  
+      } catch (Exception e) {  
+          e.printStackTrace();  
+      }  
+      ```
+
+   2. Date -> String
+
+      ```java
+      	1. 		  String dateStr = "";  
+      	2.         Date date = new Date();  
+      	3.         //format的格式可以任意  
+      	4.         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
+      	5.         DateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH/mm/ss");  
+      	6.         try {  
+      	7.             dateStr = sdf.format(date);  
+      	8.             System.out.println(dateStr);  
+      	9.             dateStr = sdf2.format(date);  
+      	10.             System.out.println(dateStr);  
+      	11.         } catch (Exception e) {  
+      	12.             e.printStackTrace();  
+              		} 
+      ```
+
+2. String与Timestamp互转
+
+   1. String ->Timestamp
+
+       使用Timestamp的valueOf()方法
+
+      ```java
+      	1.         Timestamp ts = new Timestamp(System.currentTimeMillis());  
+      	2.         String tsStr = "2011-05-09 11:49:45";  
+      	3.         try {  
+      	4.             ts = Timestamp.valueOf(tsStr);  
+      	5.             System.out.println(ts);  
+      	6.         } catch (Exception e) {  
+      	7.             e.printStackTrace();  
+          		  }  
+      ```
+
+        注：String的类型必须形如： yyyy-mm-dd hh:mm:ss[.f...] 这样的格式，中括号表示可选，否则报错！！！
+
+        如果String为其他格式，可考虑重新解析下字符串，再重组~~
+
+   2.  Timestamp -> String
+
+       使用Timestamp的toString()方法或者借用DateFormat
+
+      ```java
+      	1. Timestamp ts = new Timestamp(System.currentTimeMillis());  
+      	2.         String tsStr = "";  
+      	3.         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
+      	4.         try {  
+      	5.             //方法一  
+      	6.             tsStr = sdf.format(ts);  
+      	7.             System.out.println(tsStr);  
+      	8.             //方法二  
+      	9.             tsStr = ts.toString();  
+      	10.             System.out.println(tsStr);  
+      	11.         } catch (Exception e) {  
+      	12.             e.printStackTrace();  
+                      }  
+      ```
+
+       很容易能够看出来，方法一的优势在于可以灵活的设置字符串的形式。
+
+3. Date（ java.util.Date ）和Timestamp互转
+
+    声明：查API可知，Date和Timesta是父子类关系
+
+   1. Timestamp -> Date
+
+      ```java
+      	1. 		  Timestamp ts = new Timestamp(System.currentTimeMillis());  
+      	2.         Date date = new Date();  
+      	3.         try {  
+      	4.             date = ts;  
+      	5.             System.out.println(date);  
+      	6.         } catch (Exception e) {  
+      	7.             e.printStackTrace();  
+              	   }  
+      ```
+
+       很简单，但是此刻date对象指向的实体却是一个Timestamp，即date拥有Date类的方法，但被覆盖的方法的执行实体在Timestamp中。
+
+   2. Date -> Timestamp
+
+        父类不能直接向子类转化，可借助中间的String~~~~
+
+        注：使用以下方式更简洁
+
+      ```java
+         Timestamp ts = new Timestamp(date.getTime());
+      ```
+
+      
+
+### 学习
+
+## maven
+
+### 开发
+
+#### 关于项目得jar包都正常引用了，但是build时就是提示jar包不存在的解决办法
+
+如题，编译和打包都是正常的，pom文件中依赖存在并且没有报错。找到相应包的引用位置，也能正常访问包中的内容。而且提示的一般都是基础的jar包找不到，比如单元测试用到的jar包等。。。
+
+![](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210713083617.png)
+
+情形一：
+
+其他同事提交代码时把idea中的 .iml 文件也一起提交了，该文件中配置的jdk lib 路径与自己电脑中的该路径不一致。
+
+解决方法很简单，执行一下 maven update 即可，也可以手动修改 .iml 文件中的该路径。
+
+![](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210713083737.png)
+
+情形二：
+
+排除情形一出现的原因，或使用情形一中的方法解决无效时，可以使用以下命令更新不完整依赖：
+
+```shell
+mvn -U idea:idea
+```
+
+需要注意的是，该命令使用的插件早在13年就已经停止维护，所以有可能出现各种问题，比如我遇到过的空指针异常。
+
+情形三：
+
+使用情形二中的方法解决无效时，可以使用以下方法再次尝试
+
+1. ctrl + alt + shift + s 或 在界面菜单选择 File --> Project Structure
+
+2. 点击 Libraries 找到提示不存在的jar包（这里以junit为例），选中，然后右键打开菜单，选择Convert to Repository Library…
+
+3. 执行 maven update
+
+   ![如图](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210713084001.png)
+
+   
+
+   一般到此都能解决问题，如果还是解决不了，可能真的是人品问题，那就只能呵呵了。。
+
+   [原文连接](https://www.jb51.net/article/189894.htm)
+
+### 学习
+
+### mybatis
+
+### 开发
+
+#### 1.mybatis中#和$的使用场景
+
+1. group by 字段 ,order by 字段，表名，字段名，如果是动态的用$
+2. limit用#
+3. 其他的用#
+
+#### 2.批量插入和批量更新
+
+1. 批量插入
+
+   ```xml
+   <insert id="insertTgAfterCorrectData">
+           insert into dtjc_tg_after_correct_data(
+           id,
+           left_low,
+           right_low,
+           left_point,
+           right_point,
+           track_distance,
+           over_height,
+           sj_level,
+           trangle_pit,
+           hor_acceleration,
+           ver_acceleration,
+           track_distance_rate,
+           tqi,
+           dcjh_id,
+           file_id,
+           xb,
+           perid,
+           updatetime
+           )
+           values
+           <foreach item="item" index="index" collection="list" separator=",">
+               (
+               #{item.id},
+               #{item.left_low},
+               #{item.right_low},
+               #{item.left_point},
+               #{item.right_point},
+               #{item.track_distance},
+               #{item.over_height},
+               #{item.sj_level},
+               #{item.trangle_pit},
+               #{item.hor_acceleration},
+               #{item.ver_acceleration},
+               #{item.track_distance_rate},
+               #{item.tqi},
+               #{item.dcjh_id},
+               #{item.file_id},
+               #{item.xb},
+               #{item.perid},
+               #{item.updatetime}
+               )
+           </foreach>
+       </insert>
+   ```
+
+2. 批量更新
+
+   1. 更新多条数据，每条数据都不一样
+
+      背景描述：通常如果需要一次更新多条数据有两个方式，（1）在业务代码中循环遍历逐条更新。（2）一次性更新所有数据（更准确的说是一条sql语句来更新所有数据，逐条更新的操作放到数据库端，在业务代码端展现的就是一次性更新所有数据）。两种方式各有利弊，下面将会对两种方式的利弊做简要分析，主要介绍第二种方式在mybatis中的实现。
+
+      1. 逐条实现（java实现)
+
+         这种方式显然是最简单，也最不容易出错的，即便出错也只是影响到当条出错的数据，而且可以对每条数据都比较可控，更新失败或成功，从什么内容更新到什么内容，都可以在逻辑代码中获取。代码可能像下面这个样子：
+
+         ```java
+         updateBatch(List<MyData> datas){
+             for(MyData data : datas){
+                 try{
+                     myDataDao.update(data);//更新一条数据，mybatis中如下面的xml文件的update
+                 }
+                 catch(Exception e){
+                     ...//如果更新失败可以做一些其他的操作，比如说打印出错日志等
+                 }
+             }
+         }
+         
+         ```
+
+         ```xml
+         <!--mybatis中update操作的实现-->
+         <update>
+             update mydata
+             set   ...
+             where ...
+         </update>
+         ```
+
+         这种方式最大的问题就是效率问题，逐条更新，每次都会连接数据库，然后更新，再释放连接资源（虽然通过连接池可以将频繁连接数据的效率大大提高，抗不住数据量大），这中损耗在数据量较大的时候便会体现出效率问题。这也是在满足业务需求的时候，通常会使用上述提到的第二种批量更新的实现（当然这种方式也有数据规模的限制，后面会提到）。
+
+      2. 逐条更新(mybatis实现)
+
+         
+
+### 学习
 
 # 数据库
 
@@ -130,6 +516,63 @@ A = all('a','b') 等价于 A = 'a' and A = 'b'
 ```
 
 ​	总结 ：any 相当于用or链接后面括号里的子元素，all 相当于用and链接后面括号里面的子元素
+
+### 学习
+
+## redis
+
+### 开发
+
+#### 1.redisTemplate存储zset的写法
+
+```java
+        ZSetOperations zSetOperations = redisTemplate.opsForZSet();
+        Set<ZSetOperations.TypedTuple<Map<String, Double>>> tuples = new HashSet<>();
+
+        int cycleNum = dataShowMapper.getTrackDynamicGeometryDataNum(csrwId, xb) / 10000 + 1;// 循环次数
+
+        CountDownLatch countDownLanch = new CountDownLatch(cycleNum);
+
+        ExecutorService executor = Executors.newFixedThreadPool(cycleNum > 4 ? 4 : cycleNum);
+
+        for (int i = 0; i < cycleNum; i++) {
+            int start = i * 10000;
+            int num = 10000;
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        List<Map<String, Double>> dataListTemp = dataShowMapper.getWaveEchartsCorrectDataNoSparse(csrwId, xb, "0", "0", start, num);
+                        for (Map<String, Double> dataMap : dataListTemp) {
+                            ZSetOperations.TypedTuple<Map<String, Double>> typedTuple = new DefaultTypedTuple<>(dataMap, dataMap.get("kms"));
+                            tuples.add(typedTuple);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        countDownLanch.countDown();
+                    }
+
+                }
+            });
+        }
+
+        try {
+            countDownLanch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        executor.shutdown();
+
+        if (tuples.size() > 0) {
+            zSetOperations.add(key, tuples);
+            redisTemplate.expire(key, 3, TimeUnit.HOURS);
+        }
+
+```
+
+
 
 ### 学习
 
