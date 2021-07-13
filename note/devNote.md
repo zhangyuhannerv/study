@@ -5,7 +5,34 @@
 ---
 
 [toc]
+# 随记
+
+***
+
+## 要补习的知识
+
+1. 计算机网络：ipv6部分
+2. echarts网课：前边布局，后面地图
+3. ztree的使用
+4. jstree的demo
+5. java底层：2进制，10进制，移位，源码，补码，反码
+6. 前端关于滚动条的各个属性:clientHeight offsetHeight scrollHeight offsetTop scrollTop
+7. Java8新特性 lambda stream等
+8. Redis6->redis实站
+9. 操作系统，计算机组成原理，数据库概论可看可不看，编译原理
+10. js高级
+11. mysql游标的使用
+
+## java的各个工具包
+
+1. TiKa:预览word或者pdf的内容
+
+***
+
+
+
 # 前端
+
 ## layui
 
 ### 开发
@@ -392,7 +419,466 @@ mvn -U idea:idea
 
       2. 逐条更新(mybatis实现)
 
+         通过循环，依次执行多条update的sql
          
+         前提条件:
+         
+         要实现批量更新，首先得设置mysql支持批量操作，在jdbc链接中需要附加&allowMultiQueries=true属性才行，可能会被阿里的druid给阻挡。需要上网找绕过阻挡得方案
+         
+         例如：
+         
+         ```yaml
+         jdbc: mysql://localhost:3306/dbname?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+         ```
+         
+         ```xml
+         <update id="updateBatch"  parameterType="java.util.List">  
+             <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                 update course
+                 <set>
+                     name=${item.name}
+                 </set>
+                 where id = ${item.id}
+             </foreach>      
+         </update>
+         ```
+         
+         一条记录update一次，性能比较差，容易造成阻塞。
+
+      3. sql批量更新(主力实现)
+
+         1. 实际实践(传入的是List<Map<String, Object>>)
+
+            务必注意:一定要加where条件,里面的id为需要更新的数据的id;如果不加where条件,则会全部更新,但是需要更新且有数据的更新为传递的数据,没有数据的则更新为null,此时更新出错
+
+            ```xml
+            <update id="updateChartParamByAccountAndChartid" parameterType="list">
+                    update followme_parameters
+                    <trim prefix="set" suffixOverrides=",">
+                        <trim prefix="signal_source =case" suffix="end,">
+                            <foreach collection="list" item="item" index="index">
+                                <if test="item.signalSource!=null">
+                                    when account=#{item.account} and chart_id=#{item.chartId}
+                                     then #{item.signalSource}
+                                </if>
+                            </foreach>
+                        </trim>
+                        <trim prefix="rate =case" suffix="end,">
+                            <foreach collection="list" item="item" index="index">
+                                <if test="item.rate!=null">
+                                    when account=#{item.account} and chart_id=#{item.chartId}
+                                    then #{item.rate}
+                                </if>
+                            </foreach>
+                        </trim>
+                    </trim>
+                    where id in
+                    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+                        #{item.id}
+                    </foreach>
+                </update>
+            
+            ```
+
+            另外文章的样板
+
+            ```xml
+            <update id="updateBatch" parameterType="list">
+                 update course
+                  <trim prefix="set" suffixOverrides=",">
+                   <trim prefix="peopleId =case" suffix="end,">
+                       <foreach collection="list" item="i" index="index">
+                               <if test="i.peopleId!=null">
+                                when id=#{i.id} then #{i.peopleId}
+                               </if>
+                       </foreach>
+                    </trim>
+                    <trim prefix=" roadgridid =case" suffix="end,">
+                       <foreach collection="list" item="i" index="index">
+                               <if test="i.roadgridid!=null">
+                                when id=#{i.id} then #{i.roadgridid}
+                               </if>
+                       </foreach>
+                    </trim>
+            		<trim prefix="type =case" suffix="end," >
+                       <foreach collection="list" item="i" index="index">
+                               <if test="i.type!=null">
+                                when id=#{i.id} then #{i.type}
+                               </if>
+                       </foreach>
+                    </trim>
+                    <trim prefix="unitsid =case" suffix="end," >
+                        <foreach collection="list" item="i" index="index">
+                                <if test="i.unitsid!=null">
+                                 when id=#{i.id} then #{i.unitsid}
+                                </if>
+                        </foreach>
+                 </trim>
+                </trim>
+                where
+                <foreach collection="list" separator="or" item="i" index="index" >
+                    id=#{i.id}
+                </foreach>
+            </update>
+            
+            ```
+
+            [原文链接](https://blog.csdn.net/junehappylove/article/details/82215674)
+
+         2. 下面逐步讲解
+
+            一条sql语句来批量更新所有数据，下面直接看一下在mybatis中通常是怎么写的（去掉mybatis语法就是原生的sql语句了，所有就没单独说sql是怎么写的）
+
+            ```xml
+            <update id="updateBatch" parameterType="java.util.List">
+                update mydata_table 
+                set  status=
+                <foreach collection="list" item="item" index="index" 
+                    separator=" " open="case ID" close="end">
+                    when #{item.id} then #{item.status}
+                </foreach>
+                where id in
+                <foreach collection="list" index="index" item="item" 
+                    separator="," open="(" close=")">
+                    #{item.id,jdbcType=BIGINT}
+                </foreach>
+             </update>
+            
+            ```
+
+            其中when...then...是sql中的"switch" 语法。这里借助mybatis的语法来拼凑成了批量更新的sql，上面的意思就是批量更新id在updateBatch参数所传递List中的数据的status字段。还可以使用实现同样的功能,代码如下:
+
+            ```xml
+            <update id="updateBatch" parameterType="java.util.List">
+                    update mydata_table
+                    <trim prefix="set" suffixOverrides=",">
+                        <trim prefix="status =case" suffix="end,">
+                            <foreach collection="list" item="item" index="index">
+                                 when id=#{item.id} then #{item.status}
+                            </foreach>
+                        </trim>
+                    </trim>
+                    where id in
+                    <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+                        #{item.id,jdbcType=BIGINT}
+                    </foreach>
+                </update>
+            ```
+
+            属性说明
+
+            - prefix,suffix 表示在trim标签包裹的部分的前面或者后面添加内容 
+            - 如果同时有prefixOverrides,suffixOverrides 表示会用prefix,suffix覆盖Overrides中的内容。 
+            - 如果只有prefixOverrides,suffixOverrides 表示删除开头的或结尾的xxxOverides指定的内容。
+
+            上述代码转化成sql如下:
+
+            ```sql
+            update mydata_table 
+                set status = 
+                case
+                    when id = #{item.id} then #{item.status}//此处应该是<foreach>展开值
+                    ...
+                end
+                where id in (...);
+            
+            ```
+
+            当然这是最简单的批量更新实现,有时候可能需要更新多个字段,那就需要将
+
+            ```xml
+            <trim prefix="status =case" suffix="end,">
+                 <foreach collection="list" item="item" index="index">
+                      when id=#{item.id} then #{item.status}
+                 </foreach>
+            </trim>
+            ```
+
+            复制拷贝多次,更改prefix和when...then...的内容即可.而如果当需要为某个字段设置默认值的时候可以使用else
+
+            ```xml
+            <trim prefix="status =case" suffix="end,">
+                 <foreach collection="list" item="item" index="index">
+                      when id=#{item.id} then #{item.status}
+                 </foreach>
+                 else default_value
+            </trim>
+            ```
+
+            还有更常见的情况就是需要对要更新的数据进行判断,只有符合条件的数据才能进行更新,这种情况可以这么做:
+
+            ```xml
+            <trim prefix="status =case" suffix="end,">
+                 <foreach collection="list" item="item" index="index">
+                     <if test="item.status !=null and item.status != -1">
+                         when id=#{item.id} then #{item.status}
+                     </if>
+                 </foreach>
+            </trim>
+            ```
+
+            这样的话只有要更新的list中status != null && status != -1的数据才能进行status更新.其他的将使用默认值更新,而不会保持原数据不变.如果要保持原数据不变呢?即满足条件的更新,不满足条件的保持原数据不变,简单的来做就是再加一个,因为mybatis中没有if...else...语法,但可以通过多个实现同样的效果,如下:
+
+            ```xml
+            <trim prefix="status =case" suffix="end,">
+                 <foreach collection="list" item="item" index="index">
+                     <if test="item.status !=null and item.status != -1">
+                         when id=#{item.id} then #{item.status}
+                     </if>
+                     <if test="item.status == null or item.status == -1">
+                         when id=#{item.id} then mydata_table.status      //这里就是原数据
+                     </if>
+                 </foreach>
+            </trim>
+            ```
+
+            整体批量更新的写法如下:
+
+            ```xml
+            <update id="updateBatch" parameterType="java.util.List">
+                update mydata_table
+                <trim prefix="set" suffixOverrides=",">
+                    <trim prefix="status =case" suffix="end,">
+                         <foreach collection="list" item="item" index="index">
+                             <if test="item.status !=null and item.status != -1">
+                                 when id=#{item.id} then #{item.status}
+                             </if>
+                             <if test="item.status == null or item.status == -1">
+                                 when id=#{item.id} then mydata_table.status//原数据
+                             </if>
+                         </foreach>
+                    </trim>
+                </trim>
+                where id in
+                <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+                    #{item.id,jdbcType=BIGINT}
+                </foreach>
+            </update>
+            ```
+
+      4. 批量更新(单个字段,传参list),实际是sql批量更新的简化版本而已
+
+         1. 单个字段方法1
+
+            ```xml
+            <update id="updateByBatch" parameterType="java.util.List">
+                update t_goods
+                set NODE_ID=
+                <foreach collection="list" item="item" index="index"
+                         separator=" " open="case" close="end">
+                  when GOODS_ID=#{item.goodsId} then #{item.nodeId}
+                </foreach>
+                where GOODS_ID in
+                <foreach collection="list" index="index" item="item"
+                         separator="," open="(" close=")">
+                  #{item.goodsId,jdbcType=BIGINT}
+                </foreach>
+              </update>
+            ```
+
+         2. 单个字段方法2
+
+            ```xml
+            <update id="updateByBatch" parameterType="java.util.List">
+                UPDATE
+                t_goods
+                SET NODE_ID = CASE
+                <foreach collection="list" item="item" index="index">
+                  WHEN GOODS_ID = #{item.goodsId} THEN #{item.nodeId}
+                </foreach>
+                END
+                WHERE GOODS_ID IN
+                <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                  #{item.goodsId}
+                </foreach>
+              </update>
+            ```
+
+            以上单字段更新实际执行：
+
+            ```sql
+            UPDATE t_goods SET NODE_ID = CASE WHEN GOODS_ID = ? THEN ? END WHERE GOODS_ID IN ( ? )
+            ```
+
+      5. sql批量更新(通过insert实现)
+
+         传入的是List<Map<String,Object>>
+
+         直接运行插入,如果有插入的数据转为更新该条数据
+
+         ```xml
+         <insert id="updateChartParamByAccountAndChartid">
+             insert into followme_parameters
+             (account,chart_id,signal_source,rate)
+             values
+             <foreach collection="list" separator="," index="index" item="item">
+                 (#{item.account},#{item.chartId},#{item.signalSource},#{item.rate})
+             </foreach>
+             ON duplicate KEY UPDATE
+             signal_source=values(signal_source),rate=values(rate) 
+         </insert>
+         ```
+
+   2. 更新多条数据,更新的内容一样.
+
+      1. 传map/传String
+
+         NODE_ID从map中取出来,goodsIdList是字符串拼接好的(如下面的"1,2,5")
+
+         ```xml
+         <update id="updateByBatchPrimaryKey" parameterType="java.util.Map">
+             UPDATE t_goods
+             SET NODE_ID = #{nodeId}
+             WHERE GOODS_ID IN (${goodsIdList})
+           </update>
+         ```
+
+         实际的sql
+
+         ```sql
+         UPDATE t_goods SET NODE_ID = ? WHERE GOODS_ID IN (1,2,5);
+         ```
+
+      2. 传map/传list
+
+         NODE_ID从map中取出来,goodsIdList是用list拼接出来的
+
+         ```xml
+         <update id="updateByBatchPrimaryKey" parameterType="java.util.Map">
+             UPDATE t_goods
+             SET NODE_ID = #{nodeId}
+             WHERE GOODS_ID IN 
+             <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+               #{item.goodsId}
+             </foreach>
+         </update>
+         ```
+
+         实际的sql
+
+         ```sql
+         UPDATE t_goods SET NODE_ID = ? WHERE GOODS_ID IN (1,2,5);
+         ```
+
+         [原文链接](https://www.cnblogs.com/eternityz/p/12284760.html)
+
+#### 3.Mybatis 实现if -- else --
+
+```xml
+ <choose>
+                <when test="item.tdName == 'hor_acceleration'">
+                    '0' as horAcceleration,
+                </when>
+                <otherwise>
+                    hor_acceleration as horAcceleration,
+                </otherwise>
+ </choose>
+```
+
+#### 4.mybatis判断字符串相等时的注意事项
+
+mybatis 映射文件中，if标签判断字符串相等，两种方式：
+
+因为mybatis映射文件，是使用的ognl表达式，所以在判断字符串sex变量是否是字符串Y的时候，
+
+```xml
+<if test="sex=='Y'.toString()">
+<if test = 'sex== "Y"'>
+```
+
+注意：不能使用
+
+```xml
+<if test="sex=='Y'">
+and 1=1
+</if>
+```
+
+因为mybatis会把'Y'解析为字符，所以不能这样写 会报NumberFormatException
+
+MyBatis是使用的OGNL表达式来进行解析的，这个地方有一个坑需要注意下，单引号内有一个字符的情况下，OGNL会将其以 java 中的 char 类型进行解析，那么此时 char 类型与参数 String 类型用等号进行比较的时候结果都是false。解决方案也很简单，就是讲 test 中的单个字符用双引号括起来。
+
+```xml
+      <where>
+        	/*不行*/
+            <if test="qryStr=='Y'">
+                and counts=1
+            </if>
+             /*可以*/
+            <if test="qryStr=='Y'.toString()">
+                and counts=1
+            </if>
+                /*可以*/
+            <if test='qryStr=="Y"'>
+                and counts=2
+            </if>
+        </where>
+```
+
+建议使用外部单引号，里面双引号嵌套的方式。
+
+#### 5.mybatis自带的分页插件的使用
+
+#### 6. mybatis传入集合循环查询并用union组合
+
+实例：接口  
+
+```java
+/**
+     * selectOverrunData:查询一个单次计划某个行别某个速度级下各个超限类型的占比
+     *
+     * @param testTaskId 测试任务id
+     * @param xb         行别
+     * @param speedLevel 速度级
+     * @param type       超限还是大值
+     * @param labelList  通道名称集合
+     * @return
+     * @author Zhangyuhan
+     * @date 2021/7/8 15:03
+     */
+    List<Map<String, Object>> selectStatisticalInformation(@Param("testTaskId") String testTaskId,
+                                                           @Param("xb") String xb,
+                                                           @Param("speedLevel") Integer speedLevel,
+                                                           @Param("type") String type,
+                                                           @Param("labelList") List<String> labelList);
+```
+
+实例：接口对应的sql
+
+```xml
+<select id="selectStatisticalInformation" resultType="map">
+        <foreach collection="labelList" item="item" index="index" separator="UNION">
+        SELECT numtab.num AS VALUE,
+        concat( round(( numtab.num / numtab.total ) * 100, 2),'%' ) AS NAME
+        FROM
+            (
+            SELECT
+            <if test='type == "超限"'>
+                count( CASE WHEN cxlx = #{item} THEN 1 END ) AS num ,
+            </if>
+            <if test='type == "大值"'>
+                count( CASE WHEN dzlx = #{item} THEN 1 END ) AS num,
+            </if>
+            count(*) AS total
+            FROM
+            <if test='type == "超限"'>
+            cxdata_table
+            </if>
+            <if test='type == "大值"'>
+            dzdata_table
+            </if>
+            WHERE
+            dcjh_id = '797cb0e7de3241029b5feb6b1ffa17ca'
+            AND xb = '上行'
+            <if test='type == "超限"'>
+            AND flag = '0'
+            </if>
+            ) numtab
+        </foreach>
+    </select>
+```
+
+
 
 ### 学习
 
