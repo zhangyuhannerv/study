@@ -33,6 +33,97 @@
 
 # 前端
 
+## javascript
+
+### 开发
+
+#### 1.前台js获取时间的一个方法
+
+```javascript
+var getDate = function getNowFormatDate() {//获取当前时间
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) :  date.getMonth() + 1;
+            var strDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+            return currentdate;
+}
+```
+
+### 学习
+
+## jQuery
+
+### 开发
+
+#### 1.前台往后台传json数组  
+
+前台代码：
+
+```js
+   			   var sbUseHistory = table.cache["SbUseHistoryInfoTable"];
+                var sbUseHistoryList = [];// 这就是json对象数组
+                for (var i = 0; i < sbUseHistory.length; i++) {
+                    var sbinfoProject = {};
+	                // 下面是把对象的属性和后台实体的属性对应起来，然后在吧json对象push进list数组中
+                    sbinfoProject.xmName = sbUseHistory[i].xm;
+                    sbinfoProject.sbId = sbId;
+                    sbinfoProject.syTime = sbUseHistory[i].sj;
+                    sbinfoProject.syStatus = sbUseHistory[i].zt;
+                    // sbinfoProject.createTime =
+                    sbUseHistoryList.push(sbinfoProject);
+                }
+                $.ajax({
+                    url: Hussar.ctxPath + '/sbinfoProject/add',
+                    type: "post",
+                    dataType: "json",
+                    async: false,
+                    data: JSON.stringify(sbUseHistoryList),// 这里把json数组用stringfy()方法转成字符串，后台就能封装成对应的实体的集合
+                    contentType: 'application/json;charset=utf-8',
+                    success: function (result) {
+
+                    }
+                })
+```
+
+后台代码：
+
+```java
+    @RequestMapping(value = "/add")
+    @BussinessLog(key = "/sbinfoProject/add", type = BussinessLogType.INSERT, value = "新增设备项目履历")
+    @RequiresPermissions("sbinfoProject:add")
+    @ResponseBody
+    public Map<String, Object> add(@RequestBody List<SbinfoProject> list) {
+
+        Map<String, Object> map = new HashMap<>();
+        Boolean flag;
+        try {
+            flag = sbinfoProjectService.saveBatch(list);
+        } catch (Exception e) {
+            map.put("code", 500);
+            map.put("message", "添加失败");
+            return map;
+        }
+
+        if (flag) {
+            map.put("code", 200);
+            map.put("message", "添加成功");
+            return map;
+        } else {
+            map.put("code", 500);
+            map.put("message", "添加失败");
+            return map;
+        }
+    }
+```
+
+
+
+### 学习
+
 ## layui
 
 ### 开发
@@ -55,6 +146,300 @@
     <table id="CxDataQdTjSxTab" class="layui-table"></table>
 </div>
 ```
+
+#### 2.layui数据表格拼接日期输入框和下拉框
+
+代码如下
+
+```javascript
+	   var SbUseHistoryInfoTableEditRowObj = null; // 预先定义一个下拉框的变量
+        // 使用履历
+        table.render({
+            elem: '#SbUseHistoryInfoTable',
+            data: [],
+            method: "post",
+            contentType: "application/json;charset=UTF-8",
+            //url : Hussar.ctxPath+'/sbinfoProject/getSbUseHistory',
+            cols: [
+                [{checkbox: true, halign: 'center', align: "center", width: 50},
+                    {title: '序号', type: 'numbers', align: "center", halign: 'center', width: 50},
+                    {title: '项目', field: 'xm', align: 'center', halign: 'center', edit: 'text'},
+                    {
+                        title: '时间',
+                        field: 'sj',
+                        align: 'center',
+                        halign: 'center',
+                        edit: 'text',
+                        event: 'inputDate',
+                        data_filed: 'date'
+                    },
+                    {
+                        title: '状态',
+                        field: 'zt',
+                        align: 'center',
+                        halign: 'center',
+                        event: "ztDropDown",
+                        templet: function (d) {
+                            var html = "";
+                            if (d.zt == "1") {
+                                html = "<option value='0'>使用中</option> <option value='1' selected='selected'>以归还</option>";
+                            } else {
+                                html = "<option value='0' selected='selected'>使用中</option> <option value='1'>以归还</option>";
+                            }
+                            return '<select lay-filter="zt" name="zt"  >' + html + '</select>';
+
+                        }
+                    }
+                ]],
+            limit: 10,
+            //id : 'useHistoryReload',
+            even: true,
+            where: {},
+            done: function (res, curr, count) {
+                form.render('select');
+                $(".layui-table-body, .layui-table-box, .layui-table-cell").css('overflow', 'visible');
+            }
+        })
+
+        form.on('select(zt)', function (data) { // 这里的zt就是select的lay-filter的值
+            var oldData = table.cache['SbUseHistoryInfoTable']; // 这里cache后面的值也是table标签里面的lay-filter的值或者为id值，可以将它们两个设置为一样
+            SbUseHistoryInfoTableEditRowObj.update({
+                zt: data.value
+            });
+
+            table.reload("SbUseHistoryInfoTable", {
+                url: '',
+                data: oldData,
+                done: function () {
+	       // 回调，css，防止下拉框被盖住，直接粘贴即可
+                    $(".layui-table-body, .layui-table-box, .layui-table-cell").css('overflow', 'visible');
+                }
+            });
+        });
+
+
+        table.on('tool(SbUseHistoryInfoTable)', function (obj) {
+            var newdata = {};
+            if (obj.event === 'inputDate') {
+	     // 点击事件日期输入框时进入到此事件
+                var field = $(this).data('field');
+                laydate.render({
+                    elem: this.firstChild
+                    , show: true //直接显示
+                    , range: true
+                    , closeStop: this
+                    , type: 'datetime'
+                    , format: "yyyy-MM-dd HH:mm:ss"
+                    , done: function (value, date) {
+                        newdata[field] = value;
+                        obj.update(newdata);
+                    }
+                });
+            }
+            if (obj.event === 'ztDropDown') {
+           // 点击下拉框时先进入到此事件
+                SbUseHistoryInfoTableEditRowObj = obj;
+            }
+        })
+
+```
+
+#### 3.将layui多文件上传的组件分割，切割出来的效果是将文件对象push进文件数组里去，后台可直接接收到一个文件数组
+
+代码如下：
+
+前台html：
+
+```html
+       <div class="layui-upload-list">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" name="chb[]" id="all" onclick="setChecked(this)"/>全选</th>
+                            <th>文件名</th>
+                            <th>上传时间</th>
+                        </tr>
+                        </thead>
+                        <tbody id="jiShuList"></tbody>
+                    </table>
+                </div>
+	      
+		 <div class="fr" style="margin-right: 20px;margin-bottom: 10px;">
+		                    <button type="button" class="layui-btn layui-btn-normal" id="jiShuFile">选择多文件</button>
+		                    <button type="button" class="layui-btn delete_btn" id="deleteSbManual"><i class="layui-icon">&#xe640;</i>删除
+		                    </button>
+  		 </div>
+```
+
+前台js
+
+```javascript
+	   var jiShufiles;
+	   var demoListView = $('#jiShuList') // 它和tbody的id对应
+            , uploadListIns = upload.render({
+            elem: '#jiShuFile'// 它和选择多个文件的按钮id对应
+	       //,url: Hussar.ctxPath + '/sbinfo/uploadSbManual' //改成您自己的上传接口,不用它上传，因此可以注释掉
+            , accept: 'file'
+            , multiple: true
+            , auto: false
+            // , bindAction: '#jiShuUpload'// 这是开始上传的按钮，这里在前台没有定义
+            , choose: function (obj) {
+                jiShufiles = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                //读取本地文件
+                obj.preview(function (index, file, result) {
+                    var tr = $(['<tr id="upload-' + index + '">'
+                        , '<td>' + '<input type="checkbox" name="chb[]" onclick="setChecked(this)"/>' + '</td>'
+                        , '<td>' + file.name + '</td>'
+                        , '<td>' + getDate() + '</td>'
+                        , '</tr>'].join(''));
+
+                    //删除，如需要用到删除，可以看官方文档
+                    /*tr.find('.demo-delete').on('click', function () {
+                        delete files[index]; //删除对应的文件
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });*/
+
+                    demoListView.append(tr);// 它和最开始定义的demoListView对应
+                });
+             }
+         });
+
+            // 上传文件
+            // 预先定义一个表单元素
+            var form = new FormData();
+            // 技术手册
+            if (jiShufiles != null) { // 这里的jiShufiles和下面的shiYongfiles都是上面choose()通过obj.push()方法push进去文件对象而形成的一个对象
+                var keys = Object.keys(jiShufiles);
+                for (var i = 0; i < keys.length; i++) {
+                    form.append("techniqueFiles", jiShufiles[keys[i]]); // 利用form拼接
+                }
+            }
+
+	        if (shiYongfiles != null) {
+                var keys1 = Object.keys(shiYongfiles);
+                for (var i = 0; i < keys.length; i++) {
+                    form.append("useFiles", shiYongfiles[keys1[i]]);
+                    // jiShufilesArray.push(jiShufiles[keys[i]])
+                }
+            }
+
+       
+	     $.ajax({
+                url: Hussar.ctxPath + '/sbinfo/uploadSbManual',
+                type: "post",
+                dataType: "json",
+                async: false,
+                contentType: false,
+                processData: false,
+                data: form,
+                success: function (result) {
+                    if (result.code == 200) {
+                        layer.msg("上传成功！", {icon: 6});
+                    } else if (result.code == 500) {
+                        layer.msg(result.msg, {icon: 5});
+                    }
+                }
+            });
+
+```
+
+后台代码：
+
+可以接收不同的file数组，只要前台拼接form时名字不同
+
+```java
+	/**
+     * 多文件上传（接收示例）
+     *
+     * @return
+     */
+    @RequestMapping("/uploadSbManual")
+    @ResponseBody
+    public Map<String, Object> uploadSbFiles(@RequestParam("techniqueFiles") MultipartFile[] techniqueFiles,
+                                             @RequestParam("useFiles") MultipartFile[] useFiles,) {
+
+	      // 利用form拼接不同的名字可以上传不同的文件数组
+        Map<String, Object> jsonObject = new JSONObject();
+
+        // 上传技术手册
+        for (MultipartFile file : techniqueFiles) {
+            uploadSbFile(file, "0");
+        }
+        // 上传使用说明
+        for (MultipartFile file : useFiles) {
+            uploadSbFile(file, "1");
+        }
+     
+        return jsonObject;
+    }
+
+    /**
+     * 单文件上传方法（示例）
+     *
+     * @return
+     * @author Zhangyuhan
+     * @date 2020/11/9 16:07
+     */
+
+    public void uploadSbFile(MultipartFile file, String type) {
+        String fileName = null;
+        String basePath = FileDownUpload.getBasePath();  //系统路径
+        if (file.isEmpty()) {
+            throw new RuntimeException("文件不能为空");
+        }
+        try {
+            //创建一个文件夹
+            Date date = new Date();
+            //文件夹的名称
+            String paths = "";
+            paths = basePath + new SimpleDateFormat("yyyyMM").format(date);
+            //如果不存在,创建文件夹
+            File f = new File(paths);
+            SbinfoFile sbinfoFile = new SbinfoFile();
+            if (!f.exists()) {
+                f.mkdirs(); // 如果文件夹不存在创建一个
+                fileName = file.getOriginalFilename();//获取原名称
+                fileName = fileName.substring(0, fileName.lastIndexOf(".")) + fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+                String file_type = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                File dest = new File(paths + "/" + fileName);
+                file.transferTo(dest);
+                sbinfoFile.setId(uuid);
+                sbinfoFile.setFileName(fileName);
+                sbinfoFile.setFileType(file_type);
+                sbinfoFile.setFileUrl(paths);
+                sbinfoFile.setFileUploder(ShiroKit.getUser().getName());
+                sbinfoFile.setUpdatetime(new Timestamp(new Date().getTime()));
+                sbinfoFile.setSbId("sb_02");
+                sbinfoFile.setState("0");
+                sbinfoFile.setType(type);
+                sbinfoFileService.save(sbinfoFile);
+            } else {
+                fileName = file.getOriginalFilename();//获取原名称
+                fileName = fileName.substring(0, fileName.lastIndexOf(".")) + fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+                String file_type = fileName.substring(fileName.lastIndexOf("."), fileName.length());
+                File dest = new File(paths + "/" + fileName);
+                file.transferTo(dest);
+                sbinfoFile.setId(uuid);
+                sbinfoFile.setFileName(fileName);
+                sbinfoFile.setFileType(file_type);
+                sbinfoFile.setFileUrl(paths);
+                sbinfoFile.setFileUploder(ShiroKit.getUser().getName());
+                sbinfoFile.setUpdatetime(new Timestamp(new Date().getTime()));
+                sbinfoFile.setSbId("sb_02");
+                sbinfoFile.setState("0");
+                sbinfoFile.setType(type);
+                sbinfoFileService.save(sbinfoFile);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("文件上传失败");
+        }
+    }
+```
+
+
 
 ### 学习
 
