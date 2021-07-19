@@ -33,6 +33,16 @@
 
 # 前端
 
+## html5
+
+### 开发
+
+#### 1.容器滚动条出现的条件
+
+容器出现滚动条的条件：1，容器有固定的高度，2，容器的内容高度，超出了容器的高度，如果容器未设定高度，则它会向父亲，祖先找到有高度的容器，并在其身上显示滚动条
+
+### 学习
+
 ## javascript
 
 ### 开发
@@ -119,6 +129,38 @@ var getDate = function getNowFormatDate() {//获取当前时间
         }
     }
 ```
+
+#### 2.总结一下jQuery的ajax的contentType的格式
+
+- ajax的默认contentType是：
+
+  “application/x-www-form-urlencoded;charset=utf-8”
+
+  它就支持{key-value,key-value}的格式，各种具体的ajax详见ssmpj项目
+
+- 如果为
+
+  contentType:"application/json;charset=utf-8",
+
+  data:JSON.stringfy(data),
+
+  那么后台就用@RequestBody(JavaBean javaBean)
+
+  来接收
+
+- 如果为false
+
+  那么一般就是上传文件，详见ssmpj的图片上传与回显的例子
+
+- 如果为
+
+  text/xml
+
+  就看这篇博客的解析：
+
+  [原文链接](https://blog.csdn.net/nicexibeidage/article/details/84070290)
+
+  因为实际情况很少遇到
 
 
 
@@ -439,7 +481,224 @@ var getDate = function getNowFormatDate() {//获取当前时间
     }
 ```
 
+#### 4.layui的时间日期控件要求点击完日期后，自动弹出时间选择框，而不是一定要手动点击选择时间才弹出时间选择框。
 
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui-master/dist/css/layui.css">
+    <style>
+        #f1 {
+            width: 500px;
+            margin: 500px auto;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form action="" class="layui-form" id="f1">
+        <input type="text" id="i1">
+    </form>
+</div>
+<script src="layui-master/dist/layui.js"></script>
+<script>
+    layui.use(['laydate', 'layer'], () => {
+        var $ = layui.$;
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#i1' //指定元素
+            , type: 'datetime'
+            , min: '2021-1-15'
+            , max: '2021-2-18',
+            /*重点代码*/
+            ready() {
+                $(".layui-laydate-content table tbody tr").on('click', 'td', function () {
+                    if (($(this).attr('class') == '' || $(this).attr('class') == null || $(this).attr('class') == 'layui-this')) {
+                        $(".layui-laydate-footer [lay-type='datetime'].laydate-btns-time").click();
+                    }
+                })
+            },
+        });
+
+
+    })
+</script>
+</body>
+</html>
+```
+
+#### 5.给layui的下拉框赋值，同时触发layui的下拉框选择事件
+
+前提：该选择框需要放在layui-form的表单下
+
+```js
+$("#citySerch").val(cityId);// 给下拉框赋值
+Let filter=$('#citySerch').attr('lay-filter');//获取该元素的lay-filter属性
+filter&&layui.event('form','select('+filter+')',{elem:$("#citySerch"),value:cityId});//触发该标签的select事件
+form.render('select');// 重新渲染下拉框
+```
+
+
+
+#### 6.子页面获取父页面元素的值
+
+在layui.user().里面写即可
+
+```js
+ let cityId = parent.document.getElementById("cityId").value;
+ let id = parent.layui.$("#id").val();
+```
+
+#### 7.子页面调用父页面的方法
+
+在layui.use之前写一个json对象赋给window对象
+
+```js
+var Cdl = {
+    seItem: null,   // 选中的条目
+    layIndex: null,
+    scrollHeight: 0,
+}
+layui.user({
+Cdl.initTreeView = function(){};
+})
+```
+
+子页面
+
+```js
+window.parent.Cdl.initTreeView();
+```
+
+#### 8.layui让父页面的某个按钮点击
+
+```js
+parent.layui.$("#search").click();
+```
+
+#### 9.layui中动态纵向合并单元格
+
+```js
+// 正常渲染表格 
+table.render({
+            elem: '#CxDataQdTjXXTab',
+            height: 300,
+            url: Hussar.ctxPath + '/CxData/getQdCxData',
+            cols: [
+                //一级表头
+                [
+                    {title: '官方序号', type: 'numbers', align: 'center', halign: 'center', hide: true},
+                    {title: '模板索引', field: 'index1', align: 'center', halign: 'center', hide: true},
+                    {title: '序号', field: 'index2', align: 'center', halign: 'center',},
+                    {title: '区段', field: 'qj', align: 'center', halign: 'center',},
+                    {title: '通道', field: 'lx', align: 'center', halign: 'center',},
+                    {title: '超限数量', field: 'sl', align: 'center', halign: 'center'},
+                ],
+            ],
+            page: false,
+            id: 'CxDataQdTjXXTab',
+            even: true, limit: 20,
+            where: {
+                csrwId: $("#csrwId").val(),
+                xb: '下行',
+                isSpecial: isSpecial,
+            },
+            done(res) {
+                // 表格渲染结束后调用合并单元格的方法
+                merge(res, "CxDataQdTjXXTab");
+            }
+        })
+
+
+// 动态和并单元格的方法
+function merge(res, id) {
+        var data = res.data;
+        var mergeIndex = 0;//定位需要添加合并属性的行数
+        var mark = 1; //这里涉及到简单的运算，mark是计算每次需要合并的格子数
+        var columsName = ['index2', 'qj'];//需要合并的列名称
+        /*这里的索引是表格col[]数组的下标，下标从0开始，隐藏的列也要算。注意，index列请在后台把要合并的行转为1111，22，3333，444444……..的格式*/
+        var columsIndex = [2, 3];//需要合并的列索引值
+
+        for (var k = 0; k < columsName.length; k++) { //这里循环所有要合并的列
+            var trArr = $("[lay-id='" + id + "']>.layui-table-box>.layui-table-body>.layui-table").find("tr");//所有行
+            for (var i = 1; i < res.data.length; i++) { //这里循环表格当前的数据
+                var tdCurArr = trArr.eq(i).find("td").eq(columsIndex[k]);//获取当前行的当前列
+                var tdPreArr = trArr.eq(mergeIndex).find("td").eq(columsIndex[k]);//获取相同列的第一列
+
+                if (data[i][columsName[k]] === data[i - 1][columsName[k]]) { //后一行的值与前一行的值做比较，相同就需要合并
+                    mark += 1;
+                    tdPreArr.each(function () {//相同列的第一列增加rowspan属性
+                        $(this).attr("rowspan", mark);
+                    });
+                    tdCurArr.each(function () {//当前行隐藏
+                        $(this).css("display", "none");
+                    });
+                } else {
+                    mergeIndex = i;
+                    mark = 1;//一旦前后两行的值不一样了，那么需要合并的格子数mark就需要重新计算
+                }
+            }
+            mergeIndex = 0;
+            mark = 1;
+        }
+
+
+```
+
+#### 10.动态加载以上传的图片的方法
+
+```js
+// 就是获取图片的存储路径，让图片标签的src值指向一个后台写流的方法
+function showImg(img) {
+        let url = img.url
+        let path = "/uploadFileFile/getBytesByAbsolutePath?imgPath=" + url
+        $("img").attr("src", path);
+ }
+```
+
+```java
+ 	/**
+     * @Description: 根据图片的绝对路径返回字节流
+     */
+    @RequestMapping(value = "/getBytesByAbsolutePath")
+    @ResponseBody
+    public void getBytesByAbsolutePath(HttpServletRequest request, HttpServletResponse response) throws  Exception{
+        String imgPath = request.getParameter("imgPath");
+        File file = new File(imgPath);
+        if(file.exists()){
+            InputStream is = new FileInputStream(file);
+            byte[] bytes = new byte[is.available()];
+            is.read(bytes);
+            is.close();
+            OutputStream os = response.getOutputStream();
+            response.setContentType("image/*");
+            os.write(bytes);
+            os.close();
+        }else {
+            System.out.println("图片不存在");
+        }
+    }
+
+```
+
+
+
+### 学习
+
+## echarts
+
+### 开发
+
+#### 1.echarts图关于堆叠属性stack的问题
+
+1. 多系列的柱状图stack如果是数字且越小，该系列的每根柱子越靠前；
+
+2. 但是如果stack为0，那么该系列的每根柱子都会被放到最后；
+
+3. 这是一个需要注意的问题！！！！！！！！！
 
 ### 学习
 
@@ -654,6 +913,79 @@ mysql的DateTime对应着java中的timeStamp类型。存储的时候如何将jav
       ```
 
       
+
+### 学习
+
+## springboot
+
+### 开发
+
+#### 1.springboot中使用java代码控制事务
+
+1. 代码中控制事务的三种方式
+   - 编程式事务：就是直接在代码里手动开启事务，手动提交，手动回滚。优点就是可以灵活控制，缺点就是太麻烦了，太多重复的代码了。
+   - 声明式事务：就是使用SpringAop配置事务，这种方式大大的简化了编码。需要注意的是切入点表达式一定要写正确。
+   - 注解事务：直接在Service层的方法上面加上@Transactional注解，个人比较喜欢用这种方式。
+
+2. 事务回滚的原因
+
+   在工作中，看过别人写的代码出现了事务不回滚的现象。当然，事务不回滚的都是采用的声明式事务或者是注解事务；编程式事务都是自己写代码手动回滚的，因此是不会出现不回滚的现象。
+
+    
+
+     再说下声明式事务和注解事务回滚的原理：当被切面切中或者是加了注解的方法中抛出了RuntimeException异常时，Spring会进行事务回滚。默认情况下是捕获到方法的RuntimeException异常，也就是说抛出只要属于运行时的异常（即RuntimeException及其子类）都能回滚；但当抛出一个不属于运行时异常时，事务是不会回滚的。
+
+    
+
+     下面说说我经常见到的3种事务不回滚的产生原因：
+
+   - （1）声明式事务配置切入点表达式写错了，没切中Service中的方法
+   - （2）Service方法中，把异常给try catch了，但catch里面只是打印了异常信息，没有手动抛出RuntimeException异常
+   - （3）Service方法中，抛出的异常不属于运行时异常（如IO异常），因为Spring默认情况下是捕获到运行时异常就回滚
+
+3. 如何保证事务回滚
+
+   正常情况下，按照正确的编码是不会出现事务回滚失败的。下面说几点保证事务能回滚的方法
+
+   - （1）如果采用声明式事务，一定要确保切入点表达式书写正确
+
+   - （2）如果Service层会抛出不属于运行时异常也要能回滚，那么可以将Spring默认的回滚时的异常修改为Exception，这样就可以保证碰到什么异常都可以回滚。具体的设置方式也说下。
+
+     - 声明式事务，在配置里面添加一个rollback-for，代码如下	
+
+       ```xml
+       <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/> 
+       ```
+
+     - 注解事务，直接在注解上面指定，代码如下
+
+       ```java
+       @Transactional(rollbackFor=Exception.class)	
+       ```
+
+   - （3）只有非只读事务才能回滚的，只读事务是不会回滚的
+
+   - （4）如果在Service层用了try catch，在catch里面再抛出一个 RuntimeException异常，这样出了异常才会回滚
+
+   - （5）如果你不喜欢（4）的方式，你还可以直接在catch后面写一句回滚代码**TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();**来实现回滚，这样的话，就可以在抛异常后也能return 返回值；比较适合需要拿到Service层的返回值的场景。具体的用法可以参见考下面的伪代码
+
+     ```java
+         /** TransactionAspectSupport手动回滚事务：*/
+            @Transactional(rollbackFor = { Exception.class })  
+            public boolean test() {  
+                 try {  
+                    doDbSomeThing();    
+                 } catch (Exception e) {  
+                      e.printStackTrace();     
+                      //就是这一句了, 加上之后抛了异常就能回滚（有这句代码就不需要再手动抛出运行时异常了）
+                      TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();  
+                      return false;
+                 }  
+                return true;
+           }  
+     ```
+
+[原文链接](https://www.cnblogs.com/zeng1994/p/8257763.html)
 
 ### 学习
 
