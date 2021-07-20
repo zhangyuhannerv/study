@@ -63,6 +63,45 @@ var getDate = function getNowFormatDate() {//获取当前时间
 }
 ```
 
+#### 2.在实际项目中，get请求的url经常会过长，导致数据丢失。（也可以看自己网页上收藏的formData使用相关的博客)
+
+解决方案：采用post请求，来解决该问题，写一个采用post请求的函数即可：
+
+```js
+function sendByPost(url, ids){
+    var oForm = document.createElement("form");
+    oForm.method="post";
+    oForm.action=url;
+    
+    var hasitemsids_input = document.createElement("input");
+    hasitemsids_input.type="hidden";
+    hasitemsids_input.name="ids";
+    hasitemsids_input.value=ids;
+    oForm.appendChild(hasitemsids_input);
+    document.body.appendChild(oForm);
+    
+    oForm.submit();
+}
+```
+
+#### 3.部署项目时，在maven库上添加自己手动添加的jar 包
+
+进入到放这个jar包的文件夹，运行cmd
+
+然后根据下面的例子手动自己可以尝试着添加
+
+```shell
+mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspose.word  -DartifactId=aspose.words -Dversion=16.4.0-jdk16 -Dpackaging=jar -DgeneratePom=true
+```
+
+```xml
+<dependency>
+			<groupId>com.aspose.word</groupId>
+			<artifactId>aspose.words</artifactId>
+			<version>16.4.0-jdk16</version>
+</dependency>
+```
+
 ### 学习
 
 ## jQuery
@@ -161,6 +200,76 @@ var getDate = function getNowFormatDate() {//获取当前时间
   [原文链接](https://blog.csdn.net/nicexibeidage/article/details/84070290)
 
   因为实际情况很少遇到
+
+#### 3.实现jQuery的ajax上传文件并且监听上传进度(微调可以支持多文件上传，异步监听各个文件的上传进度，如果上传的是文件数组的话，也可以监听总的进度)
+
+```js
+let formData = new FormData();
+// 这里的file对象可以用其他的框架上传插件来获取，比如layui的或者bootstrap的,或者只是input type='file'的等等等等。
+// 这里只是获取到文件对象，并不用框架来上传，真正上传文件还在下面的代码中
+formData.append('file', file);// 这里的这个file就是前台的文件对象，后台用MultipartFile类接收的
+formData.append('fileInfo', fileInfo);
+formData.append('id', newId);
+let aj = {
+            //上传文件数据
+            url: Hussar.ctxPath + "/dtjcResources/uploadFile",
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: true,
+            xhr() {
+                let xhr = new XMLHttpRequest();
+                xhr.upload.addEventListener('progress', e => {
+                    let progressRate = Math.round((e.loaded / e.total) * 100) + '%';// 获取到百分比
+                    $("[fileId='" + domId + "'] .progress_num").text(progressRate);// 让前台的dom元素显示这个百分比
+                })
+                return xhr;
+            },
+            success(res) {
+                if (res.code == '200') {
+                     $("[fileId='" + domId + "'] .file_progress").text("上传成功")
+                    
+                } else {
+                    $("[fileId='" + domId + "'] .file_progress").text("上传失败")
+                }
+            },
+            error() {
+                $("[fileId='" + domId + "'] .file_progress").text("上传失败")
+            }
+        }
+$.ajax(aj);
+```
+
+#### 4.事件委托获取被点击的元素
+
+```js
+ $(".file_container").on('click', '.file_del', (event) => {
+
+	// 此时就能获取被点击的子元素，获取不到尝试加个parent()或children()试试
+	// 如过target里面还有元素，那么点击该元素也会触发，即会有事件冒泡
+	let dom = $(event.target);
+	
+	
+	// 或者不用event对象，直接用$(this)正常来说也能获取到
+	let dom= $(this);
+	
+ })
+```
+
+#### 5.实现回车搜索功能
+
+```js
+$("#search").bind("keydown", function (event) {
+        var e = event || window.event || arguments.callee.caller.arguments[0];
+        if (e.keyCode == 13) {
+            // search是输入框，此处是要执行输入完毕后按下回车后的操作
+	   //…………..
+        }
+
+ });
+```
 
 
 
@@ -684,6 +793,12 @@ function showImg(img) {
 
 ```
 
+#### 11.layui弹出带遮罩得加载动画的示例
+
+```js
+var index = layer.msg('正在删除文件，请耐心等待', {icon: 16, shade: 0.7, time: 0});
+```
+
 
 
 ### 学习
@@ -699,6 +814,102 @@ function showImg(img) {
 2. 但是如果stack为0，那么该系列的每根柱子都会被放到最后；
 
 3. 这是一个需要注意的问题！！！！！！！！！
+
+### 学习
+
+## bootstrap
+
+### 开发
+
+#### 1.关于使用bootstrap的fileinput插件获取不到手动拖拽的文件对象的问题
+
+```js
+var frame;
+$("#add_file").fileinput({
+                language: 'zh',                 //中文
+                uploadUrl: '/' + url + '/uploadFile',
+                showUpload: false,               //是否显示上传按钮
+                showCaption: false,             //不显示文字表述
+                uploadAsync: true,               //采用同步上传
+                removeFromPreviewOnError: true,  //当文件不符合规则，就不显示预览
+                dropZoneEnabled: true,
+                dropZoneTitle: '拖拽文件到这里 &hellip;<br>只支持单文件上传',
+                maxFileCount: 100,
+                maxFileSize: 0,          //单位为kb，如果为0表示不限制文件大小
+                uploadExtraData: function (previewId, index) {
+                    //这是一个回调函数，会在上传时调用，读取配置的额外参数。
+                    //拷贝代码，参数先不删
+                    var obj = {
+                        xb2: $("#xb2").val(),
+                        yewuId: $("#yewuId").val(),
+                        algType: $("#algType").find("option:selected").text(),
+                        fileType: $("#fileType").find("option:selected").text(),
+                        col1: $("#col1").val(),
+                        col2: $("#col2").val(),
+                        col3: $("#col3").val(),
+                        col4: $("#col4").val(),
+                        magor: $("#magor").html(),
+                    };
+                    return obj;
+                }
+            }).on("filebatchselected", function(event, files) {// 监听文件选择
+                // document.getElementById('add_file')
+                // $('#add_file').append(files[0])
+                frame = files[0] // 此时拖拽文件后，监听事件，frame就等于第一个文件对象
+            });
+
+
+frame = document.getElementById('add_file').files[0];// 这能获得手动选择文件后的第一个文件对象
+
+// 前台传递
+        formData = new FormData();        //每一次需重新创建
+        formData.append('file', blob);
+        formData.append('fileName', file.name);
+        formData.append('part', part);
+        formData.append('guid', uid);
+        $.ajax({
+            //上传文件数据
+            url: Hussar.ctxPath + "/testTasks/doUploadDatas",
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false，
+	    success(){},
+	    error(){}
+        })
+
+```
+
+```java
+// 后台接收
+ @RequestMapping(value = "/doUploadDatas",method = RequestMethod.POST)
+ @ResponseBody
+ public  Map<String,Object> doSaveImportDatas(@RequestParam("file") MultipartFile file, String fileName, Integer part,String guid) throws Exception{
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            String uuid = UUID.randomUUID().toString().replaceAll("-","");
+         
+            String path = fpPath+ File.separator+"source"+File.separator+guid+File.separator;
+
+            File mkdir = new File(path);
+            if (!mkdir.exists()) {
+                mkdir.mkdirs();
+            }
+            file.transferTo(new File(path+"\\"+fileName+"-"+part));
+            String fileId = UUID.randomUUID().toString().replaceAll("-","");
+            map.put("code",200);
+            map.put("path",path);
+            map.put("fileId",fileId);
+        } catch (Exception e) {
+            map.put("error",e.getMessage());
+        }
+        return map;
+    }
+
+```
+
+
 
 ### 学习
 
@@ -912,7 +1123,19 @@ mysql的DateTime对应着java中的timeStamp类型。存储的时候如何将jav
          Timestamp ts = new Timestamp(date.getTime());
       ```
 
-      
+#### 5.java代码实现word转pdf的几种方式
+
+1. poi(慢，格式回出问题)
+
+2. openOffice（单线程，不支持并发)
+
+3. jacob(效果好，但是不支持linux）
+
+4. docx4j（没试过)
+
+5. asposeword(效果好，块，但是付费)
+
+6. 其他第三方组件
 
 ### 学习
 
@@ -2008,3 +2231,41 @@ head -n 1000：显示前面1000行
 
 #### 学习
 # 项目
+
+## github
+
+### 开发
+
+#### 1.github搜索自己想要的项目
+
+github上搜索的例子
+
+in:name springboot forks:>4000 language:java stars:>4000 pushed:>2020-01-01
+
+in:readme springboot mybatis forks:>4000 language:java stars:>4000 pushed:>2020-10-01
+
+关键词
+
+in:name xxx
+
+in:description xxx
+
+in:readme xxx
+
+starts:>2000
+
+fork:>3000
+
+size:>=5000 注意：单位是k
+
+pushed:>2020-01-01
+
+language:xxx
+
+user:xxx
+
+搜索的方式可以组合,叠加，用空格分开条件
+
+[更多高级搜索](https://github.com/search/advanced)
+
+### 学习
