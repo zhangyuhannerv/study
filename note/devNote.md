@@ -33,7 +33,62 @@
 
 # 前端
 
-## html5
+## css
+
+### 开发
+
+#### 1.自适应宽度的input框
+
+1. 解决办法：div的contenteditable="true"属性。能实现一行编辑。
+   待解决的问题：需要禁止回车换行，同时还有编辑完之后光标不会回到最开始，光标会保留在你最后编辑的地方
+
+   ```css
+    <div class="dict_val1" contenteditable="true" id="lineLength"></div>
+   
+    div[contenteditable] {
+       height: 0.1458rem;
+       line-height: 0.1458rem;
+   
+       /*重要*/
+       width: auto;
+       min-width: 0.1458rem;
+       white-space: nowrap;
+       overflow: hidden;
+       outline: none;
+       /*重要*/
+   
+       color: #001631;
+       padding: 0 0.0677rem;
+      }
+   ```
+
+   
+
+   开启编辑状态的话只需把outline的none去掉就行，改为默认状态或自定义属性如 outline:#00FF00 dotted thick;
+
+   或者不更改outLine状态，把div的border调出来也可以
+
+2. 传统的input方法 我比较推荐使用
+   待解决的问题：只能实现下划线效果的自适应，不能实现四周带边框效果的自适应
+
+   给input一个固定的宽度,隐藏它周围的边框
+
+   ```html
+   <input readonly autocomplete="off" class="line_edit" id="line_name">
+   ```
+
+   当点击编辑的时候给input 加上一个类 input_text_underline,这样文字就有下划线了。
+
+    ```css
+    .input_text_underline {
+        text-decoration: underline;
+        text-decoration-color: #8F9AB4;
+    }
+    ```
+
+### 学习
+
+## html
 
 ### 开发
 
@@ -799,7 +854,38 @@ function showImg(img) {
 var index = layer.msg('正在删除文件，请耐心等待', {icon: 16, shade: 0.7, time: 0});
 ```
 
+#### 12.关于在layui的弹出层里再弹出一个弹出层导致新的弹出层重复弹出的问题
 
+解决办法:在layui的layer配置json里给每个弹出层指定个不同的id即可
+
+例子：
+
+```js
+let index = layer.open({
+            type: 1,
+            title: false,
+            move: $('#uploadHead'),
+            closeBtn: 0,
+            area: ['5.1979rem', '2.5052rem'],
+            content: $("#uploadFileModel"),
+            id: 'layer1'
+        })
+layer.confirm('是否取消本次文件上传？',
+                    {
+                        skin: 'confirm-class',
+                        icon: 3,
+                        title: '提示',
+                        id: 'layer2'
+                    },
+                    function (index1) {// index1表示确认框代表的弹出层实例
+                        layer.closeAll();
+})
+```
+
+#### 13.关于之前的利用layui的上传文件组件遇到的问题
+
+- 问题描述：如果choose完之后，不提交，那么该上传实例就会一直卡在这个位置。再选择相同的文件实行相应的操作会无响应，即不动。
+- 解决办法：在后台写一个只接收文件不操作的接口。接受一下文件，这样前台的upload实例就会先进入到done的状态里然后复位（即初始状态）。此时再选择相同的文件进行自己的自定义操作就可以了。 （缺点：同一个文件会在上传组件里上传一次，再在自定义的方法里上传一次，可能会上传多次，且只有一次是有用的)。
 
 ### 学习
 
@@ -1007,12 +1093,26 @@ public class DtjcProjectGeneralReportUtil {
 
 #### 4.java中的各种日期时间类型的操作（包括映射mysql）
 
-mysql的DateTime对应着java中的timeStamp类型。存储的时候如何将java中的timeStamp转换为mysql中的DateTime
+**Java中的Timestamp对应mysql中的dateTime类型**
+
+比如：java的bean类型是Timestamp
+
+插入的时候这么写
+
+```java
+setUpdateTime(new Timestamp(new Date().getTime()));
+```
+
+这样插入完成后。mysql数据库里就是datatime类型的数据了。
+
+也可以分开写如下：
 
 ```java
  java.util.Date date = new java.util.Date();   // 获取一个Date对象
  Timestamp timeStamp = new Timestamp(date.getTime());  // 给对象赋值该值插入就行了
 ```
+
+
 
 [**Java：String和Date、Timestamp之间的转换**](https://www.cnblogs.com/mybloging/p/8067698.html)
 
@@ -1943,6 +2043,36 @@ A = all('a','b') 等价于 A = 'a' and A = 'b'
 
 ​	总结 ：any 相当于用or链接后面括号里的子元素，all 相当于用and链接后面括号里面的子元素
 
+#### 6.mysql开放远程连接(5.7版本生效，8以上的没试过)
+
+先连接到本地数据库
+
+切换到mysql数据库
+
+```sql
+use mysql
+```
+
+使用以下命令可以更改远程连接的设置
+
+```sql
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+```
+
+刷新权限
+
+```sql
+flush privileges;
+```
+
+查询user表看看是否生效，如果 '%'  'root' 在第一行证明生效了
+
+```sql
+select host,user from user;
+```
+
+![确保能连接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720111410.png)
+
 ### 学习
 
 ## redis
@@ -2001,6 +2131,21 @@ A = all('a','b') 等价于 A = 'a' and A = 'b'
 
 
 ### 学习
+
+#### 1.mysql索引十诫
+
+- 什么情况下要用索引
+  - 主键自带主键索引
+  - 唯一约束自带唯一索引
+  - 外键自带外键索引
+  - 查询条件用到的字段需要
+  - 排序用的的字段
+  - 分组用到的字段
+- 什么情况下不能用索引
+  - 数据量较少时不用建索引。
+  - 频繁更新字段不能建索引
+  - 索引的选择性（字段的值尽量复杂且尽量分布不平均)
+  - where条件查询用不到的字段不用建索引
 
 # 服务器
 ## linux
