@@ -1,0 +1,9 @@
+server:
+  port: 8888
+  context-path: /zh
+  session:
+    timeout: 30
+  tomcat:
+    uri-encoding: utf-8
+logging:
+  level: info
