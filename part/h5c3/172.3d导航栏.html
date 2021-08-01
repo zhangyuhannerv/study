@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+            /*一会需要给box旋转，所以给box的父级li加，那么里面的子盒子都有透视效果*/
+            perspective: 500px;
+
+        }
+
+        ul {
+            margin: 100px;
+        }
+
+        ul li {
+            float: left;
+            width: 120px;
+            height: 35px;
+            margin: 0 5px;
+        }
+
+        .box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: all .4s;
+        }
+
+        .box:hover {
+            transform: rotateX(90deg);
+        }
+
+        .front, .bottom {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .front {
+            background-color: pink;
+            z-index: 1;
+            transform: translateZ(17.5px);
+        }
+
+        .bottom {
+            background-color: purple;
+            /*这个x轴一定是负值*/
+            /*如果有移动或者其他样式，必须先写移动*/
+            transform: translateY(50%) rotateX(-90deg);
+        }
+    </style>
+</head>
+<body>
+
+<ul>
+    <li>
+        <div class="box">
+            <div class="front">
+                黑马程序员
+            </div>
+            <div class="bottom">
+                pink老师等你
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">
+                黑马程序员
+            </div>
+            <div class="bottom">
+                pink老师等你
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">
+                黑马程序员
+            </div>
+            <div class="bottom">
+                pink老师等你
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="box">
+            <div class="front">
+                黑马程序员
+            </div>
+            <div class="bottom">
+                pink老师等你
+            </div>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

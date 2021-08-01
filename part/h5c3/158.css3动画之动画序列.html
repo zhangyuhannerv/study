@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*from和to等价于0%和100%*/
+        @keyframes move {
+            from {
+                transform: translate(0, 0);
+            }
+
+            to {
+                transform: translate(1000px, 0);
+            }
+        }
+
+        /*1.动画序列可以做多个状态的变化*/
+        /*2.keyframes：关键帧*/
+        /*3.里面的百分比需要为整数*/
+        /*4.里面的百分比就是总的时间(案例：5s)的划分*/
+        @keyframes move2 {
+            /*0s后的位置*/
+            0% {
+                /*下面这句话可以注释掉*/
+                /*transform: translate(0, 0);*/
+            }
+
+            /*1.25s后的状态*/
+            25% {
+                transform: translate(1000px, 0);
+            }
+
+            /*2.5s后的状态*/
+            50% {
+                transform: translate(1000px, 500px);
+            }
+
+            /*3.75s后的位置*/
+            75% {
+                transform: translate(0, 500px);
+            }
+            /*5s后的位置*/
+            100% {
+                transform: translate(0, 0);
+            }
+
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+
+            /*animation-name: move;*/
+            animation-name: move2;
+            animation-duration: 5s;
+
+            /*动画无限执行*/
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

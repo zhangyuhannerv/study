@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 必须具有value属性的input */
+        input[value] {
+            color: pink
+        }
+
+        /* 重点。务必掌握 */
+        /* 只选择type=password文本框的input选取出来 */
+        input[type='password'] {
+            color: pink
+        }
+
+        /* div，具有class属性，并且属性值必须是icon开头的这些元素 */
+        /* 下面的写法，权重是11 */
+        /* div是标签前选择器，中括号[]才是属性选择器 */
+        div[class^='icon'] {
+            color: red;
+        }
+
+        /* section，具有class属性，并且以data结尾 */
+        section[class$='data'] {
+            color: blue
+        }
+
+        /* E[attr*='val'],匹配具有attr属性并且值中还有val的属性 */
+
+
+        /*  类选择器，属性选择器，伪类选择器，权重都是10 */
+        div.icon1 {
+            color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 借助属性选择器可以不用借助类或者id选择器 -->
+    <input type="text" value='请输入用户名'>
+    <input type="text">
+    <!-- 属性选择器可以选择属性=值的某些元素 -->
+    <input type="text" name="" id="">
+    <input type="password" name="" id="">
+    <!-- 属性选择器可以选择属性值开头的某些元素 -->
+    <div class="icon1">小图标1</div>
+    <div class="icon2">小图标2</div>
+    <div class="icon3">小图标3</div>
+    <div class="icon4">小图标4</div>
+    <div>我是打酱油的</div>
+    <!-- 属性选择器可以选择属性值结尾的某些元素 -->
+    <section class="icon1-data">我是安其拉</section>
+    <section class="icon2-data">我是哥斯拉</section>
+    <section class="icon3-ico">那我是谁</section>
+</body>
+
+</html>

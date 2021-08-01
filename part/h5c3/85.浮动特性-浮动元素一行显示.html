@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 如果多个盒子都设置了浮动，则它们会按照属性值一行内显示并且顶端对齐排列,多出的盒子会另起一行对齐 */
+        div {
+            float: left;
+
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        .two {
+            background-color: purple;
+            height: 250px;
+        }
+
+        .four {
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div>1</div>
+    <div class="two"></div>
+    <div>3</div>
+    <div class="four"></div>
+    <div>5</div>
+</body>
+
+</html>

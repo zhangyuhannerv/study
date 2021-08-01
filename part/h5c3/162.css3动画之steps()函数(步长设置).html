@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+
+            width: 0px;
+            height: 30px;
+            background-color: pink;
+
+            /*打字效果demo*/
+            font-size: 20px;
+            /*让文字强制一行内显示*/
+            white-space: nowrap;
+            /*溢出隐藏*/
+            overflow: hidden;
+
+            /*steps就是分几步来完成动画，有了steps,就不要写ease,或者liner等属性了*/
+            animation: grow 4s steps(10) forwards;
+            /*animation: grow 4s steps(5) forwards;*/
+        }
+
+        @keyframes grow {
+            0% {
+                width: 0;
+            }
+            100% {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    世纪佳缘我在这里等你
+</div>
+
+</body>
+</html>

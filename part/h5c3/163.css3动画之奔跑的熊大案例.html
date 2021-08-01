@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+
+        div {
+            position: absolute;
+            width: 200px;
+            height: 100px;
+            background: url(所有素材/html_css_material/CSS3进阶素材-包含小熊动画/media/bear.png) no-repeat;
+            /*元素可以添加多个动画，用,分隔*/
+            animation: bear .5s steps(8) infinite,
+            move 3s linear forwards;
+        }
+
+        @keyframes bear {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: -1600px 0;
+            }
+        }
+
+        @keyframes move {
+            0% {
+                left: 0;
+            }
+            100% {
+                transform: translate(-50%, 0);
+                left: 50%;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<div>
+
+</div>
+</body>
+</html>

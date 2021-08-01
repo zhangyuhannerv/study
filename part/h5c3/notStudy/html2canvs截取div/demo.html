@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 1000px;
+            background-color: pink;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='d1'>
+        <img src="test.png" alt="">
+    </div>
+    <button id='b1'>点我</button>
+    <button id="b2">再点我</button>
+
+    <script src="./html2canvasWeb.js"></script>
+
+    <script src="./jquery-3.1.1.min.js"></script>
+    <script>
+        var arr = [];
+
+        function DownLoadDomImg(el) {
+            var base64 = '';
+            new Promise((resolve, reject) => {
+                html2canvas(el, {
+                    // 页面高度  
+                    height: el.height,
+                    // 页面宽度
+                    width: el.width,
+                    // dpi: window.devicePixelRatio * 2,
+                    // scale: 2,
+                    onrendered: function(canvas) {
+
+                        // // 直接下载图片2
+                        var mA = document.createElement("a");
+                        mA.href = canvas.toDataURL()
+                        mA.setAttribute('download', 'download.png');
+                        mA.click();
+                        console.log(mA);
+
+                        // 获取64位编码
+                        base64 = canvas.toDataURL();
+                        // console.log(base64);
+
+                        resolve(base64);
+
+                    }
+                });
+            }).then((data) => {
+                arr.push(base64);
+            })
+
+        }
+
+        $("#b1").click(() => {
+            // 使用
+            DownLoadDomImg(document.getElementById("d1"));
+        })
+
+        $("#b2").click(() => {
+            console.log(arr);
+        })
+    </script>
+</body>
+
+</html>

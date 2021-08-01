@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul li:first-of-type {
+            background-color: pink;
+        }
+
+        ul li:last-of-type {
+            background-color: pink;
+        }
+
+        ul li:nth-of-type(even) {
+            color: skyblue;
+        }
+
+
+        /* 结果谁也没选出来 */
+        /* 原因：nth-child会把所有的孩子都排列序号 */
+        /* 执行时首先看:nth-child(1),之后回去看前面的div */
+        /* 这时出现：我要找第一个孩子，是p，但是目标要找的确是div，没有满足条件的元素 */
+        section div:nth-child(1) {
+            background-color: red;
+        }
+
+        /* 成功选出第一个div */
+        /* 原因：nth-of-type会把指定的元素的盒子（即前面的div)排列序号 */
+        /* 再去看里面的数字，是第几个孩子 */
+        /* 和上面刚好相反 */
+        /* 注意：下面的权重是12。即：伪类选择器的权重是10 */
+        section div:nth-of-type(1) {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <div>开头</div>
+        <li>我是第1个孩子</li>
+        <li>我是第2个孩子</li>
+        <li>我是第3个孩子</li>
+        <li>我是第4个孩子</li>
+        <li>我是第5个孩子</li>
+        <li>我是第6个孩子</li>
+        <li>我是第7个孩子</li>
+        <li>我是第8个孩子</li>
+        <div>末尾</div>
+    </ul>
+
+    <!-- nth-child,nth-of-type的区别-->
+    <section>
+        <p>光头强</p>
+        <div>熊大</div>
+        <div>熊二</div>
+    </section>
+</body>
+
+</html>

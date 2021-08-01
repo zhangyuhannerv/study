@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul id="uid">
+    <li>刘备</li>
+    <li>关羽</li>
+    <li>张飞</li>
+    <li>大乔</li>
+    <li>小乔</li>
+</ul>
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        //-------------- 过滤选择器---------------
+
+        // 奇数：odd
+        // 奇数字体设置为红色
+        $("#uid li:odd").css('color', 'red')
+        // 偶数：even
+        $("#uid li:even").css('color', 'skyblue')
+
+        // 下标从0开始
+        // 直接定位某一行(第三行）
+        $("li:eq(2)").css('background-color', 'yellow')
+
+        // 下标大于3（第四行开始）
+        $("li:gt(3)").css('font-family', '隶书')
+
+        // 下标小于2（第1行和第二行)
+        $("li:lt(2)").css('font-size', '36px')
+    })
+</script>
+</body>
+</html>

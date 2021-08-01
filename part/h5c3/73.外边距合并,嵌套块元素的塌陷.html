@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .father {
+            width: 400px;
+            height: 400px;
+            background-color: purple;
+            margin-top: 50px;
+            /* 解决方法1. */
+            /* 因为是在上方发现的塌陷，所以：border-top*/
+            /* transparent:透明边框*/
+            /* border-top: 1px solid transparent; */
+            /* 解决方法2. */
+            /* padding-top: 1px; */
+            /* 解决方法3.(该方法不会让盒子本身的大小改变，推荐使用) */
+            overflow: hidden;
+
+        }
+
+        .son {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* margin-top: 40px; */
+            margin-top: 100px;
+
+            /* 解决方法： */
+            /* 1.为父元素定义上边框 */
+            /* 2.为父元素定义内边距 */
+            /* 3.为父元素添加overflow:hidden */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="son"></div>
+    </div>
+</body>
+
+</html>

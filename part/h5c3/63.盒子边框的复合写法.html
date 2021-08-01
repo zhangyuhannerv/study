@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            /* 这三个属性是没有顺序的 */
+            /* 下边是通俗性的顺序 */
+            /* border: 3px solid red; */
+
+            /* 单独设置上边框 */
+            border-top: 5px solid pink;
+            /* 单独设置下边框 */
+            border-bottom: 10px dashed purple;
+            /* 左右边框同理 */
+        }
+
+        /* 上边框为蓝色，其余边框为红色的需求，用下面这种写法合理的利用层叠性能够大大简化代码 */
+        .d1 {
+            /* border包含了四条边 */
+            border: 1px solid blue;
+            /* 层叠行只是层叠了上边框 */
+            border-top: 1px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+    <div class="d1"></div>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 150px;
+            height: 80px;
+            background-color: pink;
+            margin: 100px auto;
+
+            /* 开始 */
+            /* 默认自动换行 */
+            /* white-space: normal; */
+            /* 1.文字若显示不开，强制一行显示 */
+            white-space: nowrap;
+            /* 2.超出部分隐藏 */
+            overflow: hidden;
+            /* 3.文字用省略号替代超出的部分 */
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        啥也不说，此处省略一万字
+    </div>
+</body>
+
+</html>

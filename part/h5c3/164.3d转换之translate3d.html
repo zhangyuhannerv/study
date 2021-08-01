@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*translateZ一般用px做单位*/
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /*单独移动*/
+            /*transform: translateX(100px);*/
+            /*transform: translateY(100px);*/
+
+            /*两个移动*/
+            /*transform: translate(100px,100px);*/
+            /*transform: translateX(100px) translateY(100px);*/
+
+            /*三个移动*/
+            /*transform: translateX(100px) translateY(100px) translateZ(100px);*/
+            transform: translate3d(100px, 100px, 100px);
+
+            /*注意：*/
+            /*translateZ：沿着z轴移动*/
+            /*translateZ：后面的单位一般是px*/
+            /*translateZ(100px)：向外移动100px(向眼睛移动)*/
+
+            /*3d移动简写*/
+            /*transform: translate3d(x,y,z);*/
+            /*其中的x,y,z是不能省略的，如果没有就写0,如:translate3d(0,100px,100px)*/
+        }
+    </style>
+
+</head>
+<body>
+<div></div>
+</body>
+</html>

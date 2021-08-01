@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*浏览器私有前缀是为了兼容各个浏览器的老版本*/
+
+        /*-moz-  firefox私有前缀*/
+        /*-ms-  ie*/
+        /*-webkit-  safari,chrome*/
+        /*-o-   Opera*/
+
+        /*例子（盒子圆角兼容性）：先写私有，再写总的*/
+        div {
+
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            -o-border-radius: 10px;
+
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+</body>
+</html>

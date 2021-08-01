@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*建议在所有的页面上加上下面这三句话*/
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            border: 20px solid red;
+            padding: 15px;
+            /*默认的*/
+            /*box-sizing: content-box;*/
+
+            /*css3盒子模型：盒子最终的大小就是width(200)的大小*/
+            /*padding和border就不会再撑大盒子了，前提是(padding和border)不会超过width宽度*/
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<div>小猪乔治</div>
+</body>
+</html>

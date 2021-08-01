@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 移动端一般初始的设计图都是750px的 */
+        /* 一般有10等分，15等分，或者20等分的 */
+        @media screen and (min-width:320px) {
+            html {
+                /* 320/15 */
+                font-size: 21.33px;
+            }
+        }
+
+        @media screen and (min-width:750px) {
+            html {
+                /* 750/15 */
+                font-size: 50px;
+            }
+        }
+
+        div {
+            height: 2rem;
+            width: 2rem;
+            background-color: pink;
+        }
+
+        /* 公式：页面元素的rem值 = 设计稿上的元素值(px) / (屏幕宽度/划分的份数) */
+
+        /* 流程： */
+        /* 1.首先选一套标注尺寸，一般以750为准 */
+        /* 2.我们用屏幕尺寸除以划分的份数，得到了html里面的文字大小，但是我们知道不同屏幕下得到的文字大小是不同的 */
+        /* 3.页面元素的rem值 = 页面元素在750px下的px值 / 对应的html里面的文字大小 */
+    </style>
+</head>
+
+<body>
+    <div>
+
+    </div>
+</body>
+
+</html>

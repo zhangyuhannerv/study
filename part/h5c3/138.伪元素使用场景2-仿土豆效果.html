@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .todou {
+            position: relative;
+            width: 444px;
+            height: 320px;
+            background-color: pink;
+            margin: 30px auto;
+        }
+
+        .todou img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .todou::before {
+            content: '';
+            /* 初始化时隐藏遮罩层 */
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background-color: rgba(0, 0, 0, .4);
+            background-image: url(所有素材/html_css_material/第八天/images/arr.png); */
+
+            /* 复合写法： */
+            background: rgba(0, 0, 0, .4) url(所有素材/html_css_material/第八天/images/arr.png) no-repeat center;
+        }
+
+        /*注意：中间没有任何空格*/
+        .todou:hover::before {
+            display: block;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="todou">
+    <img src="所有素材/html_css_material/第八天/images/tudou.jpg" alt="">
+</div>
+
+<div class="todou">
+    <img src="所有素材/html_css_material/第八天/images/tudou.jpg" alt="">
+</div>
+
+<div class="todou">
+    <img src="所有素材/html_css_material/第八天/images/tudou.jpg" alt="">
+</div>
+</body>
+
+</html>

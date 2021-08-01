@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p id="pid">这是一个段落</p>
+<div>这是一个div</div>
+<div class="dc">
+    这是第二个div
+    <p>第二个div中的段落</p>
+    <div>
+        <p>深层段落</p>
+    </div>
+</div>
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // 后代选择器
+        $(".dc p").css({
+            'background-color': 'yellow',
+            'color': 'red',
+            'border': '5px solid blue'
+        })
+
+        // 子选择器
+        $(".dc>p").css({
+            'font-size': '36px',
+            'background-color': 'skyblue'
+        })
+
+    })
+</script>
+</body>
+</html>

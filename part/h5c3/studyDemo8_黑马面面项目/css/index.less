@@ -1,0 +1,246 @@
+body {
+    min-width: 320px;
+    max-width: 750px;
+    margin: 0 auto;
+    background-color: #f2f4f7;
+}
+
+a {
+    text-decoration: none;
+    color: #707070;
+}
+
+// 约束当屏幕大于750px的时候，html字体大小就不变换了
+@media screen and (min-width:750px) {
+    html {
+        font-size: 37.5px !important;
+    }
+}
+
+.wrap {
+    background-color: #fff;
+    padding-bottom: 1.146667rem;
+
+    .header {
+        height: 2.133333rem;
+        border-bottom: 1px solid #eaeaea;
+        text-align: center;
+        line-height: 2.133333rem;
+        font-size: .933333rem;
+        color: #1c1c1c;
+    }
+
+    .nav {
+        display: flex;
+        // 显示不开就换行
+        flex-wrap: wrap;
+        padding: 1.2rem 0 1.6rem;
+
+
+        .item {
+            flex: 33.3333%;
+            display: flex;
+            flex-direction: column;
+            // 纵向显示
+            align-items: center;
+
+            img {
+                width: 3.706667rem;
+                height: 3.706667rem;
+            }
+
+            span {
+                font-size: .666667rem;
+            }
+
+            // 选择前面三个
+            &:nth-child(-n+3) {
+                margin-bottom: 1.653333rem;
+            }
+        }
+
+    }
+
+    .go {
+        margin: 0 .266667rem 0 .48rem;
+    }
+}
+
+.content {
+    padding: 1.066667rem .64rem;
+    margin-top: .266667rem;
+    background: #fff;
+
+    .con-hd {
+        display: flex;
+        justify-content: space-between;
+        height: 1.013333rem;
+        line-height: 1.013333rem;
+        margin-bottom: .906667rem;
+
+        h4 {
+            margin: 0;
+            font-size: .746667rem;
+            color: #333;
+
+            span {
+                display: inline-block;
+                width: 1.013333rem;
+                height: 1.013333rem;
+                // 行内块元素为了让后面的文字垂直居中vertical-align改为bottom比较合适
+                vertical-align: bottom;
+            }
+        }
+
+        .more {
+            font-size: .586667rem;
+            color: #999;
+        }
+    }
+
+}
+
+// 为了防止嵌套太多，特意拿出来的
+// 工作模块
+.get_job_focus {
+    // 拿出来的箭头需要在最外面的盒子加一个相对定位
+    position: relative;
+
+    .swiper-container {
+        height: 100%;
+        // 根据需求把宽度定位540px
+        width: 14.4rem;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+
+        // 自己加的样式（改变主轴方向)
+        flex-direction: column;
+
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        transition: 300ms;
+        // 其余的兄弟是0.8
+        transform: scale(0.8);
+        opacity: 0.4;
+
+        a {
+            width: 9.013333rem;
+            height: 10.026667rem;
+
+            img {
+                height: 100%;
+                width: 100%;
+            }
+        }
+
+        p {
+            width: 9.013333rem;
+            font-size: .666667rem;
+            margin-top: .64rem;
+            color: #333;
+        }
+    }
+
+    // 当前选中的slide是1.0
+    .swiper-slide-active,
+    .swiper-slide-duplicate-active {
+        transform: scale(1);
+        // 提高中间盒子的高度，让它能够压住两边的盒子
+        z-index: 1;
+        opacity: 1;
+    }
+}
+
+.stu {
+    // 底部导航栏的高度加上最下面的盒子和底部的距离
+    padding-bottom: 2.933333rem + .8rem;
+}
+
+// 学习模块
+.study {
+    .study-slider {
+        padding: .266667rem;
+    }
+
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide {
+        font-size: 18px;
+        background: #fff;
+        width: 7.733333rem;
+        height: 9.066667rem;
+        border-radius: .266667rem;
+        box-shadow: 0 0 .266667rem rgba(0, 0, 0, 0.1);
+
+        /* Center slide text vertically */
+        // 删除原先的flex布局，使用网页的传统布局
+        h5 {
+            font-size: .693333rem;
+            margin: 0;
+            font-weight: 400;
+            margin: .533333rem 0;
+            padding: 0 .266667rem;
+        }
+
+        p {
+            font-size: .693333rem;
+            color: #ff4400;
+            padding: 0 .266667rem;
+        }
+    }
+
+
+}
+
+.footer {
+    max-width: 750px;
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    height: 2.933333rem;
+    width: 100%;
+    z-index: 2;
+    display: flex;
+    background-color: #fff;
+    padding: .533333rem;
+    border: 1px solid #ccc;
+
+    .item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 1.04rem;
+            height: 1.093333rem;
+        }
+
+        p {
+            font-size: .586667rem;
+            color: #666;
+            margin-top: .266667rem;
+        }
+    }
+
+}

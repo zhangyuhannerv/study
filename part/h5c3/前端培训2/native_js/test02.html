@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加节点</title>
+</head>
+<body>
+<ul>
+    <li>刘备</li>
+    <li>关羽</li>
+    <li>张飞</li>
+</ul>
+<button onclick="addNode()">点击添加项</button>
+<button onclick="addImg()">点击添加图片</button>
+<button onclick="copyNode()">点击复制节点</button>
+<script>
+    // 添加节点
+    function addNode() {
+        var li = document.createElement('li');
+        li.innerHTML = '孙尚香'
+        document.getElementsByTagName('ul')[0].appendChild(li);
+    }
+
+    function addImg() {
+        var ul = document.getElementsByTagName('ul')[0];
+        var img = document.createElement('img');
+        img.setAttribute('src', 'img/logo.png')
+
+        // body元素可以直接获取
+        // 在ul前面添加图片
+        // document.body.insertBefore(img, ul)
+
+        // 第二种添加方式
+        // 在ul前面添加图片
+        ul.before(img);
+
+        // 在ul后面添加图片
+        ul.after(img)
+    }
+
+    // 复制节点
+    function copyNode() {
+        // 获取ul中的最后一项
+        var ul = document.getElementsByTagName('ul')[0];
+        // var oldLi = ul.lastChild;
+
+        // 参数为true或者false
+        // 默认为false
+        // true会复制当前节点及其子节点
+        // false只会复制当前节点
+        var newUl = ul.cloneNode(true);
+        document.body.appendChild(newUl)
+    }
+
+    window.onload = function () {
+
+    }
+</script>
+</body>
+</html>

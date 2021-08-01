@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .w {
+            width: 800px;
+            height: 1400px;
+            background-color: pink;
+            margin: 0 auto;
+        }
+
+        .fixed {
+            width: 50px;
+            height: 150px;
+            background-color: skyblue;
+
+            position: fixed;
+            /* 第一步:走浏览器宽度的一半 */
+            left: 50%;
+            /* 第二步:走版心盒子宽度的一半 (800/2=400)*/
+            margin-left: 405px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fixed"></div>
+    <div class="w">
+        版心盒子 800像素
+    </div>
+</body>
+
+</html>

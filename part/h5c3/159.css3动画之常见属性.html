@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*动画关键字*/
+        @keyframes move {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(1000px, 0);
+            }
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+            /*动画名称*/
+            animation-name: move;
+
+            /*持续时间,默认是0，单位可以是s或者ms*/
+            animation-duration: 2s;
+
+            /*动画的运动曲线，默认为ease*/
+            /*linear:匀速*/
+            /*ease:低速开始，加快，结束前变慢*/
+            /*ease-in:低速开始*/
+            /*ease-out:低速结束*/
+            /*ease-in-out:低速开始和结束*/
+            /*steps():指定了时间函数中间隔的数量*/
+            animation-timing-function: ease-in-out;
+
+            /*动画的开始时间延迟，默认为0s*/
+            animation-delay: 1s;
+
+            /*动画被播放的次数默认是1，写2就重复两次，设置为infinite可无限循环*/
+            animation-iteration-count: infinite;
+
+            /*动画播放的方向,默认为normal,reverse:动画反向播放,
+            alternate:动画一来一回的播放*/
+            animation-direction: alternate;
+
+            /*规定动画播放完之后停留的位置*/
+            /*动画停在结束位置:forwards，动画回到开始位置:backwards(默认)*/
+            /*该属性和(循环,往复)属性冲突*/
+            /*animation-fill-mode: forwards;*/
+
+            /*animation-play-state:轨动动画运行或暂停，默认是running,可选:pause*/
+            /*常和:hover连用，详见下面*/
+        }
+
+        div:hover {
+            /*鼠标经过，停止动画，鼠标离开，动画继续播放*/
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

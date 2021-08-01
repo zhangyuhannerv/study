@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后代选择器</title>
+    <style>
+        /* 后代选择器可以是儿子，也可以是孙子 ，只要是后代，都会被选出来*/
+        /* 最终改变的是li的样式，对ol的样式没有影响 */
+        /* 把ol里面的li选出来改为pink色 */
+        ol li {
+            color: pink;
+        }
+
+        /* ol里面所有的a */
+        /* ol a {
+            color: red;
+        } */
+
+        /* ol里面的li里面的a */
+        ol li a {
+            color: red;
+        }
+
+        /* 后代选择器中选择器的组合可以是任意的基础选择器，不局限于标签或其他基础选择器 */
+        .nav li a {
+            color: yellow
+        }
+    </style>
+</head>
+
+<body>
+    <ol>
+        变态写法
+        <li>我是ol的孩子</li>
+        <li>我是ol的孩子</li>
+        <li>我是ol的孩子</li>
+        <li><a href="#">我是孙子</a></li>
+        <a href="#">我是儿子</a>
+    </ol>
+    <ul>
+        <li>我是ul的孩子</li>
+        <li>我是ul的孩子</li>
+        <li>我是ul的孩子</li>
+        <li><a href="#">不会变化的</a></li>
+    </ul>
+    <ul class="nav">
+        <li>我是ul的孩子</li>
+        <li>我是ul的孩子</li>
+        <li>我是ul的孩子</li>
+        <li><a href="#">不会变化的</a></li>
+        <li><a href="#">不会变化的</a></li>
+        <li><a href="#">不会变化的</a></li>
+        <li><a href="#">不会变化的</a></li>
+    </ul>
+</body>
+
+</html>

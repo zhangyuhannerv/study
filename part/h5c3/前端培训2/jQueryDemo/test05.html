@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="dc">
+    这是第二个div
+    <p>第二个div中的段落</p>
+    <div>
+        <p>深层段落</p>
+    </div>
+</div>
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        // .dc>p
+        $(".dc").children('p').css({
+            'font-size': '36px',
+            'color': 'red',
+        })
+
+        // .dc p
+        $(".dc").find('p').css({
+            'background-color': 'yellow'
+        })
+    })
+</script>
+</body>
+</html>

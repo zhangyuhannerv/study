@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 500px;
+            height: 500px;
+            border: 2px solid red;
+            background: url(所有素材/html_css_material/移动端流失布局资料/images/dog.jpg) no-repeat;
+
+            /*background-size: 图片的宽度 图片的高度;*/
+            /*background-size: 500px 200px;*/
+
+            /*如果只写一个参数，那么该参数代表宽度，而高度被省略了，此时会等比例缩放*/
+            /*background-size: 500px;*/
+
+            /*里面的单位可以跟百分比，相对于设置背景的盒子的宽度来说的*/
+            /*background-size: 50%;*/
+
+            /*cover属性：背景图片扩展至足够大，使背景图片完全覆盖背景区域*/
+            /* cover要完全覆盖div盒子（保持图片原比例，扩大到覆盖盒子的宽度和高度的较大值），可能会有部分背景图片显示不全 */
+            /* background-size: cover; */
+
+            /* contain属性 */
+            /* cover要完全覆盖div盒子（保持图片原比例，扩大到覆盖盒子的宽度和高度中的较小值），图片一定会显示完整，但是可能会有部分空白区域 */
+            background-size: contain;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+
+    </div>
+</body>
+
+</html>

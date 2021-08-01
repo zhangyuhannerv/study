@@ -1,0 +1,184 @@
+        html,
+        body,
+        div,
+        ul,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        table,
+        p,
+        span,
+        img,
+        a,
+        label,
+        i {
+            margin: 0;
+            padding: 0;
+        }
+
+        @media screen and (max-width:1366px) {
+            html {
+                font-size: 6px;
+            }
+        }
+
+        @media screen and (min-width:1367px) and (max-width:1920px) {
+            html {
+                font-size: 10px;
+            }
+        }
+
+        @media screen and (min-width:1921px) and (max-width:2560px) {
+            html {
+                font-size: 14px;
+            }
+        }
+
+        li {
+            list-style: none;
+        }
+
+        body {
+            height: 100vh;
+        }
+
+        #d1 {
+            height: 10rem;
+            background-color: #ffffff;
+        }
+
+        #d2 {
+            height: calc(100% - 10rem);
+        }
+
+        .content {
+            font-size: 2rem;
+        }
+
+        .img,
+        .menu {
+            float: left;
+            width: 10rem;
+            height: 100%;
+        }
+
+        .nav,
+        .content {
+            float: left;
+            width: calc(100% - 10rem);
+            height: 100%;
+        }
+
+        .img img {
+            width: 10rem;
+            height: 10rem;
+        }
+
+        .menu {
+            background-color: #2c3e50;
+            color: #ffffff;
+        }
+
+        .content {
+            background-color: #eaedf1;
+        }
+
+        .nav {
+            position: relative;
+        }
+
+        .nav h3 {
+            float: left;
+            margin-left: 3rem;
+            font-weight: 400;
+            font-size: 3rem;
+            line-height: 10rem;
+        }
+
+        .nav .operation {
+            float: right;
+            margin-right: 6rem;
+            height: 10rem;
+            position: relative;
+        }
+
+
+        .nav .operation img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            width: 2rem;
+        }
+
+        .operation p {
+            display: inline-block;
+            margin: 0 3rem;
+            line-height: 10rem;
+            font-size: 2rem;
+        }
+
+        .nav .logout {
+            width: 2rem;
+            margin-right: 2rem;
+            position: absolute;
+            right: 2rem;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        .menu img {
+            display: block;
+            margin: 0 auto;
+            width: 2rem;
+        }
+
+
+        .option1 {
+            height: 4rem;
+            position: relative;
+            width: 100%;
+            font-size: 2rem;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .option1:hover {
+            background-color: #55607f;
+        }
+
+        .option1:hover .option2 {
+            display: block;
+            box-shadow: 0 0 20px -4px rgba(0, 0, 0, .3);
+        }
+
+        .option2 {
+            display: none;
+            background-color: #ffffff;
+            position: absolute;
+            left: 10rem;
+            top: 0;
+        }
+
+
+        .opt_child {
+            width: 20rem;
+            height: 4rem;
+            line-height: 4rem;
+            padding: 1rem;
+        }
+
+        .opt_child div {
+            height: 4rem;
+            border-radius: 2rem;
+            color: #000000;
+        }
+
+        .opt_child div:hover {
+            color: #ffffff;
+            background-color: #23abf3;
+        }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            /* 浮动元素只会压住它下面标准流的盒子，但是不会压住下面标准流盒子里面的文字 */
+            /* 之所有会有这种现象，是因为浮动产生的目的就是做文字环绕效果的 */
+            /* float: left; */
+            /* 绝对定位（固定定位）会压住下面标准流里面的所有内容 */
+            position: absolute;
+
+            width: 150px;
+            height: 150px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+    <p>阁下何不乘风起，扶摇直上九万里</p>
+</body>
+
+</html>

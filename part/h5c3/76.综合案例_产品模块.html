@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .box {
+            width: 298px;
+            height: 415px;
+            background-color: #fff;
+            /* 让块级的盒子水平居中对齐 */
+            margin: 100px auto;
+        }
+
+        .box img {
+            /* 把子元素的宽度改为100%就是和父盒子一样宽 */
+            width: 100%;
+        }
+
+        .box p {
+            font-size: 14px;
+            height: 70px;
+            /* 因为这个段落没有width属性，所以padding不会撑开盒子的宽度 */
+            padding: 0 28px;
+            /* 这里之所以用margin而不用padding的原因是，该盒子有height属性，如果用padding-top会撑高盒子 */
+            /* 如果用margin-top则不会撑开盒子 */
+            margin-top: 30px;
+        }
+
+        .appraise {
+            font-size: 12px;
+            color: #b0b0b0;
+            margin-top: 20px;
+            padding: 0 28px;
+        }
+
+        .info {
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 0 28px;
+        }
+
+        .info h4 {
+            display: inline-block;
+            /* 取消标题的文字加粗样式 */
+            font-weight: 400;
+        }
+
+        .info span {
+            color: #ff6700;
+        }
+
+        /* 竖线的细节制作 */
+        .info em {
+            font-style: normal;
+            color: #ebe430;
+            margin: 0 6px 0 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <a href="#"><img src="img/超大背景图片.webp" alt=""></a>
+        <p class="review">
+            <a href="#">快递牛，整体不错，蓝牙秒连，红米给力</a>
+        </p>
+        <div class="appraise">来自于17218514113的评价</div>
+        <div class="info">
+            <h4><a href="#">真无线蓝牙耳机...</a></h4>
+            <em>|</em>
+            <span>99.9元</span>
+        </div>
+    </div>
+</body>
+
+</html>

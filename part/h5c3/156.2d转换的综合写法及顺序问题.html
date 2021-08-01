@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            transition: .5s;
+        }
+
+        div:hover {
+            transform: translate(150px, 50px) rotate(180deg) scale(1.5);
+            /*注意这里有顺序问题*/
+            /*下面的写法和上面的效果不一样，因为有代码的执行顺序问题*/
+            /*所以注意：同时有位移和其他属性时，先将位移放到最前面,像上面的写法*/
+            /*transform: rotate(180deg) translate(150px, 50px) scale(1.5);*/
+        }
+    </style>
+</head>
+<body>
+<div>
+
+</div>
+</body>
+</html>

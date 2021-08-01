@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            position: relative;
+            height: 500px;
+            width: 500px;
+            background-color: pink;
+            /*1.我们translate里面的参数是可以用%的*/
+            /*2.如果里面的参数是%，那么他移动的距离是以盒子自身的宽度或高度来对比的*/
+            /*3.这里的50%就是50px，因为盒子自身的宽度就是100px*/
+            /*transform: translateX(50%);*/
+        }
+
+        p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+
+            /*以前的写法*/
+            /* margin-top: -100px;
+             margin-left: -100px;*/
+
+            /*现在的写法*/
+            /*盒子往上走自己宽度的一半，自己高度的一半，注意要去掉盒子的外边距*/
+            margin: 0;
+            transform: translate(-50%, -50%);
+
+            width: 200px;
+            height: 200px;
+            background-color: purple;
+        }
+
+        span {
+            /*注意，translate对于行内元素是无效的*/
+            transform: translate(300px, 300px);
+        }
+    </style>
+</head>
+<body>
+<div>
+    <p></p>
+</div>
+<span>
+    123
+</span>
+</body>
+</html>

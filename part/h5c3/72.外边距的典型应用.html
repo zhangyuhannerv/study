@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 块级盒子水平居中的前提条件: */
+        /* 必须手动指定宽度(使用默认的父盒子宽度（即：不写宽度）是不行的) */
+        /* 把左右的外边距设置auto */
+        .header {
+            width: 900px;
+            height: 200px;
+            background-color: pink;
+            /* margin-left: auto; */
+            /* margin-right: auto; */
+            margin: 100px auto;
+
+
+            /* ----------------- */
+            text-align: center;
+        }
+
+        /* 行内元素或者行内块元素水平居中的条件： */
+        /* 给它的父元素添加：text_align:center */
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <!-- 行内元素 -->
+        <span>行内元素</span>
+    </div>
+
+    <div class="header">
+        <!-- 行内块元素 -->
+        <img src="img/示例图片.png">
+    </div>
+</body>
+
+</html>

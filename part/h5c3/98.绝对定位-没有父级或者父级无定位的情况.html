@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* absolute:重要 */
+        /* 特点： */
+        /* 1.如果没有祖先元素，或者祖先元素没有定位，则以浏览器文档（document)为准,进行位移*/
+
+        .aa {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+
+        .son1 {
+            position: absolute;
+            /* 只要是定位，如果不加边偏移，那么盒子就不会动 */
+            top: 50px;
+            /* left: 50px; */
+            right: 200px;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        .father {
+            width: 500px;
+            height: 500px;
+            background-color: skyblue;
+        }
+
+        .son2 {
+            position: absolute;
+            bottom: 50px;
+            right: 50px;
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="son1"></div>
+    <div class="father">
+        <div class="son2"></div>
+    </div>
+    <div class="aa"></div>
+</body>
+
+</html>

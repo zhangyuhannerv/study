@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>块级元素</title>
+    <style>
+        div {
+            /* width: 200px; */
+            height: 200px;
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- h,p,div,ul,ol,li等。。。 -->
+    <!-- 块级元素的特点：
+    1.比较霸道，自己独占一行 
+    2.宽度，高度，内，外边距都可以控制
+    3.宽度默认是容器（父级元素）的100%，如果里面没有任何内容，那么高度默认是0
+    4.是一个容器及盒子，里面可以放行内或者块级元素-->
+
+
+    <div>1</div>2
+
+    <!-- 注意：1.文字类的元素内不能使用块级元素，如:p,h1-h6等 -->
+    <p>
+        <div>这里有问题，用f12检查元素一看便知</div>
+    </p>
+</body>
+
+</html>

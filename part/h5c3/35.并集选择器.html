@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* ,代表和，这是并集选择器的写法，让，连接的元素使用统一的样式 */
+        /* div,
+        p {
+            color: red;
+        } */
+
+        div,
+        p,
+        .pig li {
+            color: pink;
+        }
+
+        /* 约定的语法规范，并集选择器习惯竖着写 */
+        /* 一定要注意：最后一个选择器后面不需要加"," */
+    </style>
+</head>
+
+<body>
+    <div>熊大</div>
+    <p>熊二</p>
+    <span>光头强</span>
+    <ul class="pig">
+        <li>小猪佩奇</li>
+        <li>猪爸爸</li>
+        <li>猪妈妈</li>
+    </ul>
+</body>
+
+</html>

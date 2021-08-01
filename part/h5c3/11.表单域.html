@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 表单域就是form标签 -->
+    <form action="demo.php" method="post" name="name1">
+        <!--表单控件： input：select,textarea -->
+        <!-- text是文本框，用户可以在里面输入任何文字 -->
+        <!-- maxlength规定输入字段中字符的最大长度,一般较少使用，一般都用js中的正则表达式来校验输入字符的数量-->
+        用户名：<input type="text" name="username" value="请输入用户名111111" maxlength="6"><br>
+        <!-- password是密码框，用户看不见输入的密码-->
+        密码：<input type="password" name="password" value="请输入密码"><br>
+        <!--radio是单选按钮，可以实现单选  -->
+        <!-- name是表单元素的名字，这里性别单选按钮必须有相同的名字name，才可以实现多选一的功能 -->
+        <!-- 单选按钮和复选框可以设置checked属性，当页面打开的时候就可以默认选中这个按钮 -->
+        性别：<label for="man">男</label><input type="radio" name="sex" value="男" id='man'> <label
+            for="woman">女</label><input type="radio" name='sex' value="女" checked='checked' id='woman'>
+        <label for="renyao">人妖</label><input type="radio" name='sex' value="人妖" id='renyao'> <br>
+        <!-- checkbox是多选按钮（复选框），可以实现多选，不一定要写多个，写一个也可以 -->
+        <!--注意：复选按钮同样要求有相同的name值-->
+        <!-- 两种默认选中的方式对于单选钮和复选框来说都可以 -->
+        爱好：吃饭<input type="checkbox" name='hobby' value="eat"> 睡觉<input type="checkbox" name='hobby' value="sleep"
+            checked>
+        打豆豆<input type="checkbox" name="hobby" value="play" checked='checked'><br>
+        <!-- 点击了提交按钮，可以把表单域form里面的表单元素里面的值提交给服务器 -->
+        <input type="submit" value="免费注册">
+        <!-- 重置按钮可以还原为表单元素初始的默认状态 -->
+        <input type="reset" value="重新填写">
+        <!-- 普通按钮 button，后期结合js搭配使用 -->
+        <input type="button" value="获取短信验证码"><br>
+        <!-- 上传头像，type=file，文件域，上传文件使用的-->
+        上传头像：<input type="file"><br>
+        <!-- label标签不是表单元素，但是经常和表单元素放在一起使用，用来增加用户体验 -->
+        <label for="text">点击此处，光标定位或选择对应的表单元素</label><input type="text" id='text'><br>
+        <!-- 下拉框 select标签中至少包含一对option,用selected来默认选中-->
+        籍贯：
+        <select>
+            <option>山东</option>
+            <option>北京</option>
+            <option>天津</option>
+            <option selected='selected'>火星</option>
+        </select><br>
+        <!-- 文本域 -->
+        <!-- 注意：实际开发中，并不会用到textarea的cols属性和rows属性，都是用css来控制的，完全可以忘掉这两个属性 -->
+        今日反馈
+        <textarea name="" id="" cols="50" rows="5">文本域是双标签，默认显示的文字写在双标签的里面，而不是value值，这点要注意
+        </textarea>
+    </form>
+</body>
+
+</html>

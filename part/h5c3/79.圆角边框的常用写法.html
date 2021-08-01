@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 圆形 */
+        div {
+            /* 正方形盒子 */
+            height: 200px;
+            width: 200px;
+            background-color: pink;
+            /* 做圆，为宽或高的一半 */
+            /* border-radius: 100px; */
+            /* 更好的写法:50%，就是宽度或高度的一半 */
+            border-radius: 50%;
+        }
+
+        /* 圆角矩形 */
+        .yuanju {
+            width: 300px;
+            height: 100px;
+
+            background-color: pink;
+            /* 圆角设置为高度的一半 */
+            border-radius: 50px;
+        }
+
+        .sijiao {
+            width: 300px;
+            height: 100px;
+
+            background-color: pink;
+
+            /* 分别代表左上角，右上角，右下角，左下角。顺时针 */
+            border-radius: 10px 20px 30px 40px;
+            /* 两个值，左上和右下；右上和左下 */
+            /* 三个值各代表什么，自己百度 */
+            /* 四个角分别单独设置也可以，自己百度 */
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 做圆 -->
+    <div></div>
+
+    <!-- 圆角矩形 -->
+    <div class="yuanju"></div>
+
+    <!-- 四角分别设置 -->
+    <div class="sijiao"></div>
+</body>
+
+</html>

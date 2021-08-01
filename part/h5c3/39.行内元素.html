@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        span {
+            width: 100px;
+            height: 100px;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 常见的元素：a,strong,b,em,i,del,s,ins,u,span等 -->
+    <!-- 行内元素的特点：
+    1.相邻行内元素在一行上，一行可以显示多个
+    2.高，宽直接设置是无效的
+    3.默认宽度就是它本身内容的宽度,如果没内容，那么默认高度就是0
+    4.行内元素只能容纳文本或者其他行内元素 ，不能放其他的块级元素，如span里面不能放div-->
+
+
+
+    <span>张111111</span>
+    <strong>品如的衣服</strong>
+    <span>张</span>
+    <strong>品如的衣服</strong>
+
+    <!-- 行内元素的注意事项：
+    1.a链接里面不能再放a链接  
+    2.特殊情况下，a标签里面可以放块级元素，但是要给a转换一下块级模式才最安全-->
+
+    <a href="http://www.baidu.com">
+        <a href="http://www.taobao.com"></a>
+    </a>
+</body>
+
+</html>

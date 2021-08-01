@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <h2>当前计数{{counter}}</h2>
+    <!--    <button v-on:click="counter++">+</button>-->
+    <!--    <button v-on:click="counter&#45;&#45;">-</button>-->
+    <button @click="add">+</button>
+    <button @click="sub">-</button>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+    // proxy
+    const app = new Vue({
+        el: '#app',
+        data: {
+            counter: 0,
+        },
+        methods: {
+            // 加的函数
+            add() {
+                console.log('add被执行');
+                this.counter++;
+            },
+
+            // 减的函数
+            sub() {
+                console.log('sub被执行');
+                this.counter--;
+            }
+        }
+
+        // 原先：
+        // 1.拿button元素
+        // 2.添加监听事件
+    })
+</script>
+</body>
+</html>

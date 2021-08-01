@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>固定定位:fixed</title>
+    <style>
+        body {
+            height: 3000px;
+        }
+
+        /* 注意事项 */
+        /* 1.以浏览器的可视窗口为参照点进行元素的移动 */
+        /* 2.和父元素及祖先元素没有任何关系 */
+        /* 3.不随滚动条的滚动而滚动 */
+        /* 4.脱标，不再占有原先的位置 */
+        .dj {
+            position: fixed;
+            top: 100px;
+            right: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dj">
+        <img src="img/dj.png" alt="">
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        div {
+            width: 100px;
+            height: 100px;
+            margin: 100px auto 0;
+            background-color: pink;
+            /*一般父亲的perspective固定不动，给各个儿子加不同的z值，从而使用复数的儿子实现组合3d效果*/
+            transform: translateZ(0);
+        }
+    </style>
+</head>
+<body>
+
+<div></div>
+
+</body>
+</html>

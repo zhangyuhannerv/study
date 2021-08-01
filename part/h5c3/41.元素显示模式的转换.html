@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a {
+            width: 150px;
+            height: 50px;
+            background-color: blue;
+            /* 把行内元素a转换为块级元素 */
+            display: block;
+        }
+
+        div {
+            width: 300px;
+            height: 100px;
+            background-color: purple;
+            /* 把块级元素转换为行内元素,转换之后上面的宽度和高度设置是无效的 */
+            display: inline;
+        }
+
+        span {
+            width: 300px;
+            height: 100px;
+            background-color: #5ea2f7;
+            /* 把元素转为行内块元素，一行可以显示多个，并且可以设置宽度，高度以及内外边距 */
+            display: inline-block;
+        }
+    </style>
+</head>
+
+
+<body>
+    <a href="#">金星阿姨</a>
+    <a href="#">哈哈</a>
+
+    <div>我是块级元素1</div>
+    <div>我是块级元素2</div>
+
+    <span>我是行内元素转换为行内块元素1</span>
+    <span>我是行内元素转换为行内块元素2</span>
+</body>
+
+</html>

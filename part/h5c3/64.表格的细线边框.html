@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,
+        td,
+        th {
+            /* 设置表格，每个单元格和表头的边框样式 */
+            border: 1px solid pink;
+
+            /* 合并td相邻的边框，放止相邻边框叠加变粗 */
+            border-collapse: collapse;
+
+            font-size: 14px;
+            text-align: center;
+        }
+
+
+        th {
+            /* 单独让表头单元格的高度高一些 */
+            height: 35px;
+        }
+
+        table {
+            width: 500px;
+            height: 249px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>排名</th>
+                <th>关键词</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>11</td>
+                <td>22</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

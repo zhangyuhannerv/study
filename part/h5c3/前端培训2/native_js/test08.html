@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+</head>
+<body>
+用户名：<input type="text" name="uname" onkeypress="getName()" onfocus="setRed()" onblur="setBlue()">
+<script>
+    function getName() {
+        var uname = document.getElementsByName('uname')[0];
+        // enter的键码是13
+        if (event.keyCode == 13) {
+            alert(uname.value);
+        }
+    }
+
+    function setRed() {
+        var uname = document.getElementsByName('uname')[0];
+        uname.style.backgroundColor = 'red';
+    }
+
+    function setBlue() {
+        var uname = document.getElementsByName('uname')[0];
+        uname.style.backgroundColor = 'blue';
+    }
+</script>
+</body>
+</html>

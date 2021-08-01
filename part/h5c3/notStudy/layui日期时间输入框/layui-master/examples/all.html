@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>完整库使用 - layui</title>
+
+<link rel="stylesheet" href="../src/css/layui.css">
+
+<style>
+body{padding: 10px;}
+</style>
+</head>
+<body>
+
+<div id="demo1"></div>
+<button class="layui-btn demo" data-type="test">测试弹出式Form</button>
+
+<div class="layui-tab" lay-filter="tabDemo">
+  <ul class="layui-tab-title">
+    <li class="layui-this" lay-id="1">标题1</li>
+    <li lay-id="2">标题2</li>
+    <li lay-id="3">标题3</li>
+    <li lay-id="4">标题4</li>
+    <li lay-id="5">标题5</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+      内容1
+    </div>
+    <div class="layui-tab-item">
+      <div id="test2" class="demo-transfer"></div>
+    </div>
+    <div class="layui-tab-item">3</div>
+    <div class="layui-tab-item">4</div>
+    <div class="layui-tab-item">5</div>
+  </div>
+</div>
+
+
+<script src="../dist/layui.all.js"></script>
+<script>
+;!function(){
+  var $ = layui.jquery
+  ,layer = layui.layer
+  ,form = layui.form
+  ,laypage = layui.laypage
+  ,element = layui.element
+  ,transfer = layui.transfer;
+  
+  layer.ready(function(){
+    layer.msg('hello');
+  });
+  
+  laypage.render({
+    elem: 'demo1'
+    ,count: 100 //总页数
+  });
+  
+  
+  //测试加载非内置模块
+  layui.config({
+    base: 'extends/'
+  }).extend({
+    mod1: 'mod1'
+    ,mod2: 'mod2'
+  }).use('mod1');
+  
+  
+  //定义标题及数据源
+  transfer.render({
+    elem: '#test2'
+    ,title: ['候选文人', '获奖文人']  //自定义标题
+    ,data: [
+      {"value": "1", "title": "李白"}
+      ,{"value": "2", "title": "杜甫"}
+      ,{"value": "3", "title": "苏轼"}
+      ,{"value": "4", "title": "李清照"}
+      ,{"value": "5", "title": "鲁迅", "disabled": true}
+      ,{"value": "6", "title": "巴金"}
+      ,{"value": "7", "title": "冰心"}
+      ,{"value": "8", "title": "矛盾"}
+      ,{"value": "9", "title": "贤心"}
+    ]
+    //,width: 150 //定义宽度
+    ,height: 210 //定义高度
+  })
+  
+  //触发事件
+  var active = {
+    test: function(){
+      layer.open({
+        type: 1
+        ,resize: false
+        ,content: ['<ul class="layui-form" style="margin: 10px;">'
+          ,'<li class="layui-form-item">'
+            ,'<label class="layui-form-label">邮箱激活</label>'
+            ,'<div class="layui-input-block">'
+              ,'<select name="activate">'
+                ,'<option value="0">未激活</option>'
+                ,'<option value="1">已激活</option>'
+              ,'<select>'
+            ,'</div>'
+          ,'</li>'
+          ,'<li class="layui-form-item" style="text-align:center;">'
+            ,'<button type="submit" lay-submit lay-filter="*" class="layui-btn">提交</button>'
+          ,'</li>'
+        ,'</ul>'].join('')
+        ,success: function(layero){
+          layero.find('.layui-layer-content').css('overflow', 'visible');
+          
+          form.render().on('submit(*)', function(data){
+            layer.msg(JSON.stringify(data.field));
+          });
+        }
+      });
+    }
+  };
+  $('.demo').on('click', function(){
+    var type = $(this).data('type');
+    active[type] ? active[type].call(this) : '';
+  });
+}();
+</script>
+</body>
+</html>

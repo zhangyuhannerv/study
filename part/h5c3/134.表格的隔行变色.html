@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 1.even是偶数的意思，把所有的偶数的孩子选择出来 */
+        ul li:nth-child(even):hover {
+            background-color: #cccccc;
+        }
+
+        /* 2.把所有的基数的孩子选取出来 */
+        ul li:nth-child(odd) {
+            background-color: gray;
+        }
+
+        /* nth-child(n)里面的n甚至可以用公式*/
+        /* n从0开始，每次加1，往后面计算，这里面必须是n，不能是其他的字母,第0个孩子或者超出的孩子就被忽略掉 */
+        ol li:nth-child(3n+1) {
+            background-color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>我是第1个孩子</li>
+        <li>我是第2个孩子</li>
+        <li>我是第3个孩子</li>
+        <li>我是第4个孩子</li>
+        <li>我是第5个孩子</li>
+        <li>我是第6个孩子</li>
+        <li>我是第7个孩子</li>
+        <li>我是第8个孩子</li>
+    </ul>
+
+    <ol>
+        <li>我是第1个孩子</li>
+        <li>我是第2个孩子</li>
+        <li>我是第3个孩子</li>
+        <li>我是第4个孩子</li>
+        <li>我是第5个孩子</li>
+        <li>我是第6个孩子</li>
+        <li>我是第7个孩子</li>
+        <li>我是第8个孩子</li>
+    </ol>
+</body>
+
+</html>

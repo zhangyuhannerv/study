@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 大布局用百分比，小调整用媒体查询,字体控制用rem */
+        /*屏幕宽度在768px和1090px之间时*/
+        @media screen and (min-width:768px) and (max-width:1090px) {
+            html {
+                font-size: 100px;
+            }
+        }
+
+        /*屏幕宽度在1091px和1366px之间时*/
+        @media screen and (min-width:1091px) and (max-width:1366px) {
+            html {
+                font-size: 200px;
+            }
+        }
+
+        @media screen and (min-width:1600px) and (max-width:1920px) {}
+
+        @media screen and (min-width:1367px) and (max-width:1599px) {}
+
+        .top {
+            height: 1rem;
+            font-size: 0.5rem;
+            background-color: green;
+            text-align: center;
+            line-height: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">培训学校</div>
+</body>
+
+</html>

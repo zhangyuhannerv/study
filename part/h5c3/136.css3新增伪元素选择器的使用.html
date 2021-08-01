@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 利用css创建新的标签元素，从而简化html结构 */
+        /* before和after创建一个元素是属于行内元素 */
+        /* 新创建的元素在文档中找不到，所以我们称之为伪元素 */
+        /* 语法：element::before/after */
+        /* before和after必须具有content属性 */
+        /* before是在父元素内容的前面创建元素，after是在父元素内容的后面插入元素 */
+        /* 伪元素选择器和标签选择器一样，权重为1 */
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        /*div::before下面的权重是2*/
+        div::before {
+            /* 这个content是必须要写的 */
+            display: inline-block;
+            content: '我';
+            width: 30px;
+            height: 40px;
+            background-color: purple;
+        }
+
+        div::after {
+            content: '小猪佩奇';
+        }
+    </style>
+</head>
+
+<body>
+    <div>是</div>
+</body>
+
+</html>

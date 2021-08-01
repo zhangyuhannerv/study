@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /*注意：perspective（透视）写在被观察元素的父盒子上面*/
+        /*d是视距，指人眼到屏幕的距离，近大远小*/
+        body {
+            perspective: 200px;
+        }
+
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /*z是物体离屏幕的距离，z越大，看到的物体越大*/
+            transform: translate3d(1500px, 100px, 100px);
+
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

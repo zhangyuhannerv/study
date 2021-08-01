@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        section {
+            display: flex;
+            width: 60%;
+            height: 150px;
+            background-color: pink;
+            margin: 0 auto;
+        }
+
+        section div:nth-child(1) {
+            width: 100px;
+            /* flex: 1; */
+            height: 150px;
+            background-color: red;
+        }
+
+        section div:nth-child(2) {
+            flex: 1;
+            /* flex:0.5; */
+            /* 里面的子盒子可以写百分比，是相对于父级来说的 */
+            /* flex: 20%; */
+            background-color: green;
+        }
+
+        section div:nth-child(3) {
+            width: 100px;
+            height: 150px;
+            background-color: blue;
+        }
+
+        p {
+            display: flex;
+            width: 60%;
+            height: 150px;
+            background-color: pink;
+            margin: 100px auto;
+        }
+
+        p span {
+            /* 因为span没有宽度，站在父亲的角度来说，它的剩余空间就是100% */
+            flex: 1;
+        }
+
+        p span:nth-child(2) {
+            /* 一定要注意，子元素的flex是从剩余空间里面去分配宽度，如果子元素有宽度的情况下要注意 */
+            flex: 2;
+            background-color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+    <p>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </p>
+</body>
+
+</html>

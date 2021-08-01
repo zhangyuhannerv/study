@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            color: red;
+            font-size: 12px;
+        }
+
+        div {
+            color: pink
+        }
+
+        /* 相同的选择器，相同的样式，样式如果冲突，执行就近原则：哪个样式离结构近，就执行哪个样式 */
+        /* 例如：上面第二个样式离div近，所以div里面文字的颜色会是粉色 */
+        /* 层叠可以理解为覆盖 */
+        /* 如果样式不冲突，就不会覆盖，例如：上面第一个样式里面的文字大小任然可以正常执行 */
+    </style>
+</head>
+
+<body>
+    <div>长江后浪推前浪，前浪死在沙滩上</div>
+</body>
+
+</html>

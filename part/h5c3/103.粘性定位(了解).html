@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 粘性定位的特点 */
+        /* 1.以浏览器的可视窗口为参照点移动元素（fixed特点) */
+        /* 2.粘性定位占有原先的位置（相对定位) */
+        /* 3.必须添加上下左右其中的一个边偏移才有效(top bottom left right) */
+        body {
+            height: 3000px;
+        }
+
+        .nav {
+            /* 粘性定位 */
+            position: sticky;
+            /* 边偏移 */
+            top: 0;
+
+            width: 800px;
+            height: 50px;
+            background-color: pink;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav">我是导航栏</div>
+</body>
+
+</html>

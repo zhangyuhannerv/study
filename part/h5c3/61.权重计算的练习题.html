@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .nav {
+            color: red;
+        }
+
+        li {
+            color: pink;
+        } */
+
+        /* 最终li里面的文字颜色是粉色 */
+        /* 别忘了继承的权重是0 */
+
+        /* ------------------------------- */
+
+        /* 权重是0，0，1，1 */
+        .nav li {
+            color: red;
+        }
+
+        /* 权重是0，0，1，0 */
+        .pink {
+            color: pink;
+            font-weight: 700;
+        }
+
+        /* 最终的结果：第一个li的颜色还是红色了，但是文字是加粗了的（层叠性） */
+
+        /* ---------------------------------- */
+
+        /* 要实现把第一个li文字变粗，颜色变为粉色，要像下面这样写,尽量提高它的权重，至少要比原先的权重高*/
+        .nav .pink {
+            color: pink;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="nav">
+        <li class='pink'>人生四大悲</li>
+        <li>家里没宽带</li>
+        <li>网速不够快</li>
+        <li>手机没流量</li>
+        <li>学校没wifi</li>
+    </ul>
+</body>
+
+</html>

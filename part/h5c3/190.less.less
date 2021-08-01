@@ -1,0 +1,41 @@
+// .less即为less文件，在这个文件里面写less语句
+// less变量
+// less编译
+// less嵌套
+// less运算
+
+// 语法：
+// @变量名:值;
+
+// 变量名的命名规范：
+// 必须以@为前缀
+// 不能包含特殊字符
+// 不能以数字为开头
+// 大小写是敏感的
+
+// 错误的变量名：
+// @1color
+// @color~#
+// @Color和@color是两个不同的变量
+
+// 例子：定义一个粉色的变量
+@color: yellow;
+@color1: red;
+// 例子：定义了一个字体为14px的变量
+@font14: 14px;
+
+
+body {
+    background-color: @color;
+}
+
+div {
+    color: @color1;
+    font-size: @font14;
+}
+
+a {
+    font-size: @font14;
+}
+
+// less文件的编译：通过easy less插件，ctrl+s保存后自动生成对应的css文件

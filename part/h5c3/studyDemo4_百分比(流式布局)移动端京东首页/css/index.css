@@ -1,0 +1,255 @@
+body {
+    width: 100%;
+    min-width: 320px;
+    max-width: 640px;
+    margin: 0 auto;
+
+    /* 常用的其他初始化样式 */
+    font-size: 14px;
+    font-family: -apple-system, Helvetica, sans-serif;
+    color: #666;
+    line-height: 1.5;
+
+}
+
+/* 移动端的特殊样式 */
+* {
+    /* css3盒子模型 */
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /* 去掉用手指点击的背景颜色变成高亮的效果,其他元素也通用 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+input {
+    /* 去掉input在移动端默认的亮光样式，而且input和button加上这个属性才能写我们的自定义样式*/
+    -webkit-appearance: none;
+}
+
+/* 禁用长按某种元素时弹出菜单 */
+img,
+a {
+    -webkit-touch-callout: none;
+}
+
+
+/* 清除浮动 */
+.clearfix:after {
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+.clearfix {
+    /* ie6,7专有 */
+    *zoom: 1;
+}
+
+
+img {
+    /* 去除图片的空白缝隙，中线对齐。写top(顶部对齐)也可以 */
+    vertical-align: middle;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+/* 顶部 */
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app {
+    height: 45px;
+}
+
+.app ul li {
+    float: left;
+    height: 45px;
+    line-height: 45px;
+    background-color: #333;
+    text-align: center;
+    color: #fff;
+}
+
+.app ul li:nth-child(1) {
+    width: 8%;
+}
+
+.app ul li:nth-child(1) img {
+    width: 10px;
+}
+
+.app ul li:nth-child(2) {
+    width: 10%;
+}
+
+.app ul li:nth-child(2) img {
+    width: 30px;
+    vertical-align: middle;
+}
+
+.app ul li:nth-child(3) {
+    width: 57%;
+}
+
+.app ul li:nth-child(4) {
+    width: 25%;
+    background-color: #f63515;
+}
+
+/* 搜索 */
+.search-wrap {
+    position: fixed;
+    overflow: hidden;
+    height: 44px;
+    min-width: 320px;
+    max-width: 640px;
+    /* 注意：加了固定定位的盒子一定要写宽度 */
+    width: 100%;
+}
+
+.search-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 44px;
+}
+
+.search-btn::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 18px;
+    background: url(../images/s-btn.png) no-repeat;
+    background-size: 20px 18px;
+    margin: 14px 0 0 15px;
+}
+
+.search_login {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 44px;
+    color: #fff;
+    line-height: 44px;
+}
+
+.search {
+    position: relative;
+    height: 30px;
+    background-color: #fff;
+    /* 会出现外边距合并，需要给父级添加overflow:hidden */
+    margin: 7px 50px 0;
+    border-radius: 15px;
+}
+
+.jd-icon {
+    width: 20px;
+    height: 15px;
+    position: absolute;
+    top: 8px;
+    left: 13px;
+    background: url(../images/jd.png) no-repeat;
+    background-size: 20px 15px;
+}
+
+.jd-icon::after {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 0;
+    display: block;
+    width: 1px;
+    height: 15px;
+    background-color: #ccc;
+}
+
+.sou {
+    width: 18px;
+    height: 15px;
+    position: absolute;
+    top: 8px;
+    left: 50px;
+
+    /* 总结：二倍精灵图的做法 */
+    /* 1.在firework里把精灵图等比例缩放为原来的一半 */
+    /* 2.之后根据大小测量坐标 */
+    /* 3.在代码里写入background-size:精灵图原来宽度的一半 */
+
+    background: url(../images/jd-sprites.png) no-repeat -81px 0;
+    background-size: 200px;
+}
+
+.slider img {
+    width: 100%;
+}
+
+/* 品牌日 */
+.brand {
+    /* 加overflow:hidden是为了切掉图片，否则图片会盖住盒子的圆角 */
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.brand div {
+    float: left;
+    width: 33.33%;
+}
+
+.brand div img {
+    width: 100%;
+}
+
+/* nav */
+nav {
+    padding-top: 5px;
+}
+
+nav a {
+    float: left;
+    width: 20%;
+    text-align: center;
+}
+
+nav a img {
+    width: 40px;
+    margin: 10px 0;
+}
+
+nav a span {
+    display: block;
+}
+
+/* news */
+
+.news {
+    margin-top: 20px;
+}
+
+.news a {
+    float: left;
+    box-sizing: border-box;
+}
+
+.news img {
+    width: 100%;
+}
+
+.news a:nth-child(1) {
+    width: 50%;
+}
+
+/* n+2就是从第二个往后面选 */
+.news a:nth-child(n+2) {
+    width: 25%;
+    border-left: 1px solid #ccc;
+}

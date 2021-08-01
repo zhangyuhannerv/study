@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../iframe跨域调用互相的方法/jquery-3.1.1.min.js"></script>
+    <script>
+        function demo() {
+            var testLength = document.getElementById('test').value.length
+            $("#test").css('width', testLength * 5 + 'px')
+        }
+    </script>
+</head>
+
+<body>
+    <input id="test" onkeypress="demo()" type="text" />
+</body>
+
+</html>

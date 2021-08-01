@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件冒泡</title>
+    <style>
+        #div1 {
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+        }
+
+        #div2 {
+            width: 100px;
+            height: 100px;
+            background-color: pink;
+        }
+
+        #div3 {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+
+    </style>
+</head>
+<body>
+<div id="div1" onclick="getDiv1()">
+    <div id="div2" onclick="getDiv2()">
+        <div id="div3" onclick="getDiv3()">
+            <button onclick="getBtn()">按钮</button>
+        </div>
+    </div>
+</div>
+<script>
+    function getDiv1() {
+        console.log('div1')
+    }
+
+    function getDiv2() {
+        console.log('div2')
+    }
+
+    function getDiv3() {
+        console.log('div3')
+    }
+
+    function getBtn(e) {
+        // 此时有个事件传递现象，传给了父级元素
+        console.log('btn')
+        stopBubble(e);
+    }
+
+    // 阻止事件冒泡
+    function stopBubble(e) {
+        if (e && e.stopPropagation) {
+            e.stopPropagation();
+        } else {
+            window.event.cancelBubble = true;
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* vertical-align只针对行内或者行内块元素有效 */
+        img {
+            /* 图片文字默认是基线对线 */
+            /* vertical-align: baseline; */
+            /* 底线对齐 */
+            /* vertical-align: bottom; */
+            /* 中线对齐,最常用 */
+            vertical-align: middle;
+            /* 顶部对齐 */
+            /* vertical-align: top; */
+        }
+
+        textarea {
+            vertical-align: middle;
+        }
+
+        div {
+            /* 加上这两行代码就会去除行内块元素的间距，这是最优解 */
+            display: table;
+            /* 调教webkit*/
+            word-spacing: -1em;
+            /*其他浏览器*/
+
+            width: 500px;
+            height: 500px;
+            background-color: pink;
+
+        }
+
+        /* 这种垂直居中会有一个小的宽度，加上上面的两行代码，就会去除这个间距*/
+        div span {
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+
+
+        /* 这种垂直居中完美贴合做边线，因为是自己控制的 */
+        /* div {
+            background: url(所有素材/html_css_material/第九天/images/ldh.jpg) no-repeat 0 center;
+            background-color: pink;
+        } */
+    </style>
+</head>
+
+<body>
+    <img src="所有素材/html_css_material/第九天/images/ldh.jpg" alt="">
+    pink老师是刘德华
+    <br><br>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    请你留言hhhj
+
+    <!-- 图片垂直居中 -->
+    <div>
+        <span></span>
+        <img src="所有素材/html_css_material/第九天/images/ldh.jpg" alt="">
+    </div>
+</body>
+
+</html>

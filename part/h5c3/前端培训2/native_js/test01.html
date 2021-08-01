@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取元素</title>
+</head>
+<body>
+<p id="pid1" name="pname" class="pClass">
+    第一个段落
+</p>
+<p id="pid2" name="pname" class="pClass">
+    第二个段落
+</p>
+<div>
+    <p class="pClass">div中的段落</p>
+</div>
+<script>
+    // 页面加载获取元素
+    window.onload = function () {
+        // 根据id获取元素
+        // console.log(document.getElementById("pid1"));
+        // 根据类名获取元素
+        // var ps = document.getElementsByClassName('pClass');
+        // for (let i = 0; i < ps.length; i++) {
+        //     console.log(ps[i].innerHTML)
+        // }
+
+        // querySelector是根据css选择器的规则获取第一个匹配到的元素
+        console.log(document.querySelector('.pClass').innerText);
+        console.log(document.querySelector('div .pClass').innerText);
+
+        // 根据css选择器的获取所有匹配的元素
+        console.log(document.querySelectorAll('.pClass').length);
+
+    }
+</script>
+</body>
+</html>

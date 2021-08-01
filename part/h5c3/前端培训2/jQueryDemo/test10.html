@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li>刘备</li>
+    <li>关语</li>
+    <li>张飞</li>
+    <li>大乔</li>
+    <li>小乔</li>
+</ul>
+
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        // 注册多个事件用bind
+        // $("ul").bind({
+        //     'mouseover'() {
+        //         $(this).css('background-color', 'red')
+        //     },
+        //
+        //     'mouseout'() {
+        //         $(this).css('background-color', 'blue')
+        //     }
+        // })
+
+        // delegate注册委托事件（适用于多个子元素,以及动态拼接的节点的点击事件)
+        // $("ul").delegate('li', {
+        //     'click': function () {
+        //         $(this).css('background-color', 'blue')
+        //     },
+        // })
+
+
+        // 强烈建议用on来绑定事件以及注册事件
+        // 给子元素绑定单个事件
+        // 不写'li',作用就是相当于'bind'
+        $("ul").on('click', 'li', function () {
+
+        })
+
+        // 给子元素绑定多个事件
+        $("ul").on({
+            // 这里放多个事件
+        }, 'li')
+
+        // jQuery的链式编程有个end(),需要自己查找文档了解一下，它能回到链式编程的最开始的对象
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <li>刘备</li>
+    <li>关语</li>
+    <li>张飞</li>
+    <li>大乔</li>
+    <li>小乔</li>
+</ul>
+<button id="btn1">添加</button>
+<button id="btn2">删除</button>
+
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        $("#btn1").click(function () {
+            // 创建节点
+            var $li = $("<li>吕布</li>");
+            // 添加ul的子节点的最后
+            // $("ul").append($li);
+
+            // $li.appendTo($("ul"))
+            // $("ul").prepend($li);
+            // $li.prependTo($("ul"));
+
+            var $img = $("<img src='../img/logo.png'>")
+            // 在外面添加
+            // $("ul").after($img);
+            $("ul").before($img);
+        })
+
+        $("#btn2").click(function () {
+            // 将内部的所有东西都清空
+            // $("ul").empty()
+
+            // 连自己也杀
+            $("ul").remove();
+        })
+    })
+</script>
+</body>
+</html>

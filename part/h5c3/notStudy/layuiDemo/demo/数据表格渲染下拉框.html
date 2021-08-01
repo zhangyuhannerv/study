@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' src='../layui/css/layui.css'>
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+    <form class='layui-form'>
+        <div>
+            <table id='table' lay-filter='table'">
+
+            </table>
+        </div>
+    </form>
+
+
+    <script src='../layui/layui.js'></script>
+    <script>
+        layui.use(['table', 'form'], function() {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jQuery;
+
+            let tempData = [
+                { id: 1, name: '张雨晗', sex: '男' },
+                { id: 2, name: '李四', sex: '女' }
+            ]
+
+            table.render({
+                elem: 'table',
+                data: tempData,
+                page: false,
+                cols: [
+                    [
+                        { field: 'id', title: 'ID', align: 'center' },
+                        { field: 'name', title: '用户名', align: 'center' },
+                        {
+                            field: 'sex',
+                            title: '性别',
+                            align: 'center',
+                        },
+                    ]
+                ],
+                done() {
+                    form.render();
+                }
+            })
+
+
+
+        })
+    </script>
+</body>
+
+</html>

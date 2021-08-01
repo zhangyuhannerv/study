@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        div {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 自适应方案里大布局用百分比 */
+        .top {
+            width: 100%;
+            height: 80px;
+            background-color: lightcoral;
+        }
+
+
+
+        .content_body .left {
+            width: 220px;
+            /* 1vh是可见区域的高度的1%，1vw是可见区域宽度的%1 */
+            height: calc(100vh - 80px - 40px);
+            background-color: #ff6600;
+            float: left;
+        }
+
+        .content_body .right {
+            width: calc(100% - 220px);
+            height: calc(100vh - 80px - 40px);
+            background-color: green;
+            float: left;
+        }
+
+        .footer {
+            width: 100%;
+            height: 40px;
+            background-color: red;
+            /* 清除浮动 */
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top">顶部</div>
+    <div class="content_body">
+        <div class="left">左侧</div>
+        <div class="right">右侧</div>
+    </div>
+    <div class="footer">底部</div>
+</body>
+
+</html>

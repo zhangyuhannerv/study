@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 更改默认文本的样式使用了伪元素 */
+        input::placeholder {
+            color: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 如果想自带验证，必须在表单域里面 -->
+    <form action="">
+        <!-- 不为空required -->
+        <!-- placeholder 提示文本 -->
+        <!-- autofocus 页面加载自动聚焦 -->
+        <!-- autocomplete：on/off 成功的前提，默认打开,放在表单内，有name属性，同时成功提交 -->
+        <input type="search" name='search' id='' required='required' placeholder="张雨晗" autofocus='autofocus'>
+        <!-- 单文件上传 -->
+        <input type="file">
+        <!-- 多文件上传 -->
+        <input type="file" multiple='multiple'>
+        <input type="submit" value="提交">
+    </form>
+</body>
+
+</html>

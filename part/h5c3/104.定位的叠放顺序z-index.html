@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*z-index数值可以是正整数，负整数或0，默认是auto,数值越大，盒子越靠上*/
+        /* 如果z-index值是相同的，则按照书写顺序，后来者居上 */
+        /* 数字后面不能加单位 */
+        /* 只有定位的盒子才有z-index属性 */
+
+        .box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+        }
+
+        .xiongda {
+            background-color: red;
+            z-index: 1;
+        }
+
+        .xionger {
+            background-color: green;
+            left: 50px;
+            top: 50px;
+            z-index: 2;
+        }
+
+        .qiangge {
+            background-color: blue;
+            left: 100px;
+            top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box xiongda">熊大</div>
+    <div class="box xionger">熊二</div>
+    <div class="box qiangge">光头强</div>
+</body>
+
+</html>

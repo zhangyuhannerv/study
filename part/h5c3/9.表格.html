@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 这些属性要写到表格标签table里面去 -->
+    <!-- cellpadding:文字和单元格边框之间的距离 -->
+    <!-- cellspacing:单元格与单元格之间的距离-->
+    <!-- width和height -->
+    <table align="center" border="1" cellpadding='0' cellspacing='0' width='500' height='250'>
+        <!-- 表头:里面的文字会居中，加粗 -->
+        <tr>
+            <th>姓名：</th>
+            <th>性别：</th>
+            <th>年龄；</th>
+        </tr>
+        <tr>
+            <td>刘德华</td>
+            <td>男</td>
+            <td>56</td>
+        </tr>
+        <tr>
+            <td>张学友</td>
+            <td>男</td>
+            <td>58</td>
+        </tr>
+        <tr>
+            <td>郭富城</td>
+            <td>男</td>
+            <td>58</td>
+        </tr>
+        <tr>
+            <td>黎明</td>
+            <td>男</td>
+            <td>57</td>
+        </tr>
+    </table>
+    <!-- 结构化表格 tbody和thead -->
+    <table>
+        <thead>
+            <tr>
+                <th>标题1</th>
+                <th>标题2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>内容1</td>
+                <td>内容2</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- 合并单元格 -->
+    <!-- 确定跨行还是跨列 -->
+    <!-- 找到目标单元格，写上代码 -->
+    <!-- 合并玩后删除多余的单元格-->
+    <table border="1px" cellpadding='50' cellspacing=0>
+        <tr>
+            <td>1</td>
+            <td colspan="2">2</td>
+        </tr>
+        <tr>
+            <td rowspan="2">4</td>
+            <td>5</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>9</td>
+        </tr>
+    </table>
+</body>
+
+</html>

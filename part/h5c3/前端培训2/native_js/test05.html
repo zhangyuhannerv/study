@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单指操作</title>
+</head>
+<body>
+用户名：<input type="text" id='uname' name="uname"><br>
+密码： <input type="password" name="pwd"><br>
+性别： <input type="radio" name="sex" value="男">男
+<input type="radio" name="sex" value="女">女
+<br>
+爱好：<input type="checkbox" name="hobby" value="读书"> 读书
+<input type="checkbox" name="hobby" value="音乐">音乐
+<input type="checkbox" name="hobby" value="游戏">游戏
+<br>
+学历：<select name="edu" id="edu">
+    <option value="专科">专科</option>
+    <option value="本科">本科</option>
+    <option value="硕士">硕士</option>
+    <option value="博士">博士</option>
+</select>
+<br>
+<button onclick="setValue()">设置值</button>
+<button onclick="getValue()">获取值</button>
+
+<script>
+    function setValue() {
+        document.getElementById('uname').value = '李四'
+        document.getElementsByName('pwd')[0].value = '1234qwer'
+        // 单选框设置状态
+        var sex = document.getElementsByName('sex');
+        for (let i = 0; i < sex.length; i++) {
+            if (sex[i].value == '女') {
+                sex[i].checked = true;
+            }
+        }
+        // 设置复选框的值
+        var hobby = document.getElementsByName('hobby');
+        for (let i = 0; i < hobby.length; i++) {
+            if (hobby[i].value == '读书' || hobby[i].value == '游戏') {
+                hobby[i].checked = true;
+            }
+        }
+        // 给下拉框设置值
+        var edu = document.getElementById('edu');
+        edu.value = '本科';
+    }
+
+    function getValue() {
+        // .value不赋值就是获取值
+
+        var sex = document.getElementsByName('sex');
+        for (let i = 0; i < sex.length; i++) {
+            if (sex[i].checked) {
+                console.log(sex[i].value);
+            }
+        }
+
+    }
+</script>
+</body>
+</html>

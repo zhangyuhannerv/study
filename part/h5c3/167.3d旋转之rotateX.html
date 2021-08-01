@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        img {
+            width: 700px;
+            display: block;
+            margin: 100px auto;
+            transition: all 2s;
+        }
+
+        img:hover {
+            /*光旋转不立体，想要立体效果要加透视*/
+            /*transform: rotateX(180deg);*/
+
+            /*transform: rotate(45deg);*/
+
+            /*transform: rotateX(45deg);*/
+            transform: rotateX(-45deg);
+        }
+    </style>
+</head>
+<body>
+<img src="img/dj.png" alt="">
+</body>
+</html>

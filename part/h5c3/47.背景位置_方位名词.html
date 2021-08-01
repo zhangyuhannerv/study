@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 300px;
+            width: 300px;
+            /* 页面元素既可以添加背景图片又可以加背景颜色，但是背景颜色是会被背景图片压住的，背景颜色在最底层 */
+            background-color: pink;
+            /* 注意不要落下url;background-image:默认是none*/
+            background-image: url(img/示例图片.png);
+            /* 1.背景图片不平铺 */
+            background-repeat: no-repeat;
+            /* 2.默认情况是平铺的 */
+            /* background-repeat: repeat; */
+            /* 3.背景图片沿着x轴平铺 */
+            /* background-repeat: repeat-x; */
+            /* 4.背景图片沿着y轴平铺 */
+            /* background-repeat: repeat-y; */
+
+
+
+            /* background-position:方位名词 */
+            /* 参数若都是方位名词，则两个值的前后顺序无关:如 top center 和 center top效果是一样的*/
+            /* background-position: center top; */
+            /* background-position: top center; */
+
+            /* background-position: right center; */
+            /* background-position: right center; */
+
+            /* 如果只指定一个方位名词，那么第二个默认是居中对齐的（center） */
+            /* 此时：水平靠右，上下居中 */
+            /* background-position: right; */
+            /* 此时：垂直靠下，左右居中 */
+            /* background-position: bottom; */
+
+            /* 此时：上下左右都居中 */
+            background-position: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 常见于logo，装饰性的小图片，或者是超大的背景图片 -->
+    <div></div>
+</body>
+
+</html>

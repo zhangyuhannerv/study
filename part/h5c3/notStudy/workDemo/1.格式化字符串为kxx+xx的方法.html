@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function formatMile(str) {
+            // 空字符串
+            if (str == "") {
+                return "";
+            }
+            // 非数字
+            if (isNaN(str)) {
+                return str;
+            }
+            // 如果是数字那么将数字转为字符串
+            str = str + "";
+            // 整数
+            var firNum = str.split(".")[0];
+            // 小数
+            var secNum = str.split(".")[1];
+            var kmeters = parseFloat(firNum);
+            var thousand = parseInt(kmeters / 1000);
+            var dem = kmeters % 1000 + "";
+
+            // 补位百
+            switch (dem.length) {
+                case 0:
+                    dem = "000";
+                    break;
+                case 1:
+                    dem = "00" + dem;
+                    break;
+                case 2:
+                    dem = "0" + dem;
+                    break;
+                default:
+                    break;
+            }
+
+
+            // 对小数的处理
+            if (typeof (secNum) != "undefined") {
+                var num;
+                if (Number(secNum) == 0) {
+                    num = "K" + thousand + "+" + dem;
+                } else if (secNum.length > 3) {
+                    secNum = secNum.substring(0, 3);
+                    secNum = removeLastZero(Number("0." + secNum));
+                    num = "K" + thousand + "+" + dem + "." + secNum;
+                } else {
+                    secNum = removeLastZero(Number("0." + secNum));
+                    num = "K" + thousand + "+" + dem + "." + secNum;
+                }
+            } else {
+                var num = "K" + thousand + "+" + dem;
+            }
+            return num;
+
+        };
+
+        function removeLastZero(num) {
+            num = "" + num;
+            return num.substring(num.indexOf(".") + 1);
+        }
+
+        console.log(formatMile(25333.000));
+        console.log(formatMile(25303.001));
+        console.log(formatMile(25303.010));
+        console.log(formatMile(25303.011));
+        console.log(formatMile(25303.100));
+        console.log(formatMile(25303.101));
+        console.log(formatMile(25303.110));
+        console.log(formatMile(25303.111));
+        console.log(formatMile(25303.1110));
+        console.log(formatMile(25303.1111));
+        console.log(formatMile(25303.1101));
+        console.log(formatMile(25303.11001));
+        console.log("-------------------------")
+        console.log(formatMile("" + 25333.000));
+        console.log(formatMile("" + 25303.001));
+        console.log(formatMile("" + 25303.010));
+        console.log(formatMile("" + 25303.011));
+        console.log(formatMile("" + 25303.100));
+        console.log(formatMile("" + 25303.101));
+        console.log(formatMile("" + 25303.110));
+        console.log(formatMile("" + 25303.111));
+        console.log(formatMile("" + 25303.1110));
+        console.log(formatMile("" + 25303.1111));
+        console.log(formatMile("" + 25303.1101));
+        console.log(formatMile("" + 25303.11001));
+    </script>
+</body>
+
+</html>

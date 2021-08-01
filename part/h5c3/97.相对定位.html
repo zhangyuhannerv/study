@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 相对定位的特点 */
+        /* 1.它是相对于自己原来的位置来移动的 */
+        /* 2.原来的标准流的位置继续占有，后面的盒子仍以标准流的方式对待它（不脱标，继续保留原来的位置）*/
+        /* 3.相对定位最典型的应用就是给绝对定位当爹 */
+        .box1 {
+            position: relative;
+            top: 100px;
+            left: 100px;
+            height: 200px;
+            width: 200px;
+            background-color: pink;
+        }
+
+        .box2 {
+            width: 200px;
+            height: 200px;
+            background-color: deeppink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+</body>
+
+</html>

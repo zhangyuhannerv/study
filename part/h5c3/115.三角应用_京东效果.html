@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .jd {
+            position: relative;
+            width: 120px;
+            height: 250px;
+            background-color: pink;
+        }
+
+        .jd span {
+            position: absolute;
+            left: 70%;
+
+            /* 这里的数值是边框宽度的2倍 */
+            top: -10px;
+
+            width: 0;
+            height: 0;
+
+            /* 照顾兼容性 */
+            line-height: 0;
+            font-size: 0;
+
+            border: 5px solid transparent;
+            border-bottom-color: pink;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="jd">
+        <span></span>
+    </div>
+</body>
+
+</html>

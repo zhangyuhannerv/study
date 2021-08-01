@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        img {
+            display: block;
+            margin: 0 auto;
+            transition: all 1s;
+        }
+
+        img:hover {
+
+            /*transform: rotateZ(180deg);*/
+
+            /*沿着自定义的轴旋转，了解即可*/
+            /*transform: rotate3d(x,y,z,deg);*/
+            /*例子：沿着x轴旋转*/
+            /*transform: rotate3d(1, 0, 0, 45deg);*/
+            /*例子：沿着y轴旋转*/
+            /*transform: rotate3d(0, 1, 0, 45deg);*/
+            /*例子：沿着对角线旋转*/
+            transform: rotate3d(1, 1, 0, 45deg);
+        }
+    </style>
+</head>
+<body>
+<img src="img/dj.png" alt="">
+</body>
+</html>

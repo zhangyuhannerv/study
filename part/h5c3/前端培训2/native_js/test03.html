@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除和替换节点</title>
+</head>
+<body>
+<img id="i1" src="../img/logo.png" alt="无图片">
+<button onclick="delNode()">删除节点</button>
+<button onclick="replaceNode()">替换节点</button>
+<script>
+    function delNode() {
+        var img = document.getElementById('i1');
+        document.body.removeChild(img);
+    }
+
+    function replaceNode() {
+        var img = document.getElementById('i1');
+        var h1 = document.createElement('h1');
+        h1.innerText = '一级标题';
+        // 新节点在前，旧节点在后
+        document.body.replaceChild(h1, img);
+    }
+</script>
+</body>
+</html>

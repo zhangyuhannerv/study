@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        input,
+        textarea {
+            /* 取消表单的轮廓线，写0也是一样的效果 */
+            outline: none;
+        }
+
+        textarea {
+            /* 防止文本域拖拽 */
+            resize: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 1.取消表单的轮廓 -->
+    <input type="text">
+    <!-- 2.防止拖拽文本域 -->
+    <!-- 补充：文本域的标签尽量写在一行且中间没有空格，否则起始位置会偏移，不在头上 -->
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        img {
+            /*blur()是一个函数，()里面数值越大，图像越模糊，注意数值要加px单位*/
+            filter: blur(5px);
+            /*filter: blur(15px);*/
+        }
+
+        img:hover {
+            filter: blur(0);
+        }
+    </style>
+</head>
+<body>
+<img src="img/dj.png" alt="">
+</body>
+</html>

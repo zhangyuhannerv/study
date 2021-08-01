@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            color: pink;
+            /*字号：12px,行高：24px，字体：微软雅黑*/
+            /* font: 12px/24px 'Microsoft YaHei'; */
+
+            /* 这里的1.5就是当前元素文字大小的1.5倍 */
+            font: 12px/1.5 'Microsoft YaHei'
+
+        }
+
+        div {
+            /* 子元素继承了父元素的行高，1.5 */
+            /* 但是行高的计算要14*1.5，而不是12*1.5，因为1.5是要以当前元素的文字的大小为基准 */
+            font-size: 14px;
+        }
+
+        p {
+            /* 1.5*16=24,24px即为当前的行高 */
+            font-size: 16px;
+        }
+
+        li {
+            /* li没有手动指定文字大小，但是会继承祖先的文字大小，所以li的文字大小为12px，那么行高就是:12*1.5=18px */
+            color: black
+        }
+
+        /* body行高1.5这样的写法最大的优势就在于：子元素的行高可以根据自己文字的大小自行调整自己的行高 */
+    </style>
+</head>
+
+<body>
+    <div>
+        粉红色的回忆
+    </div>
+    <p>
+        蓝色的回忆
+    </p>
+    <ul>
+        <li>我没有指定文字大小</li>
+    </ul>
+</body>
+
+</html>

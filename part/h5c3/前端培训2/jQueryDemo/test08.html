@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<img alt="图片损坏">
+<button id="btn1">设置属性</button>
+<button id="btn2">获取属性</button>
+<button id="btn3">移除属性</button>
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        // 设置属性
+        $("#btn1").click(function () {
+            $("img").attr({
+                'src': '../img/logo.png',
+                'title': 'logo',
+                'width': '500px',
+            })
+        });
+
+        // 获取属性
+        $("#btn2").click(function () {
+            console.log($("img").attr('src'));
+        })
+
+        // 移除属性
+        $("#btn3").click(function () {
+            $("img").removeAttr('src')
+        })
+    });
+</script>
+</body>
+</html>

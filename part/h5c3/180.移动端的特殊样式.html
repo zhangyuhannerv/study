@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            /* css3盒子模型 */
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        a {
+            /* 去掉a链接用手指点击的背景颜色变成高亮的效果,其他元素也通用 */
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        input {
+            /* 去掉input在移动端默认的亮光样式，而且input和button加上这个属性才能写我们的自定义样式*/
+            -webkit-appearance: none;
+        }
+
+        /* 禁用长按某种元素时弹出菜单 */
+        img,
+        a {
+            -webkit-touch-callout: none;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#">黑马</a>
+    <input type="button" value="按钮">
+</body>
+
+</html>

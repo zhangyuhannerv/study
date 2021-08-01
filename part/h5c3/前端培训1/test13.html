@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .div01 {
+            width: 150px;
+            height: 80px;
+            background-color: pink;
+
+            /* 1.取消文本默认换行 */
+            white-space: nowrap;
+            /* 2.将文字溢出部分隐藏 */
+            overflow-x: hidden;
+            /* 3.将文字超出部分用...代替 */
+            text-overflow: ellipsis;
+        }
+
+        div:nth-of-type(2) {
+            width: 150px;
+            height: 65px;
+            background-color: gray;
+
+            /* 固定公式 */
+            /*弹性伸缩盒子模型显示*/
+            display: -webkit-box;
+            /*设置或检索伸缩盒对象的子元素的排列方式*/
+            -webkit-box-orient: vertical;
+            /*限制在一个块元素显示的文本行数*/
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="div01">
+        啥也不说，此处省略1w字
+    </div>
+
+    <div>
+        啥也不说，此处省略1w字
+        啥也不说，此处省略1w字
+        啥也不说，此处省略1w字
+        啥也不说，此处省略1w字
+        啥也不说，此处省略1w字
+    </div>
+</body>
+
+</html>

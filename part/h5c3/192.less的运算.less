@@ -1,0 +1,22 @@
+// 运算符的左边和右边必须加一个空格来隔开
+// 两个数字参与运算，如果只有一个数有单位，则最后的结果就以这个单位为准
+@border: (5px + 5) * 2;
+// 如果两个数参与运算，两个数都有单位,以第一个数字的单位为准
+@baseFont: 50px;
+
+html {
+    font-size: @baseFont;
+}
+
+div {
+    width: 200px + 200 * 2;
+    height: 200px * 3;
+    border: @border solid red;
+    background-color: #666 - #222;
+}
+
+img {
+    // 只有除法注意要用（）包含起来
+    width: (82 / @baseFont); // css里面是1.64px
+    height: (82rem / @baseFont); // css里面是1.64rem
+}

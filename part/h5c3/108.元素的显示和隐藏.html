@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .peppa {
+            /* ---------------------------------------------------- */
+            /* 隐藏元素，且不再占有原来的位置,在f12里任然可以看到 */
+            /* display: none; */
+            /* 显示元素，这是它的另一层含义（display:block） */
+            /* display: block; */
+            /* ---------------------------------------------------- */
+            /* visibility隐藏元素后，继续占有原来的位置，在f12里可以看到 */
+            visibility: hidden;
+            /* 显示元素 */
+            /* visibility: visible; */
+
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+        }
+
+        .george {
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="peppa">佩奇</div>
+    <div class="george">乔治</div>
+</body>
+
+</html>

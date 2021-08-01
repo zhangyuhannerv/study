@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+用户名: <input type="text" name="uname"><br>
+密码: <input type="password" name="pwd"><br>
+<button id="btn">按钮</button>
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+
+        $("#btn").click(function () {
+            // 交集选择器+属性选择器[...]
+            // 所有的属性都以可用[]，比如id,value,class等等等
+            alert($('input[name=uname]').val());
+            alert($("input[type=password]").val());
+
+            // 第二种属性选择器
+            // type可以直接用‘:’来代替
+            console.log($("input:password").val());
+        })
+
+    })
+</script>
+</body>
+</html>

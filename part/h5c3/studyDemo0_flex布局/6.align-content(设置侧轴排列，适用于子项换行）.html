@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            display: flex;
+            width: 800px;
+            height: 400px;
+            background-color: pink;
+            /* 换行 */
+            flex-wrap: wrap;
+            /* justify-content: space-between; */
+            /* 因为有了换行，所以侧轴上控制子元素的对齐方式我们用align-content,注意:align-content对于单行是没有效果的 */
+            /* align-content: flex-start; */
+            /* align-content: center; */
+            /* align-content: flex-end; */
+
+            /* 侧轴多行平分剩余空间 */
+            /* align-content: space-around; */
+
+            /* 侧轴多行两边贴边，剩余的评分剩余空间 */
+            /* align-content: space-between; */
+
+            /* 设置子项元素的高度平分父元素的高度,别忘了把子元素的高度注释掉 */
+            /* align-content: stretch; */
+
+            /* 注意：有了flex-wrap:wrap后，在只有一行的情况下，align-item和align-content都有效 */
+            align-content: center;
+            /* align-items: center; */
+        }
+
+        div span {
+            width: 150px;
+            height: 100px;
+            background-color: purple;
+            color: #fff;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <!-- <span>4</span>
+        <span>5</span>
+        <span>6</span> -->
+    </div>
+
+</body>
+
+</html>

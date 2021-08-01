@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 精灵图的说明 */
+        /* 1.精灵图主要针对于背景图片使用，就是把国歌小背景图整合导一张大图上去 */
+        /* 2.这个大图被称为sprites精灵图或者雪碧图 */
+        /* 3.移动这个背景图片的位置，此时可以使用background-position */
+        /* 4.移动的距离就目标图片的x和y坐标，注意网页中的坐标有所不同 */
+        /* 5.精灵图一般情况都是往上和往左移动，所以是负值 */
+        /* 6.使用精灵图的时候需要精确测量，每个小背景图片的大小和位置 */
+        .box1 {
+            width: 60px;
+            height: 60px;
+            margin: 100px auto;
+            background: url(所有素材/html_css_material/第九天/images/sprites.png) no-repeat -182px 0;
+        }
+
+        .box2 {
+            width: 27px;
+            height: 25px;
+            margin: 200px auto;
+            background: url(所有素材/html_css_material/第九天/images/sprites.png) no-repeat -155px -106px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+</body>
+
+</html>

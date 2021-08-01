@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /*我们需要一个50px*50px像素的图片，在网页上是50*50（物理像素）*/
+        /*如果直接放到iphone8里面会变成100*100（物理像素）*/
+
+        /*解决办法*/
+        /*找一个100px*100px的图片,手动缩小为50*50px,那么在移动端放大2倍后会恢复原来的大小 */
+        /*因此我们准备的图片比实际需要的大小大2倍，这种方式就是2倍图*/
+        img:nth-child(2) {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+<!--模糊-->
+<img src="所有素材/html_css_material/移动端流失布局资料/images/apple50(1).jpg" alt="">
+
+<!--清晰-->
+<img src="所有素材/html_css_material/移动端流失布局资料/images/apple100.jpg" alt="">
+</body>
+</html>

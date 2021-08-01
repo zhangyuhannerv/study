@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标签属性操作</title>
+</head>
+<body>
+<img id="i1" src="../img/logo.png" alt="">
+<button onclick="getAttr()">获取属性</button>
+<button onclick="setAttr()">设置属性</button>
+<button onclick="removeAttr()">移除属性</button>
+<script>
+    var img = document.getElementById('i1');
+
+    function getAttr() {
+        console.log(img.getAttribute('src'));
+    }
+
+    function setAttr() {
+        img.setAttribute('src', 'img/xtgl.png')
+        img.setAttribute('title', '这是动物');
+    }
+
+    function removeAttr() {
+        img.removeAttribute('src');
+    }
+
+</script>
+</body>
+</html>

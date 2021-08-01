@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*移动盒子的位置，定位，盒子的外边距，2d转换移动*/
+        div {
+            width: 200px;
+            height: 200px;
+            background: pink;
+            /*x就是x轴上移动的位置，y就是y轴上移动的位置，中间用,号分隔*/
+            /*transform: translate(x, y);*/
+            /*例子*/
+            /*transform: translate(100px, 100px);*/
+
+            /*1.只移动x轴的坐标*/
+            /*transform: translate(100px, 0);*/
+            /*transform: translateX(100px);*/
+
+            /*2.只移动y轴的坐标*/
+            /*transform: translate(0,100px);*/
+            /*transform: translateY(100px);*/
+
+            /*重点：*/
+            /*1.translate不会影响其他盒子的位置*/
+            /*可以用来做鼠标悬浮盒子上移代表选中效果*/
+            /*2.如果是百分比单位是相对于自身元素的translate(50%,50%)*/
+            /*3,对行内元素没有效果*/
+        }
+
+        div:nth-child(1) {
+            transform: translate(30px, 30px);
+        }
+
+        div:last-child {
+            background-color: purple;
+        }
+    </style>
+</head>
+<body>
+<div>
+
+</div>
+<div>
+
+</div>
+</body>
+</html>

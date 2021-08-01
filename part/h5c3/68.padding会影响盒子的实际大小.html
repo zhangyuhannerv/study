@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* 如果盒子已经有了宽和高，再指定padding会影响盒子的实际大小，盒子会被撑大 */
+            /* 盒子变为240px*240px */
+            padding: 20px;
+            /* 解决方案 */
+            /* 宽高各减去两个内边距的数值，就能保证盒子为预设的大小 */
+            width: 160px;
+            height: 160px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        padding影响盒子的实际大小
+    </div>
+</body>
+
+</html>

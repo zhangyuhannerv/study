@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 未访问过的链接 a:link，把没有访问过的链接选出来更改样式*/
+        a:link {
+            color: #333;
+            text-decoration: none;
+        }
+
+
+
+        /* a:visited:选择点击过的（访问过的链接） */
+        a:visited {
+            color: orange;
+        }
+
+        /* a:hover：选择鼠标经过的链接 */
+        a:hover {
+            color: skyblue;
+        }
+
+
+        /* a:active:选择的是我们鼠标正在按下还没有弹起鼠标的那个链接 */
+        a:active {
+            color: green
+        }
+
+        /* 
+        链接伪类的注意事项
+        1.按照顺序声明：link,visited,hover,active,尽量不要颠倒顺序的声明
+        2.链接具有默认样式，所以要給a赋予样式要单独写个a标签先选出来再设置样式
+         */
+
+        /* 下面是在实际开发中的常用写法：平时一个状态，鼠标经过另一个状态 */
+        /* a {
+            color: gray;
+            text-decoration:none;
+        }
+
+        a:hover {
+            color: red;
+            text-decoration:underline;
+        } */
+    </style>
+</head>
+
+<body>
+    <a href="#">小猪佩奇</a>
+    <a href="#">未知的网站</a>
+</body>
+
+</html>

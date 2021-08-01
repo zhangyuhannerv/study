@@ -1,0 +1,698 @@
+@charset "UTF-8";
+/**
+ * @ClassName: login1.css
+ * @Description: 登录样式表
+ * @Author: hxx
+ * @Date: 2019-2-18
+ */
+html, body {
+    width: 100%;
+    height: auto;
+    font-size: 14px;
+    font-family: "Microsoft YaHei", Helvetica, AppleGothic, sans-serif;
+    font-weight: 400;
+    color: #8B9CAE;
+    background-color: #fff;
+}
+
+html, body, h1, h2, h3, h4, h5, div, img, span, label, nav, ul, li, a {
+    margin: 0;
+    padding: 0;
+}
+
+ul, li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+a:hover, a:active, a:link {
+    color: #fff;
+    text-decoration: none;
+}
+
+i {
+    font-style: normal;
+}
+
+img {
+    border: 0px;
+}
+
+/*修改*/
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+    position: relative;
+}
+
+.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+/*溢出隐藏*/
+.overHidden {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+}
+
+.overHiddenSpec {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    cursor: pointer;
+    /*-webkit-line-clamp: 2;*/
+}
+
+/*图层*/
+.zIndexView {
+    z-index: 10;
+}
+
+.backWhite {
+    background-color: #ffffff;
+    z-index: 11;
+}
+
+/*头部开始*/
+.container-fluid-header {
+    height: 200px;
+    background-image: url("../img/banner-big.png");
+    background-size: 100% 100%;
+}
+
+.header-body {
+    padding-top: 32px;
+}
+
+.header-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.header-logo > img, .header-company > img {
+    width: 100%;
+    height: 100%;
+}
+
+.header-company {
+    width: auto;
+    height: 38px;
+    padding-left: 18px;
+}
+
+.header-title > img {
+    height: 40px;
+}
+
+.headerNav {
+    width: 100%;
+    height: 55px;
+    box-shadow: 2px 4px 6px #ece8e8;
+    color: #333333;
+    font-size: 16px;
+    line-height: 55px;
+    text-align: center;
+}
+
+.nav-menu {
+    height: 55px;
+    color: #333333;
+}
+
+.titleLi {
+    width: 14%;
+    position: relative;
+    float: left;
+    height: 58px;
+}
+
+.titleLi:hover {
+    background-color: #3366cc;
+}
+
+.titleLi > a {
+    height: 55px;
+    overflow: hidden;
+}
+
+.headerNav nav > ul > li:hover {
+    background-color: #BFD4E9;
+    border-bottom: 3px solid #2680EB;
+}
+
+.headerNav nav > ul > li:hover > a {
+    color: #2680EB;
+}
+
+.headerNav nav > ul > li > a {
+    text-transform: uppercase;
+    display: inline-block;
+    line-height: 55px;
+    color: #333333;
+}
+
+.headerNav nav ul li ul {
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid #f7f4f3;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: 0;
+    z-index: 102;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.headerNav nav ul li.last ul {
+    right: 0;
+    left: auto;
+}
+
+.headerNav nav ul li ul li {
+    text-align: center;
+}
+
+.headerNav nav ul li ul li a {
+    text-transform: capitalize;
+    color: #3c3c3c;
+    display: block;
+    line-height: 55px;
+    text-align: center;
+    font-size: 16px;
+    text-align: center;
+}
+
+.headerNav nav ul li ul li a:hover {
+    background-color: #BFD4E9;
+    color: #2680EB;
+}
+
+.headerNav nav ul li:nth-child(2) ul li a {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.headerNav nav ul li:hover ul {
+    top: 57px;
+    visibility: visible;
+    opacity: 1;
+    z-index: 99999;
+}
+
+.open {
+    background-color: #BFD4E9;
+    border-bottom: 3px solid #2680EB;
+    height: 58px;
+}
+
+.open > a {
+    color: #2680EB !important;
+}
+
+.specSearch {
+    height: 43px;
+    line-height: 43px;
+    padding-left: 5px;
+    color: black;
+    margin-top: 12px;
+}
+
+.specSearch > .input-group {
+    width: 100%;
+    overflow: hidden;
+}
+
+.form-special {
+    width: calc(100% - 43px) !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    float: left !important;
+
+}
+
+.input-group-addon {
+    cursor: pointer;
+    width: 43px;
+    height: 30px;
+    display: block;
+    float: right;
+    padding: 0px;
+    border: none;
+    line-height: 0px;
+}
+
+.input-group-addon:hover, .input-group-addon:active {
+    border: 1px solid cornflowerblue;
+    margin-top: -1px;
+}
+
+.btn-special {
+    height: 30px;
+    margin-top: 12px;
+    background-color: #2680EB;
+    float: right;
+}
+
+.logTitle {
+    text-align: left;
+    font-size: 14px;
+    padding-left: 15px !important;
+}
+
+/*头部结束*/
+
+/*首页开始*/
+.firstContent {
+    margin-top: 25px;
+    width: 100%;
+    height: 490px;
+}
+
+.firstLeft {
+    width: calc(100% - 10px);
+    float: left;
+    height: 480px;
+    box-shadow: 1px 1px 10px 2px #ece8e8;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.firstRight {
+    width: calc(100% - 10px);
+    float: right;
+    height: 480px;
+}
+
+.firstLeft > span {
+    width: auto;
+    color: #8B9CAE;
+    font-size: 14px;
+    padding-right: 25px;
+    float: right;
+    padding-top: 18px;
+    cursor: pointer;
+}
+
+.firstLeft > span:hover {
+    color: #2680EB;
+}
+
+.firstInfoBody {
+    padding: 0px 25px 19px 25px;
+}
+
+.firstImg {
+    width: 260px;
+    height: 200px;
+}
+
+.firstImg > img, .tzgg_pic > img, .firstRight-logo > img {
+    width: auto;
+    height: 100%;
+}
+
+.firInfoBody {
+    width: calc(100% - 280px);
+    padding-left: 20px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.firstDate {
+    padding: 10px;
+}
+
+.firstDate > span {
+    font-size: 24px;
+    color: #333333;
+}
+
+.firstDate > img {
+    margin-top: 10px;
+}
+
+.firstDate > label {
+    font-size: 20px;
+    color: #999999;
+    font-weight: 200;
+    padding-top: 10px;
+}
+
+.firstDate > div {
+    margin-top: 10px;
+}
+
+.firstInfoCont {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.firstInfoCont > span {
+    width: 100%;
+    font-size: 22px;
+    color: #333333;
+    font-weight: bold;
+    line-height: 29px;
+    display: block;
+}
+
+.firstInfoCont > label {
+    width: 100%;
+    color: #65717F;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 26px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-align: left;
+    cursor: pointer;
+}
+
+.firstOthers {
+    background-color: #F8F8F8;
+}
+
+.firstOthers > li {
+    width: 100%;
+    height: 75px;
+    padding: 0px 25px;
+    overflow: hidden;
+}
+
+.firstOtherDate {
+    width: 90px;
+    height: 50px;
+    margin-top: 12px;
+    float: left;
+    text-align: center;
+    border-right: 1px solid #D6D6D6;
+}
+
+.firstOtherDate > span, .firstOtherInfoCont > span {
+    width: 100%;
+    color: #333333;
+    font-size: 20px;
+    display: block;
+}
+
+.firstOtherDate > i, .firstOtherInfoCont > i {
+    width: 100%;
+    color: #999999;
+    font-size: 14px;
+    display: block;
+}
+
+.firstOtherInfoCont {
+    float: right;
+    width: calc(100% - 115px);
+    height: 50px;
+    margin-top: 12px;
+}
+
+.firstOthers > li:hover {
+    background-color: #2680EB;
+}
+
+.firstOthers > li:hover > div > span, .firstOthers > li:hover > div > i {
+    color: #ffffff;
+}
+
+.firstRight-logo {
+    width: 100%;
+    height: 60px;
+}
+
+.firstRight-body {
+    width: 100%;
+    height: 405px;
+    margin-top: 15px;
+    box-shadow: 1px 1px 10px 2px #ece8e8;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.firstRight-body > li {
+    width: 100%;
+    height: 135px;
+    padding: 20px 15px 0px 15px;
+}
+
+.firstRight-body > li > span {
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    color: #333333;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.tzgg_pic {
+    float: left;
+    width: 66px;
+    height: 66px;
+    margin-top: 12px;
+}
+
+.tzgg_cont {
+    float: right;
+    width: calc(100% - 80px);
+}
+
+.tzgg_cont > span {
+    width: 100%;
+    color: #8B9CAE;
+    height: 44px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+    -webkit-line-clamp: 2;
+    text-align: left;
+    margin-top: 12px;
+}
+
+.tzgg_cont > label {
+    width: auto;
+    line-height: 22px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+    color: #8B9CAE;
+}
+
+.firstRight-body li:hover {
+    background-color: #2680EB;
+}
+
+.firstRight-body li:hover > span, .firstRight-body li:hover .tzgg_cont > span, .firstRight-body li:hover .tzgg_cont > label {
+    color: #ffffff;
+}
+
+.text_title {
+    width: 100%;
+    height: 50px;
+    background-image: url("../img/text_title.png");
+    background-size: 100% 100%;
+    clear: both;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-size: 26px;
+    text-align: center;
+    line-height: 50px;
+}
+
+/*首页兼容性设置*/
+@media (max-width: 1366px) {
+    .container-fluid-header {
+        height: 120px;
+    }
+
+    .headerNav {
+        font-size: 14px;
+        line-height: 50px;
+    }
+
+    .header-body {
+        padding-top: 15px;
+    }
+
+    .header-logo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .header-company {
+        padding-left: 10px;
+        height: 34px;
+    }
+
+    .header-title > img {
+        height: 36px;
+    }
+
+    .headerNav, .nav-menu, .titleLi {
+        height: 50px;
+    }
+
+    .headerNav nav > ul > li > a, .headerNav nav ul li ul li a {
+        line-height: 50px;
+    }
+
+    .open {
+        height: 50px;
+    }
+
+    .headerNav nav ul li:hover ul {
+        top: 51px;
+    }
+
+    .firstContent {
+        height: 400px;
+    }
+
+    .firstLeft {
+        height: 400px;
+    }
+
+    .firstLeft > span {
+        padding-top: 10px;
+    }
+
+    .firstImg {
+        width: 200px;
+        height: 150px;
+    }
+
+    .firstInfoBody {
+        padding: 0px 20px 12px 20px;
+    }
+
+    .firInfoBody {
+        padding-left: 15px;
+        width: calc(100% - 205px);
+        height: 150px;
+    }
+
+    .firstDate {
+        padding: 0px;
+    }
+
+    .firstDate > span {
+        font-size: 20px;
+    }
+
+    .firstDate > img {
+        margin-top: 5px;
+        height: 30px;
+    }
+
+    .firstDate > label {
+        font-size: 18px;
+    }
+
+    .firstDate > div {
+        margin-top: 0px;
+    }
+
+    .firstInfoCont {
+        padding: 0px;
+    }
+
+    .firstInfoCont > span {
+        font-size: 18px;
+        line-height: 30px;
+    }
+
+    .firstInfoCont > label {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .firstOthers > li {
+        height: 69px;
+        padding: 0px 20px;
+    }
+
+    .firstOtherDate > span, .firstOtherInfoCont > span {
+        font-size: 16px;
+    }
+
+    .firstOtherDate > i, .firstOtherInfoCont > i {
+        font-size: 12px;
+    }
+
+    .firstLeft > span {
+        padding-right: 20px;
+    }
+
+    .firstRight-logo {
+        height: 50px;
+    }
+
+    .firstRight-body {
+        height: 339px;
+        margin-top: 11px;
+    }
+
+    .firstRight-body > li {
+        padding: 15px 15px 0px 15px;
+        height: 113px;
+    }
+
+    .firstRight-body > li > span {
+        font-size: 16px;
+        height: 22px;
+        line-height: 22px;
+    }
+
+    .tzgg_pic {
+        width: 55px;
+        height: 55px;
+        margin-top: 10px;
+    }
+
+    .tzgg_cont {
+        width: calc(100% - 65px);
+    }
+
+    .tzgg_cont > span {
+        height: 36px;
+        font-size: 12px;
+        line-height: 18px;
+        margin-top: 10px;
+    }
+
+    .tzgg_cont > label {
+        line-height: 18px;
+        font-size: 12px;
+    }
+
+    .firstRight {
+        height: 400px;
+    }
+
+    .text_title {
+        height: 45px;
+        line-height: 45px;
+        font-size: 22px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
+
+/*首页结束*/
+
+

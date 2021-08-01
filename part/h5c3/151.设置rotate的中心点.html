@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*transform-origin:x y*/
+        /*注意：*/
+        /*1.后面的x和y中空格隔开*/
+        /*2.默认的参数是 (50% 50%)，等价于(center center) */
+        /*3.还可以给x y设置像素或者方位名词(top bottom left right center)*/
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            margin: 100px auto;
+            transition: all 1s;
+
+            /*transform-origin: 0 100%; !*左下角，百分比*!*/
+            /*transform-origin: left bottom; !*左下角，方位名词*!*/
+
+            transform-origin: 50px 50px; /*单位是像素，中心点是左上部分*/
+        }
+
+        div:hover {
+            transform: rotate(360deg);
+        }
+    </style>
+
+</head>
+<body>
+<div></div>
+</body>
+</html>

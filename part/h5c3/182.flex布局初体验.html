@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 80%;
+            height: 300px;
+            background-color: pink;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        div span {
+            /* width: 150px; */
+            height: 100px;
+            background-color: purple;
+            margin-right: 5px;
+            flex: 1;
+        }
+
+        /* 任意一个盒子都可以设置为flex布局 */
+        /* 父元素设置为flex后，子元素的vertical-align,float,clear都将失效 */
+        /* 父:flex容器，子：flex项目 */
+    </style>
+</head>
+
+<body>
+    <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+</body>
+
+</html>

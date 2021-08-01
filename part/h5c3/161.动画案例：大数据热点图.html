@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: #333;
+        }
+
+        .map {
+            position: relative;
+            width: 747px;
+            height: 617px;
+            background: url(所有素材/html_css_material/CSS3进阶素材-包含小熊动画/media/map.png) no-repeat;
+            margin: 0 auto;
+        }
+
+        .city {
+            position: absolute;
+            top: 227px;
+            right: 193px;
+            color: #fff;
+        }
+
+        .tb {
+            top: 500px;
+            right: 80px;
+        }
+
+        .dotted {
+            width: 8px;
+            height: 8px;
+            background-color: #09f;
+            border-radius: 50%;
+        }
+
+        /*选择.city里面的class以pulse开头的div*/
+        .city div[class^='pulse'] {
+            /*保证小波纹在父盒子里面水平垂直居中，放大之后就会中心向四周发散*/
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #009dfd;
+
+            animation: pulse 1.2s linear infinite;
+        }
+
+        .city div.pulse2 {
+            /*pulse1走了0.4s后pulse2才走*/
+            animation-delay: 0.4s;
+        }
+
+        .city div.pulse3 {
+            /*pulse2走了0.4s后pulse3才走*/
+            animation-delay: 0.8s;
+        }
+
+        /*定义动画*/
+        @keyframes pulse {
+            0% {
+
+            }
+
+            70% {
+                /*这里不用scale，因为他会将影子的大小也放大，上面的12会变成60，导致放大效果超出你的预期*/
+                /*transform: scale(5);*/
+
+                width: 40px;
+                height: 40px;
+
+                /*透明度是1，保持不变*/
+                opacity: 1;
+            }
+
+            100% {
+                width: 70px;
+                height: 70px;
+                /*透明度是0，看不到那个放大的圆圈阴影了*/
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="map">
+    <div class="city">
+        <div class="dotted"></div>
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+        <div class="pulse3"></div>
+    </div>
+
+    <div class="city tb">
+        <div class="dotted"></div>
+        <div class="pulse1"></div>
+        <div class="pulse2"></div>
+        <div class="pulse3"></div>
+    </div>
+</div>
+</body>
+</html>

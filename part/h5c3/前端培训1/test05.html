@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .father {
+            width: 200px;
+            height: 2000px;
+            background-color: #ff6600;
+            /* 绝对定位 */
+            position: absolute;
+            left: 200px;
+            top: 100px;
+        }
+
+        .rel {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            /* 相对定位,参照物：元素本来应该在的位置 */
+            /* position: relative; */
+            /* 绝对定位，它的参照物是父元素中有position定位的那个元素，如果它的父标签中都没有position定位，那么参照物是html标签*/
+            /* position: absolute; */
+            /* 固定定位：参照物是浏览器窗口，浏览器中存在滚动条时，它不会移动 */
+            position: fixed;
+            left: 30px;
+            top: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="father">
+        <div class="rel">
+
+        </div>
+        <span>是全球最大的中文搜索引擎，中国最大的以信息和知识为核心的互联网综合服务公司，全球领先的人工智能平台型公司。百度愿景是：成为最懂用户，并能帮助人们成长的全球顶级</span>
+    </div>
+
+</body>
+
+</html>

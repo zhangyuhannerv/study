@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 600px;
+            height: 200px;
+            /* 目前linear-gradient属性必须添加浏览器的私有前缀，因为它的支持性不是太好 */
+            /* background: linear-gradient(left, red, blue);无效 */
+
+            /* background: -webkit-linear-gradient(left, red, blue); */
+
+            /* 方位名词还可以写right,top,bottom,其中top是默认值 */
+            /* background: -webkit-linear-gradient(green, blue); */
+
+            /* 甚至可以从左上到右下渐变，语法如下 */
+            background: -webkit-linear-gradient(top left, red, blue);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>

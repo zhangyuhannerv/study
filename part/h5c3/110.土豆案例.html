@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .todou {
+            position: relative;
+            width: 444px;
+            height: 320px;
+            background-color: pink;
+            margin: 30px auto;
+        }
+
+        .todou img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mask {
+            /* 初始化时隐藏遮罩层 */
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* background-color: rgba(0, 0, 0, .4);
+            background-image: url(所有素材/html_css_material/第八天/images/arr.png); */
+
+            /* 复合写法： */
+            background: rgba(0, 0, 0, .4) url(所有素材/html_css_material/第八天/images/arr.png) no-repeat center;
+        }
+
+        /* 当鼠标经过了土豆这个盒子，就让里面的遮罩层显示出来 */
+        .todou:hover .mask {
+            /* 此时display:block是显示元素的意思 */
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="todou">
+        <img src="所有素材/html_css_material/第八天/images/tudou.jpg" alt="">
+        <!-- 遮罩层 -->
+        <div class="mask"></div>
+    </div>
+
+    <div class="todou">
+        <img src="所有素材/html_css_material/第八天/images/tudou.jpg" alt="">
+        <!-- 遮罩层 -->
+        <div class="mask"></div>
+    </div>
+
+    <div class="todou">
+        <img src="所有素材/html_css_material/第八天/images/tudou.jpg" alt="">
+        <!-- 遮罩层 -->
+        <div class="mask"></div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绝对定位水平垂直居中</title>
+    <style>
+        .box {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            /* 加上定位后原先的水平居中失效 */
+            /* margin: 0 auto; */
+
+            /* 水平居中算法 */
+            /* 1.父容器宽度的一半 */
+            left: 50%;
+            /* 2.margin,负值,往左边走自己宽度的一半 */
+            margin-left: -100px;
+
+            /* 垂直居中算法(同水平居中算法) */
+            top: 50%;
+            margin-top: -100px;
+
+            /* 固定定位也是一种特殊的绝对定位 */
+            /* 水平居中和垂直居中同上 */
+
+           
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+
+</html>

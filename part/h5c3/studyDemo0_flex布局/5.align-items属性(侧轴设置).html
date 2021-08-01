@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            display: flex;
+            width: 800px;
+            height: 400px;
+            background-color: pink;
+            /* 默认的主轴是x轴 row*/
+            /* flex-direction: column; */
+            /* 主轴居中对齐 */
+            justify-content: center;
+            /* 我们需要一个侧轴居中 */
+            /* 注意align-items只适用于子项为单行的时候 */
+            align-items: center;
+            /* align-items: flex-start; */
+            /* align-items: flex-end; */
+
+            /* stretch:拉伸,沿着侧轴去拉伸子盒子，如果侧轴是y轴那么，子盒子不要给高度，侧轴为x轴即不设置宽度 */
+            /* align-items: stretch; */
+        }
+
+        div span {
+            width: 150px;
+            height: 100px;
+            background-color: purple;
+            color: #fff;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+    </div>
+</body>
+
+</html>

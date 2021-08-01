@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* 字体声明 */
+        @font-face {
+            font-family: 'icomoon';
+            src: url('所有素材/html_css_material/第九天/fonts/icomoon.eot?p4ssmb');
+            src: url('所有素材/html_css_material/第九天/fonts/icomoon.eot?p4ssmb#iefix') format('embedded-opentype'),
+            url('所有素材/html_css_material/第九天/fonts/icomoon.ttf?p4ssmb') format('truetype'),
+            url('所有素材/html_css_material/第九天/fonts/icomoon.woff?p4ssmb') format('woff'),
+            url('所有素材/html_css_material/第九天/fonts/icomoon.svg?p4ssmb#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+
+        div {
+            width: 200px;
+            height: 35px;
+            border: 1px solid red;
+            position: relative;
+        }
+
+        div::after {
+            font-family: 'icomoon';
+            /*这里写字体图标的编号或者'口'，因为字体注册有问题，所以我写了个1代替*/
+            /*content: '\e91e';*/
+            content: '1';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

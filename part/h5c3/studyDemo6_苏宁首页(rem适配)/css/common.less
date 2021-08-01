@@ -1,0 +1,81 @@
+// 设置常见的屏幕尺寸，修改里面的html文字大小
+// 写死在pc端访问移动端页面的的font-size,一定要写在最上面
+html {
+    font-size: 50px;
+}
+
+a {
+    text-decoration: none;
+}
+
+// 我们定义此次划分的份数为15
+@no: 15;
+
+// 320
+@media screen and (min-width:320px) {
+    html {
+        font-size: (320px / @no);
+    }
+}
+
+// 360
+@media screen and (min-width:360px) {
+    html {
+        font-size: (360px / @no);
+    }
+}
+
+// 375 iphone 678
+@media screen and (min-width:375px) {
+    html {
+        font-size: (375px / @no);
+    }
+}
+
+@media screen and (min-width:384px) {
+    html {
+        font-size: (384px / @no);
+    }
+}
+
+@media screen and (min-width:400px) {
+    html {
+        font-size: (400px / @no);
+    }
+}
+
+@media screen and (min-width:414px) {
+    html {
+        font-size: (414px / @no);
+    }
+}
+
+@media screen and (min-width:424px) {
+    html {
+        font-size: (424px / @no);
+    }
+}
+
+@media screen and (min-width:480px) {
+    html {
+        font-size: (480px / @no);
+    }
+}
+
+@media screen and (min-width:540px) {
+    html {
+        font-size: (540px / @no);
+    }
+}
+
+@media screen and (min-width:720px) {
+    html {
+        font-size: (720px / @no);
+    }
+}
+
+@media screen and (min-width:750px) {
+    html {
+        font-size: (750px / @no);
+    }
+}

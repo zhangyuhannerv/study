@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 200px;
+            height: 200px;
+            border: solid 1px red;
+        }
+
+        /* 选中所有div标签中第一个div标签 */
+        div:nth-of-type(1) {
+            float: right;
+            border-width: 3px;
+            border-color: blue;
+        }
+
+        div:nth-of-type(2) {
+            float: right;
+        }
+
+        span:nth-of-type(1) {
+            float: left;
+            width: 200px;
+            background-color: red;
+
+        }
+
+        span:nth-of-type(2) {
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div>div1</div>
+    <div>div2</div>
+
+    <span>span1</span>
+    <span>span2</span>
+</body>
+
+</html>

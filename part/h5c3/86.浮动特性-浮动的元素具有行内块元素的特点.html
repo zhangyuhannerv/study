@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 任何元素都可以添加浮动特性，添加浮动之后都具有行内块元素相似的特性 */
+        span,
+        div {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+
+            float: left;
+        }
+
+        /* 如果行内元素有了浮动，则不需要转换为块级、行内块元素就可以直接给宽度和高度 */
+        p {
+            /* width: 300px; */
+            height: 300px;
+            background-color: purple;
+            float: right;
+        }
+
+        /* 块级元素没有设置宽度，默认宽度和父级元素一样宽，但是添加浮动之后，宽度大小由内容来决定（这是行内块元素的特性） */
+        /* 浮动的盒子之间是没有空隙，紧挨着在一起的 */
+        /* 行内元素同理 */
+    </style>
+</head>
+
+<body>
+    <span>1</span>
+    <span>2</span>
+
+    <div>div</div>
+    <p>pppppppppppp</p>
+</body>
+
+</html>

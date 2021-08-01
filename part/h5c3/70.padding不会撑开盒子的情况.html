@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            /* 如果没有指定盒子的宽度,则padding不会撑开盒子的宽度*/
+            /* width: 100%; */
+            height: 200px;
+            background-color: pink;
+            padding: 30px;
+        }
+
+        div {
+            width: 300px;
+            height: 100px;
+            background-color: purple;
+        }
+
+        div p {
+            /* 孩子如果和父亲有相同的宽度，那么就没必要写width了，如果写了，padding会撑开子盒子，使其大于父盒子 */
+            /* width: 100%; */
+            padding: 30px;
+            background-color: skyblue;
+        }
+
+        /* 总结：如果盒子本身没有指定width/height的属性，则此时padding是不会撑开盒子大小的 */
+    </style>
+</head>
+
+<body>
+    <h1></h1>
+    <div>
+        <p></p>
+    </div>
+</body>
+
+</html>

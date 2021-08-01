@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 2n相当于even */
+        ol li:nth-child(2n) {
+            background-color: pink;
+        }
+
+        ol li:nth-child(2n + 1) {
+            background-color: skyblue;
+        }
+
+        /* 5n:第5,10,15...个孩子;  7n:第7,14,21..个孩子 */
+        /* n+5:第5个及之后得孩子 */
+        /* -n+5,前5个孩子，是包含第5个孩子的 */
+        ol li:nth-child(n+3) {
+            color: aqua;
+        }
+
+        ol li:nth-child(-n+2) {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ol>
+        <li>我是第1个孩子</li>
+        <li>我是第2个孩子</li>
+        <li>我是第3个孩子</li>
+        <li>我是第4个孩子</li>
+        <li>我是第5个孩子</li>
+        <li>我是第6个孩子</li>
+        <li>我是第7个孩子</li>
+        <li>我是第8个孩子</li>
+    </ol>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        ul li {
+            position: relative;
+            /* 此时中间的边框会比较粗一些 */
+            float: left;
+            list-style: none;
+            width: 150px;
+            height: 200px;
+            border: 1px solid red;
+
+            margin-left: -1px;
+        }
+
+        ul li:hover {
+            /* 如果只写这一行代码，那么中间盒子的右边框会被下一个盒子的左边框压住 */
+            border: 1px solid blue;
+            /* 如果盒子没有定位，则鼠标经过，添加相对定位即可 */
+
+            /* 加上这一行代码，相对定位飘的比浮动定位要高 */
+            /* position: relative; */
+            /* 如果li都有相对定位，那么鼠标经过，添加z-index属提高层级性即可*/
+            z-index: 1;
+
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+</body>
+
+</html>

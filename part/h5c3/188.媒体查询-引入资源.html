@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 当样式比较繁多的时候，我们可以针对不同的媒体使用不用的stylesheets样式表 -->
+    <!-- 原理就是直接在link中判断设备的尺寸，然后引用不同的css文件 -->
+
+    <!-- 需求： -->
+    <!-- 当屏幕大于等与640px以上的时候，我们让div一行显示两个 -->
+    <!-- 当屏幕小于640px的时候，我们让一行显示一个 -->
+
+    <!-- 一个建议：我们媒体查询最好的方法是从小到大 -->
+    <link rel="stylesheet" media="screen and (min-width:320px)" href="188.style320.css">
+    <link rel="stylesheet" href="188.style640.css" media="screen and (min-width:640px)">
+
+    <!-- 引入资源就是针对于不同的屏幕尺寸，调用不同的css文件 -->
+
+
+</head>
+
+<body>
+    <div>1</div>
+    <div>2</div>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>样式操作</title>
+    <style>
+        #div1 {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="div1" style="font-size: 36px">这是一个div</div>
+<button onclick="addStyle()">添加样式</button>
+<button onclick="getStyle()">获取样式</button>
+<script>
+    var div = document.getElementById("div1");
+
+    function addStyle() {
+        // 如果不是赋值，就是在获取
+        div.style.width = '800px';
+        div.style.height = '400px';
+        div.style.backgroundColor = 'blue';
+    }
+
+    function getStyle() {
+        console.log(div.style.fontSize);
+        console.log(div.style.color);// 这里是获取不到的，因为，这是行外样式
+        //---------------获取行外样式
+        var div1 = document.defaultView.getComputedStyle(div, null,) // 绝大部分浏览器可以去掉document.default
+        // var div2 = div1.currentStyle;// 在ie8以下要这么获得,div2.color;div2.fontSize
+        console.log(div1.color);
+        console.log(div1.fontSize);// 同样可以获取行内的
+        //-----------------
+        console.log(div.style.width);
+        console.log(div.style.backgroundColor);
+    }
+</script>
+</body>
+</html>

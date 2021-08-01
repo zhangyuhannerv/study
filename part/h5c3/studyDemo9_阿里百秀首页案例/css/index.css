@@ -1,0 +1,198 @@
+/* 设计图是1280px的，所以要修改.container的最大宽度 */
+/* 此时1280以下还是按照bootstrap内置的来分挡位 */
+@media screen and (min-width: 1280px) {
+    .container {
+        width: 1280px;
+    }
+}
+
+body {
+    background-color: #f5f5f5;
+}
+
+.container {
+    background-color: #fff;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #666;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* header */
+
+header {
+    padding-left: 0 !important;
+}
+
+
+.logo {
+    background-color: #429ad9;
+}
+
+.logo img {
+    /* width: 100%; */
+    /* logo图片不需要缩放 */
+    max-width: 100%;
+    /* 图片左右居中 */
+    display: block;
+    margin: 0 auto;
+}
+
+.logo span {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* nav */
+.nav {
+    background-color: #eee;
+    border-bottom: 1px solid #ccc;
+}
+
+/* 当我们进入小屏幕还有超小屏幕的时候，nav里面的li就浮动起来，并且宽度变为25% */
+@media screen and (max-width: 991px) {
+    .nav ul li {
+        float: left;
+        width: 20%;
+    }
+
+    article {
+        margin-top: 10px;
+    }
+}
+
+/* 当进入超小屏幕的时候，nav里面的文字会变成14px */
+@media screen and (max-width: 767px) {
+    .nav ul li a {
+        font-size: 14px;
+        padding-left: 3px;
+    }
+
+    /* 当我们处于超小屏幕，第一个li的宽度为100%，剩下的li各占50% */
+    .news ul li:nth-child(1) {
+        width: 100%;
+    }
+
+    .news ul li:nth-child(n+2) {
+        width: 50%;
+    }
+
+    .publish h3 {
+        font-size: 14px;
+    }
+}
+
+.nav a {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    padding-left: 30px;
+    font-size: 16px;
+}
+
+.nav a:hover {
+    background-color: #fff;
+    color: #333;
+}
+
+.nav a::before {
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.news ul li {
+    float: left;
+    width: 25%;
+    height: 128px;
+    /* bootstrap里默认所有盒子都是css3模型 */
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+
+.news li:first-child {
+    width: 50%;
+    height: 266px;
+}
+
+.news li a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.news li a img {
+    width: 100%;
+    height: 100%;
+}
+
+.news li a p {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 41px;
+    background-color: rgba(0, 0, 0, .5);
+    font-size: 12px;
+    color: #fff;
+    margin-bottom: 0;
+    padding: 5px 10px;
+}
+
+.news li:first-child a p {
+    line-height: 41px;
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+.publish {
+    border-top: 1px solid #ccc;
+}
+
+.pic {
+    margin-top: 10px;
+}
+
+.pic img {
+    width: 100%;
+}
+
+.publish .row {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.banner img {
+    width: 100%;
+}
+
+.hot {
+    display: block;
+    margin-top: 20px;
+    padding: 0 20px 20px;
+    border: 1px solid #ccc;
+}
+
+.hot span {
+    border-radius: 0;
+    margin-bottom: 20px;
+}
+
+.hot p {
+    font-size: 12px;
+}

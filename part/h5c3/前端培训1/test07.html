@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 清除浮动 */
+        .flex::after {
+            content: '';
+            display: block;
+            /* 清除浮动对当前元素的影响，该伪类会感知到浮动的元素，因此会撑开父盒子 */
+            clear: both;
+        }
+
+
+        #father {
+            width: 630px;
+            border: solid 3px red;
+            padding: 20px;
+            /* 清除浮动的第二种方式 */
+            /*overflow:hidden属性可以清除其内部标签的浮动，父元素就能感知到浮动的子元素的存在，所以该盒子就被撑起来了 */
+            overflow: hidden;
+        }
+
+        #dleft {
+            width: 300px;
+            height: 200px;
+            border: solid 1px blue;
+            float: left;
+        }
+
+        #dright {
+            width: 300px;
+            height: 200px;
+            border: solid 1px blue;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='father' class="">
+        <div id="dleft">左侧</div>
+        <div id="dright">右侧</div>
+    </div>
+</body>
+
+</html>

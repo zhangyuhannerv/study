@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<p id="pid">这是一个段落</p>
+<div>这是一个div</div>
+<div class="dc">这是第二个div</div>
+<script src="../jquery-3.1.1.min.js"></script>
+<script>
+    $(function () {
+        // 组合（并集)选择器
+        $("#pid,div").css("color", 'red').css("font-size", "30px");
+        // 交集选择器(注意中间没有空格)
+        $("div.dc").css("background-color", 'yellow')
+    })
+</script>
+</body>
+</html>

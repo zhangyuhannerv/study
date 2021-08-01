@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css 三角制作</title>
+    <style>
+        /* 边框的本质是三角 */
+        .box1 {
+            width: 0;
+            height: 0;
+            /* border: 10px solid pink; */
+            border-top: 10px solid pink;
+            border-right: 10px solid red;
+            border-bottom: 10px solid blue;
+            border-left: 10px solid green;
+        }
+
+        /* 单独一个三角的制作 */
+        .box2 {
+            width: 0;
+            height: 0;
+            /* 照顾兼容性 */
+            line-height: 0;
+            font-size: 0;
+            /* --------- */
+            border: 100px solid transparent;
+            border-left-color: pink;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+</body>
+
+</html>

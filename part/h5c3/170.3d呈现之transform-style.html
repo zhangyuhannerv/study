@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            perspective: 500px;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+            position: relative;
+            transition: all 2s;
+
+            /*transform-style用来开启子元素是否开启3d空间*/
+            /*默认：flat，不开启*/
+            /*preserve-3d,子元素开启立体空间*/
+            /*代码是写给父级的(亲的，祖父不行)，但是影响的是子盒子*/
+            /*该属性很重要*/
+            /*所以让子元素保持3d立体空间*/
+            transform-style: preserve-3d;
+        }
+
+        .box:hover {
+            transform: rotateY(60deg);
+        }
+
+        .box div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: pink;
+        }
+
+        .box div:last-child {
+            background-color: purple;
+            transform: rotateX(60deg);
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div></div>
+    <div></div>
+</div>
+</body>
+</html>

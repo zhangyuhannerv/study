@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            /* 加玩边框后图片底侧会有一个缝隙 */
+            border: 2px solid red;
+        }
+
+
+        img {
+            /* 第一种解决方案,只要不是基线对齐就行，提倡使用*/
+            /* vertical-align: bottom; */
+            /* vertical-align: middle; */
+
+            /* 第二种解决方案，把图片转为块级元素 */
+            display: block;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <img src="所有素材/html_css_material/第九天/images/ldh.jpg" alt="">
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 300px;
+            width: 300px;
+            background-color: pink;
+            background-image: url(img/示例图片.png);
+            background-repeat: no-repeat;
+
+            /* 混合单位必定是有顺序关系的，前面的是x，后面的是y */
+
+            /* 下面的写法等价于只写一个20px */
+            /* background-position: 20px center; */
+
+            /* 下面的代码表示：水平靠右，距离上面（y值）是20px */
+            background-position: right 20px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 常见于logo，装饰性的小图片，或者是超大的背景图片 -->
+    <div></div>
+</body>
+
+</html>

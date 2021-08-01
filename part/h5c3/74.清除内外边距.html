@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 网页元素一般都带有默认的内外边距，而且不同的浏览器默认的也不一致，因此在布局前，首先要清除下
+    网页元素的内外边距 -->
+    <style>
+        /* 这句话一般都是css的第一行代码 */
+        * {
+            /* 清除所有元素的内边距 */
+            padding: 0;
+            /* 清除所有元素的外边距 */
+            margin: 0
+        }
+
+        /* 为了照顾兼容性，行内元素一般只设置左右内外边距，行内块或者块级元素可以任意设置 */
+        span {
+            background-color: pink;
+            /* 这里写完后只有左右有效果，而上下是没有效果的 */
+            /* margin: 20px */
+            margin-left: 20px;
+            margin-right: 20px;
+            /* 如果硬要设置上下的内外边距，可以把它转为行内块或者块级元素 */
+        }
+    </style>
+</head>
+
+<body>
+    123
+    <ul>
+        <li>abcd</li>
+    </ul>
+    <span>
+        行内元素尽量只设置左右的内外边距
+    </span>
+</body>
+
+</html>

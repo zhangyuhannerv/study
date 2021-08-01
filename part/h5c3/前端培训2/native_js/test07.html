@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类操作</title>
+    <style>
+        .div1 {
+            color: red;
+        }
+
+        .div2 {
+            font-size: 36px;
+        }
+
+        .div3 {
+            width: 200px;
+            height: 200px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<div id="id1" class="div1 div2">这是一个div</div>
+<button onclick="getClass()">获取类</button>
+<button onclick="setClass()">设置类</button>
+<button onclick="removeClass()">移除类</button>
+<button onclick="containClass()">是否包含某个类</button>
+<button onclick="toggleClass()">切换类</button>
+
+<script>
+    var div = document.getElementById('id1')
+
+    function getClass() {
+        console.log(div.className);
+        console.log(div.classList);
+    }
+
+    function setClass() {
+        // div.className = 'div2 div3' // div1就没有效果了
+        div.classList.add('div3') // div1和div2仍然有效果
+    }
+
+    function removeClass() {
+        div.classList.remove('div1');// div1没有效果了
+    }
+
+    function containClass() {
+        alert(div.classList.contains('div1'));
+    }
+
+    // 切换类 (按一下添加div3，再按一下移除div3）
+    function toggleClass() {
+        div.classList.toggle('div3')
+    }
+</script>
+</body>
+</html>

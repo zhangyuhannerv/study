@@ -1,0 +1,80 @@
+/* 如果屏幕超过了750px，那么就按照750设计稿来走，不会让页面超过750px，宽度和高度都要设置*/
+/* 因为这是按照最大的设计图来的 */
+/* 如果还要适配比该设计图还要大的设备，这里可以适当调整，或者干脆不写该媒体查询 */
+@media screen and (min-width:750px) {
+    html {
+        font-size: 75px !important;
+    }
+}
+
+a {
+    text-decoration: none;
+    font-size: .333333rem;
+}
+
+body {
+    min-width: 320px;
+    /* 不写max-width的话body的宽度将永远和设备一样宽,又因为上面写了媒体查询，所以下面的代码可以省略 */
+    /* max-width: 750px; */
+
+    /* 因为flexible.js将设备宽度分成了10份 */
+    width: 10rem;
+    margin: 0 auto;
+    line-height: 1.5;
+    font-family: Arial, Helvetica;
+    background-color: #f2f2f2;
+}
+
+/* cssrem默认的html的文字大小为16px */
+/* 在设置里改变根字体的大小为75px */
+img {
+    width: 5.125rem;
+    height: 1.093333rem;
+}
+
+.search-content {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10rem;
+    height: 1.173333rem;
+    background-color: #ffc001;
+}
+
+.classify {
+    width: .586667rem;
+    height: .933333rem;
+    background-color: pink;
+    margin: .146667rem .333333rem .133333rem;
+    background: url(../images/classify.png) no-repeat;
+    background-size: .586667rem .933333rem;
+}
+
+.search {
+    flex: 1;
+}
+
+.search input {
+    width: 100%;
+    height: .88rem;
+    outline: none;
+    border: 0;
+    font-size: .333333rem;
+    background-color: #fff2cc;
+    margin-top: .133333rem;
+    border-radius: .44rem;
+    color: #757575;
+    padding-left: .733333rem;
+}
+
+.login {
+    width: 1rem;
+    height: .933333rem;
+    margin: .133333rem;
+    font-size: .333333rem;
+    color: #fff;
+    line-height: .933333rem;
+    text-align: center;
+}
