@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var num = 3;
+        switch (num) {
+            case 1:
+                console.log(1);
+                break;
+            case 3:
+                console.log(3);
+                break;
+            case "3":
+                console.log("字符串3");
+                break;
+        }
+        // 1.注意num和case里面的值匹配的时候是全等，必须是值和数据类型都一样才可以。即：num===1
+        // 2.如果当前的case里面没有break，则不会退出switch，是继续执行下一个case
+    </script>
+</body>
+
+</html>

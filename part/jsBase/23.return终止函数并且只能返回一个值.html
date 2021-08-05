@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 函数返回值注意事项
+        // 1.return 终止函数
+        function getSum(num1, num2) {
+            return num1 + num2;
+            // return 后面的代码不会被执行
+            alert("我是不会被执行的噢")
+        }
+
+        console.log(getSum(1, 2));
+
+        // 2.return只能返回一个值
+        function fn(num1, num2) {
+            return num1, num2; // 此时返回的是最后一个值，即num2
+        }
+        console.log(fn(1, 2));
+
+        // 3.我们求任意两个数的加减乘除
+        // 想要返回多个值可以用数组，对象代替
+        function getResult(num1, num2) {
+            return [num1 + num2, num1 - num2, num1 * num2, num1 / num2]
+        }
+
+        console.log(getResult(3, 5));
+    </script>
+</body>
+
+</html>

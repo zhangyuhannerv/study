@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <!--  第一种写法-->
+  <h2>
+    {{message}}
+  </h2>
+  <!--  第二种写法-->
+  <h2>
+    {{str1}}bbb
+  </h2>
+  <!--  第三种写法-->
+  <!--  在mustache语法中,不仅仅可以直接写变量，也可以写简单的表达式-->
+  <h2>
+    {{firstName + lastName}}
+  </h2>
+  <!--  第四种写法-->
+  <h2>
+    {{firstName + ' ' + lastName}}
+  </h2>
+  <!-- 第四种写法的另一种形式-->
+  <h2>
+    {{firstName}} {{lastName}}
+  </h2>
+  <!-- 第五种写法-->
+  <h2>
+    {{counter * 2}}
+  </h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      str1: 'ddd',
+      firstName: 'kobe',
+      lastName: 'bryant',
+      counter: 100
+    },
+  })
+</script>
+
+</body>
+</html>

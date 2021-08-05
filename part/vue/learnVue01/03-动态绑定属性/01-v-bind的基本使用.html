@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <img src="img.jpg" alt="">
+  <hr>
+  <hr>
+
+  <!--这种写法是错误的-->
+  <!--标签的属性上不能使用mustache语法-->
+  <!--  <img src="{{imgURL}}" alt="">-->
+
+  <!--正确的做法时使用v-bind指令-->
+  <!--v-bind把src绑定上动态的变量imgURL-->
+  <img v-bind:src="imgURL" alt="">
+  <a v-bind:href="aHref">
+    点我到百度
+  </a>
+
+  <!--v-bind的语法糖是:-->
+  <a :href="aHref">
+    语法糖点我到百度
+  </a>
+
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      imgURL: 'img.jpg',
+      aHref: 'http://www.baidu.com'
+    },
+  })
+</script>
+
+</body>
+</html>

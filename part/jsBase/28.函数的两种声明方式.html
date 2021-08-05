@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // l.利用函数的关键字自定义函数(命名函数)
+        function fn() {
+
+        }
+
+        // 2.函数表达式声明函数,此时fn2叫做变量名，所以这个函数没有名字，所以该函数称为(匿名函数)
+        var fn2 = function() {
+            console.log("我是函数表达式");
+            console.log(arguments[0]);
+        }
+        fn2('aaaa');
+        // 注意：函数表达式声明方式和声明变量差不多。只不过变量里面存的是值，而函数表达式里面存的是函数
+    </script>
+
+</body>
+
+</html>

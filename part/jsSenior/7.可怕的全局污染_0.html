@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="7.可怕的全局污染_1.js"></script>
+    <script>
+        // 有时发现变量不定义也能使用
+        // web = '123';
+        // console.log(web);
+        // 注意：上面会造成变量全局污染
+
+        // 使用严格模式，如果变量不声明，就报错
+        // 下面的代码不知道为啥不生效，奇了怪了。虽不影响但是要知道有严格模式这个东西
+        // 'use strict';
+
+        var web = 'abc';
+        // 该函数时另一个文件里面引过来的
+        show();
+        console.log(web); // 打印123
+    </script>
+</body>
+
+</html>

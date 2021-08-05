@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 作用域链: 内部函数访问外部函数的变量，采取的是链式查找的方式来决定取哪个值，这种结构我们称之为作用域链
+        // 作用域链：就近原则
+        var num = 10;
+
+        function fn() { // 外部函数
+            // var num = 20;
+
+            function fun() { // 内部函数
+                // var num = 30;
+                console.log(num); // 此时是undefined,如果把fun（）执行的过程放到'var num = 20;'的后面那么就会打印出20
+            }
+
+            fun();
+
+            var num = 20;
+
+            fun();
+        }
+
+        fn();
+
+        // 作用域链的案例1：打印的结果是什么？
+        function f1() {
+            var num = 123;
+
+            function f2() {
+                // var num = 0;
+                console.log(num); // 打印出123,可以站在目标出发一层一层的往外查找
+            }
+
+            f2();
+        }
+
+        var num = 456;
+        f1();
+
+        // 作用域链的案例2：
+        var a = 1;
+
+        function fn1() {
+            var a = 2;
+            var b = '22';
+            fn2();
+
+            function fn2() {
+                var a = 3;
+                fn3();
+
+                function fn3() {
+                    var a = 4;
+                    console.log(a); // 4
+                    console.log(b); //'22'
+                }
+            }
+        }
+
+        fn1();
+    </script>
+</body>
+
+</html>

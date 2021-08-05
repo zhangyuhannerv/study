@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // var web = 'aa'
+        // console.log(web);
+        // var class = 'hdcms';
+        // 它并不会输出web,而是会直接报错
+
+
+        // console.log(web);
+        // var web = '123'; 
+        // 解析为两步：
+        // var web; // 声明（解析时把这句话提到最前面了）
+        // web = 'hdms' // 赋值
+
+
+        function hd() {
+            if (false) {
+                var web = 'hd';
+            }
+            console.log(web);
+        }
+        hd();
+
+        function bd() {
+            var a;
+            if (false) {
+                a = 'hd';
+            }
+            console.log(a);
+        }
+        bd();
+
+        // 总结：如果非要用var来声明变量，最好在最开始先用var声明这个变量
+    </script>
+</body>
+
+</html>

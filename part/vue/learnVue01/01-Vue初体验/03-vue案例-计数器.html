@@ -19,6 +19,8 @@
 <script src="../../js/vue.js"></script>
 <script>
     // proxy
+    // el可以挂字符串也可以挂element(用选择器选到的)
+    // data可以挂obj和function。
     const app = new Vue({
         el: '#app',
         data: {
@@ -36,6 +38,20 @@
                 console.log('sub被执行');
                 this.counter--;
             }
+        },
+
+        // 测试vue声明周期函数
+        beforeCreate() {
+            // vue创建前
+            console.log('beforeCreated');
+        },
+        created() {
+            // vue创建后
+            console.log('created');
+        },
+        mounted() {
+            // vue挂载后
+            console.log('mounted');
         }
 
         // 原先：

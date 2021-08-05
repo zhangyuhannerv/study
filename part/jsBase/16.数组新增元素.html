@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 1.修改数组的长度实现数组的扩容
+        var arr = ['red', 'green', 'blue'];
+        console.log(arr.length);
+        arr.length = 5;
+        console.log(arr.length);
+        console.log(arr);
+        console.log(arr[3]); // undefined
+        console.log(arr[4]); // undefined
+
+        // 2.通过修改数组索引好的方法给数组新增元素
+        var arr1 = ['red', 'green', 'blue'];
+        console.log(arr1);
+        arr1[4] = 'pink'; // 此时下标为3的位置为undefined
+        console.log(arr1);
+
+        arr1[0] = 'yellow'; // 替换原来的数组元素
+        console.log(arr1);
+
+        arr1 = '有点意思'; // 不要直接给数组名字赋值。否则里面的数组元素都没有了
+        console.log(arr1);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <h2>{{message}}</h2>
+  <!--  v-cloak和上面的stylesheet配合可以让界面不显示'{{message}}',而直接显示'你好啊'-->
+  <!--  不过在开发中基本上用不到，但是要知道有这么个东西-->
+  <h2 v-cloak>{{message}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  // 在vue解析之前，h2中有一个v-cloak属性
+  // 在vue解析之后，h2中没有了这个属性v-cloak
+  setTimeout(() => {
+    const app = new Vue({
+      el: '#app',
+      data: {
+        message: '你好啊'
+      },
+    })
+  }, 1000)
+
+</script>
+
+</body>
+</html>

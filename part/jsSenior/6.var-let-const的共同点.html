@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // // var web = '123';
+        // let web = '123';
+        // // const web = '123';
+
+        // function show() {
+        //     console.log(web);
+        // }
+        // show();
+        // console.log(web);
+
+        // -------------------------
+        // 这里使用let或者const都是一样的
+        // var web = '123';
+
+        // function show() {
+        //     // 不声明就是公共的，是同一个
+        //     // 声明就是两个不同的。里面的是私有的
+        //     // var web = 'abc';
+        //     web = 'abc'
+        //     console.log(web);
+        // }
+        // show(); // 打印'abc'
+        // console.log(web); // 打印 '123'
+
+        // -------------------------------
+        // 这里使用let或者const都是一样的
+        var web = '123';
+
+        function show() {
+            // 不声明就是公共的，是同一个
+            // 声明就是两个不同的。里面的是私有的
+            // var web = 'abc';
+            var web = 'abc'
+            console.log(web);
+
+            function run() {
+                var web = 'def'
+                console.log(web);
+            }
+            run();
+        }
+        show(); // 打印'abc'
+        console.log(web); // 打印 '123'
+
+        // 总结：在一个函数里就是私有领地
+        // 是新开辟个空间为这个函数服务
+        // 变量如果声明就是私有的
+        // 变量如果未声明就去上一级查找
+        // 找不到就报错
+    </script>
+</body>
+
+</html>

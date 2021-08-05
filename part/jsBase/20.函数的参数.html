@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        function cook() {
+            console.log("酸辣土豆丝");
+        }
+
+        cook();
+        cook();
+
+        //1. 我们可以利用函数的参数使函数实现不同的代码
+        // function 函数名(形参1， 形参2.........) { // 在声明函数的小括号里面是形参(形式上的参数)
+
+        // }
+
+        // 函数名(实参1， 实参2...........); // 在函数调用的小括号里面是实参(实际的参数)
+
+        //2. 形参和实参的执行过程
+        function cook(aru) { // 形参是用来接收实参的，aru='韭菜盒子'，形参类似于一个变量
+            console.log(aru);
+        }
+
+        cook("韭菜盒子");
+        cook("大肘子");
+
+        //3.函数参数可以有，也可以没有，个数不限
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // 需要转换的原因： 表单或者prompt取过来的都是字符串型的
+        // 其他类型转换为字符串型
+        // 1.toString()
+        var num = 10;
+        var str = num.toString();
+        console.log(typeof str);
+
+        // 2.String()强制转换
+        var num1 = 10;
+        console.log(typeof String(num1));
+
+        // 3.加号拼接字符串(隐式转换)
+        var num2 = 10;
+        console.log(num2 + '');
+        console.log(typeof(num2 + ''));
+
+
+        // 其他类型转换为数字型(前两个是重点)
+        // var age = prompt("请输入年龄");
+        // console.log(age);
+        // console.log(parseInt(age));
+        // 1.parseInt()可以把字符型转换为整数,断尾(不是四舍五入)
+        console.log(parseInt('3.94')) // 3
+        console.log(parseInt('120px')); // 120(会去掉后面不能转换成数字的部分)
+        console.log(parseInt('a')) // NaN
+
+        // 2.parseFloat()得到浮点数
+        console.log(parseFloat('3.14')); // 3.14 
+        console.log(parseFloat('120.561341234px')) // 120.561341234
+        console.log(parseFloat('rem123')); // NaN
+
+        // 3.Number()方法
+        console.log(Number('123')); // 123
+        console.log(Number('123.56')) // 123.56
+        console.log(Number('12.44px')) // NaN
+        console.log(Number('re123')); // NaN
+
+        // 4.利用 - * / 三个运算符可以实现隐式转换
+        console.log('12' - 0);
+        console.log(typeof('12' - 0)) // 12-> number
+        console.log('123' - '120');
+        console.log(typeof('123' - '120')) //3->number
+        console.log('123' * 1);
+        console.log(typeof('123' * 1)); // 123->number
+
+        // 其他类型转换为布尔型
+        // 1.Boolean()函数
+        // 代表 '',0,NaN,null,undefined都会被转换为false(只有这五个),其余的都会被转换为true
+        console.log(Boolean('')); // false
+        // 注意下面的：
+        console.log(Boolean('0')); // true
+    </script>
+</body>
+
+</html>

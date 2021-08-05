@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 案例1：
+        var num = 10;
+        fun();
+
+        function fun() {
+            console.log(num); // undefined
+            var num = 20;
+        }
+
+        // 案例2：
+        var num1 = 10;
+
+        function fun1() {
+            console.log(num1); // undefined
+            var num1 = 20;
+            console.log(num1) // 20
+        }
+        fun1();
+
+        // 案例3：
+        f3();
+
+        function f3() {
+            // 注意：集体声明的写法是var a = 9,b = 9,c = 9;和下面的写法并不一样
+
+            var a = b = c = 9; // 相当于 var a = 9; b = 9;c = 9;此时b和c是全局变量
+
+            console.log(a); // 9
+            console.log(b); // 9
+            console.log(c); // 9
+        }
+
+
+        console.log(c); // 9
+        console.log(b); // 9
+        console.log(a); // 报错：a is not defined
+
+
+        // 之后的案例就不写了，自己能想明白就好
+    </script>
+</body>
+
+</html>

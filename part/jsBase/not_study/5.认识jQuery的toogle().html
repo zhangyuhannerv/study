@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button>请点击这里，来切换不同的背景颜色</button>
+    <script type="text/javascript" src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("button").toggle(function() {
+                    $("body").css("background-color", "green");
+                },
+                function() {
+                    $("body").css("background-color", "red");
+                },
+                function() {
+                    $("body").css("background-color", "yellow");
+                }
+            );
+        });
+
+        // 经测试，jQuery1.9（包括1.9)以上的版本不再支持toggle
+        // 想切换，那就自己在click()方法里做状态判断吧
+    </script>
+</body>
+
+</html>

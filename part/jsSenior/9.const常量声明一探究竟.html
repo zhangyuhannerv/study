@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // const指在同一个作用域下不能改变对象的引用地址
+        const URL = '123';
+        // URL = 'hdcms'; // 报错
+        function show() {
+            const URL = 'abc.com';
+            // URL = '123.com'; // 报错
+            console.log(URL);
+        }
+        console.log(URL);
+        show(); // 不报错
+
+        const obj = {};
+        obj.URL = 'fasdfasdf.com';
+        console.log(obj); // 不报错
+
+        const a1 = 'hdcms'; {
+            // 不报错，因为const和let一样是有
+            // 块作用域特性的
+            const a1 = 'afasdfasdf.cafa';
+        }
+    </script>
+</body>
+
+</html>

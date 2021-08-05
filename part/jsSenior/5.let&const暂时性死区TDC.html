@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // console.log(web);
+        // var web = '123'
+        // let web = '123';
+        // const web = '123';
+        // let 和 const都是必须先声明变量后在使用该变量
+
+        // ---------------------------------------------------------------------------------
+        // let web = '12';
+
+        // function func() {
+        //     console.log(web);
+        //     let web = 'abc';
+        //     // 这样也会报错，即：如果用到的变量在块里面let或者const声明了，
+        //     // 那么也会产生一个tdc死区，用它俩声明的变量必须放在使用该变量之前
+        // }
+        // func();
+
+        // ---------------------------------------------------------------------------------
+        // function run1(a = b, b = 3) {
+        //     // 报错，因为b没有先声明再使用
+        // }
+        // run1();
+
+        function run2(a = 3, b = a) {
+            // 不报错
+            // 因为a在使用前先声明了
+        }
+        run2();
+    </script>
+</body>
+
+</html>

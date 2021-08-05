@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        /*样式设置*/
+
+        body {
+            margin: 0;
+        }
+
+        #scroll-box {
+            width: 200px;
+            height: 150px;
+            background: red;
+            overflow: hidden;
+        }
+
+        #scroll-box ul {
+            margin: 0;
+        }
+
+        #scroll-box li {
+            color: #fff;
+            margin: 0;
+            height: 50px;
+        }
+
+        .noBom {
+            list-style: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id=scroll-box>
+
+        <ul>
+
+            <li>第一条公告</li>
+
+            <li>第二条公告</li>
+
+            <li>第三条公告</li>
+
+            <li>第四条公告</li>
+
+            <li class='noBom'></li>
+
+        </ul>
+
+        <ul></ul>
+
+    </div>
+
+    <script>
+        var box = document.getElementById('scroll-box')
+
+        var parent = document.getElementsByTagName('ul')[0]
+
+        var parent2 = document.getElementsByTagName('ul')[1]
+
+        parent2.innerHTML = parent.innerHTML
+
+        /*启动定时器*/
+
+        var timer = setInterval(autoScrollLine, 30)
+
+        /*单行向上滚动效果*/
+
+        function autoScrollLine() {
+            /*判断滚动内容是否已经滚完，滚完了则滚动的值重新设置到0
+
+            否则就每隔30毫秒向上滚动1px*/
+
+            if (box.scrollTop >= parent.offsetHeight) {
+                box.scrollTop = 0;
+            } else {
+                box.scrollTop++;
+
+            }
+
+            /*判断滚动的距离刚好为一条公告的高度时停掉定时器，
+
+            隔1s之后重新启动定时器即可实现公告滚动停留效果 */
+
+            if (box.scrollTop % box.offsetHeight == 0) {
+                clearInterval(timer)
+
+                setTimeout(() => {
+                    timer = setInterval(autoScrollLine, 30)
+
+                }, 0)
+
+            }
+
+        }
+    </script>
+</body>
+
+</html>

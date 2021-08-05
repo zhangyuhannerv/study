@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // window是一个全局对象
+        var web = 'hdcms';
+        console.log(window.web);
+        // 影响了window对象的固有属性
+        var screenLeft = 808;
+        console.log(window.screenLeft);
+
+        let web1 = 'aa';
+        console.log(window.web1); // undefined
+        let screenTop = 909;
+        console.log(window.screenTop); // 不受影响
+
+
+        var a = 'abc';
+        var a = 'def';
+        console.log(a); // var定义重复声明不报错，不提示
+
+        let b = '123';
+        // let b = '123'; // 报错不能重复声明(const也有相同的作用)
+
+        let gb = 'afa';
+
+        function show() {
+            let gb = 'afdads';
+            console.log(gb);
+        }
+
+        show();
+        console.log(gb); // 不同作用域用let或者const可以重复声明
+    </script>
+</body>
+
+</html>
