@@ -390,6 +390,34 @@ $("#search").bind("keydown", function (event) {
  });
 ```
 
+#### 6.实现实时监听input或者textarea值变化并触发事件（不需要失去焦点)
+
+暂时只对input和textarea有效
+
+select没经过测试，不知道对select是否也有效
+
+```js
+$('textarea').bind('input propertychange', function () {
+    CarInfo.initEcharts();
+});
+```
+
+#### 7.利用jQuery的ajax导入写好的json静态文件
+
+代码示例
+
+```js
+$.ajax({
+    type: 'get',
+    url: Hussar.ctxPath + '/static/js/homePage/map.json', // 文件相对地址（相对于使用这个js脚本的html文件,非常重要，仔细理解这句话）
+    dataType: 'json', // 类型
+    async: false,
+    success: function (data) {
+        Lmap = data;
+    }
+})
+```
+
 
 
 ### 学习
@@ -2274,7 +2302,171 @@ select host,user from user;
 
 ![确保能连接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720111410.png)
 
+#### 7.mysql在导入.sql文件的时候报错  1067 - Invalid default value for ‘LOCK_TIME_‘
+
+推荐使用以下的方式永久修改
+
+编辑mysql的配配置文件 my.cnf
+
+在[mysqld]下面添加如下列：
+
+```properties
+sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+```
+
+然后重启mysql服务即可
+
 ### 学习
+
+#### 1.mysql使用索引十诫
+
+- 什么情况下要用索引
+  - 主键自带主键索引
+  - 唯一约束自带唯一索引
+  - 外键自带外键索引
+  - 查询条件用到的字段需要
+  - 排序用的的字段
+  - 分组用到的字段
+- 什么情况下不能用索引
+  - 数据量较少时不用建索引。
+  - 频繁更新字段不能建索引
+  - 索引的选择性（字段的值尽量复杂且尽量分布不平均)
+  - where条件查询用不到的字段不用建索引
+
+#### 2.mysql优化索引十诫（附口诀)
+
+- 全值匹配我最爱
+- 最佳左前缀法则(如果索引引了多列，要遵守最左前缀法则。指的是查询从索引的最左前列开始并且不跳过索引中的列)
+- 不在索引列上做任何操作（计算，函数，（自动or手动)类型转换），会导致索引失效而转向全表扫描
+- 存储引擎不能使用索引中范围条件右边的列
+- 尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致)),减少select *
+- mysql在使用!=或者<>时候无法使用索引而转向全表扫描
+- is null,is not null也无法使用索引
+- like以通配符开头('%abc')mysql索引失效会变成全表扫描的操作。解决办法：使用覆盖索引
+- 字符串不加单引号导致索引失效
+- 少用or,用or连接时会索引失效
+
+**口诀**
+
+**全职匹配我最爱，最左前缀要遵守；
+带头大哥不能死，中间兄弟不能断；
+索引列上少计算，范围之后全失效；
+LIKE 百分写最右，覆盖索引不写*；
+不等空值还有OR，索引影响要注意；
+VAR 引号不可丢，SQL 优化有诀窍。**
+
+#### 3.mysql排序优化（为排序使用索引)
+
+![请确认能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210810170647.png)
+
+#### 4.mysql show profile功能
+
+1. 开启Show Profile功能，默认该功能是关闭的，使用前需开启。
+
+   ```sql
+   show variables like 'profiling';
+   set profiling = on;
+   ## 执行一部分sql后(默认保留15条)
+   show profiles;
+   ## duration是持续时间
+   ## 针对特定的sql进行诊断
+   show profile cpu,block io for query Query_ID;/*Query_ID为#3步骤中show profiles列表中的Query_ID*/
+   ```
+
+   
+
+2. show profile的常用查询参数。
+
+   ①ALL：显示所有的开销信息。
+
+   ②BLOCK IO：显示块IO开销。
+
+   ③CONTEXT SWITCHES：上下文切换开销。
+
+   ④CPU：显示CPU开销信息。
+
+   ⑤IPC：显示发送和接收开销信息。
+
+   ⑥MEMORY：显示内存开销信息。
+
+   ⑦PAGE FAULTS：显示页面错误开销信息。
+
+   ⑧SOURCE：显示和Source_function，Source_file，Source_line相关的开销信息。
+
+   ⑨SWAPS：显示交换次数开销信息。
+
+3. 日常开发需注意的结论。（出现下述结论都需要优化)
+
+   ①converting HEAP to MyISAM：查询结果太大，内存不够，数据往磁盘上搬了。
+
+   ②Creating tmp table：创建临时表。先拷贝数据到临时表，用完后再删除临时表。
+
+   ③Copying to tmp table on disk：把内存中临时表复制到磁盘上，危险！！！
+
+   ④locked。
+
+4. 总结
+
+   1.show profile默认是关闭的，并且开启后只存活于当前会话，也就说每次使用前都需要开启。
+
+   2.通过show profiles查看sql语句的耗时时间，然后通过show profile命令对耗时时间长的sql语句进行诊断。
+
+   3.注意show profile诊断结果中出现相关字段的含义，判断是否需要优化sql语句。
+
+   4.可更多的关注MySQL官方文档，获取更多的知识。
+
+#### 5.mysql的myisam的读写锁(表锁)
+
+```sql
+lock table emp read;
+lock table emp write;
+
+```
+
+
+
+myisam是写锁调度优于读锁调度,所以mysiam要偏读（因为写会阻塞其他线程对当前表的任何操作)
+
+myisam执行select时会给所有涉及的表增加读锁。执行增删改时会给所有涉及到的表增加写锁
+
+表读锁，当前session只能读当前表，对其他表任何操作都做不了，其他session能做任何操作，只是对有读锁的表的增删改会阻塞
+
+表写锁，当前session只能对当前表做增删改查，对其他表任何操作都做不了，其他session对有写锁的表的任何操作都会堵塞，但是对其他的表可以做任何操作
+
+```sql
+show open tables; --查看哪些表被锁了
+show status like 'table%'; --分析表的锁定状况
+```
+
+#### 6.mysql的innodb的读写锁(行锁)
+
+session1更新某一行时,且未提交。session2读到的是旧数据。直到ession1提交。session2才能读到新数据
+
+session1更新某一行时,且未提交。当session2同时也更新这一行时，阻塞。直到ession1提交。session2才能更新完成。注意：session2更新其他行的数据不受影响
+
+---
+
+**注意**
+
+innode引擎默认是行锁。但是出现以下情况的时候，行锁还是会变成表锁
+
+即：更新时where后面的条件没有使用上索引。包括字段上本身没有索引或者有索引但是sql写的不严谨导致索引失效，此时即使是innodb引擎它在更新的时候还是会锁住整张表
+
+---
+
+行锁的状态查看命令
+
+```sql
+show status like 'innodb_row_lock%'
+--出现的参数依次往下分别是:
+--当前正在等待的锁的数量
+--从服务器启动到现在等待锁的总的时间长度
+--每次等待所花的平均时间
+--等待的最长的一次时间
+--服务启动到现在总共等待锁的次数
+```
+
+
 
 ## redis
 
@@ -2332,43 +2524,6 @@ select host,user from user;
 
 
 ### 学习
-
-#### 1.mysql使用索引十诫
-
-- 什么情况下要用索引
-  - 主键自带主键索引
-  - 唯一约束自带唯一索引
-  - 外键自带外键索引
-  - 查询条件用到的字段需要
-  - 排序用的的字段
-  - 分组用到的字段
-- 什么情况下不能用索引
-  - 数据量较少时不用建索引。
-  - 频繁更新字段不能建索引
-  - 索引的选择性（字段的值尽量复杂且尽量分布不平均)
-  - where条件查询用不到的字段不用建索引
-
-#### 2.mysql优化索引十诫（附口诀)
-
-- 全值匹配我最爱
-- 最佳左前缀法则(如果索引引了多列，要遵守最左前缀法则。指的是查询从索引的最左前列开始并且不跳过索引中的列)
-- 不在索引列上做任何操作（计算，函数，（自动or手动)类型转换），会导致索引失效而转向全表扫描
-- 存储引擎不能使用索引中范围条件右边的列
-- 尽量使用覆盖索引（只访问索引的查询（索引列和查询列一致)),减少select *
-- mysql在使用!=或者<>时候无法使用索引而转向全表扫描
-- is null,is not null也无法使用索引
-- like以通配符开头('%abc')mysql索引失效会变成全表扫描的操作。解决办法：使用覆盖索引
-- 字符串不加单引号导致索引失效
-- 少用or,用or连接时会索引失效
-
-**口诀**
-
-**全职匹配我最爱，最左前缀要遵守；
-带头大哥不能死，中间兄弟不能断；
-索引列上少计算，范围之后全失效；
-LIKE 百分写最右，覆盖索引不写*；
-不等空值还有OR，索引影响要注意；
-VAR 引号不可丢，SQL 优化有诀窍。**
 
 # 服务器
 ## linux
