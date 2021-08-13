@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    li {
+      cursor: pointer;
+    }
+
+    .isActive {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  {{message}}
+  <!--需求，海王（第一条）字体永远是红色，其后的数据我点击谁谁变成红色,其余的字体恢复原来的颜色-->
+  <ul>
+    <li v-for="item in movies">{{item}}</li>
+    <hr>
+    <!--提示-->
+    <li v-for="(item,index) in movies"
+        :class="{isActive:getActive(index)}"
+        @click="changeActive(index)">
+      {{index}}-{{item}}
+    </li>
+  </ul>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      movies: ['海王', '海尔兄弟', '星际穿越', '火影忍者', '进击的巨人'],
+      defaultIndex: -1,
+    },
+    methods: {
+      getActive(index) {
+        if (index == this.defaultIndex || index == 0) {
+          return true;
+        }
+        return false;
+      },
+      changeActive(num) {
+        this.defaultIndex = num;
+      }
+    }
+  })
+</script>
+</body>
+</html>
