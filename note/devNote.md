@@ -5,6 +5,7 @@
 ---
 
 [toc]
+
 # 随记
 
 ***
@@ -100,10 +101,10 @@ vue->js基础完成剩下的课程->补习9->软件设计师
    当点击编辑的时候给input 加上一个类 input_text_underline,这样文字就有下划线了。
 
     ```css
-    .input_text_underline {
-        text-decoration: underline;
-        text-decoration-color: #8F9AB4;
-    }
+   .input_text_underline {
+       text-decoration: underline;
+       text-decoration-color: #8F9AB4;
+   }
     ```
 
 ### 学习
@@ -1247,7 +1248,7 @@ setUpdateTime(new Timestamp(new Date().getTime()));
 
    1. String ->Timestamp
 
-       使用Timestamp的valueOf()方法
+      使用Timestamp的valueOf()方法
 
       ```java
       	1.         Timestamp ts = new Timestamp(System.currentTimeMillis());  
@@ -1264,9 +1265,9 @@ setUpdateTime(new Timestamp(new Date().getTime()));
 
         如果String为其他格式，可考虑重新解析下字符串，再重组~~
 
-   2.  Timestamp -> String
+   2. Timestamp -> String
 
-       使用Timestamp的toString()方法或者借用DateFormat
+      使用Timestamp的toString()方法或者借用DateFormat
 
       ```java
       	1. Timestamp ts = new Timestamp(System.currentTimeMillis());  
@@ -1288,7 +1289,7 @@ setUpdateTime(new Timestamp(new Date().getTime()));
 
 3. Date（ java.util.Date ）和Timestamp互转
 
-    声明：查API可知，Date和Timesta是父子类关系
+   声明：查API可知，Date和Timesta是父子类关系
 
    1. Timestamp -> Date
 
@@ -1307,9 +1308,9 @@ setUpdateTime(new Timestamp(new Date().getTime()));
 
    2. Date -> Timestamp
 
-        父类不能直接向子类转化，可借助中间的String~~~~
+      父类不能直接向子类转化，可借助中间的String~~~~
 
-        注：使用以下方式更简洁
+      注：使用以下方式更简洁
 
       ```java
          Timestamp ts = new Timestamp(date.getTime());
@@ -1338,6 +1339,7 @@ setUpdateTime(new Timestamp(new Date().getTime()));
 #### 1.springboot中使用java代码控制事务
 
 1. 代码中控制事务的三种方式
+
    - 编程式事务：就是直接在代码里手动开启事务，手动提交，手动回滚。优点就是可以灵活控制，缺点就是太麻烦了，太多重复的代码了。
    - 声明式事务：就是使用SpringAop配置事务，这种方式大大的简化了编码。需要注意的是切入点表达式一定要写正确。
    - 注解事务：直接在Service层的方法上面加上@Transactional注解，个人比较喜欢用这种方式。
@@ -1552,17 +1554,17 @@ mvn -U idea:idea
       2. 逐条更新(mybatis实现)
 
          通过循环，依次执行多条update的sql
-         
+
          前提条件:
-         
+
          要实现批量更新，首先得设置mysql支持批量操作，在jdbc链接中需要附加&allowMultiQueries=true属性才行，可能会被阿里的druid给阻挡。需要上网找绕过阻挡得方案
-         
+
          例如：
-         
+
          ```yaml
          jdbc: mysql://localhost:3306/dbname?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
          ```
-         
+
          ```xml
          <update id="updateBatch"  parameterType="java.util.List">  
              <foreach collection="list" item="item" index="index" open="" close="" separator=";">
@@ -1574,7 +1576,7 @@ mvn -U idea:idea
              </foreach>      
          </update>
          ```
-         
+
          一条记录update一次，性能比较差，容易造成阻塞。
 
       3. sql批量更新(主力实现)
@@ -2233,6 +2235,7 @@ public IPage<User> selectUserPage(Page<User> page, Integer state) {
    - union all: 对两个结果集进行并集操作, 包括重复行, 即所有的结果全部显示, 不管是不是重复;
 
 2. 区别2：获取结果后的操作
+
    - union: 会对获取的结果进行排序操作
    - union all: 不会对获取的结果进行排序操作
 
@@ -2466,7 +2469,439 @@ show status like 'innodb_row_lock%'
 --服务启动到现在总共等待锁的次数
 ```
 
+#### 7.mysql8的安装
 
+1. 查看是否有安装过mysql
+
+   ```shell
+   rpm -qa | grep -i mysql
+   ```
+
+   
+
+2. 删除mysql
+
+   ```shell
+   yum -y remove MySQL-*
+   yum -y remove MySQL
+   ```
+
+   一般用rpm -e 的命令删除mysql,这样表面上删除了mysql,可是mysql的一些残余程序仍然存在,并且通过第一步的方式也查找不到残余,而yum命令比较强大,可以完全删除mysql.(ps:用rpm删除后再次安装的时候会提示已经安装了,这就是rpm没删除干净的原因)
+
+3. 把所有出现的目录统统删除
+
+   ```shell
+   find / -name mysql
+   ```
+
+
+   查找mysql的一些目录，把所有出现的目录删除，可以使用rm -rf 路径，删除时请注意，一旦删除无法恢复。
+
+4. 删除配置文件
+
+   ```shell
+   rm -rf /etc/my.cnf
+   ```
+
+5. 删除mysql的默认密码
+
+   ```shell
+   rm -rf /root/.mysql_sercret
+   ```
+
+   删除mysql的默认密码,如果不删除,以后安装mysql这个sercret中的默认密码不会变,使用其中的默认密码就可能会报类似Access denied for user ‘root@localhost’ (using password:yes)的错误.
+
+***
+
+五步完成之后，这样mysql就全部删除干净了，若没安装过mysql可忽略以上步骤
+
+1. 配置Mysql 8.0安装源
+
+   ```shell
+   sudo rpm -Uvh https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
+   ```
+
+2. 安装Mysql 8.0
+
+   ```shell
+   sudo yum --enablerepo=mysql80-community install mysql-community-server
+   ```
+
+
+   提示下载插件选择：y
+
+
+   看到complet(完毕)就是安装完啦
+
+3. 启动mysql服务
+
+   ```shell
+   sudo service mysqld start
+   ```
+
+
+   显示如下：
+
+   启动完成
+
+4. 查看mysql服务运行状态
+
+   ```shell
+   service mysqld status
+   ```
+
+   
+
+5. 查看root临时密码
+
+   安装完mysql之后，使用下列命令生成一个临时的密码让root用户登录
+
+   ```shell
+   grep "A temporary password" /var/log/mysqld.log
+   ```
+
+   
+
+6. 更改临时密码
+
+   输入：
+
+   ```shell
+   mysql -uroot -p
+   ```
+
+   在Enter password：后面输入临时密码
+   登录成功
+   输入：
+
+   ```sql
+   ALTER USER 'root'@'localhost' IDENTIFIED BY '123456Aa?';
+   ```
+
+   会提示：ERROR 1819 (HY000): Your password does not satisfy the current policy requirements(密码不符合当前策略)
+
+   - 方案1: 设置符合策略的密码(大小写字母+数据+符号，8位)
+   - 方案2:密码策略改简单一点
+
+   方案2设置方式
+
+   先看看当前的密码验证策略
+   输入：
+
+   ```sql
+   SHOW VARIABLES LIKE 'validate_password.%';
+   ```
+
+   策略说明
+
+   - validate_password.length 是密码的最小长度，默认是8，我们把它改成6
+     输入：
+
+     ```sql
+     set global validate_password.length=6;
+     ```
+
+   - validate_password.policy 验证密码的复杂程度，我们把它改成0
+     输入：
+
+     ```sql
+     set global validate_password.policy=0;
+     ```
+
+   - validate_password.check_user_name 用户名检查，用户名和密码不能相同，我们也把它关掉
+
+     输入：
+
+     ```sql
+     set global validate_password.check_user_name=off;
+     ```
+
+   - 再执行修改密码的命令
+
+     输入：
+
+     ```sql
+     ALTER USER ‘root’@‘localhost’ IDENTIFIED BY ‘12345’;
+     ```
+
+     密码设成功
+     用mysql客户连接报不允许连接的错误，那是因为没开通远程访问的权限
+
+   
+
+
+
+7. 配置远程访问
+
+   输入：
+
+   ```sql
+   GRANT ALL ON *.* TO 'root'@'%';
+   flush privileges;
+   ```
+
+   报错：
+
+   mysql> GRANT ALL ON . TO ‘root’@’%’;
+   ERROR 1410 (42000): You are not allowed to create a user with GRANT
+
+   看下默认MySQL用户：
+   输入：
+
+   ```sql
+   use mysql;
+   ```
+
+   输入：
+
+   ```sql
+   select host, user, authentication_string, plugin from user;
+   ```
+
+   发现root的host是localhost，不是%，可以加个host是%的root账号：
+   输入：
+
+   ```sql
+   CREATE USER ‘root’@’%’ IDENTIFIED BY ‘123456Aa?’;
+   ```
+
+   再查下用户
+
+   输入：
+
+   ```sql
+   select host, user, authentication_string, plugin from user;
+   ```
+
+   可以看到已经新增了host为%的root用户
+
+   输入：
+
+   ```sql
+   GRANT ALL ON *.* TO 'root'@'%';
+   flush privileges;
+   ```
+
+
+   配置成功
+
+***
+
+**如果客户端连接mysql报错，并且其他配置都正常的情况下**
+
+原因可能是mysql8的加密方式规则不一样，是caching_sha2_password
+
+需要加密方式改成mysql_native_password就行了
+
+语法:
+
+ALTER USER ‘[用户名]’@’%’ IDENTIFIED WITH mysql_native_password BY ‘[密码]’;
+
+输入：
+
+```sql
+ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456Aa?’;
+```
+
+加密方式以及改成了mysql_native_password
+
+#### 8.mysql主从复制的搭建
+
+0. 做主从的前提
+
+   - 两台服务器的防火墙都开放了各自mysql的服务端口（下面以默认的3306为例子）
+   - 从库无法同步主库之前的数据。如果主库之前有数据，那么先把主库的数据导入到从库中。保证两台服务器在做主从复制之前的数据一致性
+   - 尽量保证两台服务器的my.cnf文件只有server-id不同。其他的配置都相同
+
+1. 修改主服务器的配置
+
+   ```shell
+   vi /etc/my.cnf
+   ```
+
+   
+
+   ```shell
+   [mysqld]
+   # 启用主从配置(主服务器)
+   
+   # 主服务器id
+   server-id=1
+   
+   # 二进制日志
+   log-bin=mysqlbin
+   
+   # 设置忽略复制的数据库
+   # binlog-ignore-db=mysql
+   
+   # 设置需要复制的数据库
+   # binlog-do-db=dtjc                 
+   ```
+
+2. 重启mysql服务器
+
+   ```shell
+   service mysqld restart
+   ```
+
+   mysqld 无效的话把mysqld换成mysql
+
+3. 运行
+
+   ```sql
+   mysql> show master status;
+   +-----------------+----------+--------------+------------------+------------------------------------------+
+   | File            | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set                        |
+   +-----------------+----------+--------------+------------------+------------------------------------------+
+   | mysqlbin.000003 |      883 |              |                  | e730104b-113f-11eb-9739-000c2972b171:1-7 |
+   +-----------------+----------+--------------+------------------+------------------------------------------+
+   1 row in set (0.01 sec)
+   ```
+
+   后续需要使用**file**和**position**这两个字段
+
+4. 为从服务器生成专门的账号用来做主从复制,同时赋予做从服务器的权限
+
+   ```sql
+   create user 'repl'@'%' identified by '123456Aa?';
+   grant replication slave,replication client on *.* to 'repl'@'%';
+   flush privileges;
+   ```
+
+5. 修改从服务器的配置
+
+   ```shell
+   vi /etc/my.cnf
+   ```
+
+   ```shell
+   [mysqld]
+   # 启用主从配置(主服务器)
+   
+   # 从服务器id
+   server-id=2
+   
+   # 二进制日志
+   log-bin=mysqlbin
+   
+   # 设置忽略复制的数据库
+   # binlog-ignore-db=mysql
+   
+   # 设置需要复制的数据库
+   # binlog-do-db=dtjc    
+   ```
+
+6. 重启mysql服务
+
+   ```sql
+   service mysqld restart
+   ```
+
+   mysqld 无效的话把mysqld换成mysql
+
+7. slave节点测试repl用户远程连接mater节点
+
+   ```sql
+   mysql -h192.168.220.10 -P3306 -urepl -p123456Aa?
+   ```
+
+    链接成功，即可进行下一步，否则要排错
+
+8. 退出master节点的登陆，登陆本机的mysql,运行以下命令
+
+   ```sql
+    change master to master_host='192.168.220.10',master_port=3306,master_user='repl',master_password='12345Aa?',master_log_file='mysqlbin.000003',master_log_pos=883;
+   ```
+
+   **master_log_file就是主服务器的file字段，883就是主服务器的position字段**
+
+9. 如果第8步的mysql没有报错的话，查看slave状态
+
+   ```sql
+   mysql> show slave status\G
+   *************************** 1. row ***************************
+                  Slave_IO_State: Waiting for source to send event
+                     Master_Host: 192.168.220.10
+                     Master_User: repl
+                     Master_Port: 3306
+                   Connect_Retry: 60
+                 Master_Log_File: mysqlbin.000003
+             Read_Master_Log_Pos: 196
+                  Relay_Log_File: localhost-relay-bin.000002
+                   Relay_Log_Pos: 323
+           Relay_Master_Log_File: mysqlbin.000003
+                Slave_IO_Running: Yes
+               Slave_SQL_Running: Yes
+                 Replicate_Do_DB:
+             Replicate_Ignore_DB:
+              Replicate_Do_Table:
+          Replicate_Ignore_Table:
+         Replicate_Wild_Do_Table:
+     Replicate_Wild_Ignore_Table:
+                      Last_Errno: 0
+                      Last_Error:
+                    Skip_Counter: 0
+             Exec_Master_Log_Pos: 196
+                 Relay_Log_Space: 536
+                 Until_Condition: None
+                  Until_Log_File:
+                   Until_Log_Pos: 0
+              Master_SSL_Allowed: No
+              Master_SSL_CA_File:
+              Master_SSL_CA_Path:
+                 Master_SSL_Cert:
+               Master_SSL_Cipher:
+                  Master_SSL_Key:
+           Seconds_Behind_Master: 0
+   Master_SSL_Verify_Server_Cert: No
+                   Last_IO_Errno: 0
+                   Last_IO_Error:
+                  Last_SQL_Errno: 0
+                  Last_SQL_Error:
+     Replicate_Ignore_Server_Ids:
+                Master_Server_Id: 1
+                     Master_UUID: e730104b-113f-11eb-9739-000c2972b171
+                Master_Info_File: mysql.slave_master_info
+                       SQL_Delay: 0
+             SQL_Remaining_Delay: NULL
+         Slave_SQL_Running_State: Replica has read all relay log; waiting for more updates
+              Master_Retry_Count: 86400
+                     Master_Bind:
+         Last_IO_Error_Timestamp:
+        Last_SQL_Error_Timestamp:
+                  Master_SSL_Crl:
+              Master_SSL_Crlpath:
+              Retrieved_Gtid_Set:
+               Executed_Gtid_Set: e730104b-113f-11eb-9739-000c2972b171:1-3
+                   Auto_Position: 0
+            Replicate_Rewrite_DB:
+                    Channel_Name:
+              Master_TLS_Version:
+          Master_public_key_path:
+           Get_master_public_key: 0
+               Network_Namespace:
+   1 row in set, 1 warning (0.00 sec)
+   ```
+
+   如果
+
+   ```sql
+                Slave_IO_Running: Yes
+               Slave_SQL_Running: Yes
+   ```
+
+   那么主从配置就搭建好了
+
+   如果Slave_IO_Running或者Slave_SQL_Running有任意一个不是Yes的话，搭建失败
+
+   运行以下命令,停止主从。然后从最开始一步步排错
+
+   ```sql
+   stop slave;
+   reset slave all;
+   ```
+
+   
 
 ## redis
 
@@ -2526,9 +2961,13 @@ show status like 'innodb_row_lock%'
 ### 学习
 
 # 服务器
+
 ## linux
+
 ### centos
+
 #### 开发
+
 ##### 1.Linux下文档类型转PDF乱码解决方式
 
 在Linux系统下进行文本类型转PDF时出现乱码。
@@ -2591,7 +3030,7 @@ show status like 'innodb_row_lock%'
    <dir>~/.fonts</dir>
    ```
 
-6. 刷新Liunx字体缓存
+7. 刷新Liunx字体缓存
 
    操作命令：
 
@@ -2603,7 +3042,7 @@ show status like 'innodb_row_lock%'
 
    fc-list :lang=ZH
 
-7. 重启文件服务器(完成配置)
+8. 重启文件服务器(完成配置)
 
 [原文链接](https://blog.csdn.net/weixin_45606229/article/details/111060060  )
 
@@ -2617,7 +3056,7 @@ show status like 'innodb_row_lock%'
 
 3. 解压文件：tar -zxvf Apache_OpenOffice_4.1.6_Linux_x86-64_install-rpm_zh-CN.tar.gz，解压后进入zh-CN目录中。
 
-4.  cd RPMS/ 里面都是rpm文件，我们需要安装这些文件 
+4. cd RPMS/ 里面都是rpm文件，我们需要安装这些文件 
 
 5. 安装rpm文件： rpm -ivh *.rpm
 
@@ -2636,15 +3075,13 @@ show status like 'innodb_row_lock%'
 10. 查看启动状态
 
     ```shell
-    ps -ef|grep openoffice
-    netstat -lnp |grep 8100
+    ps -ef|grep openofficenetstat -lnp |grep 8100
     ```
 
 ##### 3.查看后台运行的java -jar项目的端口号，并杀死该进程
 
 ```shell
-lsof -i:8088
-Kill -9 pid
+lsof -i:8088Kill -9 pid
 ```
 
 ##### 4.用windowd的cmd向linux服务器上传文件
@@ -2680,9 +3117,7 @@ tail -n 1  /var/log/boot.log
 ```
 
 ```she
-tail -n 1000：显示最后1000行
-tail -n +1000：从1000行开始显示，显示1000行以后的
-head -n 1000：显示前面1000行
+tail -n 1000：显示最后1000行tail -n +1000：从1000行开始显示，显示1000行以后的head -n 1000：显示前面1000行
 ```
 
  [原文链接](https://www.cnblogs.com/keta/p/9627227.html)
@@ -2753,6 +3188,7 @@ head -n 1000：显示前面1000行
 
 
 #### 学习
+
 # 项目
 
 ## github

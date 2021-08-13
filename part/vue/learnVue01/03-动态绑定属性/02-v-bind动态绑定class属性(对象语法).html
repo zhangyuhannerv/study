@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .active {
+      color: red
+    }
+
+    .title {
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <h2 class="active">{{message}}</h2>
+  <h2 :class="active">{{message}}</h2>
+
+  <!--当boolean为true时，对应的类名会被添加到相应的标签上-->
+  <!--  <h2 :class="{类名1:boolean,类名2:boolear}">{{message}}</h2>-->
+
+  <!--此时就可以通过修改isActive的值或者isLine的值来给标签动态的添加class-->
+  <!--除了:class外，也可以写单独的class，到时候所有的class会组合渲染出来-->
+  <!--一般静态的class会写在class属性里，动态的class通过vue的对象语法动态控制-->
+  <h2 class="title" :class="{active:isActive,line:isLine}">
+    {{message}}
+  </h2>
+
+  <!--有时候对象语法太长或者过于复杂，也可以单独抽成一个方法或者抽成一个计算属性，注意。这里的方法的()不能省略-->
+  <h2 class="title" :class="getClasses()">
+    {{message}}
+  </h2>
+
+  <!--点击按钮可以动态修改上面h2内容的颜色-->
+  <button v-on:click="btnClick">按钮</button>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      active: 'active',
+      isActive: true,
+      isLine: true,
+    },
+    methods: {
+      btnClick() {
+        this.isActive = !this.isActive;
+      },
+      getClasses() {
+        return {active: this.isActive, line: this.isLine}
+      }
+    }
+  })
+</script>
+</body>
+</html>

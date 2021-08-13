@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .line {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!--当类名非常多的时候，可以把类名放到数组里展示，但是应用情况较少-->
+  <!--''包裹的是静态的类名，此时可以与title写在一起。没有被包裹的时动态的，和变量绑定-->
+  <h2 class="title" :class="['active',line]">{{message}}</h2>
+  <!--数组语法也可以抽成一个方法或者计算属性-->
+  <h2 class="title" :class="getClasses()">{{message}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      line: 'line',
+    },
+    methods: {
+      getClasses() {
+        return ['active', this.line]
+      }
+    }
+  })
+</script>
+</body>
+</html>
