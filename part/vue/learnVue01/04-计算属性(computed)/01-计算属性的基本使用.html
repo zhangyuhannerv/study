@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--需求:在firstName和lastName之间加一个空格-->
+
+  <!--以下的写法太长-->
+  <span>插值写法:</span>
+  <h2>{{firstName + ' ' + lastName}}</h2>
+  <h2>{{firstName}} {{lastName}}</h2>
+
+  <!--解决方法1:method-->
+  <!--不好的地方，{{}}里很少直接放入方法，一般都是放入变量-->
+  <span>方法:</span>
+  <h2>{{getFullName()}}</h2>
+  <h2 v-text="getFullName()"></h2>
+
+  <!--解决方法2:计算属性（computed）-->
+  <span>计算属性:</span>
+  <h2>{{fullName}}</h2>
+
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      firstName: 'Lebron',
+      lastName: 'James',
+    },
+
+    // 计算属性:computed
+    computed: {
+      // 约定俗成：计算属性里一般不加动词如'get'之类的。
+      fullName() {
+        return this.firstName + ' ' + this.lastName;
+      }
+    },
+    methods: {
+      getFullName() {
+        return this.firstName + ' ' + this.lastName;
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--可以以变量数组的形式添加多个css属性-->
+  <!--应用场景很少-->
+  <h2 :style="[baseBackgroundColor,baseFontSize]">{{message}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      baseBackgroundColor: {backgroundColor: 'red'},
+      baseFontSize: {fontSize: '20px'},
+    },
+  })
+</script>
+</body>
+</html>

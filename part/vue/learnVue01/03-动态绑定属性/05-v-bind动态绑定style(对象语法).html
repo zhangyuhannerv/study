@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .title {
+      /*这里不需要加''*/
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!--  <h2 :style="{key(css的属性名:如color,fontSize等):value(属性值)}">{{message}}</h2>-->
+
+  <!--这里也支持font-size的写法-->
+  <!--这里如果不加'',会把20px作为一个变量来解析-->
+  <h2 :style="{fontSize:'20px'}">{{message}}</h2>
+
+  <!--finalSize当成一个变量来使用了-->
+  <h2 :style="{fontSize: finalSize}">{{message}}</h2>
+
+  <!--如果fontSize只写数字，那么后面要手动拼接一个'px'-->
+  <h2 :style="{fontSize: fontSize + 'px',color:finalColor}">{{message}}</h2>
+
+  <!--还可以把很长的对象通过方法返回-->
+  <h2 :style="getStyle()">{{message}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      finalSize: '100px',
+      fontSize: 100,
+      /*在组件里只需要改这个变量的值，那么就可以动态改变组件的样式*/
+      finalColor: 'red',
+    },
+    methods: {
+      getStyle() {
+        let obj = {fontSize: this.fontSize + 'px', color: this.finalColor}
+        return obj;
+      }
+    }
+  })
+</script>
+</body>
+</html>
