@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 800px;
+            height: 800px;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container1" class="container"></div>
+    <div id="container2" class="container"></div>
+    <div id="container3" class="container"></div>
+    <button id=btn>点击截取echarts图</button>
+
+</body>
+<script src="./lib/jquery-3.5.1.js"></script>
+<script src="./lib/echarts.min.js"></script>
+
+<script>
+    $(function () {
+        $("#btn").click(function () {
+            let dom = echarts.init(document.getElementById("container1"));
+            let optionTemp = dom.getOption();
+            
+            optionTemp.xAxis[0].min = 850;
+            optionTemp.xAxis[0].max = 880;
+
+            dom.clear();
+            dom.setOption(optionTemp);
+        })
+
+        var dom1 = echarts.init(document.getElementById("container1"));
+        var option1 = {
+            xAxis: {
+                type: 'value',
+                min: 820,
+                max: 890
+            },
+            yAxis: {
+                type: 'value'
+            },
+            dataZoom: {
+                type: 'slider'
+            },
+            series: [{
+                data: [
+                    [820, 930],
+                    [840, 940],
+                    [850, 900],
+                    [860, 900],
+                    [870, 900],
+                    [880, 900],
+                    [890, 900],
+                ],
+                type: 'line'
+            }],
+            tooltip: {
+                trigger: 'axis',
+            }
+        };
+        dom1.setOption(option1);
+
+        var dom2 = echarts.init(document.getElementById("container2"));
+        var option2 = {
+            xAxis: {
+                type: 'value',
+                min: 820,
+                max: 890
+            },
+            yAxis: {
+                type: 'value'
+            },
+            dataZoom: {
+                type: 'slider'
+            },
+            series: [{
+                data: [
+                    [820, 90],
+                    [840, 85],
+                    [850, 43],
+                    [860, 24],
+                    [870, 38],
+                    [880, 68],
+                    [890, 94],
+                ],
+                type: 'line'
+            }],
+            tooltip: {
+                trigger: 'axis',
+            }
+        };
+        dom2.setOption(option2);
+
+        // var dom1 = echarts.init(document.getElementById("container1"));
+        // var dom2 = echarts.init(document.getElementById("container2"));
+        // dom1.group = 'group1';
+        // dom2.group = 'group1';
+        // echarts.connect('group1');
+    })
+</script>
+
+
+</html>

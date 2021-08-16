@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>折线图</title>
+</head>
+<body>
+<div id="d2">
+    <a href="javascript:;" id="a1">2020</a>
+    <a href="javascript:;" id="a2">2021</a>
+</div>
+<div style="width: 400px;height: 400px;background-color: white" id="d1">
+</div>
+
+<script src="../echarts/echarts.min.js"></script>
+<script src="../node_modules/jQuery/tmp/jquery.js"></script>
+<script>
+    (function () {
+
+        var yearData = [
+            {
+                year: '2020', // 年份
+                data: [ // 两个数组是因为有两条线
+                    [24, 40, 101, 134, 90, 230, 210, 230, 120, 230, 210, 120],
+                    [40, 64, 191, 324, 290, 330, 310, 213, 180, 200, 180, 79]
+                ]
+            }
+            , {
+                year: '2021', // 年份
+                data: [ // 两个数组是因为有两条线
+                    [123, 175, 112, 197, 121, 67, 92, 21, 43, 64, 76, 38],
+                    [143, 131, 165, 123, 178, 21, 82, 64, 43, 60, 19, 34]
+                ]
+
+            }
+        ];
+
+
+        var mycharts = echarts.init(document.getElementById("d1"))
+        option = {
+            // 折线图可以通过这个color数组来修改线条的颜色
+            color: ['#00f2f1', '#ed3f35'],
+            /*title: {
+                text: '折线图堆叠'
+            },*/
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                // 修改图例组件中的文字颜色
+                textStyle: {
+                    color: '#4c9bfd',
+                },
+                // 如果series对象由name值，legend可以不用写data
+                /*data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],*/
+                // 修改图例组件的位置
+                // 注意，这个10%一定要加引号
+                right: '10%'
+            },
+            grid: {
+                top: '20%',
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                show: true, // 该属性为是否显示边框
+                borderColor: '#012f4a',//设置边框颜色
+                containLabel: true
+            },
+
+            // 不要工具箱里面的保存为图片的功能
+            /*toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },*/
+            xAxis: {
+                type: 'category',
+                boundaryGap: false, // 去除轴间距
+                data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                axisTick: {
+                    show: false // 去除刻度线
+                },
+                axisLabel: {
+                    color: '#4c90fb' // 更换坐标轴刻度标签的文本颜色
+                },
+                axisLine: {
+                    show: false // 去除轴线
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisTick: {
+                    show: false // 去除刻度线
+                },
+                axisLabel: {
+                    color: '#4c90fb' // 更换坐标轴刻度标签的文本颜色
+                },
+                axisLine: {
+                    show: false // 去除轴线
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: "#012f4a" // 分割线的颜色
+                    }
+                }
+            },
+            series: [
+                {
+                    name: '新增粉丝',
+                    type: 'line',
+                    // stack（数据堆叠），同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加。
+                    // stack: '总量',
+                    data: yearData[0].data[0],
+                    // 设置折线是否平滑显示（带有弧度）
+                    smooth: true
+                },
+                {
+                    name: '新增游客',
+                    type: 'line',
+                    // stack（数据堆叠），同个类目轴上系列配置相同的stack值后，后一个系列的值会在前一个系列的值上相加。
+                    // stack: '总量',
+                    data: yearData[0].data[1],
+                    // 设置折线是否平滑显示（带有弧度）
+                    smooth: true
+                }
+            ]
+        };
+
+        mycharts.setOption(option);
+
+        // 新增点击切换效果
+        $("#d2 a").click(function () {
+            // console.log($(this).index());
+            // 点击a之后，根据当前a的索引号，找到对应的yearData相关对象
+            // console.log(yearData[$(this).index()]);
+            option.series[0].data = yearData[$(this).index()].data[0];
+            option.series[1].data = yearData[$(this).index()].data[1];
+            // 配置项option变了，所以需要重新渲染
+            mycharts.setOption(option);
+
+        });
+
+        // 折线图自适应
+        window.addEventListener('resize', function () {
+            myeCharts.resize();
+        });
+
+    })();
+
+</script>
+</body>
+</html>

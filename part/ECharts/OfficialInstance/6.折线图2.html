@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>折线图2</title>
+</head>
+<body>
+
+<div id="d1" style="width: 300px;height: 300px;background-color: yellowgreen">
+
+</div>
+
+<script src="../echarts/echarts.min.js"></script>
+<script src="../node_modules/jQuery/tmp/jquery.js"></script>
+<script>
+
+    (function () {
+
+        // 这里初始化容器最好使用document,而不用jQuery,否则会报错
+        var mychart = echarts.init(document.getElementById("d1"));
+        option = {
+            /*title: {
+                text: '堆叠区域图'
+            },*/
+            tooltip: {
+                trigger: 'axis',
+
+                // 这里是设置横着的鼠标放置线
+                /*  axisPointer: {
+                      type: 'cross',
+                      label: {
+                          backgroundColor: 'red'
+                      }
+                  }*/
+            },
+            legend: {
+                top: '0%',
+                data: ['邮件营销', '联盟广告'],
+                textStyle: {
+                    color: "rgba(255,255,255,.5)",
+                    fontSize: "12"
+                }
+            },
+            /*toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },*/
+            grid: {
+                left: '10',
+                top: '30',
+                right: '10',
+                bottom: '10',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    // 这是坐标轴的刻度标签（文本标签）
+                    axisLabel: {
+                        textStyle: {
+                            color: "rgba(255,255,255,.6)",
+                            fontsize: 12
+                        }
+                    },
+                    // x轴的颜色 rgba(255,255,255.2)
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,.2)'
+                        }
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,.3)'
+                        }
+                    },
+                    axisLabel: {
+                        textStyle: {
+                            color: 'rgba(255,255,255.6)',
+                            fontSize: 12
+                        }
+                    },
+                    // 修改y轴分割线的颜色
+                    splitLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,.3)'
+                        }
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '邮件营销',
+                    type: 'line',
+                    // stack: '总量',
+                    smooth: true,
+                    lineStyle: {
+                        // lineStyle是单独修改当前线条的样式
+                        // 设置当前线条的颜色
+                        color: "#0184d5",
+                        // 设置当前线条的宽度(默认为2）
+                        width: 3,
+                        // 设置线条为虚线
+                        type: 'dashed'
+                    },
+
+                    // 线下面的填充区域设置
+                    areaStyle: {
+                        // color:'pink',
+                        // 设置渐变色，不需要记住，只需要复制即可
+                        color: new echarts.graphic.LinearGradient(
+                            0,
+                            0,
+                            0,
+                            1,
+                            [
+                                {
+                                    offset: 0,
+                                    // color: 'rgba(1,132,213,0.4)' // 渐变色的起始颜色 ,是上面的颜色
+                                    color: 'black'
+                                },
+                                {
+                                    offset: 0.8,
+                                    // color: 'rgba(1,132,213,0.1)' // 渐变色的结束颜色，是下面的颜色
+                                    color: 'white'
+                                }
+                            ],
+                            false
+                        ),
+
+                    },
+                    // 为线条添加阴影颜色
+                    shadowColor: 'red',
+                    data: [120, 132, 101, 134, 90, 230, 210],
+                    // 设置拐点形状
+                    symbol: 'rect',
+                    // 设置拐点大小
+                    symbolSize: 12,
+                    // 设置为开始不显示拐点，鼠标经过显示
+                    showSymbol: false,
+                    // 设置拐点的样式（颜色以及边框）
+                    itemStyle: {
+                        // 设置拐点颜色
+                        color: '#0184d5',
+                        // 设置拐点边框颜色
+                        borderColor: "rgba(221,220,107,.1)",
+                        // 设置拐点边框宽度
+                        borderWidth: 12
+                    }
+                },
+                {
+                    name: '联盟广告',
+                    type: 'line',
+                    // stack: '总量',
+                    smooth: true,
+                    areaStyle: {},
+                    data: [220, 182, 191, 234, 290, 330, 310]
+                }
+            ]
+        };
+
+        mychart.setOption(option);
+        // 折线图自适应（跟随屏幕)
+        window.addEventListener('resize', function () {
+            myeCharts.resize();
+        });
+
+    })()
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="d1" style="width: 500px;height:800px;overflow: auto;">
+        <div id='d2' style="width: 500px;height: 1000px;">
+
+        </div>
+    </div>
+    <div id="slider" style="height: 50px;width: 500px;"></div>
+    <div id='d3' style="width: 500px;height: 250px;">
+
+    </div>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        $(function () {
+
+            var mychart2 = echarts.init(document.querySelector("#d2"));
+            var option2 = {
+                legend: [{
+                        top: '5%',
+                        x: 'right',
+                        data: ['轮轨力', '轮轨力速度'],
+                        formatter: function (name) {
+                            return name.indexOf("速度") == -1 ? name : name.substring(name.length - 2,
+                                name.length);
+                        }
+                    },
+                    {
+                        x: 'right',
+                        top: '45%',
+                        data: ['右轮减载率', '右轮减载率速度'],
+                        formatter: function (name) {
+                            return name.indexOf("速度") == -1 ? name : name.substring(name.length - 2,
+                                name.length);
+                        }
+                    }
+                ],
+                grid: [{
+                    containLabel: true,
+                    top: '10%',
+                    right: '5%',
+                    width: '60%',
+                    height: '30%'
+                }, {
+                    containLabel: true,
+                    top: '50%',
+                    height: '30%'
+                }],
+                dataZoom: [{
+                    top: 0,
+                    show: true,
+                    realtime: false,
+                    start: 0,
+                    end: 100,
+                    showDetail: false,
+                    xAxisIndex: [0, 1],
+                }],
+                xAxis: [{
+                    type: 'value',
+                    gridIndex: 0,
+                }, {
+                    type: 'value',
+                    gridIndex: 1,
+                }],
+                yAxis: [{
+                        type: 'value',
+                        gridIndex: 0,
+                    },
+                    {
+                        type: 'value',
+                        gridIndex: 0,
+                    },
+                    {
+                        type: 'value',
+                        gridIndex: 1,
+                    },
+                    {
+                        type: 'value',
+                        gridIndex: 1,
+                    },
+                ],
+                axisPointer: {
+                    show: true,
+                    // link: {
+                    //     xAxisIndex: 'all'
+                    // },
+                    axis: 'x'
+                },
+                tooltip: {
+                    show: true,
+                    formatter: function (params) {
+                        let html = '';
+                        for (const key in params) {
+                            html += params[key].axisValue + '<br>'
+                        }
+                        return html;
+                    },
+                    trigger: 'axis',
+                },
+                dataset: [{
+                        source: [{
+                                'distance': 1,
+                                'value': 3,
+                                'speed': 4
+                            },
+                            {
+                                'distance': 2,
+                                'value': 6,
+                                'speed': 7
+                            },
+                            {
+                                'distance': 3,
+                                'value': 9,
+                                'speed': 5
+                            },
+                            // [2, 6, 7],
+                            // [3, 9, 5]
+                        ]
+                    },
+                    {
+                        source: [{
+                                'distance': 1.1,
+                                'value': 2,
+                                'speed': 5
+                            },
+                            {
+                                'distance': 2.2,
+                                'value': 4,
+                                'speed': 7
+                            },
+                            {
+                                'distance': 3.3,
+                                'value': 5,
+                                'speed': 4
+                            },
+                            // [1.1, 2, 5],
+                            // [2.2, 4, 7],
+                            // [3.3, 5, 4]
+                        ]
+                    },
+                ],
+                series: [{
+                    xAxisIndex: 0,
+                    yAxisIndex: 0,
+                    datasetIndex: 0,
+                    name: '轮轨力',
+                    type: 'scatter',
+                    encode: {
+                        x: 'distance',
+                        y: 'value',
+                    }
+                }, {
+                    xAxisIndex: 0,
+                    yAxisIndex: 1,
+                    datasetIndex: 0,
+                    name: '轮轨力速度',
+                    type: 'line',
+                    encode: {
+                        x: 'distance',
+                        y: 'speed',
+                    }
+                }, {
+                    xAxisIndex: 1,
+                    yAxisIndex: 2,
+                    datasetIndex: 1,
+                    name: '右轮减载率',
+                    type: 'scatter',
+                    encode: {
+                        x: 'distance',
+                        y: 'value',
+                    }
+                }, {
+                    xAxisIndex: 1,
+                    yAxisIndex: 3,
+                    datasetIndex: 1,
+                    name: '右轮减载率速度',
+                    type: 'line',
+                    encode: {
+                        x: 'distance',
+                        y: 'speed',
+                    }
+                }]
+            }
+            mychart2.setOption(option2);
+
+            let sliderOption = {
+                xAxis: {
+                    show: false
+                },
+                yAxis: {
+                    show: false
+                },
+                grid: {
+                    left: 0,
+                    right: '0.4%',
+
+                },
+                dataZoom: [{
+                        top: 0,
+                        show: true,
+                        realtime: false,
+                        start: 0,
+                        end: 100,
+                        showDetail: false,
+                    },
+
+                ]
+            }
+            var slider = echarts.init(document.querySelector("#slider"))
+            slider.setOption(sliderOption, true);
+            slider.on('dataZoom', function (params) {
+                let start = params.start;
+                let end = params.end;
+                let tempEchart = echarts.init(document.querySelector("#d2"));
+                let option = tempEchart.getOption();
+                option.dataZoom[0].start = start;
+                option.dataZoom[0].end = end;
+                tempEchart.setOption(option, true);
+            })
+
+            setTimeout(function () {
+                let tempEchart = echarts.init(document.querySelector("#d2"));
+                let tempOption = tempEchart.getOption();
+                let arr = [{
+                        'distance': 4,
+                        'value': 3,
+                        'speed': 4
+                    },
+                    {
+                        'distance': 5,
+                        'value': 6,
+                        'speed': 7
+                    },
+                    {
+                        'distance': 6,
+                        'value': 9,
+                        'speed': 5
+                    },
+                    // [2, 6, 7],
+                    // [3, 9, 5]
+                ];
+                let data = tempOption.dataset[0].source.concat(arr);
+                tempOption.dataset[0].source = data;
+                tempEchart.setOption(tempOption);
+            }, 5000);
+
+            // var mychart3 = echarts.init(document.querySelector("#d3"));
+            // var option3 = {
+            //     xAxis: {
+            //         type: 'value',
+            //     },
+            //     yAxis: [{
+            //             type: 'value'
+            //         },
+            //         {
+            //             type: 'value'
+            //         },
+            //     ],
+            //     tooltip: {
+            //         trigger: 'axis',
+            //     },
+            //     axisPointer: {
+            //         show: true,
+            //         triggerTooltip: true,
+            //     },
+            //     dataset: {
+            //         source: [
+            //             [4, 3, 4],
+            //             [5, 6, 7],
+            //             [6, 9, 5]
+            //         ]
+            //     },
+            //     legend: {
+            //         show: true
+            //     },
+            //     series: [{
+            //         name: '右轮减载率',
+            //         type: 'line',
+            //         encode: {
+            //             x: 0,
+            //             y: 1,
+            //         }
+            //     }, {
+            //         name: '速度',
+            //         yAxisIndex: 1,
+            //         type: 'line',
+            //         encode: {
+            //             x: 0,
+            //             y: 2,
+            //         }
+            //     }]
+            // }
+
+            // mychart3.setOption(option3);
+
+            // var mychart2 = echarts.init(document.querySelector("#d2"));
+            // var mychart3 = echarts.init(document.querySelector("#d3"));
+            // mychart2.group = '1';
+            // mychart3.group = '1';
+            // echarts.connect('1');
+        })
+    </script>
+</body>
+
+</html>

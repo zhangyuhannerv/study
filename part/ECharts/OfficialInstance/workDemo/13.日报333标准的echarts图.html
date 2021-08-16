@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #d1,
+        #d2 {
+            margin: 0 auto;
+            width: 1558px;
+            height: 500px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='d1'>
+
+    </div>
+
+    <div id="d2">
+
+    </div>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        let dom1 = echarts.init(document.getElementById("d1"));
+        let option1 = {
+            legend: {
+                itemGap: 20,
+                itemWidth: 14,
+                itemHeight: 14,
+                icon: 'circle',
+                textStyle: {
+                    color: '#333333',
+                },
+                data: [
+                    { name: '左高低' },
+                    { name: '右高低' },
+                    { name: '左轨向' },
+                    { name: '右轨向' },
+                    { name: '大轨距' },
+                    { name: '小轨距' },
+                    { name: '水平' },
+                    { name: '三角坑' },
+                    { name: '超高' },
+                    { name: '横向加速度' },
+                    { name: '垂向加速度' },
+                    { name: '轨距变化率' },
+                ]
+            },
+            tooltip: {},
+            series: [{
+                name: '总超限',
+                type: 'pie',
+                radius: ['25%', '35%'],
+                center: ['25%', '30%'],
+                label: {
+                    formatter: '{b}:{c}({d}%)',
+                },
+                itemStyle: {
+                    borderWidth: 2,
+                    borderColor: "#fff",
+                },
+                data: [
+                    { value: 2, name: '左高低', itemStyle: { color: '#719DBF' } },
+                    { value: 3, name: '右高低', itemStyle: { color: '#A1AFE3' } },
+                    { value: 4, name: '左轨向', itemStyle: { color: '#348DD1' } },
+                    { value: 5, name: '右轨向', itemStyle: { color: '#3CA3B7' } },
+                    { value: 6, name: '大轨距', itemStyle: { color: '#A495C6' } },
+                    { value: 6, name: '小轨距', itemStyle: { color: '#BB95C6' } },
+                    { value: 0, name: '水平', itemStyle: { color: '#008E77' } },
+                    { value: 6, name: '三角坑', itemStyle: { color: '#7ED2C4' } },
+                    { value: 6, name: '超高', itemStyle: { color: '#46BCB7' } },
+                    { value: 6, name: '横向加速度', itemStyle: { color: '#5384B4' } },
+                    { value: 6, name: '垂向加速度', itemStyle: { color: '#1B77D1' } },
+                    { value: 0, name: '轨距变化率', itemStyle: { color: '#23AD96' } },
+                ],
+
+            }, {
+                name: '二级超限',
+                type: 'pie',
+                radius: ['25%', '35%'],
+                center: ['75%', '30%'],
+                label: {
+                    formatter: '{b}:{c}({d}%)',
+                },
+                itemStyle: {
+                    borderWidth: 2,
+                    borderColor: "#fff",
+                },
+                data: [
+                    { value: 2, name: '左高低', itemStyle: { color: '#719DBF' } },
+                    { value: 3, name: '右高低', itemStyle: { color: '#A1AFE3' } },
+                    { value: 4, name: '左轨向', itemStyle: { color: '#348DD1' } },
+                    { value: 5, name: '右轨向', itemStyle: { color: '#3CA3B7' } },
+                    { value: 6, name: '大轨距', itemStyle: { color: '#A495C6' } },
+                    { value: 6, name: '小轨距', itemStyle: { color: '#BB95C6' } },
+                    { value: 0, name: '水平', itemStyle: { color: '#008E77' } },
+                    { value: 6, name: '三角坑', itemStyle: { color: '#7ED2C4' } },
+                    { value: 6, name: '超高', itemStyle: { color: '#46BCB7' } },
+                    { value: 6, name: '横向加速度', itemStyle: { color: '#5384B4' } },
+                    { value: 6, name: '垂向加速度', itemStyle: { color: '#1B77D1' } },
+                    { value: 0, name: '轨距变化率', itemStyle: { color: '#23AD96' } },
+                ],
+            }, {
+                name: '三级超限',
+                type: 'pie',
+                radius: ['25%', '35%'],
+                center: ['25%', '75%'],
+                label: {
+                    formatter: '{b}:{c}({d}%)',
+                },
+                itemStyle: {
+                    borderWidth: 2,
+                    borderColor: "#fff",
+                },
+                data: [
+                    { value: 2, name: '左高低', itemStyle: { color: '#719DBF' } },
+                    { value: 3, name: '右高低', itemStyle: { color: '#A1AFE3' } },
+                    { value: 4, name: '左轨向', itemStyle: { color: '#348DD1' } },
+                    { value: 5, name: '右轨向', itemStyle: { color: '#3CA3B7' } },
+                    { value: 6, name: '大轨距', itemStyle: { color: '#A495C6' } },
+                    { value: 6, name: '小轨距', itemStyle: { color: '#BB95C6' } },
+                    { value: 0, name: '水平', itemStyle: { color: '#008E77' } },
+                    { value: 6, name: '三角坑', itemStyle: { color: '#7ED2C4' } },
+                    { value: 6, name: '超高', itemStyle: { color: '#46BCB7' } },
+                    { value: 6, name: '横向加速度', itemStyle: { color: '#5384B4' } },
+                    { value: 6, name: '垂向加速度', itemStyle: { color: '#1B77D1' } },
+                    { value: 0, name: '轨距变化率', itemStyle: { color: '#23AD96' } },
+                ],
+            }, {
+                name: '四级超限',
+                type: 'pie',
+                radius: ['25%', '35%'],
+                center: ['75%', '75%'],
+                label: {
+                    formatter: '{b}:{c}({d}%)',
+                },
+                itemStyle: {
+                    borderWidth: 2,
+                    borderColor: "#fff",
+                },
+                data: [
+                    { value: 2, name: '左高低', itemStyle: { color: '#719DBF' } },
+                    { value: 3, name: '右高低', itemStyle: { color: '#A1AFE3' } },
+                    { value: 4, name: '左轨向', itemStyle: { color: '#348DD1' } },
+                    { value: 5, name: '右轨向', itemStyle: { color: '#3CA3B7' } },
+                    { value: 6, name: '大轨距', itemStyle: { color: '#A495C6' } },
+                    { value: 6, name: '小轨距', itemStyle: { color: '#BB95C6' } },
+                    { value: 0, name: '水平', itemStyle: { color: '#008E77' } },
+                    { value: 6, name: '三角坑', itemStyle: { color: '#7ED2C4' } },
+                    { value: 6, name: '超高', itemStyle: { color: '#46BCB7' } },
+                    { value: 6, name: '横向加速度', itemStyle: { color: '#5384B4' } },
+                    { value: 6, name: '垂向加速度', itemStyle: { color: '#1B77D1' } },
+                    { value: 0, name: '轨距变化率', itemStyle: { color: '#23AD96' } },
+                ],
+            }, {
+                type: 'pie',
+                radius: ['30%', '30%'],
+                center: ['25%', '30%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: true,
+                    position: 'center',
+                    color: '#333',
+                    fontSize: 18
+                },
+                labelLine: {
+                    show: false
+                },
+                tooltip: {
+                    show: false
+                },
+                emphasis: {
+                    scale: false
+                },
+                data: [
+                    { value: 0, name: '总超限占比' },
+                ],
+
+            }, {
+                type: 'pie',
+                radius: ['30%', '30%'],
+                center: ['75%', '30%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: true,
+                    position: 'center',
+                    color: '#333',
+                    fontSize: 18
+                },
+                labelLine: {
+                    show: false
+                },
+                tooltip: {
+                    show: false
+                },
+                emphasis: {
+                    scale: false
+                },
+                data: [
+                    { value: 0, name: '二级超限占比' },
+                ],
+
+            }, {
+                type: 'pie',
+                radius: ['30%', '30%'],
+                center: ['25%', '75%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: true,
+                    position: 'center',
+                    color: '#333',
+                    fontSize: 18
+                },
+                labelLine: {
+                    show: false
+                },
+                tooltip: {
+                    show: false
+                },
+                emphasis: {
+                    scale: false
+                },
+                data: [
+                    { value: 0, name: '三级超限占比' },
+                ],
+
+            }, {
+                type: 'pie',
+                radius: ['30%', '30%'],
+                center: ['75%', '75%'],
+                avoidLabelOverlap: false,
+                label: {
+                    show: true,
+                    position: 'center',
+                    color: '#333',
+                    fontSize: 18
+                },
+                labelLine: {
+                    show: false
+                },
+                tooltip: {
+                    show: false
+                },
+                emphasis: {
+                    scale: false
+                },
+                data: [
+                    { value: 0, name: '四级超限占比' },
+                ],
+
+            }, ]
+        };
+        dom1.setOption(option1);
+
+        let dom2 = echarts.init(document.getElementById("d2"));
+        let option2 = {
+            color: ["#6983A2", "#69A0A2", "#90B4CE", "#BCD5E2"],
+            legend: {
+                itemGap: 20,
+                itemWidth: 14,
+                itemHeight: 14,
+                textStyle: {
+                    color: '#333333',
+                },
+                right: '10%'
+            },
+            grid: {
+                bottom: '3%',
+                containLabel: true
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                },
+            },
+            xAxis: {
+                type: 'category',
+                axisTick: {
+                    show: false
+                },
+                axisLine: {
+                    show: false
+                },
+                axisLabel: {
+                    color: "#8F9AB4"
+                },
+                data: [
+                    '左高低',
+                    '右高低',
+                    '左轨向',
+                    '右轨向',
+                    '大轨距',
+                    '小轨距',
+                    '水平',
+                    '三角坑',
+                    '超高',
+                    '横向加速度',
+                    '垂向加速度',
+                    '轨距变化率',
+                ]
+            },
+            yAxis: {
+                type: 'value',
+                name: '数量',
+                nameLocation: 'center',
+                nameTextStyle: {
+                    verticalAlign: 'bottom',
+                    padding: [0, 0, 30, 0]
+                },
+                axisLabel: {
+                    color: "#8F9AB4"
+                },
+                boundaryGap: ['0%', '5%'],
+            },
+            series: [{
+                    name: '总超限',
+                    type: 'bar',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    },
+                    barMaxWidth: 20,
+                    data: [1, 2, 4, 5, 6, 8, 2, 5, 1, 2, 4, 5]
+                },
+                {
+                    name: '一级超限',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    },
+                    type: 'bar',
+                    barMaxWidth: 20,
+                    data: [0, 1, 2, 3, 2, 3, 0, 1, 1, 0, 2, 2]
+                },
+                {
+                    name: '二级超限',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    },
+                    type: 'bar',
+                    barMaxWidth: 20,
+                    data: [0, 1, 1, 0, 2, 4, 2, 1, 0, 1, 1, 3]
+                },
+                {
+                    name: '三级超限',
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    },
+                    type: 'bar',
+                    barMaxWidth: 20,
+                    data: [0, 0, 1, 1, 2, 1, 0, 4, 0, 1, 1, 0]
+                }
+            ]
+        };
+        dom2.setOption(option2);
+    </script>
+</body>
+
+</html>

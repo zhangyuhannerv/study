@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>横着的柱状图</title>
+</head>
+<body>
+<div style="width: 400px;height: 400px;background-color: darkblue" id="d1">
+</div>
+<script src="../echarts/echarts.min.js"></script>
+<script>
+    var mycolor = ['#1089E7', '#F57474', '#56D0E3', '#F8B448', '#8B78F6'];
+    var myeCharts = echarts.init(document.getElementById('d1'));
+    option = {
+        // 删除标题
+        /*title: {
+            text: '世界人口总量',
+            subtext: '数据来自网络'
+        },*/
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+
+        // 删除图例组件
+        /* legend: {
+             data: ['2011年', '2012年']
+         },*/
+        grid: {
+            left: '20%',
+            right: '22%',
+            bottom: '10%',
+            // 注释掉就不管刻度标签的位置了
+            // containLabel: true
+        },
+        // 不显示x轴的相关信息
+        xAxis: {
+            show: false
+        },
+        yAxis: [{
+            type: 'category',
+            data: ['HTML5', 'CSS3', 'javascript', 'VUE', 'NODE'],
+
+            // 设置坐标轴是否反转
+            inverse: true,
+            // 不显示y轴的线
+            axisLine: {
+                show: false
+            },
+            // 不显示y轴的刻度
+            axisTick: {
+                show: false
+            },
+            // 把刻度标签里面的文字颜色设置为白色
+            axisLabel: {
+                color: '#fff'
+            },
+
+        },
+            {
+                // 这是y轴里面的第二组对象
+                // 用于显示右边的总数
+
+                type: 'category',
+                data: [702, 350, 610, 793, 664],
+                inverse: true,
+                // 不显示y轴的线
+                axisLine: {
+                    show: false
+                },
+                // 不显示y轴的刻度
+                axisTick: {
+                    show: false
+                },
+                // 把刻度标签里面的文字颜色设置为白色
+                axisLabel: {
+                    color: '#fff'
+                },
+            }
+        ],
+        series: [
+            {
+                name: '条',
+                type: 'bar',
+                data: [70, 34, 60, 78, 69],
+
+                // 设置柱子的层别,在叠加的时候特别有用
+                yAxisIndex: 0,
+
+                // 修改第一组柱子的样式
+                itemStyle: {
+                    // 设置圆角
+                    barBorderRadius: 20,
+                    // 此时的color可以修改柱子的颜色
+                    // 设置颜色
+                    // 统一设置为粉色
+                    // color: 'pink'
+                    // 分别设置颜色
+                    color: function (params) {
+                        // params即传进来的是柱子的对象
+                        // 它的dataIndex是当前柱子的索引(下标从0开始)
+                        console.log(params);
+                        // 膜上数组的长度,可以让柱子的颜色重复循环颜色数组里的颜色
+                        return mycolor[params.dataIndex % 5];
+                    }
+                },
+                // 柱子之间的距离
+                barCateGoryGap: 50,
+                // 柱子宽度
+                barWidth: 10,
+                // 设置第一组柱子内百分比显示数据
+                // 图形上的文本标签 ：label
+                label: {
+                    show: true,
+                    position: 'inside',
+                    // {c}会自动的解析为数据，这里一定是“”，而不能是''。 （解析的就是data里面的数据）
+                    formatter: "{c}%"
+                }
+            },
+            {
+                name: '框',
+                type: 'bar',
+                data: [100, 100, 100, 100, 100],
+                barCateGoryGap: 50,
+                barWidth: 15,
+
+                // 设置柱子的层别,在叠加的时候特别有用
+                yAxisIndex: 1,
+
+                itemStyle: {
+                    color: 'none',
+                    borderColor: "#00c1de",
+                    // 设置边框的宽度
+                    borderWidth: 3,
+                    // 设置15px的圆角
+                    barBorderRadius: 15
+                }
+            }
+        ]
+    };
+    myeCharts.setOption(option);
+    window.addEventListener('resize', function () {
+        myeCharts.resize();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="d1" style="width: 500px;height: 250px;">
+
+    </div>
+    <div id='d2' style="width: 500px;height: 250px;">
+
+    </div>
+    <div id='d3' style="width: 500px;height: 250px;">
+
+    </div>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        var mychart1 = echarts.init(document.querySelector("#d1"));
+        var option1 = {
+            xAxis: {
+                type: 'value',
+                axisPointer: {
+                    show: true,
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            tooltip: {
+                show: true,
+                formatter: function (params) {
+                    console.log("1" + params.value);
+                }
+            },
+            series: [{
+                    data: [
+                        [1, 8],
+                        [1.2, 4],
+                        [1.8, 3],
+                    ],
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    data: [
+                        [1, 4],
+                        [1.2, 6],
+                        [1.8, 2],
+                    ],
+                    type: 'line',
+                    smooth: true
+                }
+            ]
+        };
+        mychart1.setOption(option1);
+
+        var mychart2 = echarts.init(document.querySelector("#d2"));
+        var option2 = {
+            xAxis: {
+                type: 'value',
+                axisPointer: {
+                    show: true,
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            tooltip: {
+                show: true,
+                formatter: function (params) {
+                    console.log("2" + params.value);
+                }
+            },
+            series: [{
+                    data: [
+                        [1, 2],
+                        [1.2, 8],
+                        [1.8, 4],
+                    ],
+                    type: 'line',
+                    smooth: true
+                },
+                {
+                    data: [
+                        [1, 8],
+                        [1.2, 4],
+                        [1.8, 3],
+                    ],
+                    type: 'line',
+                    smooth: true
+                }
+            ]
+        }
+        mychart2.setOption(option2);
+
+        var mychart3 = echarts.init(document.querySelector("#d3"));
+        var option3 = {
+            xAxis: {
+                type: 'value',
+                axisPointer: {
+                    show: true,
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            tooltip: {
+                show: true,
+                formatter: function (params) {
+                    console.log("3" + params.value);
+                }
+            },
+            series: [{
+                data: [
+                    [1, 3],
+                    // [1.2, 5],
+                    [1.8, 7],
+                ],
+                type: 'line',
+                smooth: true
+            }]
+        }
+
+        mychart3.setOption(option3);
+
+
+        mychart1.group = 'group1';
+        mychart2.group = 'group1';
+        mychart3.group = 'group1';
+        echarts.connect('group1');
+    </script>
+</body>
+
+</html>

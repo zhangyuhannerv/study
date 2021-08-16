@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #d1 {
+            width: 1900px;
+            height: 1000px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id='d1'>
+
+    </div>
+
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        function S4() {
+            return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+        }
+
+        // 这是生成随机的id的方法
+        newGuid = function() {
+            return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4()).replaceAll('-', '');
+        }
+
+
+        // echarts图开始
+
+        let greenList = new Set();
+        greenList.add('1号线');
+        greenList.add('八通线');
+        console.log(greenList);
+
+        let colorArr = ['#c54d4a', '#266fa1', '#379aa6', '#af388b', '#d7a219',
+            '#d7a21a', '#3ba47b', '#3ba47a', '#9bc946', '#3da6c5', '#225fa5',
+            '#e8d843', '#d7afab', '#d7b0ab', '#6c4376', '#84ab4b', '#c54f49',
+            '#df91ba', '#e52a85', '#e57043', '#aba5c1', '#bb6b37', '#e47043', '#fce5e7', 'skyblue'
+        ];
+
+        let map;
+
+        $.ajax({
+            type: 'get',
+            url: './map.json', // 文件相对地址（相对于使用这个js脚本的html文件）
+            dataType: 'json', // 类型
+            async: false,
+            success: function(data) {
+                map = data;
+                console.log(map);
+            }
+        })
+
+
+        let category = [];
+        let legendData = [];
+
+        let seriesObj = {
+            categories: [],
+            type: "graph",
+            draggable: false,
+            coordinateSystem: "cartesian2d", //使用二维的直角坐标系（也称笛卡尔坐标系）
+            data: [],
+            links: [],
+            lineStyle: {
+                width: 5 //线条宽度
+            }
+        };
+
+        let animationObj = {
+            type: "lines",
+            coordinateSystem: "cartesian2d",
+            zlevel: 100,
+            animation: true,
+            polyline: true,
+            effect: {
+                show: true,
+                period: 2,
+                // constantSpeed: 200,
+                symbolSize: 8,
+                symbol: "circle",
+                loop: true,
+            },
+            lineStyle: {
+                width: 0,
+            },
+            data: [],
+        };
+
+        function formatName(station) {
+
+            return newGuid() + '-' + station.lb;
+
+        }
+
+        function formatLabelShow(station) {
+
+            for (let obj of seriesObj.data) {
+                if (obj.name.substring(obj.name.indexOf('-') + 1) == station.lb) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        for (let i = 0; i < map.length; i++) {
+
+
+
+
+            let tempStationArr = [];
+            let tempStationLinkArr = [];
+
+            let line = map[i];
+
+            let cateObj = { name: line.lb }
+
+            seriesObj.categories.push(cateObj);
+
+            legendData.push(line.lb);
+
+            // 动画数据定义部分
+            let animationFlag = false;
+            let coordsObj = {
+                name: line.lb,
+                coords: [],
+                lineStyle: {
+                    color: colorArr[i],
+                }
+            };
+
+            if (greenList.has(line.lb)) {
+                console.log("该线被选中");
+                animationFlag = true;
+            }
+
+            for (let j = 0; j < line.station.length; j++) {
+
+                let station = line.station[j];
+
+                let dataObj = {
+                    category: line.lb,
+                    name: formatName(station),
+                    symbol: 'circle',
+                    symbolSize: 10,
+                    layout: 'none',
+                    value: [station.x, 0 - station.y],
+                    fixed: true,
+                    itemStyle: {
+                        color: '#fff',
+                        borderColor: colorArr[i],
+                    },
+                    label: {
+                        offset: [parseFloat(station.rx) + 20, parseFloat(station.ry) + 10],
+                        show: formatLabelShow(station),
+                        formatter(params) {
+                            return params.name.substring(params.name.indexOf('-') + 1);
+                        }
+                    },
+                };
+
+                tempStationArr.push(dataObj);
+
+                if (j != 0) {
+                    linkObj = {
+                        source: tempStationArr[j - 1].name,
+                        target: tempStationArr[j].name,
+                        lineStyle: {
+                            color: colorArr[i]
+                        }
+                    };
+                    tempStationLinkArr.push(linkObj);
+                }
+
+                if (animationFlag) {
+                    coordsObj.coords.push([station.x, 0 - station.y])
+                }
+
+            }
+
+            for (let obj of tempStationArr) {
+                seriesObj.data.push(obj);
+            }
+
+            for (let obj of tempStationLinkArr) {
+                seriesObj.links.push(obj);
+            }
+
+            if (animationFlag) {
+                animationObj.data.push(coordsObj)
+            }
+        }
+
+
+
+
+        let option = {
+            color: colorArr,
+            title: {
+                text: '北京市地铁线路图',
+                textStyle: {
+                    fontSize: 20
+                },
+                x: 'center',
+                top: '5%'
+            },
+            xAxis: {
+                show: false,
+            },
+            yAxis: {
+                show: false,
+            },
+            grid: {
+                top: '5%',
+                right: '5%',
+                left: '5%',
+                bottom: '5%',
+                containLabel: true
+            },
+            tooltip: {},
+            legend: {
+                data: legendData,
+            },
+            dataZoom: [{
+                type: 'inside'
+            }, {
+                type: 'inside',
+                orient: 'vertical'
+            }],
+
+            series: [
+                seriesObj,
+                animationObj
+            ],
+
+        };
+
+        console.log(option);
+
+        let mychart = echarts.init($("#d1")[0]);
+        mychart.setOption(option, true);
+    </script>
+
+</body>
+
+</html>

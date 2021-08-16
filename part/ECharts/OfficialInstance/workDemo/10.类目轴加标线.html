@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='d3' style="width: 500px;height: 500px;">
+
+    </div>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        $(function () {
+            let mychart3 = echarts.init(document.querySelector("#d3"));
+            let option3 = {
+                xAxis: {
+                    type: 'value',
+                    type: 'category',
+                    data: [2, 3, 4, 5, 6, 7, 8]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    type: 'line',
+                    data: [150, 230, 224, 218, 135, 147, 260],
+                    // data: [
+                    //     [2, 150],
+                    //     [3, 230],
+                    //     [4, 224],
+                    //     [5, 218],
+                    //     [6, 135],
+                    //     [7, 147],
+                    //     [8, 260],
+                    // ],
+                    markLine: {
+                        lineStyle: {
+                            width: 2,
+                        },
+                        data: [
+                            [{
+                                    name: '两个坐标之间的标线',
+                                    coord: [2.2, 20]
+                                },
+                                {
+                                    coord: [3.3, 30]
+                                }
+                            ]
+                        ],
+                    },
+                }]
+            }
+
+
+
+            mychart3.setOption(option3);
+        })
+    </script>
+
+</body>
+
+</html>

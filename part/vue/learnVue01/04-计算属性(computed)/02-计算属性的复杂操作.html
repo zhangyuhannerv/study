@@ -6,7 +6,15 @@
 </head>
 <body>
 <div id="app">
-  {{message}}
+  <h2>{{message}}</h2>
+  <hr>
+  <!--需求显示书的总价格-->
+  <!--这么写也行但是，忒恶心-->
+  <span>总价格:{{books[0].price + books[1].price}}</span>
+  <hr>
+  <!--也可以用方法-->
+  <!--但是还是推荐用属性，因为{{}}里面一般只写属性-->
+  <span>总价格:{{totalPrice}}</span>
 </div>
 
 <script src="../../js/vue.js"></script>
@@ -14,8 +22,23 @@
   const app = new Vue({
     el: '#app',
     data: {
-      message: '你好啊'
+      message: '你好啊',
+      books: [
+        {id: 110, name: 'unix编程艺术', price: 119},
+        {id: 111, name: '代码大全', price: 105},
+        {id: 112, name: '深入理解计算机原理', price: 98},
+        {id: 113, name: '现代操作系统', price: 87},
+      ]
     },
+    computed: {
+      totalPrice() {
+        let sum = 0;
+        for (let i = 0; i < this.books.length; i++) {
+          sum += this.books[i].price;
+        }
+        return sum;
+      }
+    }
   })
 </script>
 </body>

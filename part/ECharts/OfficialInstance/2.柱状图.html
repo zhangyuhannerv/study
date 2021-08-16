@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定制柱状图</title>
+</head>
+<body>
+
+<div style="width: 500px;height:500px " id="d1">
+</div>
+
+<script src="../echarts/echarts.min.js"></script>
+<script>
+    (function () {
+        // 1.实例化对象
+        var mychart = echarts.init(document.getElementById('d1'));
+        // 2.指定配置项数据
+        var option = {
+            title: {
+                text: '自定义柱状图'
+            },
+            // 修改color
+            color: ['#2f89cf'],
+            tooltip: {
+                trigger: 'axis',
+                // 鼠标轴放到坐标轴上的触发事件
+                axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                    type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+
+            // 修改图表的大小
+            grid: {
+                left: '0%',
+                right: '10px',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: ['金融', '游戏', 'Wed', 'Thu', 'Fri'],
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    // 修改刻度标签相关样式(x坐标轴上的文字样式）
+                    axisLabel: {
+                        color: 'red',
+                        fontSize: '12'
+                    },
+
+                    // 不显示x轴的线
+                    axisLine: {
+                        show: false
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    axisLabel: {
+                        color: 'red',
+                        fontSize: '12'
+                    },
+
+                    // 配置y轴的线
+                    axisLine: {
+                        lineStyle: {
+                            color: '#333',
+                            width: 5,
+                            // 配置y坐标轴实线
+                            // type: 'solid'
+                        }
+                    },
+
+                    // 配置y轴分割线
+                    splitLine: {
+                        lineStyle: {
+                            color: 'rgba(255,255,255,.1)' // 此时分割线设置为近乎为无
+                        }
+                    }
+                }
+            ],
+            // 系列，数据放在这里
+            series: [
+                {
+                    name: '直接访问',
+                    type: 'bar',
+                    barWidth: '35%', // 柱子宽度
+                    data: [1, 2, 3, 4, 5, 6, 7],
+                    // 修改柱子的外型
+                    itemStyle: {
+                        // 修改柱子圆角
+                        barBorderRadius: 5
+                    }
+                }
+            ]
+        };
+        // 3.把配置项给实例对象
+        mychart.setOption(option);
+        // 4.让图表跟随屏幕尺寸自动的去适应
+        // 注意此时容器的尺寸不能写死，否则resize()方法不生效
+        window.addEventListener('resize', () => {
+            this.myecharts.resize();
+        })
+    })();
+</script>
+</body>
+</html>

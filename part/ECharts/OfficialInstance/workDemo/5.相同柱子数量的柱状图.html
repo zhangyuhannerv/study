@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>定制柱状图</title>
+</head>
+
+<body>
+
+    <div style="width: 500px;height:500px " id="d1">
+    </div>
+    <script src="波形图固定，滑动，滚动条固定//lib/jquery-3.5.1.js"></script>
+    <script src="../../echarts/echarts.min.js"></script>
+    <script>
+        $(function () {
+            (function () {
+
+                // 1.实例化对象
+                var mychart = echarts.init(document.getElementById('d1'));
+                var data = []
+
+                // 2.指定配置项数据
+                option = {
+                    // color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        // data: ['Forest', 'Steppe', 'Desert', 'Wetland']
+                    },
+                    grid:{
+                      left:'-20%',  
+                    },
+                    xAxis: [{
+                        // type: 'category',
+                        type: 'category',
+                        axisTick: {
+                            show: false
+                        },
+                    }],
+                    yAxis: [{
+                        type: 'value'
+                    }],
+                    series: [{
+                            name: 'Forest',
+                            type: 'bar',
+                            barGap: 0,
+                            // data: [320, 332, 301, 334, 390]
+                            data:[['我',2],['你',3]]
+                        },
+                        {
+                            name: 'Steppe',
+                            type: 'bar',
+                            // data: [220, 182, 191, 234, 290]
+                            data:[['我',4],['你',5]]
+                        },
+                        {
+                            name: 'Desert',
+                            type: 'bar',
+                            // data: [150, 232, 201, 154, 190]
+                            data:[['我',6],['你',7]]
+                        },
+                        {
+                            name: 'Wetland',
+                            type: 'bar',
+                            // data: [98, 77, 22, 99, 40]
+                            data:[['我',4],['你',5]]
+                        }
+                    ]
+                };
+
+                // 3.把配置项给实例对象
+                mychart.setOption(option);
+                // 4.让图表跟随屏幕尺寸自动的去适应
+                // 注意此时容器的尺寸不能写死，否则resize()方法不生效
+            })();
+        })
+    </script>
+</body>
+
+</html>

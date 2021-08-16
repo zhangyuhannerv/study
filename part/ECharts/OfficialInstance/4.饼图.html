@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第一个饼形图</title>
+</head>
+<body>
+<div style="width: 400px;height: 400px;background-color: darkblue" id="d1">
+</div>
+<script src="../echarts/echarts.min.js"></script>
+<script>
+    var myeCharts = echarts.init(document.getElementById('d1'));
+    option = {
+        color: [
+          '#065aab','#066eab','#0682ab','#0696ab','#06a0ab'
+        ],
+
+        // 提示框组件
+        tooltip: {
+            trigger: 'item',
+            /**
+             * a:series里的name
+             * b:series的data里面的name
+             * c:series的data里面的value
+             * d:是通过自动计算得出来的
+             * 以上属性可以在手册里查找
+             */
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        // 图例组件
+        legend: {
+            // orient: 'vertical', //设置图例组件垂直居中
+            // 距离底部为10%
+            bottom:'0%',
+            // 修改小图标的宽度和高度,即修改小图标的大小
+            itemWidth:10,
+            itemHeight:10,
+            // 修改文字样式
+            textStyle:{
+              color:'rgba(255,255,255,.5)',
+              fontSize:'12'
+            },
+
+            // series里有名字了，data即可省略
+            // data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+        },
+        series: [
+            {
+                name: '年龄分布',
+                center:['50%','50%'],// 饼形图的位置，默认就是水平垂直居中，也可自己定制
+                type: 'pie',
+                // radius修改饼形图的大小，前一个值是内圆的半径，后一个值是外圆的半径，百分比都是相对容器来说的
+                radius: ['40%', '60%'],
+                avoidLabelOverlap: false,
+
+                // 不显示文字标签
+                // 图形上的文字，即每一个模块的标签，默认为false
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+
+                // 饼图中间的文字提示信息模块
+                /*emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: '30',
+                        fontWeight: 'bold'
+                    }
+                },*/
+
+                // 不显示连接线
+                // 连接线即是label标签和各个部分（模块）的连接线
+                // 连接文字和图形的线默认为false
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    {value: 1, name: '0岁以下'},
+                    {value: 4, name: '20-29岁'},
+                    {value: 2, name: '30-39岁'},
+                    {value: 2, name: '40-49岁'},
+                    {value: 1, name: '50岁以上'}
+                ]
+            }
+        ]
+    };
+    myeCharts.setOption(option);
+    window.addEventListener('resize', function () {
+        myeCharts.resize();
+    });
+</script>
+</body>
+</html>

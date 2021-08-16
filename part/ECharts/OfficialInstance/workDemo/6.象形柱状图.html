@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            height: 200px;
+            width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='div1'>
+
+    </div>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        $(function () {
+            let max = 4;
+
+            let option = {
+                xAxis: {
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                },
+                grid: {
+                    left: 100,
+                    top: 0, // 设置条形图的边距
+                    right: 80,
+                    bottom: 0
+                },
+                yAxis: [{
+                    type: "category",
+                    inverse: false,
+                    data: [{
+                            name: "弓网关系测试",
+                            value: "1",
+                            max: "4"
+                        },
+                        {
+                            name: "轮轨关系测试",
+                            value: "2",
+                            max: "2"
+                        },
+                    ],
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLabel: {
+                        show: false
+                    }
+                }],
+                series: [{
+                        // 内
+                        type: "bar",
+                        barWidth: 18,
+                        legendHoverLink: false,
+                        silent: true,
+                        itemStyle: {
+                            normal: {
+                                barBorderRadius: [4, 4, 4, 4],
+                                color: function (params) {
+                                    var color;
+                                    if (params.dataIndex == 19) {
+                                        color = {
+                                            type: "linear",
+                                            x: 0,
+                                            y: 0,
+                                            x2: 1,
+                                            y2: 0,
+                                            colorStops: [{
+                                                    offset: 0,
+                                                    color: "#00B48A" // 0% 处的颜色
+                                                },
+                                                {
+                                                    offset: 1,
+                                                    color: "#00B48A" // 100% 处的颜色
+                                                }
+                                            ]
+                                        }
+                                    } else if (params.dataIndex == 18) {
+                                        color = {
+                                            type: "linear",
+                                            x: 0,
+                                            y: 0,
+                                            x2: 1,
+                                            y2: 0,
+                                            colorStops: [{
+                                                    offset: 0,
+                                                    color: "#00B48A" // 0% 处的颜色
+                                                },
+                                                {
+                                                    offset: 1,
+                                                    color: "#00B48A" // 100% 处的颜色
+                                                }
+                                            ]
+                                        }
+                                    } else if (params.dataIndex == 17) {
+                                        color = {
+                                            type: "linear",
+                                            x: 0,
+                                            y: 0,
+                                            x2: 1,
+                                            y2: 0,
+                                            colorStops: [{
+                                                    offset: 0,
+                                                    color: "#00B48A" // 0% 处的颜色
+                                                },
+                                                {
+                                                    offset: 1,
+                                                    color: "#00B48A" // 100% 处的颜色
+                                                }
+                                            ]
+                                        }
+                                    } else {
+                                        color = {
+                                            type: "linear",
+                                            x: 0,
+                                            y: 0,
+                                            x2: 1,
+                                            y2: 0,
+                                            colorStops: [{
+                                                    offset: 0,
+                                                    color: "#00B48A" // 0% 处的颜色
+                                                },
+                                                {
+                                                    offset: 1,
+                                                    color: "#00B48A" // 100% 处的颜色
+                                                }
+                                            ]
+                                        }
+                                    }
+                                    return color;
+                                },
+                            }
+                        },
+                        label: {
+                            normal: {
+                                show: true,
+                                position: "left",
+                                formatter: "{b}",
+                                textStyle: {
+                                    color: "#708A8B",
+                                    fontSize: 14
+                                }
+                            }
+                        },
+                        data: [{
+                                name: "弓网关系测试",
+                                value: (1 / 4) * max,
+                                max: "4"
+                            },
+                            {
+                                name: "轮轨关系测试",
+                                value: (2 / 2) * max,
+                                max: "2"
+                            },
+                        ],
+                        z: 1,
+                        animationEasing: "elasticOut"
+                    },
+                    {
+                        // 分隔
+                        type: "pictorialBar",
+                        itemStyle: {
+                            normal: {
+                                color: "#fff"
+                            }
+                        },
+                        symbolRepeat: "fixed",
+                        symbolMargin: 2,
+                        symbol: "rect",
+                        symbolClip: true,
+                        symbolSize: [2, 21],
+                        symbolPosition: "start",
+                        symbolOffset: [1, -1],
+                        data: [{
+                                name: "弓网关系测试",
+                                value: (1 / 4) * max,
+                                max: "4"
+                            },
+                            {
+                                name: "轮轨关系测试",
+                                value: (2 / 2) * max,
+                                max: "2"
+                            },
+                        ],
+                        z: 2,
+                        animationEasing: "elasticOut"
+                    },
+                    {
+                        // 外边框
+                        type: "pictorialBar",
+                        symbol: "rect",
+                        symbolMargin: 2,
+                        symbolRepeat: "fixed",
+                        symbolSize: [4, 20],
+                        itemStyle: {
+                            normal: {
+                                color: "#EAEAEA"
+                            }
+                        },
+                        label: {
+                            normal: {
+                                color: '#708A8B',
+                                formatter: (params) => {
+                                    var text;
+                                    if (params.dataIndex == 1) {
+                                        text = (params.name / params.data * 100);
+                                    } else if (params.dataIndex == 2) {
+                                        text = (params.name / params.data * 100);
+                                    } else if (params.dataIndex == 3) {
+                                        text = (params.name / params.data * 100);
+                                    } else {
+                                        text = (params.name / params.data * 100);
+                                    }
+                                    console.log(text)
+                                    return parseInt(text).toFixed(2) + "%";
+                                },
+                                rich: {
+                                    f: {
+                                        color: "#708A8B"
+                                    }
+                                },
+                                position: 'right',
+                                show: true
+                            }
+                        },
+                        data: ["4", "2"],
+                        z: 1,
+                        animationEasing: "elasticOut"
+                    }
+                ]
+            };
+
+            let chart = echarts.init(document.getElementById("div1"))
+            chart.setOption(option, true);
+
+        })
+    </script>
+</body>
+
+</html>

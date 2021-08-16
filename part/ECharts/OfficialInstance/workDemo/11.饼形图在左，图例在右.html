@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #d1 {
+            width: 829px;
+            height: 288px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id='d1'>
+
+    </div>
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        let dom = echarts.init(document.getElementById("d1"));
+
+        let option = {
+
+            tooltip: {
+                trigger: 'item'
+            },
+            legend: {
+                orient: 'vertical',
+                height: '70%',
+                left: '60%',
+                itemGap: 20,
+                top: 'middle',
+                itemWidth: 14,
+                itemHeight: 14,
+            },
+            series: [{
+                name: '超限占比',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                // label: {
+                //     alignTo: 'edge',
+                //     formatter: '{name|{b}}\n',
+                //     minMargin: 5,
+                //     edgeDistance: '2%',
+                //     lineHeight: 15,
+                // },
+                // labelLine: {
+                //     length: 15,
+                //     length2: 0,
+                //     maxSurfaceAngle: 80
+                // },
+                // labelLine: {
+                //     length: 20,
+                //     length2: 70
+                // },
+                // label: {
+                //     formatter: '{c} ({d}%)\n',
+                //     padding: [0, -55]
+                // },
+                center: ['30%', '50%'],
+                data: [
+                    { value: 2, name: '左高低: 2 (10%)', itemStyle: { color: '#719DBF' } },
+                    { value: 3, name: '右高低: 2 (10%)', itemStyle: { color: '#A1AFE3' } },
+                    { value: 4, name: '左轨向: 2 (10%)', itemStyle: { color: '#348DD1' } },
+                    { value: 5, name: '右轨向: 2 (10%)', itemStyle: { color: '#3CA3B7' } },
+                    { value: 6, name: '大轨距: 2 (10%)', itemStyle: { color: '#A495C6' } },
+                    { value: 6, name: '小轨距: 2 (10%)', itemStyle: { color: '#BB95C6' } },
+                    { value: 0, name: '水平: 2 (10%)', itemStyle: { color: '#008E77' } },
+                    { value: 6, name: '三角坑: 2 (10%)', itemStyle: { color: '#7ED2C4' } },
+                    { value: 6, name: '超高: 2 (10%)', itemStyle: { color: '#46BCB7' } },
+                    { value: 6, name: '横向加速度: 2 (10%)', itemStyle: { color: '#5384B4' } },
+                    { value: 6, name: '垂向加速度: 2 (10%)', itemStyle: { color: '#1B77D1' } },
+                    { value: 0, name: '轨距变化率: 0 (0%)', itemStyle: { color: '#23AD96' } },
+                ],
+
+            }]
+        };
+
+        dom.setOption(option);
+    </script>
+</body>
+
+</html>
