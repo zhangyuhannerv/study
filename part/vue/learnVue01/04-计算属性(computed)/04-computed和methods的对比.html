@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--1.直接拼接:语法过于繁琐，不支持很复杂的操作(如不确定的数组求和)-->
+  <h2>{{firstName}} {{lastName}}</h2>
+
+  <!--2.通过定义methods,在整个界面上会执行4次-->
+  <h2>{{getFullName()}}</h2>
+  <h2>{{getFullName()}}</h2>
+  <h2>{{getFullName()}}</h2>
+  <h2>{{getFullName()}}</h2>
+
+  <!--3.通过定义计算属性computed,,在整个界面上会执行1次-->
+  <!--computed内部有缓存，在数据不发生变化的情况下，只会执行一次-->
+  <!--所以，在类似的对数据处理，然后展示等地方，尽量使用computed而不是使用methods-->
+  <h2>{{fullName}}</h2>
+  <h2>{{fullName}}</h2>
+  <h2>{{fullName}}</h2>
+  <h2>{{fullName}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      firstName: 'Kobe',
+      lastName: 'Bryant',
+    },
+    methods: {
+      getFullName() {
+        console.log('getFullName');
+        return this.firstName + ' ' + this.lastName;
+      }
+    },
+    computed: {
+      // 这是计算属性的简写
+      fullName() {
+        console.log('fullName');
+        return this.firstName + ' ' + this.lastName;
+      }
+    },
+  })
+</script>
+</body>
+</html>

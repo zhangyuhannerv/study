@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<button>按钮1</button>
+<button>按钮2</button>
+<button>按钮3</button>
+<button>按钮4</button>
+<button>按钮5</button>
+<script>
+
+  // 在es5及其之前，因为if和for都没有块级作用域的概念，所以在很多时候必须要借用于function的作用域来解决引用外面变量的问题
+  // es5的var是没有块级作用域的
+  // 在es6中加入了let,let它是有if和for的块级作用域的
+  // es6的let是有块级作用域的
+
+  // 1.块级作用域：变量在什么范围内是可用的
+  /*{
+    var name = 'why';
+    console.log(name);
+  }
+  console.log(name)*/
+
+  // 2.没有块级作用域引起的问题:if的块级
+  /*var func;
+  if (true) {
+    var name = 'why';
+    func = function () {
+      console.log(name);
+    }
+  }
+
+  name = 'coby'
+
+  func();// 本来想打印'why'，但是打印了'coby'*/
+
+  // 3.没有块级作用域引起的问题:for的块级
+  var btns = document.getElementsByTagName('button');
+  for (var i = 0; i < btns.length; i++) {
+    /*btns[i].addEventListener('click', function () {
+      console.log('第' + i + '个按钮被点击');// 永远打印5
+    })*/
+
+    // es5的解决办法：闭包
+    // 为什么闭包可以解决：因为函数是一个作用域
+    // 闭包函数的本质是es5定义的立即执行函数
+    /*(function (num) {
+      btns[num].addEventListener('click', function () {
+        console.log('第' + num + '个按钮被点击');// 正确打印
+      })
+    })(i)*/
+  }
+
+  // es6的解决办法
+  for (let i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function () {
+      console.log('第' + i + '个按钮被点击');// 正确打印
+    })
+  }
+
+</script>
+</body>
+</html>

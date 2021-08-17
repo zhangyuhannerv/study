@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h2>{{fullName}}</h2>
+  <button type="button" @click="changeFullName('张 雨晗')">点我延时改变计算属性的值</button>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      firstName: 'Kobe',
+      lastName: 'Bryant',
+    },
+    methods: {
+      changeFullName(value) {
+        // 这里补充一点，vue里面的setTimeout必须手动的指定为window，因为this默认只想的是vue实例
+        window.setTimeout(() => {
+          this.fullName = value;
+        }, 3000);
+      }
+    },
+    computed: {
+      // 这是计算属性的简写
+      /*fullName() {
+        return this.firstName + ' ' + this.lastName;
+      }*/
+      // 这是计算属性的完整写法
+      fullName: {
+        // 计算属性的set()方法一般是没有set()方法的，此时该计算属性是只读属性，这也是上面计算属性简写（上面所示）的由来
+        /*set() {
+
+
+        },*/
+
+        // 当有set()方法时
+        set(newValue) {
+          console.log('调用了set()方法');
+          const names = newValue.split(' ');
+          this.firstName = names[0];
+          this.lastName = names[1];
+        },
+
+        get() {
+          // 如果这里return 'abc'的话，那么{{fullName}}直接显示的就是abc
+          // return 'abc';
+          return this.firstName + ' ' + this.lastName;
+        }
+      }
+    },
+    mounted() {
+      this.changeFullName('lel olo');
+    }
+  })
+</script>
+</body>
+</html>
