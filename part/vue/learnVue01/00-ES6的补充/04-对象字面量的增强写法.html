@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<script>
+  // 定义对象的方法1
+  const obj1 = new Object();
+  // 定义对象的方法2，其中{}就被称为对象的字面量
+  const obj2 = {
+    name: 'zyh',
+    age: 18,
+    run: function () {
+      console.log('running');
+    },
+    eat: function () {
+      console.log('eating');
+    }
+  };
+
+  // 1.es6里面对象属性的增强写法
+  const name = 'lisi';
+  const age = 18;
+
+  // es5的传统写法
+  const obj3 = {
+    name: name,
+    age: age
+  }
+
+  // es6的增强写法
+  // es6会自动把变量的名称作为属性名称，把变量的值作为属性值
+  const obj4 = {
+    name,
+    age,
+  }
+
+  console.log(obj4);
+
+  // 2.es6里面对象的函数的增强写法
+  // es5的写法
+  const obj5 = {
+    run: function () {
+
+    },
+    eat: function () {
+
+    }
+  }
+
+  // es6的写法
+  const obj6 = {
+    run() {
+
+    },
+    eat() {
+
+    }
+  }
+</script>
+
+</body>
+</html>
