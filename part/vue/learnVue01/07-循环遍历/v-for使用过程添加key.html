@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{message}}
+  <hr>
+  <ul>
+    <!--这里:key的主要目的就是当循环的dom有变化时，大大提高变化的效率，这涉及到底层的diff算法。理解就好，不必硬扣-->
+    <!--这里注意要绑定item,绝对不要绑定index-->
+    <!--绑定item的主要目的是保证key的唯一性，如果item有重复的可以尝试绑定item.id，这里可以看一下官方的文档-->
+    <li v-for="item in letters" :key="item">
+      {{item}}
+    </li>
+  </ul>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      letters: ['A', 'B', 'C', 'D', 'E']
+    },
+    mounted() {
+      window.setTimeout(() => {
+        // 从第几个位置开始，删除几个元素
+        // 2,2就是删除第三个和第四个元素
+        // this.letters.splice(2, 2)
+
+        // 在第三个位置('C'的位置)插入新的元素 'A','B''f'....
+        this.letters.splice(2, 0, 'f');
+
+      }, 2000)
+    }
+  })
+</script>
+</body>
+</html>

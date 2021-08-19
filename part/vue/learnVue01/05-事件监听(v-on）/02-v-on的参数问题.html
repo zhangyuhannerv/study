@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{message}}
+
+  <!--在非事件监听的情况下，如果调用方法，那么()绝对不可以省略-->
+  <!--在事件监听的时候，如果方法不需要参数，那么()可以省略-->
+
+  <!--1.事件调用的方法没有参数-->
+  <button @click="btn1Click">按钮1</button>
+  <button @click="btn1Click()">按钮1</button>
+  <hr>
+
+  <!--2.在事件定义时，写函数时省略了小括号，但是方法本身是需要参数的，这个时候，vue会默认将浏览器生成的event对象作为参数传入到方法中-->
+  <button @click="btn2Click(123)">按钮2</button><!--正常打印123-->
+  <button @click="btn2Click()">按钮2</button><!--打印undefined-->
+  <button @click="btn2Click">按钮2</button><!--打印event对象-->
+  <hr>
+
+  <!--3.在方法定义时，我们需要event对象，同时又需要其他参数,可以像下面这样写-->
+  <!--在调用方法时，如果要手动的获取到浏览器产生的event对象：$event-->
+  <button @click="btn3Click(123,$event)">按钮3</button>
+  <button @click="btn3Click($event,123)">按钮3</button>
+  <!--这里的abc是常量-->
+  <button @click="btn3Click('abc',123)">按钮3</button>
+  <!--这里的abc是变量，需要在vue实例里面定义，否则点击报错-->
+  <button @click="btn3Click(abc,123)">按钮3</button>
+  <hr>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      // abc: 'dd'
+    },
+    methods: {
+      btn1Click() {
+        alert('按钮1被点击')
+      },
+      btn2Click(argu) {
+        console.log(argu);
+      },
+      btn3Click(abc, event) {
+        console.log(abc);
+        console.log(event);
+      }
+    }
+  })
+</script>
+</body>
+</html>

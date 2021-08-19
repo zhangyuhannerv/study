@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{message}}
+  <hr>
+
+  <!--v-else-if的用法示例，但是当出现下面这种判断逻辑的时候，不建议使用v-if-else-->
+  <!--总的来说，就是不建议使用v-if-else-->
+  <div v-if="score>=90">优秀</div>
+  <div v-else-if="score>=80">良好</div>
+  <div v-else-if="score>=60">及格</div>
+  <div v-else>不及格</div>
+  <hr>
+
+  <!--当需要动态展示内容的时候，推荐使用计算属性(优先)或者方法来在js里判断，而不是通过标签指令来判断-->
+  <div>{{result}}</div>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      score: 99,
+    },
+    computed: {
+      result() {
+        let showMessage = '';
+        if (this.score >= 90) {
+          showMessage = '优秀';
+        } else if (this.score >= 80) {
+          showMessage = '良好';
+        } else if (this.score >= 60) {
+          showMessage = '及格'
+        } else {
+          showMessage = '不及格'
+        }
+        return showMessage
+      }
+    },
+    mounted() {
+      window.setInterval(() => {
+        this.score -= 10;
+      }, 1000);
+    }
+  })
+</script>
+</body>
+</html>

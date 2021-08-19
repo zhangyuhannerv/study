@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <div v-if="isShow">
+    <div>abc</div>
+    <div>abc</div>
+    <div>abc</div>
+  </div>
+  <div v-else>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+  </div>
+
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      isShow: true,
+    },
+    mounted() {
+      window.setTimeout(() => {
+        this.isShow = false;
+      }, 3000)
+    }
+  })
+</script>
+</body>
+</html>

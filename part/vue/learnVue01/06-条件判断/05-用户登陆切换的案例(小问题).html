@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{message}}
+  <hr>
+
+  <!--此时面临的问题，如果在账号输入框里输入了内容，并且点击了切换，那么邮箱输入框里会保留账号输入框里的内容-->
+  <!--原因：vue底层在渲染dom时会尽可能复用之前存在过的dom，而不是创建新的dom-->
+  <!--解决办法：在不需要复用的dom元素上加上不同的key。如果加上相同的key，那么还是会复用的-->
+  <span v-if="isUser">用户账号：
+  <input type="text" placeholder="用户账号" key="username">
+  </span>
+  <span v-else>用户邮箱：
+  <input type="text" placeholder="用户邮箱" key="email">
+  </span>
+  <button @click="isUser = !isUser">切换类型</button>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      isUser: true
+    },
+  })
+</script>
+</body>
+</html>

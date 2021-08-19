@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h2>{{counter}}</h2>
+  <!--直接接表达式-->
+  <button v-on:click="counter++">+</button>
+  <!--接方法-->
+  <button v-on:click="decrement">-</button>
+  <!--v-on的语法糖: 'v-on:' ==> '@'-->
+  <!--  <input type="text" v-on:keyup.enter="alertLayer"></input>-->
+  <input type="text" @keyup.enter="alertLayer"></input>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      counter: 0,
+    },
+    methods: {
+      decrement() {
+        this.counter--;
+      },
+      alertLayer() {
+        alert('你点击了回车')
+      }
+    }
+  })
+</script>
+</body>
+</html>

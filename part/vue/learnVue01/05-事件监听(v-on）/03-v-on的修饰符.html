@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--1. '.stop'修饰符的使用-->
+  <!--如果，不用v-on的.stop修饰符，那么此时会有事件冒泡-->
+  <div @click="divClick">
+    aaa
+    <!--.stop就是v-on修饰符的一种，能够阻止事件冒泡-->
+    <button @click.stop="btnClick">按钮</button>
+  </div>
+
+  <!--2. '.prevent'修饰符的使用-->
+  <!--.prevent是用来阻止默认事件-->
+  <!--示例：-->
+  <!--如果什么都不做，那么点击提交按钮会默认提交-->
+  <form action="baidu">
+    <!--加上了.prevent就不会默认提交，而是只执行我们自定义的手动提交方法-->
+    <input type="submit" value="提交" @click.prevent="submitClick">
+  </form>
+
+  <!--3.'.keyAlias'的示例：监听某个按键的点击-->
+  <input type="text" @keyup.enter="enterClick">
+
+  <!--4. '.native'监听组件根元素的原生事件-->
+  <!--后面讲组件的时候才会用到，现在先不具体展开-->
+
+  <!--5. '.once'只触发一次回调-->
+  <hr>
+  <button @click.once="onceClick">按钮</button>
+
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    methods: {
+      btnClick() {
+        console.log('btnClick');
+      },
+      divClick() {
+        console.log('divClick');
+      },
+      submitClick() {
+        console.log('submitClick');
+      },
+      enterClick() {
+        console.log('enterClick');
+      },
+      onceClick() {
+        console.log('onceClick');
+      }
+    }
+  })
+</script>
+</body>
+</html>
