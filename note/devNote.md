@@ -2149,7 +2149,23 @@ public IPage<User> selectUserPage(Page<User> page, Integer state) {
     </select>
 ```
 
+#### 7.mysql区间查询的方法
 
+1. 取交集的区间查询:两个区间段只要有交集就查出来
+
+   ```xml
+   <if test='(startTime != "" and startTime != null) and (endTime == null or endTime == "")'>
+       AND csrw.endtime &gt;= #{startTime}
+   </if>
+   
+   <if test='(startTime == "" or startTime == null) and (endTime != null and endTime != "")'>
+       AND csrw.createtime &lt;= #{endTime}
+   </if>
+   
+   <if test='(startTime != "" and startTime != null) and (endTime != null and endTime != "")'>
+       AND !(csrw.endtime &lt; #{startTime} OR csrw.endtime &gt; #{startTime})
+   </if>
+   ```
 
 ### 学习
 

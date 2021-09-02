@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>定制柱状图</title>
+</head>
+
+<body>
+
+    <div style="position:relative">
+        <div style="width: 500px;height:500px;position: relative;" id="d1">
+        </div>
+        <div style="width: 500px;height:500px;position: absolute;top: 0;" id="d2">
+        </div>
+    </div>
+
+
+    <script src="../波形图固定，滑动，滚动条固定/lib/jquery-3.5.1.js"></script>
+    <script src="../../../echarts/echarts.min.js"></script>
+    <script>
+        $(function() {
+            (function() {
+                // 1.实例化对象
+                let mychart1 = echarts.init(document.getElementById('d1'));
+
+                let option1 = {
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        min: 0,
+                        max: 1500,
+                    },
+                    series: [{
+                        data: [600, 700, 600, 700, 600, 700, 600],
+                        type: 'line',
+                        areaStyle: {
+                            color: '#ccc'
+                        }
+                    }]
+                };
+                // 3.把配置项给实例对象
+                mychart1.setOption(option1);
+
+                // 1.实例化对象
+                let mychart2 = echarts.init(document.getElementById('d2'));
+
+                let option2 = {
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    yAxis: {
+                        type: 'value',
+                        min: 0,
+                        max: 1500,
+                    },
+                    dataZoom: [{
+                        type: 'slider',
+                        xAxisIndex: 0,
+                        filterMode: 'none'
+                    }, ],
+                    series: [{
+                        zLevel: 2,
+                        data: [820, 932, 901, 934, 1290, 1330, 1320],
+                        type: 'line',
+                        areaStyle: {
+                            color: 'red'
+                        }
+                    }]
+                };
+                // 3.把配置项给实例对象
+                mychart2.setOption(option2);
+
+            })();
+        })
+    </script>
+</body>
+
+</html>
