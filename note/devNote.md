@@ -2149,23 +2149,17 @@ public IPage<User> selectUserPage(Page<User> page, Integer state) {
     </select>
 ```
 
-#### 7.mysql区间查询的方法
+#### 7.mybatis .and() 和 .or()的嵌套使用
 
-1. 取交集的区间查询:两个区间段只要有交集就查出来
+and 里面嵌套 or 如下使用
 
-   ```xml
-   <if test='(startTime != "" and startTime != null) and (endTime == null or endTime == "")'>
-       AND csrw.endtime &gt;= #{startTime}
-   </if>
-   
-   <if test='(startTime == "" or startTime == null) and (endTime != null and endTime != "")'>
-       AND csrw.createtime &lt;= #{endTime}
-   </if>
-   
-   <if test='(startTime != "" and startTime != null) and (endTime != null and endTime != "")'>
-       AND !(csrw.endtime &lt; #{startTime} OR csrw.endtime &gt; #{startTime})
-   </if>
-   ```
+```java
+QueryWrapper<ErrorData> ew = new QueryWrapper<>();
+ew.eq("dcjh_id", csrwInfo.getCsrwID()).and(wrapper -> wrapper.eq("wtlx", "0").or().eq("wtlx", "1"));// where dcjh_id = '' and (wtlx = '0' or wtlx = '1'),注意：这里是一个lambda表达式
+List<ErrorData> dataList = errorDataService.list(ew);
+```
+
+
 
 ### 学习
 
@@ -2334,6 +2328,40 @@ sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AU
 ```
 
 然后重启mysql服务即可
+
+#### 8.mysql的DATE_FORMAT()函数和STR_TO_DATE()函数的常用例子
+
+1. 常用的DATE_FORMAA()格式
+
+   ```sql
+   DATE_FORMAT(updatetime,'%Y-%m-%d') -- 把mysql的datetime格式化成2021-09-23的字符串格式
+   DATE_FORMAT(updatetime,'%Y-%m-%d %H:%i:%S') -- 把mysql的datetime格式化成2021-09-07 09:30:37的字符串格式
+   ```
+
+2. 常用的STR_TO_DATE()格式
+
+   ```sql
+   ```
+
+#### 9.mysql区间查询的方法
+
+1. 取交集的区间查询:两个区间段只要有交集就查出来
+
+   ```xml
+   <if test='(startTime != "" and startTime != null) and (endTime == null or endTime == "")'>
+       AND csrw.endtime &gt;= #{startTime}
+   </if>
+   
+   <if test='(startTime == "" or startTime == null) and (endTime != null and endTime != "")'>
+       AND csrw.createtime &lt;= #{endTime}
+   </if>
+   
+   <if test='(startTime != "" and startTime != null) and (endTime != null and endTime != "")'>
+       AND !(csrw.endtime &lt; #{startTime} OR csrw.endtime &gt; #{startTime})
+   </if>
+   ```
+
+### 
 
 ### 学习
 
