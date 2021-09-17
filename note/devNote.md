@@ -980,6 +980,55 @@ layer.confirm('是否取消本次文件上传？',
 - 问题描述：如果choose完之后，不提交，那么该上传实例就会一直卡在这个位置。再选择相同的文件实行相应的操作会无响应，即不动。
 - 解决办法：在后台写一个只接收文件不操作的接口。接受一下文件，这样前台的upload实例就会先进入到done的状态里然后复位（即初始状态）。此时再选择相同的文件进行自己的自定义操作就可以了。 （缺点：同一个文件会在上传组件里上传一次，再在自定义的方法里上传一次，可能会上传多次，且只有一次是有用的)。
 
+#### 14.layui表格编辑使用键盘跳转
+
+可以单独把下面的代码写个js，然后在需要的页面上引入该js
+
+```js
+$(document).on('keydown','.layui-table-edit',function (e){
+    // debugger
+    var td=$(this).parent('td'),
+        tr=td.parent('tr'),
+        trs=tr.parent().parent().find("tr"),
+        tr_index=tr.index(),
+        td_index=td.index(),
+        td_last_index=tr.find('[data-edit="text"]:last').index(),
+        td_first_index=tr.find('[data-edit="text"]:first').index();
+    switch (e.keyCode){
+        case 13:
+        case 39:
+            td.nextAll('[data-edit="text"]:first').click();
+            if (td_index==td_last_index){
+                tr.next().find("td").eq(td_first_index).click();
+                if (tr_index==trs.length-1){
+                    trs.eq(0).find('td').eq(td_first_index).click();
+                }
+            }
+            setTimeout(function (){$('.layui-table-edit').select()},0)
+            break;
+        case 37:
+            td.prevAll('[data-edit="text"]:first').click();
+            setTimeout(function (){$('.layui-table-edit').select()},0)
+            break;
+        case 38:
+            tr.prev().find('td').eq(td_index).click();
+            setTimeout(function (){$('.layui-table-edit').select()},0)
+            break;
+        case 40:
+            tr.next().find('td').eq(td_index).click();
+            setTimeout(function (){$('.layui-table-edit').select()},0)
+            break;
+    }
+})
+```
+
+#### 15.layui在子弹窗写方法关闭当前子弹窗
+
+```js
+let index = parent.layer.getFrameIndex(window.name);
+parent.layer.close(index)
+```
+
 ### 学习
 
 ## echarts
@@ -1319,16 +1368,60 @@ setUpdateTime(new Timestamp(new Date().getTime()));
 #### 5.java代码实现word转pdf的几种方式
 
 1. poi(慢，格式回出问题)
-
 2. openOffice（单线程，不支持并发)
-
 3. jacob(效果好，但是不支持linux）
-
 4. docx4j（没试过)
-
 5. asposeword(效果好，块，但是付费)
-
 6. 其他第三方组件
+
+#### 6.java获得文件路径三种方法的区别
+
+```java
+File file = new File(".\\test.txt"); 
+System.out.println(file.getPath()); 
+System.out.println(file.getAbsolutePath()); 
+System.out.println(file.getCanonicalPath()); 
+```
+
+输出实例：
+
+```java
+.\test.txt 
+E:\workspace\Test\.\test.txt 
+E:\workspace\Test\test.txt 
+```
+
+ 
+
+getPath():
+
+返回的是定义时的路径，可能是相对路径，也可能是绝对路径，这个取决于定义时用的是相对路径还是绝对路径。如果定义时用的是绝对路径，那么使用getPath()返回的结果跟用getAbsolutePath()返回的结果一样
+
+getAbsolutePath():
+
+返回的是定义时的路径对应的相对路径，但不会处理“.”和“..”的情况
+
+getCanonicalPath():
+
+返回的是规范化的绝对路径，相当于将getAbsolutePath()中的“.”和“..”解析成对应的正确的路径
+
+#### 7.java获得当前系统的文件分隔符的方法
+
+```java
+String outPath = parentFile.getCanonicalPath() + File.separator + "temp-" + fileName;// File.separator会根据当前的系统自动获得'/'或者'\\'
+```
+
+#### 8.java以特定的编码读取文件，以特定的编码写入文件
+
+以下代码是针对BufferedReader和BufferedWriter的
+
+```java
+BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(inF),"GB2312"));// 以GB2312的编码读文件
+```
+
+```java
+BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFile), StandardCharsets.UTF_8));// 以utf-8写文件
+```
 
 ### 学习
 

@@ -9,9 +9,9 @@ import java.io.*;
  * @Date 2021/9/16
  * @Version 1.0
  */
-public class _12FileCopyByBuffered {
+public class _12FileCopyByBufferedReaderAndWriter {
     public static void main(String[] args) {
-        _12FileCopyByBuffered fileCopyByBuffered = new _12FileCopyByBuffered();
+        _12FileCopyByBufferedReaderAndWriter fileCopyByBuffered = new _12FileCopyByBufferedReaderAndWriter();
         String file1 = "D:\\javaTest\\note.txt";
         String file2 = "D:\\javaTest\\noteCopy1.txt";
         String file3 = "D:\\javaTest\\noteCopy2.txt";

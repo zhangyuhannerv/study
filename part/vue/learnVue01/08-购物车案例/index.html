@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>购物车案例</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th>书籍名称</th>
+      <th>出版日期</th>
+      <th>价格</th>
+      <th>购买数量</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr v-for="(item,index) in books">
+      <td>{{item.id}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.date}}</td>
+      <!--让价格保留两位小数-->
+      <!--方式1：写个方法格式化(不推荐)-->
+      <!--      <td>{{getFinalPrice(item.price)}}</td>-->
+      <!--方式2：写个过滤器(推荐)-->
+      <td>{{item.price | showPrice}}</td>
+      <td>
+        <!--当数量小于等于1时，就禁用掉'-'按钮-->
+        <button :disabled="item.count <= 1" @click="decrement(index)">-</button>
+        {{item.count}}
+        <button @click="increment(index)">+</button>
+      </td>
+      <td>
+        <button>移除</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <h2>
+    总价格:{{}}
+  </h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
