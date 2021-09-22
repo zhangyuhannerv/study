@@ -41,6 +41,9 @@ const app = new Vue({
 
     decrement(index) {
       this.books[index].count--;
+    },
+    removeHandler(index) {
+      this.books.splice(index, 1);
     }
   },
 
@@ -48,6 +51,28 @@ const app = new Vue({
   filters: {
     showPrice(price) {
       return '￥' + Number(price).toFixed(2)
+    }
+  },
+
+  computed: {
+    totalPrice() {
+      let totalPrice = 0;
+      // 这里补充几个for循环的方式
+      // 1.普通for循环
+      /*for (let i = 0; i < this.books.length; i++) {
+        totalPrice += this.books[i].price * this.books[i].count;
+      }*/
+
+      // 2.in
+      // for (let i in this.books) {
+      //   totalPrice += this.books[i].price * this.books[i].count;
+      // }
+
+      // 3.of
+      for (let book of this.books) {
+        totalPrice += book.price * book.count;
+      }
+      return totalPrice;
     }
   }
 
