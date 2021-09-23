@@ -21,9 +21,10 @@ public class _14ObjectOutputStream {
         try {
             oos = new ObjectOutputStream(new FileOutputStream(filePath));
             // 序列化数据到文件中
-            oos.write(100);// int->Integer,Integer是实现了serializable接口的
+            // 如果用write()的话，那么只保存了个值，没有保存数据类型，所以不要用write()
+            oos.writeInt(100);// int->Integer,Integer是实现了serializable接口的
             oos.writeBoolean(true);// boolean->Boolean(实现了serializable)
-            oos.write('a');// char->Character(实现了serializable)
+            oos.writeChar('a');// char->Character(实现了serializable)
             oos.writeDouble(9.5);// 同理
             oos.writeUTF("张雨晗");// String(实现了serializable)
             // 保存一个dog对象（Dog类必须实现serializable）

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 编程范式的两种分类方式:
+  // 命令式编程/声明式编程
+  // 面向对象编程(第一公民是对象)/函数式编程(第一公民是函数)
+
+  // 三个高阶函数：map/filter/reduce
+
+  // filter(过滤数组)
+  // 1.会创造一个新的数组
+  // 2.filter的回调函数中有个要求：必须返回一个boolean值
+  // 当返回true时，函数内部会自动将当前遍历的元素e加入到新的数组中
+  // 当返回false时，函数内部会过滤掉这次遍历的元素e
+
+  // map(数组元素的个性化)
+
+  // reduce(数组中所有的内容进行汇总,例子：所有元素全部相乘，或者所有元素全部相加)
+  // reduce如果不提供初始值，那么会从1的index位置开始循环回调，且第一个prevVal是arr[0]，如果此时数组为空，可能会报错。所以要尽量提供初始值
+
+  // 函数式编程的例子,
+  const nums = [10, 20, 30, 40, 222, 333, 50]
+
+  // 1需求：找出所有小于100的数字
+  let newNums = [];
+  // 传统
+  /*for (let n of nums) {
+    if (n < 100) {
+      newNums.push(n);
+    }
+  }*/
+  // 使用filter
+  newNums = nums.filter(function (n) {
+    return n < 100;
+  })
+  console.log(newNums);
+
+  // 2.需求：将所有小于100的数字进行转化：全部*2
+  let newNums2 = [];
+  // 传统
+  /*for (let n of newNums) {
+    newNums2.push(n * 2);
+  }*/
+  // 使用map
+  newNums2 = newNums.map(function (n) {
+    return n * 2;
+  })
+  console.log(newNums2)
+
+  // 3.将newNums2里面所有的数字相加得到最终结果
+  let totalNum = 0;
+  // 传统
+  /*for (let n of newNums2) {
+    totalNum += n;
+  }*/
+  // 使用reduce
+  // prvVal：上一次遍历返回的值，n：当前值,0：初始化值(如果求总的乘积的话，这里需要初始化为1)
+  totalNum = newNums2.reduce(function (preVal, n) {
+    return preVal + n;
+  }, 0)
+  // 第一次：preVal:0     n:20  返回:0 + 20 = 20
+  // 第二次：preVal:20    n:40  返回:20 + 40 = 60
+  // 第三次：preVal:60    n:60  返回:60 + 60 = 120
+  // 第四次：preVal:120   n:80  返回:120 + 80 = 200
+  // 第五次：preVal:200   n:100 返回:200 + 100 = 300
+
+  // 总的链式编程写法
+  totalNum = nums.filter((n) => {
+    return n < 100
+  }).map((n) => {
+    return n * 2
+  }).reduce((preVal, n) => {
+    return preVal + n
+  }, 0)
+
+  // 更加简洁
+  totalNum = nums.filter(n => n < 100).map(n => n * 2).reduce((preVal, n) => preVal + n);
+
+  console.log(totalNum);// 最终得到值
+</script>
+</body>
+</html>

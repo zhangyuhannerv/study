@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--v-model的通常写法-->
+  <!--v-model同样适用于textarea-->
+  <!--  <input type="text" v-model="message">-->
+
+  <!--v-model是两个指令的集合，具体如下：-->
+  <!--写法一：抽成一个方法-->
+  <!--  <input type="text" :value="message" @input="valueChange">-->
+  <!--写法二：直接写个表达式-->
+  <input type="text" :value="message" @input="message = $event.target.value">
+  {{message}}
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    methods: {
+      valueChange(event) {
+        this.message = event.target.value;
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -69,11 +69,18 @@ const app = new Vue({
       // }
 
       // 3.of
-      for (let book of this.books) {
-        totalPrice += book.price * book.count;
-      }
+      // for (let book of this.books) {
+      //   totalPrice += book.price * book.count;
+      // }
+
+      // 4.reduce
+      totalPrice = this.books.reduce((pre, n) => {
+        return n.price * n.count + pre
+      }, 0)
       return totalPrice;
     }
   }
-
 })
+
+
+
