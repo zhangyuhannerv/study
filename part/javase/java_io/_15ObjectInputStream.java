@@ -8,7 +8,14 @@ import java.io.ObjectInputStream;
 
 /**
  * @ClassName _15ObjectInputStream
- * @Description TODO
+ * @Description 数据的反序列化
+ * 对象处理流的注意事项
+ * 1.写顺序要求一致，（先写个字符串，肯定要先读字符串，否则就报错）
+ * 2.要求序列化或者反序列化的对象，必须实现serializable接口
+ * 3.序列化的类中建议添加SerialVersionUID,为了提高版本的兼容性（详见bean.Dog）
+ * 4.序列化时，默认将里面的所有属性都序列化，除了static和transient修饰的成员（详见bean.Dog）
+ * 5.序列化对象时，要求里面属性的类型也需要实现序列化接口（详见bean.Dog和bean.Master）
+ * 6.序列化具有可继承性，也就是说，如果某类已经实现了序列化的接口，则其所有的子类也已经默认实现了序列化的接口
  * @Author Zhangyuhan
  * @Date 2021/9/23
  * @Version 1.0
@@ -39,6 +46,9 @@ public class _15ObjectInputStream {
                 // 此时需要将Dog类的定义，拷贝到可以引用的地方
                 Dog dog = (Dog) o;
                 System.out.println("名字是" + dog.getName());
+                System.out.println("年龄是" + dog.getAge());
+                System.out.println("国家是" + Dog.getNation());// null
+                System.out.println("颜色是" + dog.getColor());// null
 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();

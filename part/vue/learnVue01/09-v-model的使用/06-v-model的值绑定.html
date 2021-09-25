@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--自己亲自试验：label包裹form元素时，label不需要特意使用for:id-->
+  <label v-for="item in originHobbies">
+    <!--:value就是要说的值绑定-->
+    <input type="checkbox" :value="item" v-model="hobbies">{{item}}
+  </label>
+  <h2>您的爱好是:{{hobbies}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      hobbies: [],
+      originHobbies: ['篮球', '足球', '乒乓球', '羽毛球', '台球', '高尔夫球']
+    },
+  })
+</script>
+</body>
+</html>

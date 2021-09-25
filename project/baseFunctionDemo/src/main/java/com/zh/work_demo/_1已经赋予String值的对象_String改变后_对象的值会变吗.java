@@ -1,4 +1,4 @@
-package work_demo;
+package com.zh.work_demo;
 
 /**
  * @ClassName _1已经赋予String值的对象_String改变后_对象的值会变吗

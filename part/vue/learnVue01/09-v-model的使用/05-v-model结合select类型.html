@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--1.选择一个-->
+  <select name="" v-model="fruit">
+    <option value="苹果">苹果</option>
+    <option value="香蕉">香蕉</option>
+    <option value="榴莲">榴莲</option>
+    <option value="葡萄">葡萄</option>
+  </select>
+  <h2>
+    您选择的水果是：{{fruit}}
+  </h2>
+
+
+  <!--1.选择多个-->
+  <!--添加multiple后在前台按住ctrl键可以选择多个，这是select原生的属性-->
+  <select name="" v-model="fruits" multiple>
+    <option value="苹果">苹果</option>
+    <option value="香蕉">香蕉</option>
+    <option value="榴莲">榴莲</option>
+    <option value="葡萄">葡萄</option>
+  </select>
+  <h2>
+    您选择的水果是：{{fruits}}
+  </h2>
+
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      fruit: '香蕉',
+      fruits: ['榴莲', '葡萄'],
+    },
+  })
+</script>
+</body>
+</html>

@@ -28,7 +28,7 @@ public class _14ObjectOutputStream {
             oos.writeDouble(9.5);// 同理
             oos.writeUTF("张雨晗");// String(实现了serializable)
             // 保存一个dog对象（Dog类必须实现serializable）
-            oos.writeObject(new Dog("张三", 10));
+            oos.writeObject(new Dog("张三", 10, "日本", "白色"));
 
             System.out.println("数据保存完毕(序列化形式保存)");
 

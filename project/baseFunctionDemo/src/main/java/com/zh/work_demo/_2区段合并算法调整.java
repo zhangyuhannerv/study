@@ -1,4 +1,4 @@
-package work_demo;
+package com.zh.work_demo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @ClassName _2区段合并算法调整
- * @Description TODO
+ * @Description 将不连续的一维数组分为多个连续的二维数组
  * @Author Zhangyuhan
  * @Date 2021/9/22
  * @Version 1.0
