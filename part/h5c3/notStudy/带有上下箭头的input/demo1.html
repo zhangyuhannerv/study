@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title>无标题页</title>
+    <script type="text/javascript" language="javascript">
+        function addOne() {
+            var showControl = document.getElementById("txtNumber");
+            showControl.value = parseInt(showControl.value) + 1;
+        }
+
+        function removeOne() {
+            var showControl = document.getElementById("txtNumber");
+            showControl.value = parseInt(showControl.value) - 1;
+        }
+    </script>
+</head>
+
+<body>
+    <div style="width:40px;height:40px;">
+        <table style=" background-color:#ebead8;">
+            <tr>
+                <td rowspan="2" style="width:70%">
+                    <input type="text" value="0" id="txtNumber" style="height:40px;width:40px; text-align:center; vertical-align:middle; color:#7d2974; font-size:xx-large" /></td>
+                <td><input type="button" value="▲" id="up" onclick="addOne()" /></td>
+            </tr>
+            <tr>
+                <td><input id="down" type="button" onclick="removeOne()" value="▼" /></td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>
