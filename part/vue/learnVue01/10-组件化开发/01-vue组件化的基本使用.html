@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--需求，项目里要多次用到以下内容，使用vue组件实现-->
+  <!--  <h2>我是标题</h2>-->
+  <!--  <p>我是内容哈哈哈</p>-->
+  <!--  <p>我是内容呵呵呵呵</p>-->
+
+  <my-cpn></my-cpn>
+  <my-cpn></my-cpn>
+  <my-cpn></my-cpn>
+  <my-cpn></my-cpn>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  // 补充说明:
+  // es6可以使用``定义字符串,并且``支持换行
+  // es5里换行如下
+  const str = 'str' +
+      'cde';
+  // es6里换行
+  const str1 = `str
+  cde`;
+
+  // 1.创建组件构造器对象
+  const cpnC = Vue.extend({
+    template: `
+    <div>
+        <h2>我是标题</h2>
+        <p>我是内容哈哈哈</p>
+        <p>我是内容呵呵呵呵</p>
+    </div>`
+  });
+
+
+  // 2.注册组件
+  // Vue.component('组件的标签名', '组件构造器')
+  Vue.component('my-cpn', cpnC);
+
+  // 3.使用组件
+  // 在vue的实例内使用组件
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--1.修饰符:lazy-->
+  <!--默认，input里的值变化，data里的数据实时同步变化-->
+  <!--lazy可以让input在失去焦点或者按下回车才让data里的数据发生改变-->
+  <input type="text" v-model.lazy="message">
+  <h2>{{message}}</h2>
+
+  <!--2.修饰符：number-->
+  <!--v-model默认把data里的数据修改为String类型-->
+  <!--number可以使v-model把data里的数据赋值为Number类型-->
+  <!--  <input type="number" v-model="age">-->
+  <input type="number" v-model.number="age">
+  <h2>{{typeof age}}</h2>
+  <h2>{{age}}</h2>
+
+  <!--3.修饰符:trim-->
+  <!--如果input的值左右两边有很多空格，那么trim可以让v-model在赋值data时过滤掉这些空格-->
+  <!--  <input type="text" v-model="name">-->
+  <input type="text" v-model.trim="name">
+  <h2>您输入的名字:{{name}}</h2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      age: 2,
+      name: '张三'
+    },
+  })
+</script>
+</body>
+</html>
