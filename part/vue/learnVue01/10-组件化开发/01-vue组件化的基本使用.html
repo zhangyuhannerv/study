@@ -15,7 +15,17 @@
   <my-cpn></my-cpn>
   <my-cpn></my-cpn>
   <my-cpn></my-cpn>
+
+  <!--注册的组件可以注册使用-->
+
+  <!--注册的组件可以嵌套使用-->
+  <div>
+    <my-cpn></my-cpn>
+  </div>
 </div>
+
+<!--不在注册容器里使用无效-->
+<my-cpn></my-cpn>
 
 <script src="../../js/vue.js"></script>
 <script>
