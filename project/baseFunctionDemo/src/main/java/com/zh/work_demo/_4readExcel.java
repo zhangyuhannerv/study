@@ -6,8 +6,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.core.io.ClassPathResource;
 
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.*;
 
@@ -41,7 +39,7 @@ public class _4readExcel {
         // 获取的第一个工作区
         sheet = wb.getSheetAt(sheetNumber);
 
-        for (int i = 0; i < sheet.getLastRowNum(); i++) {// 遍历行数
+        for (int i = 0; i < sheet.getLastRowNum() + 1; i++) {// 遍历行数
 
             row = sheet.getRow(i);
 
@@ -57,6 +55,57 @@ public class _4readExcel {
             }
         }
 
+        // 以上是获取数据部分
+        // 之后是文件的数据处理部分
+
+        // 掐头去尾取中间里程
+        // 开头重复里程取最后一个
+        // 结尾重复里程取第一个
+        List<String> mileList = map2.get("里程");
+        Integer subStart = -1;
+        Integer subEnd = -1;
+        if (mileList != null && mileList.size() > 1) {// 说明有里程这一列，并且数据量至少有两个
+            if (mileList.get(0).equals(mileList.get(1))) {// 开头有里程重复数据(通过前两个里程一样得到)
+                subStart = 1;
+                for (int i = 2; i < mileList.size(); i++) {// 从第三个开始循环(如果有)
+                    if (!mileList.get(i).equals(mileList.get(i - 1))) {// 当前里程不等于前一个里程
+                        subStart = --i;// 保留前一个里程的索引
+                        break;
+                    }
+                }
+            }
+
+            // 和上面同理，只不过是从后向前遍历
+            if (mileList.get(mileList.size() - 1).equals(mileList.get(mileList.size() - 2))) {// 结尾有里程重复数据(通过最后两个里程一样得到)
+                subEnd = mileList.size() - 2;
+                for (int i = mileList.size() - 3; i >= 0; i--) {// 从倒数三个开始循环(如果有)
+                    if (!mileList.get(i).equals(mileList.get(i + 1))) {
+                        subEnd = ++i;
+                        break;
+                    }
+                }
+            }
+        }
+        for (Map.Entry<String, List<String>> entry : map2.entrySet()) {
+            String key = entry.getKey();
+            List<String> value = entry.getValue();
+
+            // 头部有重复的里程，尾部没有
+            if (subStart != -1 && subEnd == -1) {
+                value = value.subList(subStart, value.size());
+            } else if (subStart == -1 && subEnd != -1) {// 尾部有重复的里程，头部没有
+                value = value.subList(0, subEnd + 1);
+            } else if (subStart != -1 && subEnd != -1) {// 头尾都有重复的里程
+                if (subEnd >= subStart) {
+                    value = value.subList(subStart, subEnd + 1);
+                } else {// 此时，整个文件的里程都是重复的，那么默认只取第一个
+                    value = value.subList(0, 1);
+                }
+            }
+            // 重新赋值
+            map2.put(key, value);
+
+        }
         return map2;
     }
 
