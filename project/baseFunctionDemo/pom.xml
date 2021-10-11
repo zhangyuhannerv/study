@@ -9,6 +9,9 @@
 
     <version>1.0</version>
 
+    <!--打war包就加上这行代码-->
+    <packaging>war</packaging>
+
     <!--springboot父类-->
     <parent>
         <groupId>org.springframework.boot</groupId>
