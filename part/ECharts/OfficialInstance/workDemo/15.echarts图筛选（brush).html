@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #d1 {
+            margin-top: 100px;
+            width: 700px;
+            height: 500px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='d1'>
+
+    </div>
+
+    <script src="lib/echarts.min.js"></script>
+    <script src="lib/jquery-3.5.1.js"></script>
+    <script>
+        let dataBySeries = [
+            [12, 23, 54, 6, 5, 3, 12], // series 0 的数据
+        ];
+        let option = {
+            color: ['#5470c6', '#5470c6'],
+            xAxis: {
+                type: 'category',
+                data: ['1', '2', '2', '3', '3', '5', '6', '6', '7']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            // 查看图片时注释掉brush
+            // brush: {
+            //     toolbox: ['lineX', 'clear'],
+            //     outOfBrush: {
+            //         colorAlpha: 0.1
+            //     },
+            //     brushStyle: {
+            //         borderColor: '#689ad8'
+            //     },
+            //     brushType: 'lineX',
+            //     xAxisIndex: '0',
+            //     throttleType: 'debounce',
+            //     throttleDelay: 500,
+            // },
+            series: [{
+                data: dataBySeries[0],
+                type: 'scatter',
+                symbol: 'none',
+                // 查看图片时的选中区域
+                markArea: {
+                    itemStyle: {
+                        color: '#f1f4fa',
+                        borderColor: '#b3cceb',
+                        borderWidth: 2,
+                    },
+                    silent: true,
+                    data: [
+                        [{
+                                name: '选中区域',
+                                xAxis: '2'
+                            },
+                            {
+                                xAxis: '6'
+                            }
+                        ],
+                    ]
+                }
+            }, {
+                data: dataBySeries[0],
+                type: 'line'
+            }]
+        };
+        let myChart = echarts.init($("#d1")[0]);
+        myChart.setOption(option);
+
+
+        myChart.on('brushSelected', function(params) {
+            console.log(params)
+            let brushComponent = params.batch[0];
+            let dataIndex = brushComponent.selected[0].dataIndex;
+            console.log(dataIndex); // 输出选中的数据索引
+        });
+
+
+        // 触发初始选中的代码，不要了，改为markArea
+        // myChart.dispatchAction({
+        //     type: 'brush',
+        //     areas: [{
+        //         brushType: 'lineX',
+        //         coordRange: ['2', '6'],// minValue,maxValue
+        //         xAxisIndex: 0
+        //     }]
+        // });
+    </script>
+</body>
+
+</html>
