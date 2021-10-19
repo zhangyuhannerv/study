@@ -13,6 +13,10 @@ import java.util.function.Consumer;
  * ->:lambda操作符或者箭头操作符
  * 左边：lambda的形参列表，其实就是接口中的抽像方法的形参列表
  * 右边：lambda体，其实就是重写的抽像方法的方法体
+ * 3.本质：
+ * Lambda的实质就是函数式接口的实例
+ * 4.如果一个接口种只声明了一个抽像方法，则此接口就称为函数式接口
+ * 5.以前写的匿名实现类都可以用lambda表示
  * @Author Zhangyuhan
  * @Date 2021/10/9
  * @Version 1.0
