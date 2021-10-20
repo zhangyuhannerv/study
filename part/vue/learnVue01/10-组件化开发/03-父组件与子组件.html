@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--子组件写在父组件外面不生效-->
+  <!--子组件要想在外面生效，必须全局注册一次或者在vue实例里注册一次-->
+  <!--换言之，组件要想使用，必须注册-->
+  <!--  <cpn1></cpn1>-->
+  <cpn2></cpn2>
+</div>
+
+<script src="../../js/vue.js"></script>
+<script>
+  // 1.创建第一个组件构造器
+  const cpnC1 = Vue.extend({
+    template:
+        `
+    <div>
+    <h2>我是标题</h2>
+    <p>我是内容,哈哈哈</p>
+    </div>
+    `
+  })
+
+  // 2.创建第二个组件构造器
+  const cpnC2 = Vue.extend({
+    template:
+        `
+          <div>
+          <h2>我是标题2</h2>
+          <p>我是内容,呵呵呵</p>
+          <cpn1></cpn1>
+          </div>
+        `,
+    // 在第二个组件里注册第一个组件
+    components: {
+      cpn1: cpnC1
+    }
+  })
+
+  // Vue实例可以看成是root组件
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    components: {
+      cpn2: cpnC2,
+    }
+  })
+</script>
+</body>
+</html>
