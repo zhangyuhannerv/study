@@ -423,7 +423,96 @@ $.ajax({
 })
 ```
 
-#### 8.多文件上传前后台完整demo
+#### 8.多文件上传前后台完整demo（一起上传，不是一个个上传）
+
+**前台**
+
+```js
+// #uploadFileInputDiv是html里一个隐藏的div
+<!--多文件上传需要用到该容器-->
+<div id="uploadFileInputDiv" class="layui-hide">
+
+</div>
+
+
+// 在隐藏的div里拼接dom元素
+let html = '<input type="file" id="multiInput" name="filename" multiple="multiple" hidden>';
+$("#uploadFileInputDiv").html(html);
+
+// 给拼接的dom元素监听事件
+$("#uploadFileInputDiv input").on('change', function () {
+
+    let formData = new FormData();        //每一次需重新创建
+    let files = $("#uploadFileInputDiv input")[0].files;
+    for (let i = 0; i < files.length; i++) {
+        let file = files[i];
+        formData.append('file', file);
+    }
+    formData.append('testTaskId', $("#csrw_id").val());
+    formData.append('fileId', fileId);
+    uploadMultiFile(formData);
+})
+
+// 触发dom元素的点击事件
+$("#uploadFileInputDiv input").click();
+
+// 文件上传的前台代码
+function uploadMultiFile(formData) {
+    let aj = {
+        //上传文件数据
+        url: "/MultiFileUpload",
+        type: 'POST',
+        cache: false,
+        data: formData,
+        processData: false,
+        contentType: false,
+        async: true,
+        xhr() {
+            let xhr = new XMLHttpRequest();
+            xhr.upload.addEventListener('progress', e => {
+                let progressRate = Math.round((e.loaded / e.total) * 100) + '%';// 上传进度
+            })
+            return xhr;
+        },
+        success(res) {
+            layer.close(progressLayer);
+            if (res.code === 500) {
+                Hussar.info("上传文件失败");
+                fileUpload.reload();
+                return;
+            }
+
+            Hussar.success("上传成功！");
+        },
+        error() {
+            layer.close(progressLayer);
+            Hussar.info("上传文件失败");
+        }
+    }
+    $.ajax(aj);
+}
+```
+
+**后台**
+
+```java
+@RequestMapping("/MultiFileUpload")
+@ResponseBody
+public Map<String, Object> noiseFileUpload(@RequestParam("file") MultipartFile[] file,
+                                           @RequestParam("testTaskId") String testTaskId,
+                                           @RequestParam("fileId") String fileId) {
+   
+    // 接收的参数有二进制的文件数组，还有其他的参数
+   	// 自己做处理
+    // ....
+    
+    // 返回
+    Map<String, Object> map = new HashMap<>();
+    return map;
+}
+```
+
+
 
 ### 学习
 
@@ -3293,7 +3382,7 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
 
    fc-list :lang=ZH
 
-8. 重启文件服务器(完成配置)
+8. 重启服务器(完成配置)
 
 [原文链接](https://blog.csdn.net/weixin_45606229/article/details/111060060  )
 

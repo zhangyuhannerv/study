@@ -20,15 +20,20 @@ public class _1ReadSts {
     @Test
     public void test() {
         String rootPath = _1ReadSts.class.getResource("/").getPath();
-        readSts(rootPath + "noise/20191116呼和1号线梯形轨枕直线1#1.sts",
-                rootPath + "noise/data/data.txt");
+/*        readSts(rootPath + "noise/20191116呼和1号线梯形轨枕直线1#1.sts",
+                rootPath + "noise/data/data.txt");*/
+
+        readSts("C:\\Users\\13551\\Desktop\\车内里程\\车内里程\\20191211呼和浩特地铁1号线平稳性1#DT1_0.sts",
+                "C:\\Users\\13551\\Desktop\\里程.txt");
     }
 
     public static void readSts(String in, String out) {
+/*
         File parentFileDir = new File(out.substring(0, out.lastIndexOf("/")));
         if (!parentFileDir.exists()) {
             parentFileDir.mkdirs();
         }
+*/
 
         try (DataInputStream inputStream = new DataInputStream(new FileInputStream(in));
              FileWriter fw = new FileWriter(out)) {
