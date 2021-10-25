@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  {{message}}
+  <cpn></cpn>
+
+  <cpn1></cpn1>
+  <cpn1></cpn1>
+
+  <cpn2></cpn2>
+  <cpn2></cpn2>
+</div>
+
+
+<!--分离写法1:通过script标签，类型必须是text/x-template-->
+<script type="text/x-template" id="cpn1">
+  <div>
+    我是组件1（分离写法组件1）
+  </div>
+</script>
+
+<!--分离写法2：通过template标签-->
+<template id="cpn2">
+  <div>
+    我是组件2（分离写法组件2）
+  </div>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+  // 注册一个全局组件
+  Vue.component('cpn', {
+    template: `
+    <div>
+    这是组件
+    </div>
+    `
+  })
+
+  Vue.component('cpn1', {
+    template: "#cpn1"
+  })
+
+  Vue.component('cpn2', {
+    template: "#cpn2"
+  })
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+  })
+</script>
+</body>
+</html>
