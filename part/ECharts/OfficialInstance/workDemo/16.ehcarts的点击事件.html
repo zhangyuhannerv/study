@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<style>
+  #d1 {
+    width: 500px;
+    height: 500px;
+  }
+</style>
+
+<body>
+<div id='d1'>
+
+</div>
+<script src="lib/echarts.min.js"></script>
+<script src="lib/jquery-3.5.1.js"></script>
+<script>
+  $(function () {
+    let mychart = echarts.init(document.querySelector("#d1"));
+    let xData = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+    let yData = [150, 230, 224, 218, 135, 147, 260];
+    let option = {
+      tooltip: {
+        trigger: 'axis',
+      },
+      xAxis: {
+        type: 'category',
+        data: xData,
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: yData,
+          type: 'line',
+        }, {
+          type: 'line',
+          markLine: {
+            symbol: 'none',
+            label: {show: false},
+            lineStyle: {opacity: 0},
+            data: []
+          },
+        }
+      ]
+    };
+
+    xData.forEach(e => {
+      option.series[1].markLine.data.push({
+        xAxis: e,
+      })
+    })
+    mychart.setOption(option);
+    mychart.on('click', params => {
+      console.log(params);
+    })
+  })
+</script>
+
+</body>
+
+</html>
