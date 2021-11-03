@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn></cpn>
+</div>
+
+
+<template id="t1">
+  <!--组件不能直接访问Vue实例里面的数据-->
+  <!--即使能访问，把所有数据都放在Vue实例里，Vue实例也会变的非常臃肿-->
+  <!--  <h2>{{title}}</h2>-->
+  <h2>{{cpnTitle}}</h2>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+  Vue.component('cpn', {
+    template: '#t1',
+    // 组件的data必须是个函数，这个函数返回一个对象，对象内部保存着数据
+    data() {
+      return {
+        cpnTitle: 'abc'
+      }
+    }
+  })
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      title: '这是cpn的标题',
+    },
+  })
+</script>
+</body>
+</html>

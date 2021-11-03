@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--三个组件实例对象-->
+  <!--因为data是一个函数，每次使用都会调用data()函数,同时return一个新的对象}-->
+  <!--如果data是个对象，那么所有的组件实例共享一个data对象，一个组件的data的某个属性变动，那么其他组件的值也会发生变化，不同组件会互相影响-->
+  <cal></cal>
+  <cal></cal>
+  <cal></cal>
+</div>
+
+<template id="cal">
+  <div>
+    <h2>当前计数{{counter}}</h2>
+    <button @click="increment">+</button>
+    <button @click="decrement">-</button>
+  </div>
+</template>
+<script src="../../js/vue.js"></script>
+<script>
+  const countObj = {
+    counter: 0,
+  }
+
+  Vue.component('cal', {
+    template: '#cal',
+    data() {
+      // 此时，所有的组件的每个数据对象互相独立
+      return {
+        counter: 0
+      }
+      // 此时所有的组件共享一个对象
+      // return countObj;
+    },
+    methods: {
+      increment() {
+        this.counter++;
+      },
+      decrement() {
+        this.counter--;
+      }
+    }
+  })
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      title: '这是cpn的标题',
+    },
+  })
+
+  function demo() {
+    return {
+      name: '张三',
+      age: 18,
+    }
+  }
+
+  let obj1 = demo();
+  let obj2 = demo();
+  let obj3 = demo();
+
+  obj1.name = 'kobe';// 改变obj1的name属性
+  console.log(obj2.name);// 打印出来的仍是张三
+  // 结论:obj1,obj2,obj3三个对象不是同一个东西，可以类似的想象vue的组件化
+
+</script>
+</body>
+</html>
