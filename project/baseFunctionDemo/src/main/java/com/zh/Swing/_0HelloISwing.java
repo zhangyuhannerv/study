@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
  * @Date 2021/11/2
  * @Version 1.0
  */
-public class _0HelloIFrame {
+public class _0HelloISwing {
     private static JTextArea area;
 
     public static void main(String[] args) {
