@@ -1,5 +1,8 @@
 package java_Lambda;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @ClassName _0Employee
  * @Description TODO
@@ -30,6 +33,16 @@ public class _0Employee {
         this.name = name;
         this.age = age;
         this.salary = salary;
+    }
+
+    public static List<_0Employee> getData() {
+        List<_0Employee> list = new ArrayList<>();
+        list.add(new _0Employee(1, "a", 20, 3000));
+        list.add(new _0Employee(2, "b", 19, 4000));
+        list.add(new _0Employee(3, "c", 21, 5000));
+        list.add(new _0Employee(4, "d", 18, 6000));
+        list.add(new _0Employee(5, "e", 24, 7000));
+        return list;
     }
 
     public String getName() {
