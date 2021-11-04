@@ -36,42 +36,42 @@
                 type: 'value'
             },
             // 查看图片时注释掉brush
-            // brush: {
-            //     toolbox: ['lineX', 'clear'],
-            //     outOfBrush: {
-            //         colorAlpha: 0.1
-            //     },
-            //     brushStyle: {
-            //         borderColor: '#689ad8'
-            //     },
-            //     brushType: 'lineX',
-            //     xAxisIndex: '0',
-            //     throttleType: 'debounce',
-            //     throttleDelay: 500,
-            // },
+            brush: {
+                toolbox: ['lineX', 'clear'],
+                outOfBrush: {
+                    colorAlpha: 0.1
+                },
+                brushStyle: {
+                    borderColor: '#689ad8'
+                },
+                brushType: 'lineX',
+                xAxisIndex: '0',
+                throttleType: 'debounce',
+                throttleDelay: 500,
+            },
             series: [{
                 data: dataBySeries[0],
                 type: 'scatter',
                 symbol: 'none',
                 // 查看图片时的选中区域
-                markArea: {
-                    itemStyle: {
-                        color: '#f1f4fa',
-                        borderColor: '#b3cceb',
-                        borderWidth: 2,
-                    },
-                    silent: true,
-                    data: [
-                        [{
-                                name: '选中区域',
-                                xAxis: '2'
-                            },
-                            {
-                                xAxis: '6'
-                            }
-                        ],
-                    ]
-                }
+                // markArea: {
+                //     itemStyle: {
+                //         color: '#f1f4fa',
+                //         borderColor: '#b3cceb',
+                //         borderWidth: 2,
+                //     },
+                //     silent: true,
+                //     data: [
+                //         [{
+                //                 name: '选中区域',
+                //                 xAxis: '2'
+                //             },
+                //             {
+                //                 xAxis: '6'
+                //             }
+                //         ],
+                //     ]
+                // }
             }, {
                 data: dataBySeries[0],
                 type: 'line'

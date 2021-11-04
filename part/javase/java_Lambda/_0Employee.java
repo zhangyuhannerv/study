@@ -2,6 +2,7 @@ package java_Lambda;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @ClassName _0Employee
@@ -41,6 +42,7 @@ public class _0Employee {
         list.add(new _0Employee(2, "b", 19, 4000));
         list.add(new _0Employee(3, "c", 21, 5000));
         list.add(new _0Employee(4, "d", 18, 6000));
+        list.add(new _0Employee(5, "e", 24, 7000));
         list.add(new _0Employee(5, "e", 24, 7000));
         return list;
     }
@@ -85,5 +87,25 @@ public class _0Employee {
                 ", age=" + age +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        _0Employee employee = (_0Employee) o;
+        return id == employee.id && age == employee.age && Double.compare(employee.salary, salary) == 0 && Objects.equals(name, employee.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (name == null ? name.hashCode() : 0);
+        result = 31 * result + age;
+        temp = Double.doubleToLongBits(salary);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 }
