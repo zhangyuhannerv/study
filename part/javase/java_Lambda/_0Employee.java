@@ -40,7 +40,7 @@ public class _0Employee {
         List<_0Employee> list = new ArrayList<>();
         list.add(new _0Employee(1, "a", 20, 3000));
         list.add(new _0Employee(2, "b", 19, 8000));
-        list.add(new _0Employee(3, "c", 21, 7500));
+        list.add(new _0Employee(3, "雷布斯", 21, 17500));
         list.add(new _0Employee(4, "d", 18, 6000));
         list.add(new _0Employee(5, "e", 24, 7000));
         list.add(new _0Employee(5, "e1", 24, 6000));
