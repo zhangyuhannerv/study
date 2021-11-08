@@ -39,11 +39,13 @@ public class _0Employee {
     public static List<_0Employee> getData() {
         List<_0Employee> list = new ArrayList<>();
         list.add(new _0Employee(1, "a", 20, 3000));
-        list.add(new _0Employee(2, "b", 19, 4000));
-        list.add(new _0Employee(3, "c", 21, 5000));
+        list.add(new _0Employee(2, "b", 19, 8000));
+        list.add(new _0Employee(3, "c", 21, 7500));
         list.add(new _0Employee(4, "d", 18, 6000));
         list.add(new _0Employee(5, "e", 24, 7000));
-        list.add(new _0Employee(5, "e", 24, 7000));
+        list.add(new _0Employee(5, "e1", 24, 6000));
+        list.add(new _0Employee(5, "比尔盖茨", 24, 7000));
+        list.add(new _0Employee(5, "扎克伯格", 24, 7000));
         return list;
     }
 
