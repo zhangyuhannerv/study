@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn :cmovies="movies" :cmsg="message">
+    <!--如果不用v-bind那么cmovies的值就是'movies'的这个字符串，cmsg也同理-->
+    <!--  <cpn cmovies="movies" cmsg="message">-->
+
+  </cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    <h2>{{cmovies}}</h2>
+    <h2>{{cmsg}}</h2>
+    <ul>
+      <li v-for="item in cmovies">
+        {{item}}
+      </li>
+    </ul>
+    {{defaultValue}}
+  </div>
+</template>
+<script src="../../js/vue.js"></script>
+<script>
+  function Person(firstName, lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  /*父传子：props*/
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      movies: [
+        '海王',
+        '海贼王',
+        '海尔兄弟'
+      ]
+    },
+    components: {
+      'cpn': {
+        template: `#cpn`,
+        // 传值方式1：数组
+        // props: ['cmovies', 'cmsg'],
+        // 传值方式2：对象
+        props: {
+          // 对象写法好处1：类型的限制
+          // cmovies: Array,// 指定变量类型为数组
+          cmovies: {
+            type: Array,
+            // default: [],// Object/Array类型时，默认值必须是个函数
+            default() {
+              return [];
+            }
+          },
+          cmsg: String,
+
+          // 对象的写法好出2：可以提供一些默认值
+          defaultValue: {
+            type: String,
+            default: 'defaultValue的默认值'
+          },
+          // 对象写法好处3：可以确定必传值
+          // requiredValue: {
+          //   required: true
+          // }
+
+          // 4.对象写法还可以自己写一些验证函数validator(),详见文档
+          a: {
+            validator(value) {
+              return ['success'].indexOf(value) !== -1// 要求传的值必须包含'success'字符串
+            }
+          },
+
+          // 5.对象写法还可以限制类型为自己定义的类型
+          b: {
+            type: Person,
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

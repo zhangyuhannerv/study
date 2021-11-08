@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--v-bind不支持驼峰标识-->
+  <!--  <cpn :cInfo="info"></cpn>-->
+  <!--:cInfo的正确写法:c-info-->
+  <cpn :c-info="info" :child-my-message="message"></cpn>
+
+  <!--综上，个人推荐子组件的props的名命使用a_b的写法-->
+</div>
+
+<template id="t1">
+  <!--vue规定组件必须有个根标签-->
+  <div>
+    {{cInfo}}
+    <br>
+    {{childMyMessage}}
+  </div>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+
+  const cpn = {
+    template: "#t1",
+    data() {
+      return {}
+    },
+    props: {
+      cInfo: {
+        type: Object,
+        default() {
+          return {}
+        }
+      },
+      childMyMessage: {
+        type: String,
+        default: '字符串默认值',
+      }
+    }
+  }
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      info: {
+        name: 'why',
+        age: 18,
+        height: 1.88
+      },
+    },
+    components: {
+      cpn
+    }
+  })
+</script>
+</body>
+</html>
