@@ -22,20 +22,24 @@ import java.net.URL;
 public class _5获取图片的长宽 {
     @Test
     public void test() {
-        String sourceDir = "D:\\wendang\\图片\\pixiv\\米山舞";
-        String verDir = "D:\\wendang\\图片\\pixiv\\米山舞-竖屏";
-        String horDir = "D:\\wendang\\图片\\pixiv\\米山舞-横屏";
+        String sourceDir = "D:\\wendang\\图片\\动漫";
+        String verDir = "D:\\wendang\\图片\\动漫\\竖屏";
+        String horDir = "D:\\wendang\\图片\\动漫\\横屏";
 
         File file = new File(sourceDir);
         File[] files = file.listFiles();
         for (File tempFile : files) {
+            if (tempFile.isDirectory()) {
+                continue;
+            }
+
             int[] imgWidthAndHeight = getImgWidthAndHeight(tempFile);
             if (imgWidthAndHeight[0] > imgWidthAndHeight[1]) {// 宽度大于高度
                 boolean cut = FileCut.cut(tempFile, horDir);
                 if (cut) {
                     System.out.println("移动" + tempFile.getName() + "成功");
                 }
-            }else {
+            } else {
                 boolean cut = FileCut.cut(tempFile, verDir);
                 if (cut) {
                     System.out.println("移动" + tempFile.getName() + "成功");
