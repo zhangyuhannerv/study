@@ -23,7 +23,7 @@ public class _6调用python脚本 {
         String scriptPath3 = "D:\\pythoncode\\InteriorNoise\\fft_Ppt.py";// 频谱脚本
         String filePath = "D:\\Work\\workProject\\dtjc文件\\5车内噪声\\真数据文件\\20191211呼和浩特地铁1号线平稳性\\原始数据\\20191211呼和浩特地铁1号线平稳性1#26.sts";
         String start = "100";
-        String end = "120";
+        String end = "100";
         String fs = "32768";
         List<List<Double>> res = getAllRes(scriptPath1, filePath, start, end, fs);
         System.out.println(res.size());
