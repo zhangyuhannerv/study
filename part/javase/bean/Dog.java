@@ -12,6 +12,10 @@ import java.io.Serializable;
 public class Dog implements Serializable {
     // serialVersionUID 序列化的版本号，可以提高序列化的兼容性
     // 当有序列号时，当这个类改变，java不会认位它是一个新的类，而是将改变后的类看作原先类的升级版
+    // 如果类没有显示的定义这个静态常量，它的值是Java运行时环境根据类的内部细节自动生成的。若类的实例变量做了变化，serialVersionUID
+    // 可能会发生变化，故建议：显示声明
+    // 简单来说：Java的序列化是通过在运行时判断serialVersionUID来验证版本一致性的。在进行反序列化时，JVM会把传来的字节流中的
+    // serialVersionUID进行比较，如果相同就认为是一致的。可以进行反序列化，否则就会出现序列化版本不一致的异常(InvalidCastException)
     private static final Long serialVersionUID = 1L;
 
     // transient修饰的成员变量在序列化时不会被序列化
