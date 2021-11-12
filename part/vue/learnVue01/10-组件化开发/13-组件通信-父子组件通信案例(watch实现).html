@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h2>parentData:{{num1}}</h2>
+  <input type="text" v-model="num1">
+  <h2>parentData:{{num2}}</h2>
+  <input type="text" v-model="num2">
+  <hr>
+  <cpn :number1="num1"
+       :number2="num2"
+       @num1change="num1change"
+       @num2change="num2change"></cpn>
+
+  <!--说明：-->
+  <!--props属性不建议(或者说禁止)在子组件里直接修改。必须通过父组件改变原值来改变子组件中的props-->
+  <!--父组件中的原值一旦改变。props里的绑定值都会重新赋值(重新渲染)。-->
+  <!--但是如果一定要改变子组件中绑定的值，来给父组件里面的被绑定的值重新赋值的话-->
+  <!--必须不能直接改变props。一定要新建个data/computed并改变data/computed的值，然后发射出事件和值，通过父组件监听-->
+  <!--子组件发射出的事件。来改变父组件中被绑定的值，然后通过vue实例来重新渲染props-->
+</div>
+
+<template id="t1">
+  <div>
+    <!--需求：input改变number1值的同时改变num1的值-->
+    <!--错误-->
+    <h2>props:{{number1}}</h2>
+    <input type="text" v-model="number1">
+    <!--正确-->
+    <h2>childData:{{dNumber1}}</h2>
+    <input type="text" v-model="dNumber1">
+
+    <!--需求：input改变number2值的同时改变num2的值-->
+    <!--错误-->
+    <h2>props:{{number2}}</h2>
+    <input type="text" v-model="number2">
+    <!--正确-->
+    <h2>childData:{{dNumber2}}</h2>
+    <input type="text" v-model="dNumber2">
+
+
+  </div>
+</template>
+<script src="../../js/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      num1: 1,
+      num2: 0,
+    },
+    methods: {
+      num1change(value) {
+        // 传过来的value时String
+        // 这里子组件要求时数字类型，所以赋值num1时转换一下类型
+        this.num1 = Number(value);
+      },
+      num2change(value) {
+        // 传过来的value时String
+        // 这里子组件要求时数字类型，所以赋值num2时转换一下类型
+        this.num2 = Number(value);
+      }
+    },
+    components: {
+      cpn: {
+        template: '#t1',
+        props: {
+          number1: Number,
+          number2: Number,
+          name: '张三',
+        },
+        data() {
+          return {
+            // 根据props里的number1和number2来初始化dNumber1和dNumber2
+            dNumber1: this.number1,
+            dNumber2: this.number2
+          }
+        },
+        watch: {
+          dNumber1(new_value) {
+            this.dNumber2 = new_value * 100;
+            this.$emit('num1change', new_value);
+          },
+          dNumber2(new_value) {
+            this.dNumber1 = new_value / 100;
+            this.$emit('num2change', new_value);
+          },
+          name(newValue, oldValue) {
+            console.log(newValue);
+            console.log(oldValue);
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
