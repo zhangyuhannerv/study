@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--
+1.插槽的基本使用<slot></slot>
+2.插槽的默认值<slot><button>按钮</button></slot>
+3.如果有多个值同时放入到组件中进行替换时，那么就会一起作为替换元素
+-->
+
+<div id="app">
+  <cpn>
+    <!--在这里插入内容到插槽中-->
+    <button>按钮</button>
+  </cpn>
+  <cpn>
+    <span>哈哈哈</span>
+  </cpn>
+  <cpn>
+    <i>呵呵呵</i>
+  </cpn>
+
+  <!--如果插槽里面有多个内容，那么所有的内容都会插入到插槽里面去-->
+  <cpn>
+    <div>我是div元素</div>
+    <p>我是p元素</p>
+  </cpn>
+
+  <!--插槽里面没有传值，就会使用插槽的默认值，插槽的默认值可以为空-->
+  <cpn></cpn>
+  <cpn></cpn>
+  <cpn></cpn>
+  <cpn></cpn>
+</div>
+
+<!--插槽的目的是为了让组件具有更好的扩展性-->
+<!--插槽的使用要点：抽取共性，保留不同。为不同使用插槽-->
+<template id="cpn">
+  <div>
+    <h2>组件标题</h2>
+    <p>我是组件，哈哈哈</p>
+
+    <!--下面如果是按钮，那么只要使用一定是按钮-->
+    <!--<button>按钮</button>-->
+
+    <!--为了让组件具有一定的扩展性，我们使用slot标签-->
+    <!--<slot></slot>-->
+
+    <!--可以给插槽一个默认值，此时组件使用时大量重复使用的插槽值就可以作为这个默认值-->
+    <slot>
+      <button>按钮</button>
+    </slot>
+  </div>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    components: {
+      cpn: {
+        template: '#cpn'
+      }
+    }
+  })
+</script>
+</body>
+</html>

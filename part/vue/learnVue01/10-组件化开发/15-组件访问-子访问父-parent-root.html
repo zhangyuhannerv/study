@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <cpn></cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    我是子组件
+    <button @click="visitParent">访问父组件</button><!--访问到vue实例-->
+    <cpn1></cpn1>
+  </div>
+</template>
+
+<template id="cpn1">
+  <div>
+    我是孙子组件
+    <button @click="visitParent">访问父组件</button><!--访问到cpn组件-->
+    <button @click="visitRoot">访问根组件</button><!--访问到vue实例-->
+  </div>
+</template>
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            cpnName: '我是cpn组件的name'
+          }
+        },
+        methods: {
+          visitParent() {
+            console.log(this.$parent);
+          },
+        },
+        components: {
+          cpn1: {
+            template: '#cpn1',
+            methods: {
+              // 1.$parent:访问父组件。几乎不用。
+              // 不推荐在开发中使用$parent来访问父组件。
+              // 因为如果写了这样的代码。那么该组件就不够独立了。他对父组件有一定的要求。复用性大大降低
+              // 比如下面的代码就要求父组件必须有cpnName这个data
+              visitParent() {
+                console.log(this.$parent);
+                console.log(this.$parent.cpnName);
+              },
+
+              // 2.$root:访问根组件。几乎不用。因为真实开发中的vue实例里面基本上什么都没有
+              visitRoot() {
+                console.log(this.$root);
+                console.log(this.$root.message);// 打印出你好啊
+              }
+            },
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

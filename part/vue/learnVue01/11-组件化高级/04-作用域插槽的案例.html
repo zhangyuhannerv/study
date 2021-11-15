@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--作用域插槽最本质的作用，父组件替换插槽的标签，但是内容还是由子组件来提供-->
+<div id="app">
+  <!--默认展示-->
+  <cpn></cpn>
+
+  <!--不再希望默认展示。而是有一定的样式-->
+  <cpn>
+    <!--目的是获取子组件中的languages-->
+    <!--<span v-for="item in languages">{{item}}</span>--><!--如果直接这么写会Vue实例里面找languages,此时会找不到languages-->
+
+    <!--这就是作用域插槽的使用-->
+    <template slot-scope="slot1"><!--这个slot1就是slot对象(插槽对象)，slot1是自己名命的，随便取-->
+      <span v-for="item in slot1.languages">
+        {{item}} --
+      </span>
+    </template>
+  </cpn>
+
+
+  <cpn>
+    <template slot-scope="slot1"><!--这个slot1就是slot对象，slot1是自己名命的，随便取-->
+      <span v-for="item in slot1.languages">
+        {{item}}**
+      </span>
+    </template>
+  </cpn>
+
+  <!--slot-scope已被废弃-->
+  <!--新的语法如下-->
+  <cpn>
+    <!--没有名命的插槽的名字都为default-->
+    <!--v-slot:插槽名称="自己起的插槽实例的名称"-->
+    <template v-slot:default="slot2">
+      <hr>
+      <span v-for="item in slot2.languages">
+        {{item}}//
+      </span>
+    </template>
+  </cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    <!--把子组件的languages数据绑定到插槽的languages属性上，languages属性也是自己名命的。随便取-->
+    <slot :languages="languages">
+      <ul>
+        <li v-for="item in languages">{{item}}</li>
+      </ul>
+    </slot>
+  </div>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            languages: ['JavaScript', "c++", "Java", "c++", "python", "Go", "Swift"]
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

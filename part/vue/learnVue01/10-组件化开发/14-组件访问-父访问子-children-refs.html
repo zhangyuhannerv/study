@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--此时根组件里就有三个子组件-->
+  <cpn></cpn>
+  <cpn></cpn>
+  <!--aaa相当于组件的key-->
+  <cpn ref="aaa"></cpn>
+  <button @click="btnClick">按钮：触发子组件事件</button>
+</div>
+
+<template id="cpn">
+  <div>
+    我是子组件
+  </div>
+</template>
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    methods: {
+      btnClick() {
+        // 1.$children的使用->返回数组
+        // 现在访问组件只能通过下标，在真实的开发中不是这样的。因为他有可能因为需求的变更在中间插一个组件。那么原先的代码的到的组件就变了
+        // 所以以下仅供参考和学习，在实际开发中除了循环遍历或者获得所有子组件之外不要使用
+
+        /*console.log(this.$children);// 打印出子组件数组
+        console.log(this.$children.length);// 打印出子组件的数量
+        console.log(this.$children[0].name);// 打印出子组件里data的值
+        this.$children[0].showMessage();*/
+
+        // 2.$refs(开发中最常用)->返回对象类型,默认是一个空的对象
+        // 访问所有
+        console.log(this.$refs);// 只会打印组件标签上有ref属性的组件组成key-value对象
+        // 访问具体
+        // 例子：访问特定组件的name数据
+        console.log(this.$refs.aaa.name);
+        this.$refs.aaa.showMessage();
+
+      }
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            name: '我是子组件的name'
+          }
+        },
+        methods: {
+          showMessage() {
+            alert("showMessage")
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

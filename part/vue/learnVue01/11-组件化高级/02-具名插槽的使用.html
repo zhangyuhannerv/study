@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <cpn>
+    <!--以下内容会替换到所有没有名字的插槽里去-->
+    <span>标题</span><!--标题只会替换哈哈哈-->
+
+    <button slot="left">返回</button><!--返回按钮会替换左边-->
+    <!--所有指定left名称的都会替换到left插槽里去，返回和返回1放在一起插入到left插槽里去-->
+    <button slot="left">返回1</button>
+
+    <!--注意:-->
+    <!--slot="center"的写法已经被废弃，新的写法如下'-->
+    <!--语法糖：v-slot:center=>>>#center-->
+    <template v-slot:center>
+      <span>我是内容</span>
+    </template>
+  </cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    <slot>哈哈</slot>
+    <slot name="left"><span>左边</span></slot>
+    <slot name="center"><span>中间</span></slot>
+    <slot name="right"><span>右边</span></slot>
+  </div>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊'
+    },
+    components: {
+      cpn: {
+        template: '#cpn'
+      }
+    }
+  })
+</script>
+</body>
+</html>

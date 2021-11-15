@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <!--这个就是父组件得作用域-->
+  <!--该模板里的任何变量只会在自己得作用域里去找。绝不会向下（子组件）或者向上(父组件里去找）。-->
+
+  <!--此时的isShow会使用父组件里面的isShow即Vue实例里面的-->
+  <cpn v-show="isShow"></cpn>
+  <!--同理，无论是v-for还是v-if等等等都是找在哪个模板里面的。仔细理解这句话。它不会找cpn里面的data。它会找cpn上一层的data-->
+  <!--更好的理解，上面的cpn看成是一个div。那么此时想想isShow要去哪里找呢?-->
+  <!--总结：变量会找当前容器（模板）里的data-->
+</div>
+
+<template id="cpn">
+  <!--这个就是子组件得作用域-->
+  <!--该模板里的任何变量只会在自己得作用域里去找。绝不会向下（子组件）或者向上(父组件里去找）。-->
+
+  <div>
+    <h2>我是子组件</h2>
+    <p>我是内容，哈哈哈</p>
+    <!--这个isShow就是子组件里的isShow-->
+    <button v-show="isShow">按钮</button>
+  </div>
+</template>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      /*父组件的isShow*/
+      isShow: true,
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            /*子组件的isShow*/
+            isShow: false
+          }
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
