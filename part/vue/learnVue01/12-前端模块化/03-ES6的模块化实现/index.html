@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<!--一旦加上type='module'之后，就不会有名命冲突的问题(全局变量污染)-->
+<!--加上type='module'之后，一个js文件就是一个单独的模块，它有自己单独的作用域-->
+<!--但是同时也出现了如ccc.js里不能使用aaa.js里定义的变量的flag的问题(即使用flag用var定义也访问不到)-->
+<!--此时就需要es6的export/import-->
+<script src="aaa.js" type="module"></script>
+<script src="bbb.js" type="module"></script>
+<script src="ccc.js" type="module"></script>
+<!--这个type='module'至关重要，它是js文件是不是模块的标志-->
+<!--只有加上type='module',才支持export/import的语法(这是浏览器做的支持和解析)-->
+</body>
+</html>
