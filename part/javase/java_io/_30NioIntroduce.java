@@ -8,5 +8,6 @@ package java_io;
  * @Version 1.0
  */
 public class _30NioIntroduce {
+    // 本类就这些内容
     // 各种基础方法，详见PathsTest类和FilesTest类
 }
