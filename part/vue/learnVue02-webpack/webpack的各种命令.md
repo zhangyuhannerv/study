@@ -1,3 +1,11 @@
+0. npm install 模块名@版本号 --save:将保存配置信息到pacjage.json的dependencies节点中。
+
+   npm install 模块名@版本号 --save-dev:将保存配置信息到pacjage.json的devDependencies节点中。
+
+   dependencies：运行时的依赖，发布后，即生产环境下还需要用的模块
+
+   devDependencies：开发时的依赖。里面的模块是开发时用的，发布时用不到它。
+
 1. 进入到D:\Work\Study\study\part\vue\learnVue02-webpack\01-webpack的起步文件夹
 
    执行以下命令
@@ -70,4 +78,55 @@
    步骤1：通过npm安装需要的loader
 
    步骤2：在webpack.config.js的文件中的modules关键字下进行配置
+   
+   ------
+   
+   以css-loader为例：官网上有详细的安装使用教程（前看官网)。下面简写：
+   
+   注意学习版本安装css-loader的时候执行这个命令（指定css-loader的版本)，直接安装最新版本的css-loader是报错的。因为webpack学习时的版本是3.6.0，太老了。
+   
+   ```shell
+   npm install --save-dev css-loader@0.28.11
+   ```
+   
+   然后在webpack.config.js的导出对象里加上这么个属性
+   
+   ```json
+   module: {
+       rules: [
+         {
+           test: /\.css$/i,
+           use: ["css-loader"],
+         },
+       ],
+     },
+   ```
+   
+   注意：只安装css-loader只是将css进行加载。要想将css进行解析和渲染还需要style-loader
+   
+   ```js
+   npm install --save-dev style-loader@0.23.1
+   ```
+   
+   配置（上面的稍微改下就行)：
+   
+   ```js
+    use: ["style-loader", "css-loader"],
+   ```
+   
+   
+   
+   ------
+   
+   ***核心思想**
+   
+   就是将css/json/less/sass作为一个模块打包到bundle.js里面
+   
+   依赖css需要在main.js里面加上
+   
+   ```js
+   // 3.依赖css文件（将css作为module)
+   require('./css/normal.css')
+   ```
 
+​		
