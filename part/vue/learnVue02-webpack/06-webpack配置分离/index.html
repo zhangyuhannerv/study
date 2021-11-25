@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- 真实的开发中一般是spa(单页应用)。app标签里面没有任何内容，如果app里要求有内容要写到vue实例的template属性里去-->
+    <!--  <h2>
+      {{ message }}
+      {{ name }}
+      <button @click="btnClick">点击</button>
+    </h2>-->
+  </div>
+  <!--直接使用npm run build后打开index.html会报错-->
+  <!--You are using the runtime-only build of Vue where the template compiler is not available...-->
+  <!--
+这是因为：vue在最终构建的时候会有两个版本
+1.runtime-only。在该代码中。不能有任何的template。此时项目虽然没有template标签，但是会把div#app当作是vue实例的template
+2.runtime-compiler。在该代码中可以有template,因为有compiler(编译器)可以编译template标签
+此时构建的版本时runtime-only。但是代码里有template标签
+为了解决该问题。需要在webpack.config.js里加上resolve->alis属性。指定导入特定文件夹下的vue实例
+-->
+
+
+  <!-- 注释掉这里的script引用，因为打包的时候会自动插入进去的 -->
+  <!-- <script src="./dist/bundle.js"></script> -->
+</body>
+
+</html>

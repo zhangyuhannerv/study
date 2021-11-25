@@ -1,4 +1,6 @@
 const path = require('path') // 导入node的path模块
+const webpack = require('webpack') //导入webpack模块，用来使用plugin
+const HtmlWebpackPlugin = require('html-webpack-plugin') // 导入打包index.html的插件
 
 // 但是这个path包还没有。所以要在当前项目下局部安装path包
 // 0.先在项目的根目录下执行 node init ,
@@ -16,11 +18,11 @@ module.exports = {
   entry: './src/main.js', // 入口
   output: {
     // path: './dist',// 这里写相对路径会报错
-    path: path.resolve(__dirname, 'dist'), // 这里需要绝对路径，所以要动态获取，需要node的path模块,__dirname就是webpack.config.js这个文件所在文件夹的绝对路径
+    path: path.resolve(__dirname, '../dist'), // 这里需要绝对路径，所以要动态获取，需要node的path模块,__dirname就是webpack.config.js这个文件所在文件夹的绝对路径
     filename: 'bundle.js',
     // 这个属性意味着只要是任何设计url的东西，都会在前面添加dist/(在这里主要解决背景图片的引用总是引用根目录下的图片的问题,加上他就会
     // 引用dist目录下打包后的图片)
-    publicPath: 'dist/' // 在后期打包后把index.html移动到dist里去，这个属性要删除掉。目前不要删除，因为此时index.html还在外面
+    // publicPath: 'dist/' // 在后期打包后把index.html移动到dist里去，这个属性要删除掉。目前不要删除，因为此时index.html还在外面
   },
   module: {
     rules: [
@@ -83,9 +85,15 @@ module.exports = {
   // plugin(插件)对webpack的功能实现扩展
   // webpack内置了一些插件可以直接使用
   // webpack没有内置的插件需要先用npm安装一下
-  // 具体的演示在05-webpack的plugin里
   plugins: [
-
+    // BannerPlugin：版权信息，在打包的后的文件的最开始加上版权信息
+    new webpack.BannerPlugin('最终版权归张雨晗所有'),
+    // HtmlWebpackPlugin:将index.html放到dist里面，不是webpack自带的，需要自己先安装
+    // 1.自动生成一个index.html文件(可以指定模板生成)
+    // 2.将打包的js文件，自动通过script标签插入到body中
+    new HtmlWebpackPlugin({
+      template: 'index.html' // 会找webpack配置文件的同级目录下有没有这个模板文件
+    }),
   ],
   resolve: {
     // alis：别名
@@ -97,5 +105,5 @@ module.exports = {
     },
     // 这里可以配置在导入的时候文件的路径最后哪些后缀可以不用写
     extensions: ['.js', '.vue', '.css'],
-  }
+  },
 }
