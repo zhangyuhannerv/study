@@ -1,7 +1,7 @@
 {
-  "name": "vue2project",
+  "name": "runtimecompiler",
   "version": "1.0.0",
-  "description": "study vue-cli2 create project structure",
+  "description": "runtime and compiler mode",
   "author": "zhangyuhan <1355166049@qq.com>",
   "private": true,
   "scripts": {

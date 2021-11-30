@@ -1,6 +1,6 @@
-# vue2project
+# runtimecompiler
 
-> study vue-cli2 create project structure
+> runtime and compiler mode
 
 ## Build Setup
 
