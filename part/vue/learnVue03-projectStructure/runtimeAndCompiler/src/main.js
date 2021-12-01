@@ -6,11 +6,29 @@ import App from './App'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+// const cpn = {
+//   template: `
+//   <div>{{message}}</div>
+//  `,
+//   data () {
+//     return {
+//       message: '我是组件message'
+//     }
+//   }
+// }
+
 new Vue({
   el: '#app',
   components: { App },
   template: '<App/>'
+
+  // render (createElement) {
+  //   return createElement(cpn)
+  // }
 })
+
+// runtime and compiler mode
+// template->ast->render->vDom->ui
 
 // 测试esLint,必须严格按照下面的代码写一个方法。忒麻烦了。
 // function sum (num1, num2) {
@@ -23,8 +41,8 @@ new Vue({
 // 这是，就需要手动关掉esLint
 // 在config的index.js里把useEslint从true改为false即可
 // 再使用下面的代码发现可以了
-function sum(num1, num2) {
-  return num1 + num2
-}
+// function sum(num1, num2) {
+//   return num1 + num2
+// }
 
-console.log(sum(10, 20))
+// console.log(sum(10, 20))
