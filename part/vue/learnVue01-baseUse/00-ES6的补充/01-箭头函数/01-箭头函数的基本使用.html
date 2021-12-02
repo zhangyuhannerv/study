@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // 箭头函数：也是一种定义函数的方式
+    // 1.定义函数的方式
+    const aaa = function() {
+
+    }
+
+    // 2.对象字面量中定义函数
+    const obj = {
+      bbb: function() {
+
+      },
+      ccc() {
+
+      }
+    }
+
+    // 3.es6中的箭头函数
+
+    // 3.1没有参数
+    const ddd = () => {
+
+    }
+
+    // 3.2有两个参数
+    const sum = (num1, num2) => {
+      return num1 + num2;
+    }
+
+    // 3.3有一个参数
+    const pow = num => {
+      return Math.pow(num, 2);
+    }
+
+    // 4.函数中的代码数量问题
+    // 4.1函数代码块中有多行代码时
+    const test = () => {
+      console.log('hello world');
+      console.log('hello vue');
+    }
+
+    // 4.2函数代码块中只有一行代码时,有返回值
+    const mul = (num1, num2) => num1 * num2;
+    console.log(mul(1, 2));
+
+    // 4.3函数只有一行代码，没有返回值
+    const test2 = () => console.log('hello world');
+    console.log(test2()); // 打印undefined
+
+    // 关于方法简写成一行结论：
+    // 1.在js中，只要方法的代码只有一行。无论有没有返回值都可以简写（并且没有返回值的方法实际上返回了个undefined）。
+    // 2.注意和java的区别：Java里要求方法的代码有一行，并且必须有返回值的时候才可以简写。这两个条件缺一不可
+  </script>
+</body>
+
+</html>

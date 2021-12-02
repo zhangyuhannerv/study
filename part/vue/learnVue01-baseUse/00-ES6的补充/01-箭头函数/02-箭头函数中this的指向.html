@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // 1.什么使用箭头函数？
+    // 当把函数作为一个参数传到另一个函数里的时候，此时箭头函数最常用
+    // 例：
+    // setTimeout(() => {
+    //   console.log("1s钟之后打印此句话");
+    // }, 1000);
+
+
+    // 2.关于this的指向的问题
+    setTimeout(function() {
+      console.log(this); // 打印window对象
+    }, 1000)
+
+    setTimeout(() => {
+      console.log(this); // 打印window对象
+    }, 2000);
+
+    const obj = {
+      aaa() {
+        setTimeout(function() {
+          console.log(this); // 打印window对象，这里是掉用call()方法，把window作为第一个参数传过来了
+        }, 3000);
+
+        setTimeout(() => {
+          console.log(this); // 打印obj对象，这里向上找,找到上一层obj的作用域，此时this指向了obj
+        }, 4000);
+      }
+    }
+
+    obj.aaa();
+
+    // 关于this的指向结论：
+    // 箭头中的函数的this引用的就是最近作用域中的this
+    // 也可以理解为向外层作用域中一直查找this,直到有this的定义
+
+    // 考题：
+    const obj1 = {
+      aaa() {
+        setTimeout(function() {
+          setTimeout(function() {
+            console.log('---------考试题开始------------');
+            console.log(this); // window
+          });
+
+          setTimeout(() => {
+            console.log(this); // window
+          })
+        });
+
+        setTimeout(() => {
+          setTimeout(function() {
+            console.log(this); // window
+          });
+
+          setTimeout(() => {
+            console.log(this); // obj1
+            console.log('---------考试题结束------------');
+          })
+        });
+      }
+    }
+    obj1.aaa();
+  </script>
+</body>
+
+</html>
