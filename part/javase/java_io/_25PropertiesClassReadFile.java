@@ -1,7 +1,5 @@
 package java_io;
 
-import sun.misc.IOUtils;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
