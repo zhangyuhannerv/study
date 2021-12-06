@@ -40,14 +40,15 @@ public class _8StreamCollect {
     public void test1() {
         List<_0Employee> data = _0Employee.getData();
         // 把流中元素收集到新创建的集合
-
         // 收集到新创建的ArrayList
-        ArrayList<_0Employee> collect = data.stream().filter(e -> e.getSalary() > 6000).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<_0Employee> collect = data.stream().filter(e -> e.getSalary() > 6000)
+                .collect(Collectors.toCollection(ArrayList::new));
         collect.forEach(System.out::println);
 
         System.out.println("******");
         // 收集到新创建的HashSet
-        HashSet<_0Employee> collect1 = data.stream().filter(e -> e.getSalary() > 6000).collect(Collectors.toCollection(HashSet::new));
+        HashSet<_0Employee> collect1 = data.stream().filter(e -> e.getSalary() > 6000)
+                .collect(Collectors.toCollection(HashSet::new));
         collect1.forEach(System.out::println);
     }
 }
