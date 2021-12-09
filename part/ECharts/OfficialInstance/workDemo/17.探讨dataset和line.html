@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      height: 500px;
+      border: 1px solid;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1"></div>
+  <script src="lib/echarts.min.js"></script>
+  <script src="lib/jquery-3.5.1.js"></script>
+  <script>
+    $(function() {
+      let mychart = echarts.init($(".d1")[0]);
+      let data = [
+        { a: 1, b: 2, c: 3 },
+        { a: 2, b: 4, c: 1 },
+        { a: 3, b: 5, c: 2 },
+        { a: 4, b: 2.5, c: 4 },
+      ];
+      let data1 = [
+        { a: 1.2, b: 5, c: 3.2 },
+        { a: 2.2, b: 4.2, c: 1.2 },
+        { a: 3.2, b: 5.2, c: 2.2 },
+        { a: 4.2, b: 2.7, c: 4.2 },
+      ];
+      let tqiData = [
+        [2.1, 3.5],
+        [4, 5.5]
+      ]
+      let option = {
+        tooltip: {
+          show: true,
+          trigger: 'axis',
+        },
+        axisPointer: {
+          show: true,
+          triggerTooltip: false,
+          link: [{
+            xAxisIndex: 'all',
+          }]
+        },
+        grid: [{
+          top: 0,
+          height: '25%'
+        }, {
+          top: '25%',
+          height: '25%'
+        }, {
+          top: '50%',
+          height: '25%',
+          tooltip: {
+            show: false,
+          }
+        }, {
+          top: '75%',
+          height: '25%'
+        }],
+        xAxis: [{
+          type: 'value',
+          gridIndex: 0,
+        }, {
+          type: 'value',
+          gridIndex: 1,
+        }, {
+          type: 'value',
+          gridIndex: 2,
+        }, {
+          type: 'value',
+          gridIndex: 3,
+        }],
+        yAxis: [{
+          type: 'value',
+          gridIndex: 0,
+          axisPointer: {
+            show: false,
+          }
+        }, {
+          type: 'value',
+          gridIndex: 1,
+        }, {
+          type: 'value',
+          gridIndex: 2,
+        }, {
+          type: 'value',
+          gridIndex: 3,
+        }],
+        dataset: [{
+          source: data,
+        }, {
+          source: data1,
+        }, ],
+        series: [{
+          type: 'line',
+          datasetIndex: 0,
+          encode: {
+            x: 0,
+            y: 1,
+          },
+          xAxisIndex: 0,
+          yAxisIndex: 0,
+        }, {
+          type: 'line',
+          encode: {
+            x: 0,
+            y: 2,
+          },
+          datasetIndex: 0,
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+        }, {
+          type: 'line',
+          data: tqiData,
+          xAxisIndex: 2,
+          yAxisIndex: 2,
+        }, {
+          type: 'line',
+          datasetIndex: 1,
+          encode: {
+            x: 0,
+            y: 1,
+          },
+          xAxisIndex: 0,
+          yAxisIndex: 0,
+        }, {
+          type: 'line',
+          encode: {
+            x: 0,
+            y: 2,
+          },
+          datasetIndex: 1,
+          xAxisIndex: 1,
+          yAxisIndex: 1,
+        }, ]
+      };
+      mychart.setOption(option);
+    })
+  </script>
+
+</body>
+
+</html>
