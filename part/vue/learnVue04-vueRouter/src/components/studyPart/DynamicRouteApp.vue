@@ -9,7 +9,10 @@
     <!--    必须在原有的路径后面拼接别用户id才能匹配到-->
     <router-link to="/usr/zhangsan">用户界面2（匹配的到）</router-link>
     <!--    ''表示真实的字符串，usrId是变量-->
-    <router-link :to="'/usr/'+usrId">用户界面3（使用data里面的属性）</router-link>
+    <!-- 如果path后面不传值的话，那么就会匹配不到路由，整个组件就渲染不出来 -->
+    <router-link :to="'/usr/' + usrId"
+      >用户界面3（使用data里面的属性）</router-link
+    >
     <router-view></router-view>
   </div>
 </template>
@@ -19,12 +22,11 @@ export default {
   name: "DynamicRouteApp",
   data() {
     return {
-      usrId: '李四'
-    }
-  }
-}
+      usrId: "李四",
+    };
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

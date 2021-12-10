@@ -21,11 +21,12 @@ const About = () => import('../components/About')
 const Usr = () => import('../components/Usr')
 const HomeNews = () => import('../components/HomeNews')
 const HomeMessage = () => import('../components/HomeMessage')
+const Profile = () => import('../components/Profile')
 
 const routes = [
   // 设置默认路径
   {
-    path: '',// 首页路由(路径是缺省值)。这里写'/'或者直接写''都可以
+    path: '', // 首页路由(路径是缺省值)。这里写'/'或者直接写''都可以
     // component: Home,// 这样的话虽然会默认显示Home,但是浏览器的地址栏上是/#/而不是/home,所以不要这么做
     // 重定向：重新定义一个方向
     redirect: '/home'
@@ -57,15 +58,19 @@ const routes = [
   },
   {
     // path: '/usr',// 这是最基本的配置方式
-    path: '/usr/:usrId',// 这是动态路由的配置方式
+    path: '/usr/:usrId', // 这是动态路由的配置方式
     component: Usr,
+  },
+  {
+    path: '/profile',
+    component: Profile
   }
 ]
 
 const router = new VueRouter({
   routes,
-  mode: 'history',// 因为默认的vueRouter使用hash模式，所以地址栏上会带个#号，难看。修改为history模式
-  linkActiveClass: 'active'// 全局修改处于活跃的router-link标签的'router-link-active'的class改为'active'
+  mode: 'history', // 因为默认的vueRouter使用hash模式，所以地址栏上会带个#号，难看。修改为history模式
+  linkActiveClass: 'active' // 全局修改处于活跃的router-link标签的'router-link-active'的class改为'active'
 });
 
 // 3.将router对象传入Vue实例中

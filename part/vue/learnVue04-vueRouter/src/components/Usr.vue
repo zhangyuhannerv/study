@@ -12,8 +12,8 @@ export default {
   name: "Usr",
   data() {
     return {
-      message: '你好啊'
-    }
+      message: "你好啊",
+    };
   },
   computed: {
     usrId() {
@@ -25,15 +25,14 @@ export default {
       // }
       // 这个路由配置对象
 
-      return this.$route.params.usrId// 这里之所以是usrId，是因为路由配置的path里的最后是usrId。
+      return this.$route.params.usrId; // 这里之所以是usrId，是因为路由配置的path里的最后是usrId。
     },
     msg() {
       return this.message;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

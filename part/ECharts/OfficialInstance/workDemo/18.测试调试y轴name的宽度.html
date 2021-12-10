@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .d1 {
+      height: 500px;
+      border: 1px solid;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="d1"></div>
+  <script src="lib/echarts.min.js"></script>
+  <script src="lib/jquery-3.5.1.js"></script>
+  <script>
+    $(function() {
+      let mychart = echarts.init($(".d1")[0]);
+      let option = {
+        color: ["#3398DB"],
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            type: "shadow"
+          }
+        },
+        grid: {
+          containLabel: false,
+          left: 300,
+          right: '3%',
+        },
+        xAxis: [{
+          type: "category",
+          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        }],
+        yAxis: [{
+          type: "value",
+          name: '{a|这段文本采用样式a}',
+          nameLocation: 'middle',
+          nameGap: 50,
+          nameRotate: 360,
+          nameTextStyle: {
+            rich: {
+              a: {
+                color: 'red',
+                borderWidth: 1,
+                borderColor: 'red',
+                height: 200,
+                width: 250,
+                align: 'center'
+              },
+            },
+          },
+        }],
+        series: [{
+          name: "直接访问",
+          type: "bar",
+          barWidth: "60%",
+          data: [10, 52, 200, 334, 390, 330, 220]
+        }]
+      }
+      mychart.setOption(option);
+    })
+  </script>
+
+</body>
+
+</html>
