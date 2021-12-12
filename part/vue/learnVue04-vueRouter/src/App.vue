@@ -12,6 +12,7 @@
     <!--因为已经全局修改了active-class，所以下面两个的活跃class也是active-->
     <router-link to="/about" replace>关于1</router-link>
     <router-link to="/about" replace>关于2</router-link>
+    <router-link to="/profile" replace>配置</router-link>
 
 
     <!--定义按钮，通过代码实现路由的跳转-->

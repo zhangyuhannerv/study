@@ -34,6 +34,9 @@ const routes = [
   {
     path: '/home',
     component: Home,
+    meta: { // 当前路由的元数据，用来保存当前路由对象的一些信息
+      title: '首页'
+    },
     // 嵌套路由
     // 注意：子路由的path前面不需要加'/'
     children: [
@@ -55,15 +58,24 @@ const routes = [
   {
     path: '/about',
     component: About,
+    meta: { // 当前路由的元数据，用来保存当前路由对象的一些信息
+      title: '关于'
+    },
   },
   {
     // path: '/usr',// 这是最基本的配置方式
     path: '/usr/:usrId', // 这是动态路由的配置方式
     component: Usr,
+    meta: { // 当前路由的元数据，用来保存当前路由对象的一些信息
+      title: '用户'
+    },
   },
   {
     path: '/profile',
-    component: Profile
+    component: Profile,
+    meta: { // 当前路由的元数据，用来保存当前路由对象的一些信息
+      title: '配置'
+    },
   }
 ]
 
@@ -72,6 +84,18 @@ const router = new VueRouter({
   mode: 'history', // 因为默认的vueRouter使用hash模式，所以地址栏上会带个#号，难看。修改为history模式
   linkActiveClass: 'active' // 全局修改处于活跃的router-link标签的'router-link-active'的class改为'active'
 });
+
+// 这里配置全局导航守卫
+router.beforeEach((to, from, next) => {
+  next(); // 这里必须要调用next(),不调next()组件的跳转就失效了
+  // 从from路由对象跳转到to路由对象
+  // document.title = to.meta.title;
+  // 当有嵌套路由的时候，会定位到子路由。而子路由没有meta.title
+  // 此时网页的标题是undefined
+  // 此时要这么改下代码
+  document.title = to.matched[0].meta.title; // 意思是找到匹配的路由的根节点的meta.title。
+
+})
 
 // 3.将router对象传入Vue实例中
 export default router;

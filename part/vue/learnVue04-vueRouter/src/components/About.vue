@@ -7,10 +7,14 @@
 
 <script>
 export default {
-  name: "about"
-}
+  name: "about",
+  created() {
+    console.log("created"); // 组件创建
+    // 这里可以改变当前网页的标题
+    // document.title = "关于";
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

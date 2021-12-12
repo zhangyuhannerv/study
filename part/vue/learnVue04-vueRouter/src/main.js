@@ -9,11 +9,19 @@ import QueryTransParam from './components/studyPart/QueryTransParam.vue'
 
 Vue.config.productionTip = false
 
+// prototype：原型。
+// 如果在Vue的原型上加个test(),那么所有的组件都会有test()
+Vue.prototype.test = function() {
+  console.log('test');
+}
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  // render: h => h(App) // 路由的基本演示和使用,路由嵌套
+  render: h => h(App) // 路由的基本演示和使用,路由嵌套
   // render: h => h(DynamicRouteApp)// 动态路由
-  render: h => h(QueryTransParam) // 演示使用Query的方式传递参数
+  // render: h => h(QueryTransParam) // 演示使用Query的方式传递参数
 })
+
+console.log(router);
