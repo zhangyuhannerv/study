@@ -2,7 +2,7 @@
   <div id="app">
     <router-view></router-view>
     <tab-bar>
-      <tab-bar-item path="/home">
+      <tab-bar-item path="/home" activeColor="blue">
         <template v-slot:item-icon>
           <img src="./assets/img/tabbar/home.png" alt="">
         </template>
@@ -13,7 +13,7 @@
           <div>首页</div>
         </template>
       </tab-bar-item>
-      <tab-bar-item path="/about">
+      <tab-bar-item path="/about" activeColor="skyblue">
         <template v-slot:item-icon>
           <img src="./assets/img/tabbar/about.png" alt="">
         </template>
@@ -24,7 +24,7 @@
           <div>关于</div>
         </template>
       </tab-bar-item>
-      <tab-bar-item path="/shopcar">
+      <tab-bar-item path="/shopcar" activeColor="green">
         <template v-slot:item-icon>
           <img src="./assets/img/tabbar/shopcar.png" alt="">
         </template>

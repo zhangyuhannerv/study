@@ -8,7 +8,7 @@
     <div v-else>
       <slot name="item-icon-active"></slot>
     </div>
-    <div :class="{active:isActive}">
+    <div :style="activeStyle">
       <slot name="item-text"></slot>
     </div>
   </div>
@@ -18,12 +18,24 @@
 export default {
   name: "TabBarItem",
   props: {
-    path: String
+    path: String,
+    activeColor: {
+      type: String,
+      default: 'red'
+    }
+  },
+  computed: {
+    isActive() {
+      // $router是处于活跃状态的路由对象
+      // 下面这种写法能判断/home,/home/....等多种路径
+      return this.$route.path.indexOf(this.path) !== -1
+    },
+    activeStyle() {
+      return this.isActive ? {color: this.activeColor} : {}
+    }
   },
   data() {
-    return {
-      isActive: false
-    }
+    return {}
   },
   methods: {
     itemClick() {
@@ -49,9 +61,5 @@ export default {
   height: 24px;
   vertical-align: middle;
   margin-bottom: 2px;
-}
-
-.active {
-  color: red;
 }
 </style>
