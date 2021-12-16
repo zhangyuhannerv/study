@@ -19,10 +19,12 @@ export default {
   data() {
     return {
       message: "home组件Message",
+      path: '/home/news'
     };
   },
   created() {
-    console.log("created"); // 组件创建
+    // this.$router.push('/home/news')
+    console.log("home组件被创建"); // 组件创建
     // 这里可以改变当前网页的标题
     // document.title = "首页";
     // 但是这种改变标题的方式要在每个需要跳转的组件上都加个改变标题的代码
@@ -39,6 +41,27 @@ export default {
     // 这里举个例子。当this.message刷新的时候，页面上的{{message}}也会
     // 刷新，此时就会进入这个updated()回调函数
   },
+  destroyed() {
+    console.log('home组件被销毁')
+  },
+  // 当前组件活跃的时候执行,虽然有报错，但是能解决问题。。。
+  activated() {
+    // console.log('activated');
+    this.$router.push(this.path);
+  },
+  // // 当前组件不活跃的时候执行,结果，失败，因为此时获得path已经是新组件的path了
+  // deactivated() {
+  //   console.log('deactivated');
+  //   this.path = this.route.path;
+  // }
+  // 既然deactivated()不合适，调整一下，改用组件内的的导航守卫
+  beforeRouteLeave(to, from, next) {
+    this.path = this.$route.path;
+    next()
+  }
+
+  // 注意：activated()和deactivated()只有组件被<keep-alive>包裹的时候才能够执行(才有效)。
+  // 首页中使用了个path记录了离开时的路径，再此进入首页时，重定向到离开时的路径。后面的开发中不用这种方式实现记录效果。而是使用currentIndex来记录
 };
 </script>
 

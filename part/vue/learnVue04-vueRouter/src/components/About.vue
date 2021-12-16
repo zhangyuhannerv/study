@@ -9,10 +9,13 @@
 export default {
   name: "about",
   created() {
-    console.log("created"); // 组件创建
+    console.log("about created"); // 组件创建
     // 这里可以改变当前网页的标题
     // document.title = "关于";
   },
+  destroyed() {
+    console.log("about destroyed");
+  }
 };
 </script>
 

@@ -73,10 +73,16 @@ const routes = [
   {
     path: '/profile',
     component: Profile,
-    meta: { // 当前路由的元数据，用来保存当前路由对象的一些信息
+    meta: { // 当前路由的元数据(描述数据的数据)，用来保存当前路由对象的一些信息
       title: '配置'
     },
+    beforeEnter: (to, from, next) => {
+      //  这个beforeEnter就是路由独享的守卫
+      next();
+      console.log('进入配置文件')
+    }
   }
+
 ]
 
 const router = new VueRouter({
@@ -86,6 +92,7 @@ const router = new VueRouter({
 });
 
 // 这里配置全局导航守卫
+// beforeEach()称之为前置钩子。是路由跳转之前的回调
 router.beforeEach((to, from, next) => {
   next(); // 这里必须要调用next(),不调next()组件的跳转就失效了
   // 从from路由对象跳转到to路由对象
@@ -94,8 +101,20 @@ router.beforeEach((to, from, next) => {
   // 此时网页的标题是undefined
   // 此时要这么改下代码
   document.title = to.matched[0].meta.title; // 意思是找到匹配的路由的根节点的meta.title。
-
+  console.log('路由跳转之前')
 })
+
+// 还有个后置钩子afterEach()。是路由跳转完的回调。此时不用调用next()函数
+router.afterEach((to, from) => {
+  // document.title = to.matched[0].meta.title;// 这里也能实现改变页面的标题
+  console.log('路由跳转之后')
+})
+
+// beforeEach()和afterEach()称之为全局守卫，是整个router的属性。只要有页面发生跳转，都能监听的到
+// 还有路由独享的守卫和组件内的守卫
+// 路由独享守卫是只有进入某个路由里面才能进入钩子函数
+// 组件内的守卫是只有进入某个组件内才能进入钩子函数
+// 路由独享守卫和组件内的守卫用到的时候去官方文档上自己学习
 
 // 3.将router对象传入Vue实例中
 export default router;

@@ -52,9 +52,13 @@ export default {
     },
   },
   created() {
+    console.log("user created");
     // 测试如果在vue原型上加个test(),那么当前组件是否有test()
     this.test(); // 结论：控制台打印'test'。执行test()成功
   },
+  destroyed() {
+    console.log("user destroyed");
+  }
 };
 </script>
 

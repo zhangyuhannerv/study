@@ -25,7 +25,18 @@
     <!--    路由切换时，切换的是router-view挂载的组件，其他内容不会发生改变-->
     <h2>导航栏</h2>
     <!--    这个router是用来展示最外层的东西。所以不能让子路由对应的组件在这个router-view里展示-->
-    <router-view></router-view>
+    <!--    <router-view></router-view>-->
+    <!--    此时这个小项目有个问题，点击首页，点击消息，点击关于，再点击首页，发现首页在news的状态，说明现在每次路由跳转的时候都是重新创建组件-->
+    <!--    keep-alive是Vue内置的一个组件，可以使被包含的组件保留状态，或避免重新渲染-->
+    <!--    如果router-view放在keep-alive里面，那么所有路径匹配到的视图组件都会被缓存-->
+    <keep-alive exclude="Profile,about">
+      <!--      此时只要是router-view显示的组件都会被缓存-->
+      <!--      如果需要某些组件不要缓存，那么记住还有keep-alive还有include和exclude属性-->
+      <!--      include和exclude都是支持字符串或者正则表达式-->
+      <!--      这里的Profile是组件的name属性，此时Profile组件就不会被缓存，而是频繁的创建和销毁-->
+      <!--      注意：如果有多个，那么组件名称之间用','分隔开，不要有空格-->
+      <router-view></router-view>
+    </keep-alive>
     <h2>版权信息</h2>
   </div>
 </template>

@@ -11,6 +11,14 @@
 <script>
 export default {
   name: "Profile",
+  created() {
+    console.log("Profile created"); // 组件创建
+    // 这里可以改变当前网页的标题
+    // document.title = "关于";
+  },
+  destroyed() {
+    console.log("Profile destroyed");
+  }
 };
 </script>
 
