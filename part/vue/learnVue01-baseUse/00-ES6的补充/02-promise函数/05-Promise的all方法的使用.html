@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 两个网络请求
+  // 请求1和请求2
+  // 同时需要请求1和请求2的回调数据，才能完成相应的功能
+  // 以前可能先请求1再请求2.这样链式执行。在请求2的回调里写最终的需求代码
+  // 现在只需要Promise.all()方法就能够在同时执行请求1和请求2的情况下判断什么时候请求1和请求2都完成了
+
+  function request1() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('111')
+        // reject('请求1执行失败')
+      }, 1000)
+    })
+  }
+
+  function request2() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('222')
+        // reject('请求2执行失败');
+      }, 2000)
+    })
+  }
+
+  // all()方法的参数要求是集合或者数组（可遍历对象）。而集合或者数组内部是多个Promise对象
+  Promise.all([request1(), request2()]).then(res => {
+    // res是个数组，如果多个Promise都是resolve状态的话，那么res数组里就是多个按顺序的resolve出的data
+    console.log(res);
+    console.log(res[0]);// 打印111，请求1resolve出的data
+    console.log(res[1]);// 打印222，请求2resolve出的data
+  }).catch(e => {
+    // 多个Promise任何一个是reject状态，就不会进入到then()里而是会进入到catch()里。
+    // 如果只有一个Promise是reject，那么这个e就是这个Promise所reject出的data
+    // 如果有多个Promise是reject,那么这个e就是最先执行完（最先reject)的Promise所reject出的data
+    // 比如：如果上面只有请求2reject了。那么这里打印的就是'请求2执行失败'，如果请求1和请求2都reject了，那么这里打印的就是'请求1执行失败'
+    console.log(e)
+  })
+
+</script>
+</body>
+</html>

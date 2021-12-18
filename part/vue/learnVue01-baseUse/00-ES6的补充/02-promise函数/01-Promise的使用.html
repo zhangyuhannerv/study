@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+<script>
+  // 使用setTimeout()函数模拟请求
+  // setTimeout(() => {
+  //   console.log('hello world');
+  // }, 1000);
+
+  // 下面有这样一个回调地狱
+  setTimeout(() => {
+    console.log('hello world');
+    setTimeout(() => {
+      console.log('hello vue');
+      setTimeout(() => {
+        console.log('hello java')
+      }, 3000)
+    }, 2000)
+  }, 1000)
+
+
+  // 将上面的回调地狱用Promise优化(链式编程)后如下
+  // 参数->函数
+  // 函数里有两个参数
+  // resolve：解决
+  // reject：拒绝
+  // resolve和reject本身又是函数
+  new Promise((resolve, reject) => {
+    // 第一层的网络请求
+    setTimeout(() => {
+      // 在回调函数里一但执行resolve()就会进入到then()里
+      resolve('hello world');
+    }, 1000);
+  }).then((data) => {
+    // 第一层的回调函数
+    console.log(data);
+    // 第二层的网络请求
+    // 如果在回调函数里有其他的异步操作，那么就继续返回新的Promise对象，把新的异步操作封装到里面
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('hello vue')
+      }, 2000);
+    })
+  }).then((data) => {
+    // 第二层的回调函数
+    console.log(data);
+    // 第三层网络请求
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve()
+      }, 3000);
+    })
+  }).then(() => {
+    // 第三层网络回调
+    console.log('hello java')
+    // 第四层的网络回调
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject('第四层网络回调失败')
+      }, 1000)
+    })
+  }).catch(data => {
+    console.log(data);
+  })
+
+  // 什么情况下会用到promise?
+  // 一般情况下是有异步操作时使用Promise类对异步操作进行封装
+  // 网络请求成功的时候执行resolve(),网络请求失败的时候执行reject()
+
+  // Promise粗略执行过程分析：
+  // new Promise():new->构造函数
+  // 1.保存了一些状态信息
+  // 2.执行传入的函数，这是会向该函数里传入两个值，resolve和reject
+  // 3.resolve和reject本身又是函数
+</script>
+</body>
+
+</html>

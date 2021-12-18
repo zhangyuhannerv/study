@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  // 需求：进行了一次网络请求，结果是aaa
+  // 一次处理后将aaa+111传给下一步
+  // 二次处理：aaa111+222
+  // 真实目的：对一个data进行多次有顺序的处理（没有异步的情况下)也可以用Promise
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('aaa')
+    }, 1000)
+  }).then(res => {
+    // 自己对res先进行一些处理
+    console.log(res)
+
+    // 把res传给下一个处理
+    // return new Promise(resolve => {
+    //   resolve('res' + 111)
+    // })
+
+    //  没有异步操作的Promise可以简写成下面的形式
+    // return Promise.resolve(res + "111");
+
+    //  还可以继续简写,此时内部会进行形如上面的包装
+    return res + '111';
+
+  }).then(res => {
+    console.log(res);
+
+    // 再把res传给下一个处理
+    return res + '222'
+  }).then(res => {
+    console.log(res);
+
+    // 注意：在链的任何地方执行reject都会中断链，并执行最后的catch
+    // return new Promise((resolve, reject) => {
+    //   reject(res + '333')
+    // })
+
+    //  上面可以简写
+    return Promise.reject(res + '333')
+
+    //  测试throw异常能不能进入到catch里
+    //  结论：成功，除了resolve(),直接手动抛出异常也能进入到catch里，但是不推荐这种写法
+    // throw res + '333';
+  }).then(res => {
+    console.log('在then里打印' + res)
+  }).catch(e => {
+    console.log('在catch里打印' + e)
+  })
+</script>
+</body>
+</html>

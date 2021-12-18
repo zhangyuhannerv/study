@@ -4,10 +4,9 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve (dir) {
+function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
-
 
 
 module.exports = {
@@ -27,6 +26,10 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      // 这里自己再定义三个别名
+      'components': resolve('src/components'),
+      'assets': resolve('src/assets'),
+      'views': resolve('src/views'),
     }
   },
   module: {
