@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .d1 {
+    height: 500px;
+    border: 1px solid;
+  }
+
+  .echartsContainer {
+    overflow: auto;
+  }
+</style>
+
+<body>
+  <div class="echartsContainer">
+    <div class="d1"></div>
+  </div>
+
+  <button id="btn">点击改变echarts容器高度</button>
+  <script src="lib/echarts.min.js"></script>
+  <script src="lib/jquery-3.5.1.js"></script>
+  <script>
+    $(function() {
+      $("#btn").click(function() {
+        // $('.echartsContainer').height(300);
+        // $('.d1').height(300);
+        // myChart.resize();
+      })
+
+      var chartDom = $(".d1")[0];
+      var myChart = echarts.init(chartDom);
+      var option;
+
+      // prettier-ignore
+      const data = [
+        [1, 116],
+        [2, 129],
+        [3, 135],
+        [4, 86],
+        [5, 73],
+        [6, 85],
+        [7, 73],
+      ];
+      const dateList = data.map(function(item) {
+        return item[0];
+      });
+      const valueList = data.map(function(item) {
+        return item[1];
+      });
+      option = {
+        title: [{
+            left: 'center',
+            text: 'Gradient along the y axis'
+          },
+          {
+            top: '55%',
+            left: 'center',
+            text: 'Gradient along the x axis'
+          }
+        ],
+        tooltip: {
+          trigger: 'axis'
+        },
+        xAxis: [{
+            type: 'value',
+            gridIndex: 0
+          },
+          {
+            type: 'value',
+            gridIndex: 1
+          }
+        ],
+        yAxis: [
+          {},
+          {
+            gridIndex: 1
+          }
+        ],
+        grid: [{
+            bottom: '300'
+          },
+          {
+            top: '300'
+          }
+        ],
+        series: [{
+            type: 'line',
+            showSymbol: false,
+            data,
+          },
+          {
+            type: 'line',
+            showSymbol: false,
+            data,
+            xAxisIndex: 1,
+            yAxisIndex: 1
+          }
+        ]
+      };
+
+      option && myChart.setOption(option);
+      myChart.on('click', params => {
+        console.log(params);
+        $('.echartsContainer').height(300);
+      })
+    })
+  </script>
+</body>
+
+</html>
