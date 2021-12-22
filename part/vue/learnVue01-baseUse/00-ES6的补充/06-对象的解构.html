@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  const obj = {
+    name: 'zyh',
+    age: 15,
+    height: 1.88,
+    address: 'jinan'
+  }
+  // 旧：
+  // let name = obj.name;
+  // let height = obj.height;
+  // let age = obj.age;
+
+  //  新(es6)：解构写法,可以多取，也可以少取(只取对象中的某几个key)。多取的key所对应的value是undefined。
+  let {height, age, name, a} = obj;
+  console.log(height)// 1.88
+  console.log(age)// 15
+  console.log(name)// zyh
+  console.log(a)// 不存在的属性打印undefined
+
+</script>
+</body>
+</html>
