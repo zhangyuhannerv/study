@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<script>
+  const names = ['why', 'kobe', 'james']
+
+  // 旧的写法
+  // const name1 = names[0];
+  // const name2 = names[1];
+  // const name3 = names[2];
+
+  // 这里的解构就是按照顺序正常的解构。可以多写元素，多写的元素（name4）为undefined
+  const [name1, name2, name3, name4] = names;
+
+  console.log(name1, name2, name3, name4)
+</script>
+</body>
+</html>
