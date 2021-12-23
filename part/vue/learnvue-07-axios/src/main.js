@@ -84,3 +84,8 @@ axios.all([axios({
   console.log('第二个请求：')
   console.log(res2)
 }))
+
+// 3.设置全局axios默认值(可以把公共的属性抽取出来，在全局里设置)
+axios.defaults.baseURL = 'http://123.207.32.32:8000'
+axios.defaults.timeout = 5000 // 接口超时时间：5s
+axios.get('/home/multidata').then(res => console.log(res));
