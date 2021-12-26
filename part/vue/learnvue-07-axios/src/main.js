@@ -89,3 +89,37 @@ axios.all([axios({
 axios.defaults.baseURL = 'http://123.207.32.32:8000'
 axios.defaults.timeout = 5000 // 接口超时时间：5s
 axios.get('/home/multidata').then(res => console.log(res));
+
+// 注意：以上的所有请求都是使用全局的默认axios实例和全局的配置
+// 在实际开发里会根据业务需要创建局部的axios实例和配置
+
+// 4.创建对应的axios实例
+const instance1 = axios.create({
+  baseURL: 'http://123.207.32.32:8000',
+  timeout: 5000
+})
+
+instance1({
+  url: '/home/multidata',
+}).then(res => {
+  console.log('---创建自己的axios实例1---')
+  console.log(res)
+})
+
+instance1({
+  url: '/home/data',
+  params: {
+    type: 'pop',
+    page: 2
+  }
+}).then(res => {
+  console.log('---创建自己的axios实例2---')
+  console.log(res)
+})
+
+// 根据另外的需求，可以创建另一个实例，然后用该实例请求相关业务下的接口
+const instance2 = axios.create({
+  baseURL: 'http://222.111.33.33:8000',
+  timeout: 10000,
+  headers: {}
+})
