@@ -7,15 +7,20 @@
         </div>
       </template>
     </nav-bar>
-    <!--    <home-swiper :banners="banners"></home-swiper>-->
-    <!--    <home-swiper1 :banners="banners"></home-swiper1>-->
-    <home-swiper2 :banners="banners"></home-swiper2>
-    <home-recommend :recommends="recommends"></home-recommend>
-    <feature-view/>
-    <tab-control :titles="['流行','新款','精选']"
-                 class="tab-control"
-                 @tabClick="tabClick"></tab-control>
-    <goods-list :goods="showGoods"></goods-list>
+    <div class="wrapper">
+      <div content="content">
+        <!--    <home-swiper :banners="banners"></home-swiper>-->
+        <!--    <home-swiper1 :banners="banners"></home-swiper1>-->
+        <home-swiper2 :banners="banners"></home-swiper2>
+        <home-recommend :recommends="recommends"></home-recommend>
+        <feature-view/>
+        <tab-control :titles="['流行','新款','精选']"
+                     class="tab-control"
+                     @tabClick="tabClick"></tab-control>
+        <goods-list :goods="showGoods"></goods-list>
+      </div>
+    </div>
+
     <ul>
       <li>1</li>
       <li>2</li>
