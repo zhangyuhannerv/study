@@ -7,19 +7,18 @@
         </div>
       </template>
     </nav-bar>
-    <div class="wrapper">
-      <div content="content">
-        <!--    <home-swiper :banners="banners"></home-swiper>-->
-        <!--    <home-swiper1 :banners="banners"></home-swiper1>-->
-        <home-swiper2 :banners="banners"></home-swiper2>
-        <home-recommend :recommends="recommends"></home-recommend>
-        <feature-view/>
-        <tab-control :titles="['流行','新款','精选']"
-                     class="tab-control"
-                     @tabClick="tabClick"></tab-control>
-        <goods-list :goods="showGoods"></goods-list>
-      </div>
-    </div>
+
+    <scroll class="content">
+      <!--    <home-swiper :banners="banners"></home-swiper>-->
+      <!--    <home-swiper1 :banners="banners"></home-swiper1>-->
+      <home-swiper2 :banners="banners"></home-swiper2>
+      <home-recommend :recommends="recommends"></home-recommend>
+      <feature-view/>
+      <tab-control :titles="['流行','新款','精选']"
+                   class="tab-control"
+                   @tabClick="tabClick"></tab-control>
+      <goods-list :goods="showGoods"></goods-list>
+    </scroll>
 
     <ul>
       <li>1</li>
@@ -138,6 +137,7 @@ import FeatureView from "./childComps/FeatureView";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/Goods/GoodsList";
+import Scroll from "components/common/scroll/Scroll";
 
 /*网络请求*/
 import {
@@ -155,7 +155,8 @@ export default {
     HomeRecommend,
     FeatureView,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll
   },
   data() {
     return {
@@ -225,7 +226,10 @@ export default {
 
 <style scoped>
 #home {
-  padding-top: 44px;
+  height: 100vh;
+  position: relative;
+  /*隐藏原先自带的滚动条*/
+  overflow: hidden;
 }
 
 .home-nav {
@@ -246,4 +250,20 @@ export default {
   top: 44px;
   z-index: 9;
 }
+
+/*第一种确定中间内容的样式*/
+/*.content {
+  margin-top: 44px;
+  height: calc(100% - 93px);
+}*/
+
+/*第二种确定中间内容的样式，这里选择第二种*/
+.content {
+  position: absolute;
+  top: 44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+}
+
 </style>
