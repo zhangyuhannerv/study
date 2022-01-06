@@ -26,18 +26,32 @@ export default {
       scroll: null
     }
   },
+  props: {
+    probeType: {
+      type: Number,
+      default: 0
+    }
+  },
+  methods: {
+    // 给scrollTo()封上一层，方便外界调用
+    // time如果不传那么就会使用默认值300
+    scrollTo(x, y, time = 300) {
+      this.scroll.scrollTo(x, y, time)
+    }
+  },
   mounted() {
     // 为了避免用类名获取到别的元素，这里特意使用了$refs
     this.scroll = new BScroll(this.$refs.wrapper, {
-      probeType: 2,
-      pullUpLoad: true,
+      probeType: this.probeType,// 是否实时监听需要传进来一个参数，默认不实时监听(总是实时监听影响性能)
+      // pullUpLoad: true,
       // 默认会阻止除了button外的所有dom点击事件。加上click=true才会不阻止
       click: true,
       observeDOM: true, // 开启 observe-dom 插件
       observeImage: true // 开启 observe-image 插件
     })
+    //当监听滚动的时候，会发出事件，把当前的参数传递出去
     this.scroll.on('scroll', (position) => {
-      // console.log(position)
+      this.$emit('scroll', position)
     })
     // this.scroll.on('pullingUp', () => {
     //   console.log('上拉加载更多')
