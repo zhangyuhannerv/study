@@ -14,7 +14,9 @@
       class="content"
       ref="scroll"
       @scroll="contentScroll"
-      :probe-type="3">
+      :probe-type="3"
+      :pull-up-load="true"
+      @pullingUp="loadMore">
       <!--    <home-swiper :banners="banners"></home-swiper>-->
       <!--    <home-swiper1 :banners="banners"></home-swiper1>-->
       <home-swiper2 :banners="banners"></home-swiper2>
@@ -129,6 +131,10 @@ export default {
     },
 
 
+    loadMore() {
+      this.getHomeGoods(this.currentType)
+    },
+
     /**
      * 网络请求
      */
@@ -144,6 +150,7 @@ export default {
         // this.goods[type].list.concat(res.data.list)// 不知道为什么concat不行
         this.goods[type].list.push(...res.data.list)// 这里只能用es6的解构
         this.goods[type].page++;// 将当前页码加1
+        this.$refs.scroll.finishPullUp()
       })
     }
   }

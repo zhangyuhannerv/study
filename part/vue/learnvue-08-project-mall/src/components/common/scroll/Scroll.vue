@@ -30,6 +30,10 @@ export default {
     probeType: {
       type: Number,
       default: 0
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
@@ -37,13 +41,16 @@ export default {
     // time如果不传那么就会使用默认值300
     scrollTo(x, y, time = 300) {
       this.scroll.scrollTo(x, y, time)
+    },
+    finishPullUp() {
+      this.scroll.finishPullUp()
     }
   },
   mounted() {
     // 为了避免用类名获取到别的元素，这里特意使用了$refs
     this.scroll = new BScroll(this.$refs.wrapper, {
       probeType: this.probeType,// 是否实时监听需要传进来一个参数，默认不实时监听(总是实时监听影响性能)
-      // pullUpLoad: true,
+      pullUpLoad: this.pullUpLoad,
       // 默认会阻止除了button外的所有dom点击事件。加上click=true才会不阻止
       click: true,
       observeDOM: true, // 开启 observe-dom 插件
@@ -53,9 +60,13 @@ export default {
     this.scroll.on('scroll', (position) => {
       this.$emit('scroll', position)
     })
-    // this.scroll.on('pullingUp', () => {
-    //   console.log('上拉加载更多')
-    // })
+
+    if (this.pullUpLoad) {
+      this.scroll.on('pullingUp', () => {
+        this.$emit('pullingUp')
+      })
+    }
+
   }
 }
 </script>

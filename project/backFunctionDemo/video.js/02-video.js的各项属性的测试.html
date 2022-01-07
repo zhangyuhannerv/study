@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video-js.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <video id="my-player" class="video-js">
+    <!-- <source src="video/1.mp4" type="video/mp4">
+      </source> -->
+    <p class="vjs-no-js">
+      To view this video please enable JavaScript, and consider upgrading to a
+      web browser that
+      <a href="https://videojs.com/html5-video-support/" target="_blank">
+        supports HTML5 video
+      </a>
+    </p>
+  </video>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
+  <script>
+    var options = {
+      autoplay: false, //自动播放：true/false，这里设置为false，下面通过创建实例后调用方法来播放
+      controls: true, //是否显示底部控制栏：true/false
+      width: '1800',
+      height: '800',
+      muted: false, // 注意：只有静音的情况下才允许自动播放，chrome在没有交互的情况下禁止产生噪音
+      // sources: [{ src: 'video/1.mp4', type: 'video/mp4' }],
+      // sources: [{ src: 'http://192.168.220.10/video/test/test.m3u8', type: 'application/x-mpegURL' }],
+      // sources: [{ src: 'http://127.0.0.1:10012/video/test1/test1.m3u8', type: 'application/x-mpegURL' }],
+      sources: [{ src: 'http://192.168.220.10/video/test3/test3.m3u8', type: 'application/x-mpegURL' }],
+      // sources: [{ src: 'http://192.168.220.10/metaVideo/test3.mp4', type: 'video/mp4' }],
+    };
+    var player = videojs('#my-player', options, function onPlayerReady() {
+      videojs.log('Your player is ready!');
+
+      // In this context, `this` is the player that was created by Video.js.
+      // this.play();
+
+      // How about an event listener?
+      this.on('ended', function() {
+        videojs.log('Awww...over so soon?!');
+      });
+    });
+  </script>
+</body>
+
+</html>
