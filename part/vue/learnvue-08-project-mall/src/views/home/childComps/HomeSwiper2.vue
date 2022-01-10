@@ -1,7 +1,7 @@
 <template>
   <swiper ref="mySwiper" :options="swiperOptions">
     <swiper-slide v-for="item in banners">
-      <img :src="item.image" width="100%" alt="">
+      <img :src="item.image" width="100%" alt="" @load="imageLoad">
     </swiper-slide>
     <div class="swiper-pagination" slot="pagination"></div>
   </swiper>
@@ -42,6 +42,17 @@ export default {
           delay: 1500
         }
         // Some Swiper option/callback...
+      },
+      isLoad: false
+    }
+  },
+  methods: {
+    // 只需要图片加载一次就能获得高度了
+    // 通过isLoad来只发射一次事件
+    imageLoad() {
+      if (!this.isLoad) {
+        this.$emit('swiperImageLoad')
+        this.isLoad = true
       }
     }
   },

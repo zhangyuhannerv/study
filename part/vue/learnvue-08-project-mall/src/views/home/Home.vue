@@ -7,6 +7,11 @@
         </div>
       </template>
     </nav-bar>
+    <tab-control :titles="['流行','新款','精选']"
+                 @tabClick="tabClick"
+                 ref="tabControl1"
+                 v-show="isTabFixed"
+    ></tab-control>
 
     <!--    注意计算属性使用驼峰时，属性需要用-连接-->
     <!--    当不是监听原生事件时，无需加上native修饰符-->
@@ -19,12 +24,17 @@
       @pullingUp="loadMore">
       <!--    <home-swiper :banners="banners"></home-swiper>-->
       <!--    <home-swiper1 :banners="banners"></home-swiper1>-->
-      <home-swiper2 :banners="banners"></home-swiper2>
+      <home-swiper2
+        :banners="banners"
+        @swiperImageLoad=swiperImageLoad>
+      </home-swiper2>
       <home-recommend :recommends="recommends"></home-recommend>
       <feature-view/>
       <tab-control :titles="['流行','新款','精选']"
                    class="tab-control"
-                   @tabClick="tabClick"></tab-control>
+                   @tabClick="tabClick"
+                   ref="tabControl2"
+                   v-show="!isTabFixed"></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
 
@@ -50,6 +60,7 @@ import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/Goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
+import {debounce} from "common/util";
 
 /*网络请求*/
 import {
@@ -81,7 +92,9 @@ export default {
         'sell': {page: 0, list: []},
       },
       currentType: 'pop',
-      isShowBackTop: false
+      isShowBackTop: false,
+      tabOffsetTop: 0,
+      isTabFixed: false
     }
   },
   computed: {
@@ -97,6 +110,18 @@ export default {
     this.getHomeGoods('pop')
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
+  },
+  mounted() {
+    const refresh = debounce(this.$refs.scroll.refresh)
+    // 必须在Scroll组件初始化之后（即mounted里）做监听
+    // 监听goodItem里的图片加载完成
+    this.$bus.$on('itemImageLoad', () => {
+      // this.$refs.scroll.refresh()
+      // console.log('监听到要执行refresh的次数')
+      // 对于refresh()非常频繁的问题进行防抖操作。debounce：防抖/throttle：节流
+      refresh()
+    })
+
   },
   methods: {
     /**
@@ -114,6 +139,9 @@ export default {
           this.currentType = 'sell'
           break
       }
+      // 让上下两个tabControl的currentIndex保持一致
+      this.$refs.tabControl1.currentIndex = index
+      this.$refs.tabControl2.currentIndex = index
     },
 
     backTop() {
@@ -127,12 +155,25 @@ export default {
 
     contentScroll(position) {
       // position.y是负值
+      // 1.判断BackTop是否显示
       this.isShowBackTop = -position.y > 1000
+      // 2.判断tabControl是否吸顶(position:fixed)
+      this.isTabFixed = -position.y > this.tabOffsetTop
     },
 
 
+    // 上拉加载更多
     loadMore() {
       this.getHomeGoods(this.currentType)
+    },
+
+    // swiper图片加载完成,获得tabControl正确的offsetTop值
+    // 正常是等上面所有的图片都加载完成后获得该值
+    // 但是下面两张图片影响较小，所以只需等swiper的图片加载完成后即可获得
+    swiperImageLoad() {
+      // 获取tabControl的offsetTop
+      // 所有的组件都有个属性$el:用于获取组件中的元素
+      this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop
     },
 
     /**
@@ -168,20 +209,24 @@ export default {
 .home-nav {
   background: var(--color-tint);
   color: #fff;
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  z-index: 9;
+  /*采用better-scroll后是局部滚动就没必要用fixed了*/
+  /*  position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 9;*/
 }
 
 /*目前先简单的使用css实现tab-control向下滚动时吸附在最上面的功能*/
 /*注意：sticky的兼容性不好，移动端一般都适配，但是如果要适配pc端的各种浏览器，那么该属性最好别用*/
 /*后续会用better-scroll来替换掉下面的实现方式*/
 .tab-control {
-  position: sticky;
-  top: 44px;
-  z-index: 9;
+  /*使用better-scroll下面的属性失效*/
+  /*  position: sticky;
+    top: 44px;
+    z-index: 9;*/
+  position: relative;
+  z-index: 10;
 }
 
 /*第一种确定中间内容的样式*/
@@ -197,6 +242,6 @@ export default {
   bottom: 49px;
   left: 0;
   right: 0;
+  overflow: hidden;
 }
-
 </style>

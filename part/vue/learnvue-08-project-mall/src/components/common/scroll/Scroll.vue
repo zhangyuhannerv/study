@@ -40,10 +40,14 @@ export default {
     // 给scrollTo()封上一层，方便外界调用
     // time如果不传那么就会使用默认值300
     scrollTo(x, y, time = 300) {
-      this.scroll.scrollTo(x, y, time)
+      this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
     },
     finishPullUp() {
-      this.scroll.finishPullUp()
+      this.scroll && this.scroll.finishPullUp && this.scroll.finishPullUp()
+    },
+    refresh() {
+      // console.log('实际执行refresh的次数')
+      this.scroll && this.scroll.refresh && this.scroll.refresh()
     }
   },
   mounted() {
@@ -53,14 +57,16 @@ export default {
       pullUpLoad: this.pullUpLoad,
       // 默认会阻止除了button外的所有dom点击事件。加上click=true才会不阻止
       click: true,
-      observeDOM: true, // 开启 observe-dom 插件
-      observeImage: true // 开启 observe-image 插件
+      // observeDOM: true, // 开启 observe-dom 插件
+      // observeImage: true // 开启 observe-image 插件
     })
     //当监听滚动的时候，会发出事件，把当前的参数传递出去
-    this.scroll.on('scroll', (position) => {
-      this.$emit('scroll', position)
-    })
-
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on('scroll', (position) => {
+        this.$emit('scroll', position)
+      })
+    }
+    // 监听滚动到底部事件
     if (this.pullUpLoad) {
       this.scroll.on('pullingUp', () => {
         this.$emit('pullingUp')
