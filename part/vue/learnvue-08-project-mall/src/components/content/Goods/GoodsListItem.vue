@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="itemClick">
     <!--    @load是图片加载完成的vue封装的方法-->
     <img :src="goodsItem.show.img" alt="" @load="imageLoad">
     <div class="goods-info">
@@ -29,6 +29,19 @@ export default {
       // 2.通过更改vuex的属性，在home组件里监听vuex的该属性
       // 3.通过事件总线（相当于前台的消息队列）如下：
       this.$bus.$emit('itemImageLoad');
+    },
+
+    /*跳转到详情页*/
+    itemClick() {
+      /*动态路由*/
+      this.$router.push('/detail/' + this.goodsItem.iid)
+      /*query*/
+      // this.$router.push({
+      //   path: '/detail',
+      //   query: {
+      //     id: '111'
+      //   }
+      // })
     }
   }
 }

@@ -94,7 +94,8 @@ export default {
       currentType: 'pop',
       isShowBackTop: false,
       tabOffsetTop: 0,
-      isTabFixed: false
+      isTabFixed: false,
+      saveY: 0,
     }
   },
   computed: {
@@ -123,6 +124,16 @@ export default {
     })
 
   },
+
+  /*虽然betterScroll已经解决了切换路由时不在原先位置的bug*/
+  /*这里还是记录一下解决思路*/
+  /*  activated() {
+      this.$refs.scroll.scrollTo(0, this.saveY, 0)
+    },
+    deactivated() {
+      this.saveY = this.$refs.scroll.getScrollY();
+      this.$refs.scroll.refresh()
+    },*/
   methods: {
     /**
      * 事件监听

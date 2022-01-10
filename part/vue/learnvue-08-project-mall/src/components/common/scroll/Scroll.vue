@@ -48,6 +48,9 @@ export default {
     refresh() {
       // console.log('实际执行refresh的次数')
       this.scroll && this.scroll.refresh && this.scroll.refresh()
+    },
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0
     }
   },
   mounted() {
