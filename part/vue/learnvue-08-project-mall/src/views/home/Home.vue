@@ -122,7 +122,6 @@ export default {
       // 对于refresh()非常频繁的问题进行防抖操作。debounce：防抖/throttle：节流
       refresh()
     })
-
   },
 
   /*虽然betterScroll已经解决了切换路由时不在原先位置的bug*/

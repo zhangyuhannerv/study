@@ -1790,19 +1790,19 @@ BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new Fi
    - （5）如果你不喜欢（4）的方式，你还可以直接在catch后面写一句回滚代码**TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();**来实现回滚，这样的话，就可以在抛异常后也能return 返回值；比较适合需要拿到Service层的返回值的场景。具体的用法可以参见考下面的伪代码
 
      ```java
-         /** TransactionAspectSupport手动回滚事务：*/
-            @Transactional(rollbackFor = { Exception.class })  
-            public boolean test() {  
-                 try {  
-                    doDbSomeThing();    
-                 } catch (Exception e) {  
-                      e.printStackTrace();     
-                      //就是这一句了, 加上之后抛了异常就能回滚（有这句代码就不需要再手动抛出运行时异常了）
-                      TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();  
-                      return false;
-                 }  
-                return true;
-           }  
+     /** TransactionAspectSupport手动回滚事务：*/
+     @Transactional(rollbackFor = { Exception.class })  
+     public boolean test() {  
+         try {  
+             doDbSomeThing();    
+         } catch (Exception e) {  
+             e.printStackTrace();     
+             //就是这一句了, 加上之后抛了异常就能回滚（有这句代码就不需要再手动抛出运行时异常了）
+             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();  
+             return false;
+         }  
+         return true;
+     }  
      ```
 
 ***几点注意事项:***
