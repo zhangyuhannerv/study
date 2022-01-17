@@ -55,6 +55,7 @@ export default {
   created() {
     // 保存传入的iid
     this.iid = this.$route.params.id
+    // this.iid = this.$route.query.id(通过query传参的接收方法)
     // 根据iid请求详情数据
     getDetail(this.iid).then(res => {
       const data = res.result;

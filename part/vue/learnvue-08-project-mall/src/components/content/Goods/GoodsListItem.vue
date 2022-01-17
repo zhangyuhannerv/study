@@ -39,7 +39,7 @@ export default {
       // this.$router.push({
       //   path: '/detail',
       //   query: {
-      //     id: '111'
+      //     id: this.goodsItem.iid
       //   }
       // })
     }
