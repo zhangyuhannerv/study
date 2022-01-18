@@ -127,6 +127,7 @@ export default {
   /*activated和deactivated也是钩子函数*/
   /*虽然betterScroll已经解决了切换路由时不在原先位置的bug,但是时灵时不灵，所以还是把以下的代码解开吧*/
   /*这里还是记录一下解决思路*/
+  /*最终想着用他内部的observeDOM和observeImage来解决一下试试，结果没吊用，还是用下面这种方式吧*/
   activated() {
     /*home enter*/
     this.$refs.scroll.refresh()// 这里必须把refresh()放到前面才行。我也不知道为啥

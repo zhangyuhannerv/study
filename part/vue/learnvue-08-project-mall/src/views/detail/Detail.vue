@@ -69,7 +69,6 @@ export default {
       this.detailInfo = data.detailInfo
       // 5.获取参数信息
       this.paramInfo = new GoodsParams(data.itemParams.info, data.itemParams.rule)
-
     })
   },
   updated() {
