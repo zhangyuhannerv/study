@@ -11,6 +11,7 @@
       <detail-images-info :images-info="detailInfo" @imgLoad="imgLoad"></detail-images-info>
       <detail-param-info :param-info="paramInfo"></detail-param-info>
       <detail-comment-info :comment-info="commentInfo"></detail-comment-info>
+      <goods-list :goods="recommends"></goods-list>
     </scroll>
   </div>
 </template>
@@ -24,13 +25,18 @@ import DetailImagesInfo from "./childComps/DetailImagesInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
 
-import {getDetail, Goods, Shop, GoodsParams} from "network/detail";
+import {getDetail, getRecommend, Goods, Shop, GoodsParams} from "network/detail";
+// import {debounce} from "common/util";
+import {itemImageListenerMixin} from "common/mixin";
 
 import Scroll from "components/common/scroll/Scroll";
+import GoodsList from "components/content/Goods/GoodsList";
+
 
 export default {
   name: "Detail",
   components: {
+    GoodsList,
     DetailNavBar,
     DetailSwiper,
     DetailBaseInfo,
@@ -49,6 +55,7 @@ export default {
       detailInfo: {},
       paramInfo: {},
       commentInfo: {},
+      recommends: [],
     }
   },
   methods: {
@@ -78,6 +85,29 @@ export default {
         this.commentInfo = data.rate.list[0]
       }
     })
+    // 请求推荐数据
+    getRecommend().then(res => {
+      this.recommends = res.data.list
+    })
+  },
+  mounted() {
+    // 防抖和图片加载完成的bs刷新事件和home组件里的代码重复，所以放在混入里了
+    /*    const refresh = debounce(this.$refs.scroll.refresh)
+        // 必须在Scroll组件初始化之后（即mounted里）做监听
+        // 监听goodItem里的图片加载完成
+        // 对监听的事件进行保存
+        this.itemImageListener = () => {
+          // this.$refs.scroll.refresh()
+          // console.log('监听到要执行refresh的次数')
+          // 对于refresh()非常频繁的问题进行防抖操作。debounce：防抖/throttle：节流
+          refresh()
+        }
+        this.$bus.$on('itemImageLoad', this.itemImageListener)*/
+  },
+  mixins: [itemImageListenerMixin],
+  // 这里和home组件不同的地方在于，detail组件没有缓存，所以取消监听不是在deactivated里而是在destroyed里
+  destroyed() {
+    this.$bus.$off('itemImageLoad', this.itemImageListener)
   },
   updated() {
     // 这里不重新刷新，就不能滚动，我也不知道为啥

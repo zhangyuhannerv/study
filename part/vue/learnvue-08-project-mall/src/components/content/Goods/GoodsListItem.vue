@@ -1,7 +1,7 @@
 <template>
   <div class="goods-item" @click="itemClick">
     <!--    @load是图片加载完成的vue封装的方法-->
-    <img :src="goodsItem.show.img" alt="" @load="imageLoad">
+    <img :src="showImage" alt="" @load="imageLoad">
     <div class="goods-info">
       <p>{{ goodsItem.title }}</p>
       <span class="price">{{ goodsItem.price }}</span>
@@ -21,6 +21,11 @@ export default {
       }
     }
   },
+  computed: {
+    showImage() {
+      return this.goodsItem.image || this.goodsItem.show.img
+    }
+  },
   methods: {
     // 每张图片加载完都执行该方法
     imageLoad() {
@@ -29,6 +34,18 @@ export default {
       // 2.通过更改vuex的属性，在home组件里监听vuex的该属性
       // 3.通过事件总线（相当于前台的消息队列）如下：
       this.$bus.$emit('itemImageLoad');
+
+      // 如果不同的组件调用当前组件。那么都会触发home组件里的itemImageLoad()方法。即不是home组件也能让home组件里的bs刷新
+
+      // 解决方案1：按不同的路由来发出不同的事件,不同的组件监听各自的事件，就不会出现跨组件刷新
+      // if (this.$route.path.indexOf('/home')) {
+      //   this.$bus.$emit('homeItemImageLoad')
+      // } else if (this.$route.path.indexOf('/detail')) {
+      //   this.$bus.$emit('detailItemImageLoad')
+      // }
+
+      // 解决方案2：只有在组件的路由活跃的时候才监听这个事件。不活跃的时候取消监听。详见home组件
+
     },
 
     /*跳转到详情页*/

@@ -9,6 +9,15 @@ export function getDetail(iid) {
   })
 }
 
+/**
+ * 获取推荐商品数据
+ */
+export function getRecommend() {
+  return request({
+    url: '/recommend'
+  })
+}
+
 // 格式（整合）杂乱的数据为一个对象方便组件调用
 export class Goods {
   constructor(itemInfo, columns, services) {

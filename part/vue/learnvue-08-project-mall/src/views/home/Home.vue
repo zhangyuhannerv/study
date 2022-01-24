@@ -60,7 +60,8 @@ import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/Goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
 import BackTop from "components/content/backTop/BackTop";
-import {debounce} from "common/util";
+// import {debounce} from "common/util";
+import {itemImageListenerMixin} from "common/mixin";
 
 /*网络请求*/
 import {
@@ -112,17 +113,24 @@ export default {
     this.getHomeGoods('new')
     this.getHomeGoods('sell')
   },
+
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh)
-    // 必须在Scroll组件初始化之后（即mounted里）做监听
-    // 监听goodItem里的图片加载完成
-    this.$bus.$on('itemImageLoad', () => {
-      // this.$refs.scroll.refresh()
-      // console.log('监听到要执行refresh的次数')
-      // 对于refresh()非常频繁的问题进行防抖操作。debounce：防抖/throttle：节流
-      refresh()
-    })
+    console.log('home mounted')
+//    这部分代码和detail组件里的重复，公共抽出，使用mixin
+    /*      const refresh = debounce(this.$refs.scroll.refresh)
+          // 必须在Scroll组件初始化之后（即mounted里）做监听
+          // 监听goodItem里的图片加载完成
+          // 对监听的事件进行保存
+          this.itemImageListener = () => {
+            // this.$refs.scroll.refresh()
+            // console.log('监听到要执行refresh的次数')
+            // 对于refresh()非常频繁的问题进行防抖操作。debounce：防抖/throttle：节流
+            refresh()
+          }
+          this.$bus.$on('itemImageLoad', this.itemImageListener)*/
   },
+
+  mixins: [itemImageListenerMixin],
 
   /*activated和deactivated也是钩子函数*/
   /*虽然betterScroll已经解决了切换路由时不在原先位置的bug,但是时灵时不灵，所以还是把以下的代码解开吧*/
@@ -139,7 +147,14 @@ export default {
   },
   deactivated() {
     /*home leave*/
+    // 1.保存y值
     this.saveY = this.$refs.scroll.getScrollY();
+
+    // 2.取消全局事件的监听
+    // 注意：这里不能只传入参数：itemImageLoad。一旦只传入这个参数，所有关于itemImageLoad事件的监听都会被取消掉
+    // 所以，这里除了事件名之外，还要传入事件总线里的回调
+    // 这个回调已经赋值给组件实例里的data里了
+    this.$bus.$off('itemImageLoad', this.itemImageListener)
   },
   methods: {
     /**
