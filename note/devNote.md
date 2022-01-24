@@ -1371,6 +1371,16 @@ frame = document.getElementById('add_file').files[0];// 这能获得手动选择
 
 ### 学习
 
+
+
+## jsTree的基本使用
+
+### 开发
+
+#### 1.项目中的最常见使用代码实例
+
+### 学习
+
 # 后端
 
 ## java
@@ -3908,6 +3918,46 @@ tail -n 1000：显示最后1000行tail -n +1000：从1000行开始显示，显�
    ```
 
 [原文链接](https://www.cnblogs.com/heqiuyong/p/10460150.htm)
+
+##### 7.查看cpu核心数
+
+查看物理cpu数目
+
+```shell
+cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l
+```
+
+查看每个物理cpu里的核数
+
+```shell
+cat /proc/cpuinfo| grep "cpu cores"| uniq
+```
+
+查看cpu逻辑核心数（cpu数量*每个cpu的核数）
+
+```shell
+cat /proc/cpuinfo| grep "processor"| wc -l
+```
+
+[原文链接](https://blog.csdn.net/qq_38880380/article/details/79638252)
+
+##### 8.查看网址
+
+示例:查看本地的nginx是否启动
+
+```she
+ curl 127.0.0.1:80
+```
+
+##### 9.解决centos8下python命令失效的问题
+
+执行
+
+```shell
+ln -s /usr/bin/python3.6 /usr/bin/python
+```
+
+[参考地址](https://blog.csdn.net/have_a_cat/article/details/118191281)
 
 
 
