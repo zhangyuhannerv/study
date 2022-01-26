@@ -39,10 +39,14 @@ export default {
   },
   methods: {
     imgLoad() {
+      // 老版本，所有图片加载完
       // 判断所有的图片都加载完了，发射一次事件
-      if (++this.count === this.imagesLength) {
-        this.$emit("imgLoad");
-      }
+      // if (++this.count === this.imagesLength) {
+      //   this.$emit("imgLoad");
+      // }
+
+      // 新版本：每个图片加载完都发射事件，父组件执行节流函数封装的刷新方法
+      this.$emit("imgLoad");
     }
   },
   watch: {

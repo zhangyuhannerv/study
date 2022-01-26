@@ -11,10 +11,11 @@ export const itemImageListenerMixin = {
   data() {
     return {
       itemImageListener: null,
+      scrollRefresh: null,
     }
   },
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh)
+    this.scrollRefresh = debounce(this.$refs.scroll.refresh)
     // 必须在Scroll组件初始化之后（即mounted里）做监听
     // 监听goodItem里的图片加载完成
     // 对监听的事件进行保存
@@ -22,7 +23,7 @@ export const itemImageListenerMixin = {
       // this.$refs.scroll.refresh()
       // console.log('监听到要执行refresh的次数')
       // 对于refresh()非常频繁的问题进行防抖操作。debounce：防抖/throttle：节流
-      refresh()
+      this.scrollRefresh()
     }
     this.$bus.$on('itemImageLoad', this.itemImageListener)
 

@@ -60,7 +60,11 @@ export default {
   },
   methods: {
     imgLoad() {
-      this.$refs.scroll.refresh()
+      // 旧
+      // this.$refs.scroll.refresh()
+
+      // 新
+      this.scrollRefresh()
     }
   },
   created() {
@@ -109,10 +113,11 @@ export default {
   destroyed() {
     this.$bus.$off('itemImageLoad', this.itemImageListener)
   },
-  updated() {
-    // 这里不重新刷新，就不能滚动，我也不知道为啥
-    this.$refs.scroll.refresh()
-  }
+  // 加上了图片加载完的监听后，这里的代码也能重新滚动了...无语
+  // updated() {
+  //   // 这里不重新刷新，就不能滚动，我也不知道为啥
+  //   this.$refs.scroll.refresh()
+  // }
 }
 </script>
 
