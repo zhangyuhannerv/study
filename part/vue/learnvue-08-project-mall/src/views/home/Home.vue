@@ -59,9 +59,10 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/Goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
-import BackTop from "components/content/backTop/BackTop";
+// import BackTop from "components/content/backTop/BackTop";
 // import {debounce} from "common/util";
-import {itemImageListenerMixin} from "common/mixin";
+import {itemImageListenerMixin, backTopMixin} from "common/mixin";
+// import {BACK_POSITION} from "common/const";
 
 /*网络请求*/
 import {
@@ -81,7 +82,7 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop
+    // BackTop
   },
   data() {
     return {
@@ -93,7 +94,7 @@ export default {
         'sell': {page: 0, list: []},
       },
       currentType: 'pop',
-      isShowBackTop: false,
+      // isShowBackTop: false,
       tabOffsetTop: 0,
       isTabFixed: false,
       saveY: 0,
@@ -115,7 +116,7 @@ export default {
   },
 
   mounted() {
-    console.log('home mounted')
+    // console.log('home mounted')
 //    这部分代码和detail组件里的重复，公共抽出，使用mixin
     /*      const refresh = debounce(this.$refs.scroll.refresh)
           // 必须在Scroll组件初始化之后（即mounted里）做监听
@@ -130,7 +131,7 @@ export default {
           this.$bus.$on('itemImageLoad', this.itemImageListener)*/
   },
 
-  mixins: [itemImageListenerMixin],
+  mixins: [itemImageListenerMixin, backTopMixin],
 
   /*activated和deactivated也是钩子函数*/
   /*虽然betterScroll已经解决了切换路由时不在原先位置的bug,但是时灵时不灵，所以还是把以下的代码解开吧*/
@@ -177,19 +178,21 @@ export default {
       this.$refs.tabControl2.currentIndex = index
     },
 
-    backTop() {
-      // 父组件访问子组件
-      // 获取子组件里的scroll属性
-      // 使用原生的方法
-      // this.$refs.scroll.scroll.scrollTo(0, 0, 500);// 加上缓动效果，500ms内回到顶部
-      // 使用组件内部封装的方法
-      this.$refs.scroll.scrollTo(0, 0, 500)
-    },
+    /*    backTop() {
+          // 父组件访问子组件
+          // 获取子组件里的scroll属性
+          // 使用原生的方法
+          // this.$refs.scroll.scroll.scrollTo(0, 0, 500);// 加上缓动效果，500ms内回到顶部
+          // 使用组件内部封装的方法
+          this.$refs.scroll.scrollTo(0, 0, 500)
+        },*/
 
     contentScroll(position) {
       // position.y是负值
       // 1.判断BackTop是否显示
-      this.isShowBackTop = -position.y > 1000
+      // this.isShowBackTop = -position.y > BACK_POSITION
+      this.listenShowBackTop(-position.y)
+
       // 2.判断tabControl是否吸顶(position:fixed)
       this.isTabFixed = -position.y > this.tabOffsetTop
     },
