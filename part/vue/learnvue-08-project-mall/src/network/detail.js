@@ -1,4 +1,5 @@
 import {request} from "network/request";
+import it from "element-ui/src/locale/lang/it";
 
 export function getDetail(iid) {
   return request({

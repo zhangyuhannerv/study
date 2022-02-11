@@ -19,7 +19,7 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo"></detail-comment-info>
       <goods-list ref="recommend" :goods="recommends"></goods-list>
     </scroll>
-    <detail-bottom-bar/>
+    <detail-bottom-bar @addCart="addToCart"/>
     <back-top @click.native="backTop" v-show="isShowBackTop"/>
   </div>
 </template>
@@ -131,6 +131,19 @@ export default {
         // 3.判断回到顶部是否显示
         this.listenShowBackTop(positionY)
       }
+    },
+    addToCart() {
+      // 1.获取购物车需要展示的信息，然后添加进去
+      const product = {}
+      product.image = this.topImages[0]
+      product.title = this.goods.title
+      product.desc = this.goods.desc
+      product.price = this.goods.realPrice
+      product.iid = this.iid
+      // console.log(product)
+
+      // 2.将商品添加到购物车里面
+      this.$store.commit('addCart', product)
     }
   },
   created() {

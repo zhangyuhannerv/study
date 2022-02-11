@@ -25,8 +25,11 @@
 export default {
   name: "DetailBottomBar",
   methods: {
+    /**
+     * 添加至购物车
+     */
     addToCart() {
-
+      this.$emit('addCart')
     }
   }
 }
@@ -71,11 +74,12 @@ export default {
 .bar-right {
   font-size: 15px;
   color: #fff;
-  line-height: 58px;
+  line-height: 49px;
 }
 
 .bar-right .cart {
   background-color: #ffe817;
+  color: #000;
 }
 
 .bar-right .buy {
