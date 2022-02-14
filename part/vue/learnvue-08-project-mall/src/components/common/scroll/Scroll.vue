@@ -34,7 +34,15 @@ export default {
     pullUpLoad: {
       type: Boolean,
       default: false
-    }
+    },
+    observeDom: {
+      type: Boolean,
+      default: false
+    },
+    observeImage: {
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
     // 给scrollTo()封上一层，方便外界调用
@@ -60,8 +68,8 @@ export default {
       pullUpLoad: this.pullUpLoad,
       // 默认会阻止除了button外的所有dom点击事件。加上click=true才会不阻止
       click: true,
-      // observeDOM: true, // 开启 observe-dom 插件
-      // observeImage: true // 开启 observe-image 插件
+      observeDOM: this.observeDom, // 开启 observe-dom 插件
+      observeImage: this.observeImage // 开启 observe-image 插件
     })
     //当监听滚动的时候，会发出事件，把当前的参数传递出去
     if (this.probeType === 2 || this.probeType === 3) {

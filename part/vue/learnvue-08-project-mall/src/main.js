@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from "./router";
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+// import ElementUI from 'element-ui';
+// import 'element-ui/lib/theme-chalk/index.css';
 import store from "./store";
 
-Vue.use(ElementUI);
+// Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 // 将新的Vue实例作为事件总线

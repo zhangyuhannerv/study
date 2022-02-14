@@ -39,6 +39,7 @@ export default {
    * @param payload
    */
   [ADD_TO_CART](state, payload) {
+    payload.checked = true// 默认添加到购物车里的商品是选中的
     state.cartList.push(payload)
   }
 }
