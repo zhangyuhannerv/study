@@ -143,7 +143,8 @@ export default {
       // console.log(product)
 
       // 2.将商品添加到购物车里面
-      this.$store.commit('addCart', product)
+      // this.$store.commit('addCart', product)
+      this.$store.dispatch('addCart', product)
     }
   },
   created() {
