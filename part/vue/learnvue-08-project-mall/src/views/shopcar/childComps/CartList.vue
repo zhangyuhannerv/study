@@ -21,7 +21,7 @@ export default {
   name: "CartList",
   components: {
     Scroll,
-    CartListItem
+    CartListItem,
   },
   computed: {
     ...mapGetters(["cartList"])
@@ -39,7 +39,7 @@ export default {
   left: 0;
   right: 0;
   top: 44px;
-  bottom: 49px;
+  bottom: 89px;
 }
 
 .content {
