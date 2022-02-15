@@ -1,7 +1,11 @@
 <template>
   <div class="cart-bottom-bar">
     <div class="check-content">
-      <check-button class="check-button"/>
+      <check-button
+        class="check-button"
+        :is-checked="isSelectAll"
+        @click.native="checkClick"
+      />
       <span>全选</span>
     </div>
     <div class="price">
@@ -31,6 +35,43 @@ export default {
     },
     checkLength() {
       return this.cartList.filter(e => e.checked).length
+    },
+    isSelectAll() {
+      // 加个边界情况，没有商品不全选
+      if (this.cartList.length === 0) {
+        return false;
+      }
+
+      // 没有选中的商品的长度
+      // 如果为0取反就是全选
+      // 如果不为0取反就是没有全选
+      // return !(this.cartList.filter(e => !e.checked).length)
+
+      // 找到没有选中的就是没有全选
+      // 没有找到没有选中的就是全选
+      // find()找到一个就停止。不用遍历全部。性能较高。
+      return !this.cartList.find(e => !e.checked)
+    }
+  },
+  methods: {
+    /**
+     * 点击全选
+     */
+    checkClick() {
+      // if (this.isSelectAll) {
+      //   // 如果原来都是全选，点击一次，全部不选中
+      //   this.cartList.forEach(e => e.checked = false);
+      // } else {
+      //   // 如果原来有没有选中的，那么点击一次，全部选中
+      //   this.cartList.forEach(e => e.checked = true);
+      // }
+
+
+      /**
+       * 高手写法，仔细读
+       */
+      const selectStatus = this.isSelectAll
+      this.cartList.forEach(e => e.checked = !selectStatus)
     }
   }
 }

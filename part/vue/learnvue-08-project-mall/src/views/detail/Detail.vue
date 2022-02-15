@@ -42,6 +42,8 @@ import Scroll from "components/common/scroll/Scroll";
 import GoodsList from "components/content/Goods/GoodsList";
 import BackTop from "../../components/content/backTop/BackTop";
 
+import {mapActions} from 'vuex'
+
 
 export default {
   name: "Detail",
@@ -132,6 +134,15 @@ export default {
         this.listenShowBackTop(positionY)
       }
     },
+
+    /**
+     * 映射actions里的方法到当前组件的methods
+     * 类似映射getters到当前组件的computed
+     * 同理也有对象的映射方式。一样的。就是给actions里的方法改个名
+     * 这里就不写了，详见vuex文档
+     */
+    ...mapActions(['addCart']),
+
     addToCart() {
       // 1.获取购物车需要展示的信息，然后添加进去
       const product = {}
@@ -144,7 +155,21 @@ export default {
 
       // 2.将商品添加到购物车里面
       // this.$store.commit('addCart', product)
-      this.$store.dispatch('addCart', product)
+      // 复杂操作放到actions。但是由于action是异步的。
+      // 所以把action里方法用promise封装来得到异步操作的回调
+
+      // 原生调用actions
+      // this.$store.dispatch('addCart', product).then(res => {
+      //   // 3.添加到购物车成功
+      //   console.log(res)
+      // })
+
+      // 使用映射的方法调用actions
+      // 和上面本质上是一样的
+      this.addCart(product).then(res => {
+        // 3.添加到购物车成功
+        console.log(res)
+      })
     }
   },
   created() {
