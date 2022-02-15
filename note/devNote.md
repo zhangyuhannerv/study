@@ -1952,9 +1952,200 @@ public void downLoadLineStruImportTemplateFile(HttpServletResponse response) {
 
 #### 5.springboot检查文件是否存在
 
+前台
+
+```java
+/**
+     * 下载文件,传入完成路径，先检查文件是否存在，如果存在就下载
+     * @param path
+     */
+downloadFileWithPath = function (path) {
+    $.ajax({
+        url: Hussar.ctxPath + '/checkFileExist',
+        type: 'get',
+        async: true,
+        data: {
+            path
+        },
+        success(res) {
+            if (res.code === 500) {
+                Hussar.valid(res.msg);
+                return
+            }
+            // 如果文件存在，那么就下载文件
+            window.location.href = '/downLoadFile?path=' + path
+        },
+        error() {
+            Hussar.valid('查询文件资源失败')
+        }
+    })
+}
+```
+
+后台
+
+```java
+/**
+     * 检查文件是否存在
+     *
+     * @param path
+     * @return
+     */
+@RequestMapping("/checkFileExist")
+@ResponseBody
+public Map<String, Object> checkFileExist(String path) {
+    try {
+        File file = new File(path);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                return ReturnBodyUtil.returnError("下载所需的文件不存在");
+            } else {
+                return ReturnBodyUtil.returnSuccess(null);
+            }
+        } else {
+            return ReturnBodyUtil.returnError("下载所需的文件不存在");
+        }
+    } catch (Exception e) {
+        return ReturnBodyUtil.returnError("查询文件路径失败");
+    }
+}
+```
+
 #### 6.springboot动态加载服务器上的图片
 
-#### 7.使用ZipFile压缩和解压文件夹
+前台
+
+```html
+<img src="/loadImg?path='xxx'"/>
+```
+
+后台
+
+```java
+/**
+     * IO流读取存在服务器上的图片
+     *
+     * @return
+     * @throws IOException
+     */
+@RequestMapping(value = "/loadImg", method = RequestMethod.GET)
+public void loadImg(@RequestParam("path") String path, HttpServletResponse response) throws IOException {
+    //这里省略掉通过id去读取图片的步骤。
+    File file = new File(path);//imgPath为服务器图片地址
+    if (file.exists() && file.isFile()) {
+        FileInputStream in = null;
+        OutputStream out = null;
+        try {
+            in = new FileInputStream(file);
+            out = response.getOutputStream();
+            int count = 0;
+            byte[] buffer = new byte[1024 * 8];// 一次读取1k
+            while ((count = in.read(buffer)) != -1) {
+                out.write(buffer, 0, count);
+                out.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        }
+    }
+}
+```
+
+
+
+#### 7.使用ZipFile解压文件夹
+
+解压方法1（递归读取所有文件统一放到输出文件夹下。不再区分层级）
+
+```java
+/**
+     * 无论压缩文件下有多少层级，所有解压后的文件都统一放在outFileDir文件夹下，且只保留压缩的文件，压缩的文件夹不保留
+     *
+     * @param inFilePath 压缩文件路径
+     * @param outDirPath 解压目录的文件夹
+     */
+public static boolean unzip(String inFilePath, String outDirPath) {
+
+    File destFile = new File(outDirPath);
+
+    if (destFile.isFile()) {
+        return false;
+    }
+
+    if (!destFile.exists()) {
+        destFile.mkdirs();
+    }
+
+
+    File sourceFile = new File(inFilePath);
+    String fileName = sourceFile.getName();
+    String fileType = fileName.substring(fileName.lastIndexOf("."));
+
+    if (!".zip".equals(fileType)) {
+        return false;
+    }
+
+
+    // 一次读取1k
+    byte[] buff = new byte[1024];
+    int readLen = 0;
+
+    try (ZipInputStream zin = new ZipInputStream(new FileInputStream(inFilePath), Charset.forName("GBK"));
+         ZipFile zipFile = new ZipFile(sourceFile, Charset.forName("GBK"))) {
+
+        ZipEntry entry = null;
+        while (((entry = zin.getNextEntry()) != null)) {//如果entry不为空，并不在同一个目录下
+
+            if (entry.isDirectory()) {
+                continue;
+            }
+
+            String entryName = entry.getName().substring(entry.getName().lastIndexOf("/") + 1);
+
+            File tmp = new File(outDirPath + "/" + entryName);//解压出的文件路径
+            if (!tmp.exists()) {//如果文件不存在
+                File parentDir = tmp.getParentFile();
+
+                if (!parentDir.exists()) {
+                    parentDir.mkdirs();
+                }
+
+                try (OutputStream os = new FileOutputStream(tmp);//将文件目录中的文件放入输出流
+                     //用输入流读取压缩文件中制定目录中的文件
+                     InputStream in = zipFile.getInputStream(entry)) {
+
+                    while ((readLen = in.read(buff)) != -1) {//如有输入流可以读取到数值
+                        os.write(buff, 0, readLen);//输出流写入
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                }
+
+            }
+            zin.closeEntry();
+        }
+        return true;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+```
+
+
+
+
+
+
 
 ### 学习
 
