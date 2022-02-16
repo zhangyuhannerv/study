@@ -21,6 +21,7 @@
     </scroll>
     <detail-bottom-bar @addCart="addToCart"/>
     <back-top @click.native="backTop" v-show="isShowBackTop"/>
+    <!--    <toast :message="message" :show="toastShow"/>-->
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import GoodsList from "components/content/Goods/GoodsList";
 import BackTop from "../../components/content/backTop/BackTop";
 
 import {mapActions} from 'vuex'
+// import Toast from "components/common/toast/Toast";
 
 
 export default {
@@ -58,7 +60,8 @@ export default {
     DetailImagesInfo,
     DetailParamInfo,
     DetailCommentInfo,
-    DetailBottomBar
+    DetailBottomBar,
+    // Toast
   },
   data() {
     return {
@@ -72,7 +75,9 @@ export default {
       recommends: [],
       themeTopYs: [],
       getThemeTopY: null,
-      currentIndex: 0
+      currentIndex: 0,
+      // message: '',
+      // toastShow: false
     }
   },
   methods: {
@@ -168,7 +173,15 @@ export default {
       // 和上面本质上是一样的
       this.addCart(product).then(res => {
         // 3.添加到购物车成功
-        console.log(res)
+        // console.log(res)
+        // this.message = res
+        // this.toastShow = true
+        // setTimeout(() => {
+        //   this.toastShow = false
+        //   this.message = ''
+        // }, 1500)
+
+        this.$toast.show(res)
       })
     }
   },
