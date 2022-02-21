@@ -4060,7 +4060,7 @@ tail -n 1000：显示最后1000行tail -n +1000：从1000行开始显示，显�
 
  [原文链接](https://www.cnblogs.com/keta/p/9627227.html)
 
-##### 6.Centos 7 开发端口
+##### 6.Centos 7 开放端口
 
 1. 开放端口    
 
@@ -4195,6 +4195,38 @@ taskkill /f /t /im java.exe
 ```
 
 直接使用命令关闭进程可能关不了，那么可以在任务管理器中直接找到该进程关闭。
+
+## nginx
+
+### 开发
+
+1.解决单页面应用，刷新后出现404或者404的错误
+
+在location里加上  try_files  $uri $uri/ /index.html; 
+
+具体配置如下：
+
+```shell
+server {
+    listen       81;
+    server_name  project_mall;
+
+    #charset koi8-r;
+
+    #access_log  logs/host.access.log  main;
+	
+    location / {
+    root   study/project_mall;
+    index  index.html index.htm;
+    # 解决单页面应用刷新出现403或者404错误
+    try_files  $uri $uri/ /index.html;
+    }
+}
+```
+
+
+
+### 学习
 
 # 项目
 

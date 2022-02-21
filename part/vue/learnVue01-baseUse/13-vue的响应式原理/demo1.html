@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vue的响应式原理</title>
+</head>
+<body>
+
+<!--
+1.app.message修改了数据，vue内部是如何监听message数据
+Object.defineProperty -> 监听对象属性的改变
+
+2.当数据发生了改变，vue是如何知道要通知哪些界面的哪些地方发生刷新
+发布订阅者模式
+-->
+
+<div id="app">
+  {{message}}
+  {{message}}
+  {{message}}
+  {{name}}
+</div>
+
+<script>
+
+  // 1.监听对象属性发生变化
+
+  const obj = {
+    message: '哈哈哈',
+    name: 'why'
+  }
+
+
+  Object.keys(obj).forEach(key => {
+    let value = obj[key];
+    // 重新定义原来对象的所有属性
+    // 但是value要包装实现监听的效果
+    Object.defineProperty(obj, key, {
+      set(newValue) {
+        console.log('监听到' + key + '改变')
+        // 此时要告诉页面上所有用到改变量的地方，发生刷新
+        // 那么问题来了，谁在用呢？
+        // 根据解析html代码，获取到哪些地方有用到这些属性
+        // 每次用到这些属性都会进入到get()回调里
+
+
+        // set()的回调
+        // 执行容器的notify()，让容器里的每个订阅者都执行自己的update()（页面刷新）
+        dep.notify()
+
+
+        value = newValue
+      },
+      get() {
+        console.log('监听到获取' + key + '所对应的值')
+        // 张三：get ->  更新界面
+        // 李四：get ->  更新界面
+        // 王五：get ->  更新界面
+        // 那么为了三个人能知道某个属性发生了变化
+        // 此时就需要发布者订阅者设计模式
+
+        // get()的回调
+        // 假设页面有三个地方在用
+        // 那么有三个订阅者，放进dep容器里
+        let watcher1 = new Watcher('张三')
+        dep.addSub(watcher1)
+        let watcher2 = new Watcher('李四')
+        dep.addSub(watcher2)
+        let watcher3 = new Watcher('王五')
+        dep.addSub(watcher3)
+
+
+        return value
+      }
+    })
+
+
+    // 2.发布者，订阅者模式
+    class Dep {
+      constructor() {
+        this.subs = []// 订阅者数组
+      }
+
+      addSub(watcher) {
+        this.subs.push(watcher)
+      }
+
+      notify() {
+        this.subs.forEach(item => {
+          // 每个订阅者都执行自己的update()
+          item.update()
+        })
+      }
+    }
+
+    class Watcher {
+      constructor(name) {
+        this.name = name;
+      }
+
+      update() {
+        console.log(this.name + '发生update')
+      }
+    }
+
+    const dep = new Dep()
+
+
+  })
+</script>
+
+<script src="../../js/vue.js"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message: '你好啊',
+      name: 'zyh'
+    },
+  })
+</script>
+</body>
+</html>
