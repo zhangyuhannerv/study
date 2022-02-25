@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--配置User对象创建-->
     <bean id="user" class="com.study.spring5.User"></bean>
+
+    <!--使用set方法给对象注入属性-->
+    <bean id="book" class="com.study.spring5.Book">
+        <!--
+            在bean标签里面使用property标签完成属性的注入
+            name:类里面属性的名称
+            value:向属性注入的值
+        -->
+        <property name="bName" value="易筋经"></property>
+        <property name="bAuthor" value="达摩老祖"></property>
+    </bean>
+
+    <!--使用set方法给对象注入属性，是使用p名称空间注入，不常用，了解即可。注意xml的基础配置多了一行p名称的配置-->
+    <bean id="book1" class="com.study.spring5.Book" p:bName="九阳神功" p:bAuthor="无名氏">
+    </bean>
+
+    <!--使用constructor注入属性-->
+    <bean id="orders" class="com.study.spring5.Orders">
+        <constructor-arg name="oName" value="order1"></constructor-arg>
+        <constructor-arg name="address" value="china"></constructor-arg>
+        <!--除了name也可以用index来表示构造函数的第几个属性-->
+        <!--下面等效于name="oName"-->
+        <!--<constructor-arg index="0" value="order2"></constructor-arg>-->
+    </bean>
 </beans>
