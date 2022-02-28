@@ -5,10 +5,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--配置User对象创建-->
-    <bean id="user" class="com.study.spring5.User"></bean>
+    <bean id="user" class="com.study.spring5_demo1.User"/>
 
     <!--使用set方法给对象注入属性-->
-    <bean id="book" class="com.study.spring5.Book">
+    <bean id="book" class="com.study.spring5_demo1.Book">
         <!--
             在bean标签里面使用property标签完成属性的注入
             name:类里面属性的名称
@@ -16,14 +16,31 @@
         -->
         <property name="bName" value="易筋经"></property>
         <property name="bAuthor" value="达摩老祖"></property>
+        <!--设置一个空值-->
+        <!--<property name="address">
+            <null/>
+        </property>-->
+        <!--
+            属性值包含特殊符号
+            解决方式1：把<用&lt代替;把>用&gt;代替
+            解决方式2：把带特殊符号的内容写道CDATA中(本案例采用该种方式)
+            注意：value写到property标签里或者property的子标签value里，效果是一样的。
+        -->
+        <property name="address">
+            <value>
+                <![CDATA[
+                <<南京>>
+                ]]>
+            </value>
+        </property>
     </bean>
 
     <!--使用set方法给对象注入属性，是使用p名称空间注入，不常用，了解即可。注意xml的基础配置多了一行p名称的配置-->
-    <bean id="book1" class="com.study.spring5.Book" p:bName="九阳神功" p:bAuthor="无名氏">
+    <bean id="book1" class="com.study.spring5_demo1.Book" p:bName="九阳神功" p:bAuthor="无名氏">
     </bean>
 
     <!--使用constructor注入属性-->
-    <bean id="orders" class="com.study.spring5.Orders">
+    <bean id="orders" class="com.study.spring5_demo1.Orders">
         <constructor-arg name="oName" value="order1"></constructor-arg>
         <constructor-arg name="address" value="china"></constructor-arg>
         <!--除了name也可以用index来表示构造函数的第几个属性-->

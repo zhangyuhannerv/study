@@ -1,13 +1,14 @@
-package com.study.spring5.testDemo;
+package com.study.spring5_demo1.testDemo;
 
-import com.study.spring5.Book;
-import com.study.spring5.Orders;
-import com.study.spring5.User;
+import com.study.spring5_demo1.Book;
+import com.study.spring5_demo1.Orders;
+import com.study.spring5_demo1.User;
+import com.study.spring5_demo1.bean.Emp;
+import com.study.spring5_demo1.service.UserService;
+import com.study.spring5_demo1.service.UserServiceImpl;
 import org.junit.Test;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.annotation.Order;
 
 /**
  * @ClassName TestSpring5
@@ -79,4 +80,32 @@ public class TestSpring5 {
         Orders orders = context.getBean("orders", Orders.class);
         System.out.println(orders);
     }
+
+    /**
+     * 测试注入的属性是引用对象
+     */
+    @Test
+    public void testSetRef() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean2.xml");
+        UserService userService = applicationContext.getBean("userService", UserServiceImpl.class);
+        userService.add();
+    }
+
+
+    /**
+     * 测试注入属性对象的内部写法
+     */
+    @Test
+    public void testSetInnerRef() {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("bean3.xml");
+        Emp emp = applicationContext.getBean("emp", Emp.class);
+        System.out.println(emp);
+
+        Emp emp1 = applicationContext.getBean("emp1", Emp.class);
+        System.out.println(emp1);
+
+        Emp emp2 = applicationContext.getBean("emp2", Emp.class);
+        System.out.println(emp2);
+    }
+
 }

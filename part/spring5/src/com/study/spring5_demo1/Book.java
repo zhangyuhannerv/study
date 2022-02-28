@@ -1,4 +1,4 @@
-package com.study.spring5;
+package com.study.spring5_demo1;
 
 /**
  * @ClassName Book
@@ -13,6 +13,8 @@ public class Book {
 
     private String bAuthor;
 
+    private String address;
+
     // 创建属性对应的构造方法
     public void setbName(String bName) {
         this.bName = bName;
@@ -22,11 +24,16 @@ public class Book {
         this.bAuthor = bAuthor;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
                 "bName='" + bName + '\'' +
                 ", bAuthor='" + bAuthor + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

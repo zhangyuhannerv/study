@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--内部bean-->
+    <bean id="emp" class="com.study.spring5_demo1.bean.Emp">
+        <property name="eName" value="lucy"/>
+        <property name="gender" value="female"/>
+        <!--第三个是个对象类型的属性-->
+        <!--可以向bean2.xml里在外面定义一个bean。然后在这里引用-->
+        <!--也可以像现在这样写在内部-->
+        <!--内部bean可以省略id-->
+        <property name="dept">
+            <bean class="com.study.spring5_demo1.bean.Dept">
+                <property name="dName" value="security"/>
+            </bean>
+        </property>
+    </bean>
+
+    <!--级联赋值1-->
+    <bean id="emp1" class="com.study.spring5_demo1.bean.Emp">
+        <property name="eName" value="lucy"/>
+        <property name="gender" value="female"/>
+        <property name="dept" ref="dept"/>
+    </bean>
+    <bean id="dept" class="com.study.spring5_demo1.bean.Dept">
+        <property name="dName" value="财务部"/>
+    </bean>
+
+    <!--级联赋值2-->
+    <bean id="emp2" class="com.study.spring5_demo1.bean.Emp">
+        <property name="eName" value="lucy"/>
+        <property name="gender" value="female"/>
+        <!--必须得引入dept属性，否则直接赋值报错-->
+        <property name="dept" ref="dept2"/>
+        <!--这里需要dept属性的get()，否则报错-->
+        <property name="dept.dName" value="人资部"/>
+    </bean>
+    <bean id="dept2" class="com.study.spring5_demo1.bean.Dept"/>
+</beans>

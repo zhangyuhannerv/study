@@ -1,4 +1,4 @@
-package com.study.spring5;
+package com.study.spring5_demo1;
 
 /**
  * @ClassName User
