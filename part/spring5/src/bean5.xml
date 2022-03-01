@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!--集合提取，使用util标签完成List集合注入，注意名称空间的变化，详细请看笔记-->
+    <util:list id="bookList">
+        <!--既可以写value，也可以写ref(引用对象)-->
+        <!--        <ref bean=""/>-->
+        <value>易筋经</value>
+        <value>九阴真经</value>
+        <value>九阳神功</value>
+    </util:list>
+
+    <!--给对象注入提取出的集合-->
+    <bean id="book" class="com.study.spring5_demo2.collectionType.Book">
+        <property name="list" ref="bookList"/>
+    </bean>
+</beans>

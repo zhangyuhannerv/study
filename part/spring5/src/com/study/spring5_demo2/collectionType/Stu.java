@@ -25,6 +25,9 @@ public class Stu {
     // set集合类型的属性
     private Set<String> set;
 
+    // 学生所学的多门课程
+    private List<Course> courseList;
+
     public void setCourses(String[] courses) {
         this.courses = courses;
     }
@@ -41,6 +44,10 @@ public class Stu {
         this.set = set;
     }
 
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
     @Override
     public String toString() {
         return "Stu{" +
@@ -48,6 +55,7 @@ public class Stu {
                 ", list=" + list +
                 ", map=" + map +
                 ", set=" + set +
+                ", courseList=" + courseList +
                 '}';
     }
 }
