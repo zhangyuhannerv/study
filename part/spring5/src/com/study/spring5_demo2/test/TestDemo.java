@@ -1,5 +1,6 @@
 package com.study.spring5_demo2.test;
 
+import com.study.spring5_demo2.bean.Orders;
 import com.study.spring5_demo2.collectionType.Book;
 import com.study.spring5_demo2.collectionType.Course;
 import com.study.spring5_demo2.collectionType.Stu;
@@ -48,5 +49,34 @@ public class TestDemo {
 
         Course myBean = app.getBean("myBean", Course.class);
         System.out.println(myBean);
+    }
+
+    /**
+     * 测试单实例（默认)和多实例
+     */
+    @Test
+    public void testSingleAndMultiIns() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("bean5.xml");
+        Book book = app.getBean("book", Book.class);
+        System.out.println(book);
+        Book book1 = app.getBean("book", Book.class);
+        System.out.println(book1);
+
+        // 发现地址相同
+        // 在bean标签里设置scope=prototype后，发现地址不同
+    }
+
+    /**
+     * 测试bean的生命周期
+     */
+    @Test
+    public void testLifeCycle() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("bean7.xml");
+        Orders orders = app.getBean("orders", Orders.class);
+        System.out.println("第四步，获取到了创建的bean实例");
+        System.out.println(orders);
+
+        // 需要手动让bean实例(注意：父类没有close()接口)
+        ((ClassPathXmlApplicationContext) app).close();
     }
 }

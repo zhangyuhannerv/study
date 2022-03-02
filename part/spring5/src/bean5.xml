@@ -15,7 +15,12 @@
     </util:list>
 
     <!--给对象注入提取出的集合-->
-    <bean id="book" class="com.study.spring5_demo2.collectionType.Book">
+    <!--scope有多个值，常用的有两个：默认值singleton,表示单实例对象。第二个是prototype,表示多实例对象-->
+    <!--scope=singleton时,加载spring的配置文件时，就会创建单实例对象-->
+    <!--scope=prototype时,此时不是在加载spring配置文件创建对象，而是在调用getBean()时去创建一个多实例对象-->
+    <!--request是scope第三个值，创建的对象放在request里，不常用，了解-->
+    <!--session是scope第四个值，创建的对象放在session里，不常用，了解-->
+    <bean id="book" class="com.study.spring5_demo2.collectionType.Book" scope="prototype">
         <property name="list" ref="bookList"/>
     </bean>
 </beans>

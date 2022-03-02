@@ -16,10 +16,10 @@ public class Book {
         this.list = list;
     }
 
-    @Override
+/*    @Override
     public String toString() {
         return "Book{" +
                 "list=" + list +
                 '}';
-    }
+    }*/
 }
