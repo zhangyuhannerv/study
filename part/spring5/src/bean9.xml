@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--引入外部的属性文件,context是新的名称空间-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 配置连接池 -->
+    <!-- DruidDataSource dataSource = new DruidDataSource(); -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!--写死-->
+        <!--驱动名称-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://127.0.0.1:10000/test"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="root"></property>-->
+
+        <!--写活，注意名称空间的变化和引入外部配置文件-->
+        <property name="driverClassName" value="${prop.driverClass}"></property>
+        <property name="url" value="${prop.url}"></property>
+        <property name="username" value="${prop.userName}"></property>
+        <property name="password" value="${prop.password}"></property>
+    </bean>
+</beans>

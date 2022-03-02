@@ -1,5 +1,8 @@
 package com.study.spring5_demo2.test;
 
+import com.alibaba.druid.pool.DruidDataSource;
+import com.alibaba.druid.pool.DruidPooledConnection;
+import com.study.spring5_demo2.autowire.Emp;
 import com.study.spring5_demo2.bean.Orders;
 import com.study.spring5_demo2.collectionType.Book;
 import com.study.spring5_demo2.collectionType.Course;
@@ -8,6 +11,8 @@ import com.study.spring5_demo2.factoryBean.MyBean;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.sql.SQLException;
 
 /**
  * @ClassName TestDemo
@@ -78,5 +83,29 @@ public class TestDemo {
 
         // 需要手动让bean实例(注意：父类没有close()接口)
         ((ClassPathXmlApplicationContext) app).close();
+    }
+
+    @Test
+    public void testAutowire() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("bean8.xml");
+        Emp emp = app.getBean("emp", Emp.class);
+        System.out.println(emp);
+
+    }
+
+    /**
+     * 测试spring配置druid链接池
+     */
+    @Test
+    public void testDataSource() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("bean9.xml");
+        DruidDataSource dataSource = app.getBean("dataSource", DruidDataSource.class);
+        try {
+            DruidPooledConnection connection = dataSource.getConnection();
+            System.out.println(connection);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }
