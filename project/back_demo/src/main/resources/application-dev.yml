@@ -1,0 +1,11 @@
+server:
+  port: 7000
+  servlet:
+    context-path: /
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:10000/test
+    username: root
+    password: root
+
