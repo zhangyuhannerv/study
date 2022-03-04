@@ -19,5 +19,6 @@ public class TestDemo {
         UserService userService = context.getBean("userService", UserService.class);
         System.out.println(userService);
         userService.add();
+        userService.printProp();
     }
 }

@@ -12,4 +12,26 @@
     <!--    <context:component-scan base-package="com.study.spring5_demo3.dao,com.study.spring5_demo3.service"/>-->
     <context:component-scan base-package="com.study.spring5_demo3"/>
 
+
+    <!--示例1：
+        use-default-filters:false，不使用默认filter(扫描器/过滤器,它会扫描包下的所有类)，自己配置filter
+        context:include-filter,手动设置扫描哪些内容
+        下面这个配置的意思就是：在com.study.spring5_demo3包下，只扫描使用@Controller的类
+    -->
+    <context:component-scan base-package="com.study.spring5_demo3" use-default-filters="false">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+    <!--示例2：
+        此时还是使用默认的filter，即扫描包中的所有类
+        context:exclude-filter，手动设置哪些内容不进行扫描
+        下面这个配置的意思就是：在com.study.spring5_demo3包下，不扫描使用@Controller的类，即使用@Controller的类使用spring获取不到bean
+    -->
+    <context:component-scan base-package="com.study.spring5_demo3">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
 </beans>
