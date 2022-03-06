@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--1.创建bean-->
+    <bean id="book" class="com.study.spring5_aop.xml.Book">
+
+    </bean>
+    <bean id="bookProxy" class="com.study.spring5_aop.xml.BookProxy">
+
+    </bean>
+
+    <!--2.配置aop的增强-->
+    <aop:config>
+        <!--1.配置切入点-->
+        <aop:pointcut id="p" expression="execution(* com.study.spring5_aop.xml.Book.buy(..))"/>
+
+        <!--2.配置切面：把增强（通知）应用到切入点-->
+        <!--配置增强类-->
+        <aop:aspect ref="bookProxy">
+            <!--增强和切点连接起来-->
+            <aop:before method="before" pointcut-ref="p"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
