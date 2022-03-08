@@ -2,8 +2,11 @@ package com.study.spring5_jdbcTemplate.dao;
 
 import com.study.spring5_jdbcTemplate.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @ClassName BookDaoImpl
@@ -31,5 +34,40 @@ public class BookDaoImpl implements BookDao {
 
         // 3.打印执行结果
         System.out.println(update);
+    }
+
+    @Override
+    public void update(Book book) {
+        String sql = "update book set name = ?,status = ? where id = ?";
+        Object[] args = {book.getName(), book.getStatus(), book.getId()};
+        int update = jdbcTemplate.update(sql, args);
+        System.out.println(update);
+    }
+
+    @Override
+    public void delete(String id) {
+        String sql = "delete from book where id = ?";
+        int update = jdbcTemplate.update(sql, id);
+        System.out.println(update);
+    }
+
+    @Override
+    public int selectCount() {
+        String sql = "select count(*) from book";
+        return jdbcTemplate.queryForObject(sql, int.class);
+    }
+
+    @Override
+    public Book selectOne(String id) {
+        String sql = "select * from book where id = ?";
+        // 调用方法
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<Book>(Book.class), id);
+    }
+
+    @Override
+    public List<Book> selectAll() {
+        String sql = "select * from book";
+        // 调用方法
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Book>(Book.class));
     }
 }
