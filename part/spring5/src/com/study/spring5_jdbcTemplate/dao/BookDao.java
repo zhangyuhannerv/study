@@ -20,4 +20,10 @@ public interface BookDao {
     Book selectOne(String id);
 
     List<Book> selectAll();
+
+    void batchAdd(List<Object[]> args);
+
+    void batchUpdate(List<Object[]> args);
+
+    void batchDelete(List<Object[]> args);
 }

@@ -6,6 +6,9 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @ClassName TestDemo
  * @Description TODO
@@ -71,4 +74,38 @@ public class TestDemo {
         // 实践证明，必须有对象才能正确打印，否则报错。查id为1莫得问题，查id为2就报错
         System.out.println(bookService.selectAll());
     }
+
+    @Test
+    public void batchAdd() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("com/study/spring5_jdbcTemplate/bean.xml");
+        BookService bookService = app.getBean("bookService", BookService.class);
+        Object[] o1 = {3, "js", 0};
+        Object[] o2 = {4, "c++", 0};
+        Object[] o3 = {5, "c#", 0};
+        List<Object[]> list = Arrays.asList(o1, o2, o3);
+        bookService.batchAdd(list);
+    }
+
+    @Test
+    public void batchUpdate() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("com/study/spring5_jdbcTemplate/bean.xml");
+        BookService bookService = app.getBean("bookService", BookService.class);
+        Object[] o1 = {"js_edit", 1, 3};
+        Object[] o2 = {"c++_edit", 1, 4};
+        Object[] o3 = {"c#_edit", 1, 5};
+        List<Object[]> list = Arrays.asList(o1, o2, o3);
+        bookService.batchUpdate(list);
+    }
+
+    @Test
+    public void batchDelete() {
+        ApplicationContext app = new ClassPathXmlApplicationContext("com/study/spring5_jdbcTemplate/bean.xml");
+        BookService bookService = app.getBean("bookService", BookService.class);
+        Object[] o1 = {3};
+        Object[] o2 = {4};
+        Object[] o3 = {5};
+        List<Object[]> list = Arrays.asList(o1, o2, o3);
+        bookService.batchDelete(list);
+    }
+
 }
