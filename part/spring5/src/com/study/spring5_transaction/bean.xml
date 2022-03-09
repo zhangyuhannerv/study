@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--开启组件的扫描-->
+    <context:component-scan base-package="com.study.spring5_transaction"/>
+
+    <!--引入外部的属性文件,context是新的名称空间-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!-- 配置连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <!--写活，注意名称空间的变化和引入外部配置文件-->
+        <property name="driverClassName" value="${prop.driverClass}"/>
+        <property name="url" value="${prop.url}"/>
+        <property name="username" value="${prop.userName}"/>
+        <property name="password" value="${prop.password}"/>
+    </bean>
+
+    <!--JDBCTemplate对象-->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <!--注入dataSource-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--事务部分开始-->
+    <!--创建一个事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <!--注入dataSource-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!--开启事务注解-->
+    <!--先引入事务的名称空间tx-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <!--最后，在service的类或者service类的方法里面添加事务注解-->
+    <!--事务部分结束-->
+</beans>
