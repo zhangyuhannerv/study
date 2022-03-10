@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 // 该注解既可以加到类上面，也可以加到方法上面
 // 如果添加到类上面，那么该类下所有的方法都添加了事务
 // 如果添加到方法上面，那么只是为该方法添加事务
-@Transactional
+// @Transactional
 public class AccountService {
     @Autowired
     private AccountDao accountDao;

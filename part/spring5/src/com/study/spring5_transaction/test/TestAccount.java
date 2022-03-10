@@ -20,4 +20,12 @@ public class TestAccount {
         AccountService accountService = context.getBean("accountService", AccountService.class);
         accountService.transferMoney();
     }
+
+    @Test
+    public void testTransferAccountAllByXml() {
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("com/study/spring5_transaction/transactionBean.xml");
+        AccountService accountService = context.getBean("accountService", AccountService.class);
+        accountService.transferMoney();
+    }
 }
