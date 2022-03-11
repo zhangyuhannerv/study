@@ -1,8 +1,10 @@
 package com.study.spring5_transaction.test;
 
+import com.study.spring5_transaction.config.TxConfig;
 import com.study.spring5_transaction.service.AccountService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -25,6 +27,14 @@ public class TestAccount {
     public void testTransferAccountAllByXml() {
         ApplicationContext context =
                 new ClassPathXmlApplicationContext("com/study/spring5_transaction/transactionBean.xml");
+        AccountService accountService = context.getBean("accountService", AccountService.class);
+        accountService.transferMoney();
+    }
+
+    @Test
+    public void testTransferAccountAllByAno() {
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(TxConfig.class);
         AccountService accountService = context.getBean("accountService", AccountService.class);
         accountService.transferMoney();
     }
