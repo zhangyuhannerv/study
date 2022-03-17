@@ -2,6 +2,7 @@ package com.study.spring5_webflux.service.impl;
 
 import com.study.spring5_webflux.entity.User;
 import com.study.spring5_webflux.service.IUserService;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -15,6 +16,7 @@ import java.util.Map;
  * @Date 2022/3/16
  * @Version 1.0
  */
+@Service
 public class UserServiceImpl implements IUserService {
     // 创建Map集合模拟数据库
     private final Map<Integer, User> users = new HashMap<>();
@@ -27,7 +29,7 @@ public class UserServiceImpl implements IUserService {
 
     // 查询一个
     @Override
-    public Mono<User> getUserById(String id) {
+    public Mono<User> getUserById(int id) {
         return Mono.justOrEmpty(this.users.get(id));
     }
 
