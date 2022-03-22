@@ -1,8 +1,13 @@
 package com.study.springboot2study;
 
+import com.study.springboot2study.bean.Pet;
+import com.study.springboot2study.bean.User;
+import com.study.springboot2study.config.MyConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import javax.jws.soap.SOAPBinding;
 
 /**
  * @ClassName MainApplication
@@ -23,12 +28,34 @@ import org.springframework.context.ConfigurableApplicationContext;
 // @SpringBootApplication(scanBasePackages = "com.study")
 public class MainApplication {
     public static void main(String[] args) {
-        // 返回IOC容器
+        // 1.返回IOC容器
         ConfigurableApplicationContext run = SpringApplication.run(MainApplication.class, args);
-        // 查看容器里的组件
+        // 2.查看容器里的组件
         String[] beanDefinitionNames = run.getBeanDefinitionNames();
         for (String name : beanDefinitionNames) {
             System.out.println(name);
         }
+        // 3.从容器中获取组件(组件默认是单实例模式），即获取多少次都是获取的同一个
+        Pet tom = run.getBean("tom", Pet.class);
+        Pet tom1 = run.getBean("tom", Pet.class);
+        Pet tom2 = run.getBean("tom", Pet.class);
+        System.out.println((tom == tom1) && (tom1 == tom2));// 打印true
+
+
+        // 4.获取到的对象是个代理对象com.study.springboot2study.config.MyConfig$$EnhancerBySpringCGLIB$$306f94ea@464a4442
+        MyConfig bean = run.getBean(MyConfig.class);
+        System.out.println(bean);
+
+        // 5.验证配置类的方法是否被代理
+        // 如果@Configuration(proxyBeanMethods = true),此时就是代理对象调用方法。springboot总会检查需要的组件是否在
+        // 目的就是为了保持组件的单实例
+        User user = bean.user01();
+        User user1 = bean.user01();
+        System.out.println(user == user1);// 打印true
+
+        // 6.测试组件依赖
+        User user01 = run.getBean("user01", User.class);
+        Pet pet = user01.getPet();
+        System.out.println(pet == tom)  ;
     }
 }
