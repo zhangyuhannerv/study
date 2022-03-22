@@ -160,25 +160,7 @@ function sendByPost(url, ids){
 }
 ```
 
-#### 3.部署项目时，在maven库上添加自己手动添加的jar 包
-
-进入到放这个jar包的文件夹，运行cmd
-
-然后根据下面的例子手动自己可以尝试着添加
-
-```shell
-mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspose.word  -DartifactId=aspose.words -Dversion=16.4.0-jdk16 -Dpackaging=jar -DgeneratePom=true
-```
-
-```xml
-<dependency>
-			<groupId>com.aspose.word</groupId>
-			<artifactId>aspose.words</artifactId>
-			<version>16.4.0-jdk16</version>
-</dependency>
-```
-
-#### 4.promise封装ajax，并且promise的链式调用的示例
+#### 3.promise封装ajax，并且promise的链式调用的示例
 
 ```js
 let request = function (url, type = 'get', data = '', msg = "请求失败") {
@@ -220,7 +202,7 @@ request('/mainLine/getAllLineList',).then(res => {
 })
 ```
 
-#### 5.后台接口返回的数据出现了$ref，$data.***的字样
+#### 4.后台接口返回的数据出现了$ref，$data.***的字样
 
 分析原因：个人理解是如果后台返回了个map,map里面放了两个key值，但是这两个key所对应的value指向的是同一个目标地址，概括为两个key所对应的value是同一个，或者说一个value对象（值相同，地址相同）用map的两个key值存储，那么返回前台时，第二个key的值不会是value而是第一个key的value的地址。
 
@@ -2557,7 +2539,25 @@ install -Dmaven.test.skip=true
 
 用这个包含所有CLASS的单独的jar包通过exe4j转出的exe文件就能成功执行
 
+#### 4.部署项目时，在maven库上添加自己手动添加的jar 包
 
+进入到放这个jar包的文件夹，运行cmd
+
+然后根据下面的例子手动自己可以尝试着添加
+
+```shell
+mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspose.word  -DartifactId=aspose.words -Dversion=16.4.0-jdk16 -Dpackaging=jar -DgeneratePom=true
+```
+
+```xml
+<dependency>
+			<groupId>com.aspose.word</groupId>
+			<artifactId>aspose.words</artifactId>
+			<version>16.4.0-jdk16</version>
+</dependency>
+```
+
+#### 
 
 
 
@@ -4632,6 +4632,92 @@ if(browser.versions.mobile){
     //移动端
 }else {
     //pc端
+}
+```
+
+## 2.一个常用的javaweb返回体工具类
+
+```java
+/**
+ * 返回体工具
+ */
+public class DtoResult<T> implements Serializable {
+
+    public static final int STATUS_CODE_SUCCESS = 0;
+    public static final int STATUS_CODE_ERROR = 500;
+
+    private int code;
+    private String message;
+    private T data;
+
+    public DtoResult() {
+        this.setCode(0);
+    }
+
+    public DtoResult(T data) {
+        this();
+        this.data = data;
+    }
+
+    public DtoResult(Integer code, String message, T data) {
+        this.setCode(code);
+        this.message = message;
+        this.data = data;
+    }
+
+    public DtoResult(Integer code, String message) {
+        this.setCode(code);
+        this.message = message;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public static <T> DtoResult<T> ok() {
+        return new DtoResult<T>(0, "操作成功", null);
+    }
+
+    public static <T> DtoResult<T> ok(T data) {
+        return new DtoResult<T>(0, "操作成功", data);
+    }
+
+    public static <T> DtoResult<T> ok(String message, T data) {
+        return new DtoResult<T>(0, message, data);
+    }
+
+    public static <T> DtoResult<T> error() {
+        return new DtoResult<T>(500, "数据异常");
+    }
+
+    public static <T> DtoResult<T> error(String message) {
+        return new DtoResult<T>(500, message);
+    }
+
+    public static <T> DtoResult<T> error(Integer code, String message) {
+        return new DtoResult<T>(code, message);
+    }
+
+    public T getData() {
+        return this.data;
+    }
+
+    public int getCode() {
+        return this.code;
+    }
+
+    public String getMessage() {
+        return this.message;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }
 ```
 
