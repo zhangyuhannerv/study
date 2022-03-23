@@ -1,5 +1,6 @@
 package com.study.springboot2study;
 
+import com.study.springboot2study.bean.Book;
 import com.study.springboot2study.bean.Pet;
 import com.study.springboot2study.bean.User;
 import com.study.springboot2study.config.MyConfig;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.jws.soap.SOAPBinding;
+import java.util.Arrays;
 
 /**
  * @ClassName MainApplication
@@ -56,6 +58,18 @@ public class MainApplication {
         // 6.测试组件依赖
         User user01 = run.getBean("user01", User.class);
         Pet pet = user01.getPet();
-        System.out.println(pet == tom)  ;
+        System.out.println(pet == tom);
+
+        // 7.测试@Import
+        String[] beanNamesForType = run.getBeanNamesForType(User.class);
+        System.out.println(Arrays.toString(beanNamesForType));
+
+        // 8.测试@ConditionalOnBean注解
+        System.out.println(run.containsBean("book"));
+        System.out.println(run.containsBean("person"));
+
+        // 9测试@ImportResource注解
+        System.out.println(run.containsBean("haha"));
+        System.out.println(run.containsBean("hehe"));
     }
 }

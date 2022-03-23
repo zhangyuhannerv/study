@@ -1,9 +1,14 @@
 package com.study.springboot2study.config;
 
+import com.study.springboot2study.bean.Book;
+import com.study.springboot2study.bean.Person;
 import com.study.springboot2study.bean.Pet;
 import com.study.springboot2study.bean.User;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ImportResource;
 
 /**
  * @ClassName MyConfig
@@ -12,11 +17,17 @@ import org.springframework.context.annotation.Configuration;
  * 3.@Configuration的proxyBeanMethods默认值为true。
  * springboot两种底层代理（FULL:全代理，Configuration的proxyBeanMethods=true;LITE:轻量级代理,Configuration的proxyBeanMethods默认值为false）
  * 这两种代理方式主要是为了解决组件依赖
+ * 4.@Import，可以放在任何一个组件类上，给容器中自动创建某些类型的组件,该注解导入的组件的名字（id)默认是全类名
+ * 5.@Conditional是一个条件装配注解。可以加在类上，也可以加在方法上。它有很多派生注解。目的是为了满足特定的条件才会注入组件。
+ * 6.@ImportResource("classpath:beans.xml")，可以导入spring的配置文件
  * @Author Zhangyuhan
  * @Date 2022/3/22
  * @Version 1.0
  */
+
+@Import({User.class})// 该注解导入的组件的名字（id)默认是全类名
 @Configuration(proxyBeanMethods = true)// 告诉springboot这是一个配置类，以前在xml里能做什么，现在在这个类里就能做什么
+@ImportResource("classpath:beans.xml")// 引入xml配置文件。该注解一般加载配置类上
 public class MyConfig {
 
     /**
@@ -35,5 +46,16 @@ public class MyConfig {
     @Bean("tom")// 可以给bean实例一个自定义的名字
     public Pet tomcatPet() {
         return new Pet("tomcat");
+    }
+
+    // @Bean
+    public Book book() {
+        return new Book();
+    }
+
+    @ConditionalOnBean(name = "book")// 只有容器中有名为book的组件时，才创建person组件，该注解也可以加到类上。条件成里。类里所有的组件才能成功注入
+    @Bean
+    public Person person() {
+        return new Person();
     }
 }
