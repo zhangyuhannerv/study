@@ -4441,7 +4441,7 @@ ln -s /usr/bin/python3.6 /usr/bin/python
 
 ### 开发
 
-#### 1.查看端口占用，并关掉相应的程序
+#### 1.查看端口，查看进程，关闭进程
 
 以8088端口为例：
 
@@ -4449,23 +4449,43 @@ ln -s /usr/bin/python3.6 /usr/bin/python
 netstat  -aon|findstr "8088"
 ```
 
-最后一列是pid。
+最后一列是pid。假设为5544
 
-假设pid是5544
+然后根据pid查询相应进程
 
 ```shell
 tasklist|findstr "5544"
 ```
 
-第一列是程序名称
+第一列是程序名称，假设为java.exe
 
-假设程序名称是java.exe
+最后关闭进程
 
 ```shell
 taskkill /f /t /im java.exe
 ```
 
 直接使用命令关闭进程可能关不了，那么可以在任务管理器中直接找到该进程关闭。
+
+#### 2.根据端口直接关闭进程
+
+以8088端口为例：
+
+```shell
+netstat  -aon|findstr "8088"
+```
+
+最后一列是pid。假设为5544
+
+```shell
+taskkill /pid 5544 -t -f
+```
+
+
+
+
+
+ 
 
 ## nginx
 

@@ -1,10 +1,8 @@
 package com.study.springboot2study.config;
 
-import com.study.springboot2study.bean.Book;
-import com.study.springboot2study.bean.Person;
-import com.study.springboot2study.bean.Pet;
-import com.study.springboot2study.bean.User;
+import com.study.springboot2study.bean.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -28,6 +26,8 @@ import org.springframework.context.annotation.ImportResource;
 @Import({User.class})// 该注解导入的组件的名字（id)默认是全类名
 @Configuration(proxyBeanMethods = true)// 告诉springboot这是一个配置类，以前在xml里能做什么，现在在这个类里就能做什么
 @ImportResource("classpath:beans.xml")// 引入xml配置文件。该注解一般加载配置类上
+// 1.开启Car组件的属性配置绑定，2把指定的组件注入到容器中
+@EnableConfigurationProperties(Car.class)
 public class MyConfig {
 
     /**
