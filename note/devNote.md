@@ -1375,6 +1375,27 @@ frame = document.getElementById('add_file').files[0];// 这能获得手动选择
 
 ### 学习
 
+## node
+
+### 开发
+
+#### 1.node镜像管理
+
+使用下面的语句检查你的当前NPM源：
+
+```bash
+npm get registry 
+```
+
+设置镜像命令
+
+```bash
+npm config set registry http://registry.npm.taobao.org/ #设置淘宝镜像
+npm config set registryhttps://registry.npmjs.org #设置默认镜像
+```
+
+
+
 # 后端
 
 ## java

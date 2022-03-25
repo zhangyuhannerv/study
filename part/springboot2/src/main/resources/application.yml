@@ -1,0 +1,40 @@
+# 补充说明：spring的application.properties和application.yml存在哪个都行。甚至两个都存在spring会把两个合在一起都生效
+person:
+  userName: 张三 # 默认是双引号
+  #  userName: "张三 \n 李四" # ""会将\n作为换行符输出,双引号不会转义(不改变换行符本身的意思)
+  #  userName: '张三 \n 李四' #''会将\n作为字符串输出,单引号会转义(将换行符转译为了字符串)
+  boss: true
+  birth: 2019/12/9
+  age: 18
+  pet:
+    name: 旺财
+    weight: 99.99
+  #  interests: [篮球,足球]
+  interests:
+    - 篮球
+    - 足球
+    - 18
+  animal:
+    - 阿猫
+    - 阿狗
+  #  score: {english: 80,math: 90}
+  score:
+    english: 80
+    math: 90
+  salarys:
+    - 9999.98
+    - 8888.98
+  allPets:
+    sick:
+      - { name: 小强,weight: 10 }
+      - name: 星猫
+        weight: 20
+      - name: 可达鸭
+        weight: 30
+    health: [ { name: 阿花,weight: 80 },{ name: 阿艹, weight: 90 } ]
+
+spring:
+  banner:
+    image:
+      bitdepth: 8
+

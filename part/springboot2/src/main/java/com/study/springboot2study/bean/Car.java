@@ -1,5 +1,9 @@
 package com.study.springboot2study.bean;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -16,23 +20,11 @@ import org.springframework.stereotype.Component;
 // @Component
 // 属性配置绑定，注意只能绑定spring的核心配置文件，即application.properties。别的自定义命名的配置文件绑定不上
 @ConfigurationProperties(prefix = "mycar")
+@Data //getter()和setter()
+@ToString // 重写toString()
+@AllArgsConstructor// 全参构造器
+@NoArgsConstructor// 无参构造器
 public class Car {
     private String brand;
     private Integer price;
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 }
