@@ -29,6 +29,11 @@ public class HelloController {
     @Autowired
     TestYmlPerson person;
 
+    @RequestMapping("/")
+    public String index() {
+        return "欢迎页";
+    }
+
     @RequestMapping("/hello")
     public String handle01() {
         log.info("测试jrebel");

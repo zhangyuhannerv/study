@@ -1848,6 +1848,17 @@ public enum RoleEnum {
 }
 ```
 
+#### 12.后台运行jar包与停止运行
+
+将运行的jar 错误日志信息输出到log.file文件中，然后（>&1）就是继续输出到标准输出(前面加的&，是为了让系统识别是标准输出)，最后一个&,表示在后台运行。
+
+```shell
+nohup java -jar 包名.jar  > log.file  2>&1 &
+[1] 669 #669表示运行的pid
+```
+
+
+
 ### 学习
 
 ## springboot
@@ -4154,11 +4165,19 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
 
 ## linux
 
+### 通用
+
+#### 1.根据端口号查询占用pid
+
+```shell
+netstat -nap|grep 8080	
+tcp6       0      0 :::8081                 :::*                    LISTEN      16996/java
+kill -9 16996
+```
+
 ### centos
 
-#### 开发
-
-##### 1.Linux下文档类型转PDF乱码解决方式
+#### 1.Linux下文档类型转PDF乱码解决方式
 
 在Linux系统下进行文本类型转PDF时出现乱码。
 
@@ -4238,7 +4257,7 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
 
 ---
 
-##### 2.Centos7下配置openOffice
+#### 2.Centos7下配置openOffice
 
 1. 下载tar.gz包。下载地址：http://www.openoffice.org/zh-cn/ (需要下载rpm格式的)
 
@@ -4268,13 +4287,13 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
     ps -ef|grep openofficenetstat -lnp |grep 8100
     ```
 
-##### 3.查看后台运行的java -jar项目的端口号，并杀死该进程
+#### 3.查看后台运行的java -jar项目的端口号，并杀死该进程
 
 ```shell
 lsof -i:8088Kill -9 pid
 ```
 
-##### 4.用windowd的cmd向linux服务器上传文件
+#### 4.用windowd的cmd向linux服务器上传文件
 
 示例代码
 
@@ -4334,7 +4353,7 @@ scp -P 221 -r local_dir username@servername:remote_dir
 
 ---
 
-##### 5.linux查看日志最后几行
+#### 5.linux查看日志最后几行
 
 ```shell
 tail -n 50 wx.log
@@ -4352,7 +4371,7 @@ tail -n 1000：显示最后1000行tail -n +1000：从1000行开始显示，显�
 
  [原文链接](https://www.cnblogs.com/keta/p/9627227.html)
 
-##### 6.Centos 7 开放端口
+#### 6.Centos 7 开放端口，查看端口占用及根据端口占用杀掉进程
 
 1. 开放端口    
 
@@ -4414,7 +4433,7 @@ tail -n 1000：显示最后1000行tail -n +1000：从1000行开始显示，显�
 
 [原文链接](https://www.cnblogs.com/heqiuyong/p/10460150.htm)
 
-##### 7.查看cpu核心数
+#### 7.查看cpu核心数
 
 查看物理cpu数目
 
@@ -4436,7 +4455,7 @@ cat /proc/cpuinfo| grep "processor"| wc -l
 
 [原文链接](https://blog.csdn.net/qq_38880380/article/details/79638252)
 
-##### 8.查看网址
+#### 8.查看网址
 
 示例:查看本地的nginx是否启动
 
@@ -4444,7 +4463,7 @@ cat /proc/cpuinfo| grep "processor"| wc -l
  curl 127.0.0.1:80
 ```
 
-##### 9.解决centos8下python命令失效的问题
+#### 9.解决centos8下python命令失效的问题
 
 执行
 
@@ -4454,9 +4473,128 @@ ln -s /usr/bin/python3.6 /usr/bin/python
 
 [参考地址](https://blog.csdn.net/have_a_cat/article/details/118191281)
 
+### ubuntu
+
+#### 1.ubuntu安装nginx
+
+```bash
+# 切换至root用户
+sudo su root
+apt-get install nginx
+```
+
+查看nginx是否安装成功
+
+```shell
+nginx -v
+```
+
+启动nginx
+
+```shell
+service nginx start #方式1
+/usr/sbin/nginx #方式2
+```
+
+结束nginx
+
+```shell
+service nginx stop #方式1
+/usr/sbin/nginx -s stop #方式2
+```
+
+重启nginx
+
+```shell
+service nginx reload #方式1
+/usr/sbin/nginx -s reload #方式2
+```
+
+**注意：nginx方式1和方式2不能互相调用**
 
 
-#### 学习
+
+nginx文件安装完成之后的文件位置：
+
+- /usr/sbin/nginx：主程序
+- /etc/nginx：存放配置文件
+- /usr/share/nginx：存放静态文件
+- /var/log/nginx：存放日志
+
+#### 2.ubuntu切换为root账号
+
+- Ubuntu的默认root密码是随机的，即每次开机都有一个新的root密码。可以在终端输入命令 sudo passwd，然后输入当前用户的密码，回车.
+- 终端会提示输入新的密码并确认，此时的密码就是root新密码。修改成功后，输入命令 su root，再输入新的密码就成功切换到root帐号了
+
+#### 3.向ubuntu传输文件显示permission denied
+
+scp 默认不允许使用root账号传输文件.如果想用root账号传输文件，在两端服务器
+
+0、使用第二步切换为root账号
+
+1、修改sshd配置文件
+
+```bash
+vi /etc/ssh/sshd_config
+```
+
+2、找到PermitRootLogin，把前面的#去掉，并且改为yes
+
+```bash
+PermitRootLogin yes
+```
+
+3、重启sshd服务
+
+```shell
+service ssh start
+```
+
+4、使用root账户远程登陆服务器并传输文件即可。注意root密码是在第二步自己设置的
+
+#### 4.ubuntu中国大陆镜像源
+
+```shell
+http://mirrors.aliyun.com/ubuntu
+```
+
+#### 5.设置静态ip
+
+- ubuntu_server18
+
+  ```shell
+  vim /etc/netplan/50-cloud-init.yaml
+  ```
+
+  配置如下,注意格式 冒号后边有个空格 
+
+  ```yaml
+  network:
+      ethernets:
+          ens33:
+              dhcp4: false
+              addresses: [192.168.37.188/24]
+              gateway4: 192.168.37.2
+              nameservers:
+                      addresses: [114.114.114.114,8.8.8.8]
+      version: 2
+  ```
+
+  编辑好 最后保存配置文件，执行命令重启网络服务生效
+
+  ```shell
+  sudo netplan apply
+  ```
+
+
+#### 6.显示没有firewall-cmd命令
+
+```shell
+apt-get update
+apt-get install firewalld
+```
+
+
 
 ## windows
 
