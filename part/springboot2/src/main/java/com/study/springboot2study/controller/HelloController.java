@@ -29,10 +29,10 @@ public class HelloController {
     @Autowired
     TestYmlPerson person;
 
-    @RequestMapping("/")
-    public String index() {
-        return "欢迎页";
-    }
+    // @RequestMapping("/")
+    // public String index() {
+    //     return "欢迎页";
+    // }
 
     @RequestMapping("/hello")
     public String handle01() {
@@ -51,5 +51,16 @@ public class HelloController {
     public TestYmlPerson testYml() {
         log.info(person.getUserName());
         return person;
+    }
+
+    /**
+     * 测试访问静态资源名，会发生什么，结果就是，不再访问静态资源，而是走这个接口，网页显示aaa
+     * 结论就是请求先看controller，再看静态资源。
+     *
+     * @return
+     */
+    @RequestMapping("/1.png")
+    public String testStaticRequest() {
+        return "aaa";
     }
 }

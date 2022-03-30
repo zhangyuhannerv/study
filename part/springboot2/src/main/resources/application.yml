@@ -37,4 +37,11 @@ spring:
   banner:
     image:
       bitdepth: 8
+  mvc:
+  #    静态资源默认是/**，这里是配置加个前缀，注意：会导致静态资源首页功能失效，图标功能失效
+  #    static-path-pattern: /res/**
+  web:
+    resources:
+      # 手动指定自定义静态资源路径，默认的静态4个静态资源访问路径全部失效
+      static-locations: classpath:/customeStaticFile
 
