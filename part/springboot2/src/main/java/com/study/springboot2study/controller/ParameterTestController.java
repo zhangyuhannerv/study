@@ -1,0 +1,66 @@
+package com.study.springboot2study.controller;
+
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @ClassName ParameterTestController
+ * @Description TODO
+ * @Author Zhangyuhan
+ * @Date 2022/4/2
+ * @Version 1.0
+ */
+
+@RestController
+public class ParameterTestController {
+
+    // /car/1/owner/zhangsan
+    // @PathVariable除了单独提取路径变量外还能将所有的路径变量整合成一个Map<String,String>对象
+    @GetMapping("/car/{id}/owner/{username}")
+    public Map<String, Object> getCar(@PathVariable("id") Integer id,
+                                      @PathVariable("username") String name,
+                                      // 所有的路径变量封装成一个Map
+                                      @PathVariable Map<String, String> pv,
+                                      // 获取单独的请求头里的某个参数
+                                      @RequestHeader("User-Agent") String userAgent,
+                                      // 请求头里的所有数据
+                                      @RequestHeader Map<String, String> headers,
+                                      // 获取单个请求参数
+                                      @RequestParam("age") Integer age,
+                                      // 获取集合请求参数
+                                      @RequestParam("inters") List<String> inters,
+                                      // 获取所有的请求参数(注意，这里的params，前台如果是个数组（如inters)那么这里只有一个值，可以自己打断点看下）
+                                      @RequestParam Map<String, String> params,
+                                      // Cookie有多个，这里要获取单独的某个cookie值
+                                      @CookieValue("Webstorm-25a9136") String singleCookieValue,
+                                      // 这里获取某个单独的Cookie的所有属性，上面只是获取某个单独的Cookie的值
+                                      @CookieValue("Webstorm-25a9136") Cookie cookie
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("name", name);
+        map.put("pv", pv);
+        map.put("userAgent", userAgent);
+        map.put("headers", headers);
+        map.put("age", age);
+        map.put("inters", inters);
+        map.put("params", params);
+        map.put("singleCookieValue", singleCookieValue);
+        map.put("cookie", cookie);
+        return map;
+    }
+
+
+    @PostMapping("/save")
+    public Map<String, Object> postMethod(
+            // 如果用string接收，那么把请求体封装成了这种形式："userName=1&email=12"
+            @RequestBody String content) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("content", content);
+        return map;
+    }
+}

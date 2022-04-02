@@ -14,8 +14,8 @@
     <input value="REST-POST 提交" type="submit"/>
 </form>
 <form action="/user" method="post">
-    <input name="_method" type="hidden" value="delete"/>
-    <!--    <input name="_m" type="hidden" value="delete"/>-->
+    <!--    <input name="_method" type="hidden" value="delete"/>-->
+    <input name="_m" type="hidden" value="delete"/>
     <input value="REST-DELETE 提交" type="submit"/>
 </form>
 <form action="/user" method="post">
@@ -30,7 +30,7 @@
     <li>@RequestHeader（获取请求头）</li>
     <li>@RequestParam（获取请求参数）</li>
     <li>@CookieValue（获取cookie值）</li>
-    <li>@RequestBody（获取请求体[POST]）</li>
+    <li>@RequestBody（获取请求体[只有POST才有请求体]）</li>
 
     <li>@RequestAttribute（获取request域属性）</li>
     <li>@MatrixVariable（矩阵变量）</li>
