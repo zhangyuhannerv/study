@@ -1396,6 +1396,180 @@ npm config set registryhttps://registry.npmjs.org #设置默认镜像
 
 
 
+## vue
+
+### 开发
+
+#### 0.vue组件公共模板
+
+```vue
+<template>
+  <div>
+    
+  </div>
+</template>
+
+<script>
+export default {
+  name: "index"
+}
+</script>
+
+<style scoped>
+
+</style>
+
+```
+
+
+
+#### 1.vue自定义上传功能
+
+```vue
+<template>
+  <div class="engineeringVehicles">
+	<el-button type="primary" @click="importData">导入</el-button>
+	<input v-show="false" name="file" ref="selectFile" type="file" accept="xlsx" @change="changeFile"/>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "index",
+  methods:{
+    // 导入数据
+    changeFile(e) {
+      let file = e.target.files[0];
+      // 判断文件类型
+      let fileType = file.name.substring(file.name.lastIndexOf('.') + 1);
+      debugger
+      if (fileType !== 'xlsx') {
+        layer.warning(this, '仅支持上传xlsx文件')
+        this.$refs.selectFile.value = ''
+        return;
+
+      }
+      
+      // 拼接form数据
+      let param = new FormData(); //创建form对象
+      param.append('file', file);//通过append向form对象添加数据
+      let config = {
+        headers: {'Content-Type': 'multipart/form-data'} //这里是重点，需要和后台沟通好请求头，Content-Type不一定是这个值
+      }; //添加请求头
+      request.post('/lineDic/sstjq/importData', param, config)
+          .then(res => {
+            if (res.code === 200) {
+              layer.success(this, '导入成功')
+              this.list()
+            } else {
+              layer.failure(this, res.message);
+            }
+            this.$refs.selectFile.value = ''
+          })
+    },
+      
+    // 手动触发input点击
+    importData() {
+      this.$refs.selectFile.dispatchEvent(new MouseEvent('click'))
+    },
+      
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
+
+
+```
+
+#### 2.局部导入css文件
+
+```vue
+<template>
+  <div>
+    
+  </div>
+</template>
+
+<script>
+export default {
+  name: "index"
+}
+</script>
+
+<style scoped>
+@import '~@/assets/css/single_block.css';
+
+
+</style>
+
+```
+
+#### 3.ajax下载小文件（返回整体文件流，通过浏览器转成二进制触发下载）
+
+该方式和传统的方式不同。
+
+传统是读取服务器返回的流，这里是服务器流都已经整体返回了，然后才通过js转成文件触发下载
+
+该方式只适合下载小文件（一般是小于10M），如果文件过大，会导致浏览器占用内存过大，页面崩溃
+
+```js
+```
+
+
+
+
+
+### 学习
+
+## element-ui
+
+### 开发
+
+#### 1.上传组件设置token
+
+```vue
+<el-upload
+           class="uploadBtn"
+           accept="xlsx"
+           action="http://127.0.0.1:82/lineDic/sstjq/importData"
+           :on-success="importData"
+           :show-file-list="false"
+           :limit="1"
+           :headers="headers"
+           :file-list="fileList">
+    <el-button size="small" type="primary">导入</el-button>
+</el-upload>
+
+data(){
+	return{
+		headers: {
+        	Authorization: null
+      	},
+	}
+}
+
+methods: {
+    setToken() {
+      let tokenName = window.tokenName || window.top.tokenName
+      let token = localStorage.getItem(tokenName)
+      this.headers.Authorization = token
+    },
+}
+
+mounted() {
+	this.setToken();
+}
+```
+
+```js
+
+```
+
+
+
 # 后端
 
 ## java
