@@ -63,4 +63,39 @@ public class ParameterTestController {
         map.put("content", content);
         return map;
     }
+
+    // ----
+
+    // 矩阵变量
+    // springboot默认禁用掉了矩阵变量
+    // 手动开启：
+    // 原理：对于所有路径的处理，都是使用UrlPathHelper来进行解析的。
+    // 它里面的removeSemicolonContent（移除分号内容）属性是用来支持矩阵变量的
+
+    // 注意：矩阵变量是绑定在路径变量里的,因此一定要有url路径变量才能被解析
+
+    // 语法1：/cars/sell;low=34;brand=byd,audi,yd
+    @GetMapping("/cars/{path}")
+    public Map<String, Object> carsSell(@MatrixVariable("low") Integer low,
+                                        @MatrixVariable("brand") List<String> brand,
+                                        @PathVariable("path") String path) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("low", low);
+        map.put("brand", brand);
+        map.put("path", path);
+        return map;
+    }
+
+    // 语法2：/boss/1;age=20/2;age=10
+    @GetMapping("/boss/{bossId}/{empId}")
+    public Map<String, Object> bossAge(
+            // 获取路径bossId下的矩阵变量
+            @MatrixVariable(value = "age", pathVar = "bossId") Integer bossAge,
+            // 获取路径empId下的矩阵变量
+            @MatrixVariable(value = "age", pathVar = "empId") Integer empAge) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("bossAge", bossAge);
+        map.put("empAge", empAge);
+        return map;
+    }
 }
