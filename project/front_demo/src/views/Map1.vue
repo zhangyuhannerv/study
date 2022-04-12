@@ -1,6 +1,7 @@
 <template>
   <input type="text" v-model="lineName">
   <button @click="changeLine">查询</button>
+  <button @click="clearMark">删除线</button>
   <div id="container"></div>
 </template>
 
@@ -21,12 +22,10 @@ export default {
       mask: [],
 
       lineName: '',
-
       cityName: '北京',
       lineSearch: null,
       drawLine: null,
 
-      subwayLine: null,
       linePointArr: null,
     }
   },
@@ -37,6 +36,10 @@ export default {
     this.initMap()
   },
   methods: {
+    clearMark() {
+      this.map.clearMap();
+    },
+
     changeLine() {
       this.searchLine(this.lineName)
     },
@@ -47,9 +50,8 @@ export default {
     },
 
     searchLine(lineName) {
-      if (this.subwayLine) {
-        this.map.remove(this.subwayLine)
-      }
+      // 清空之前的标记
+      this.clearMark()
 
       // 开始搜索
       this.linesearch.search(lineName, (status, result) => {
@@ -59,7 +61,7 @@ export default {
           this.analysisSearchResult(result)
           // 画线
           this.drawLine()
-        } else if (status = 'no_data') {
+        } else if (status === 'no_data') {
           alert('无线路数据')
         } else {
           alert('查询出错')
@@ -93,18 +95,9 @@ export default {
         extensions: 'all' // 所有线路类型
       })
 
-      // 初始化线路查询方法
-      that.linesearch = new AMap.LineSearch({
-        pageIndex: 1, // 第一页的线路
-        city: that.cityName,
-        pageSize: 1, // 每一页的线路条数
-        extensions: 'all' // 所有线路类型
-      })
-
       // 初始化画线的方法
-      that.drawLine = function (BusArr) {
-        that.subwayLine = new AMap.Polyline({
-          map: that.map,
+      that.drawLine = () => {
+        let subwayLine = new AMap.Polyline({
           path: that.linePointArr,
           strokeColor: 'red', // 线颜色
           strokeOpacity: 0.8, // 线透明度
@@ -112,11 +105,12 @@ export default {
           outlineColor: 'white',
           strokeWeight: 10 // 线宽
         })
+
+        that.map.add(subwayLine)
       }
 
       // 画线
       this.searchLine('大兴机场线')
-
     },
 
 
