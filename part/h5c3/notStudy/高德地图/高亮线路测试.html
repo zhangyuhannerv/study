@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #map-container {
+      height: 900px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map-container"></div>
+
+  <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=a45b8935299e65fa1631dbef2d05d6cf&plugin=AMap.LineSearch"></script>
+  <script>
+    // 初始化地图
+    var map = new window.AMap.Map('map-container', {
+      viewMode: "3D", //是否为3D地图模式
+      zoom: 10, //初始化地图级别
+      center: [116.397428, 39.90923], //初始化地图中心点位置
+    })
+
+    // 实例化某以城市公交地铁线路查询类（以广州为例）
+    var linesearch = new window.AMap.LineSearch({
+      pageIndex: 1, // 第一页的线路
+      city: '北京',
+      pageSize: 1, // 每一页的线路条数
+      extensions: 'all' // 所有线路类型
+    })
+
+    // 开始搜索
+    var name = '大兴机场线'
+    linesearch.search(name, (status, result) => {
+      if (status === 'complete' && result.info === 'OK') {
+        console.log(result)
+        // 查询成功调用
+        lineSearch_Callback(result)
+      } else {
+        console.log('查询出错')
+      }
+    })
+
+    /* 地铁路线查询服务返回数据解析概况 */
+    function lineSearch_Callback(data) {
+      var lineArr = data.lineInfo;
+      var lineNum = data.lineInfo.length;
+      if (lineNum == 0) {
+        console.log(lineNum)
+      } else {
+        for (var i = 0; i < lineNum; i++) {
+          var pathArr = lineArr[i].path;
+          if (i == 0) // 只绘制一条线路，就是需要高亮的地铁线路
+            drawbusLine(pathArr);
+        }
+      }
+    }
+
+    /* 绘制路线 */
+    function drawbusLine(BusArr) {
+      let busPolyline = new window.AMap.Polyline({
+        map: map,
+        path: BusArr,
+        strokeColor: 'red', // 线颜色
+        strokeOpacity: 0.8, // 线透明度
+        isOutline: true,
+        outlineColor: 'white',
+        strokeWeight: 10 // 线宽
+      })
+    }
+  </script>
+</body>
+
+</html>
