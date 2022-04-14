@@ -1,7 +1,11 @@
 package com.study.springboot2study.config;
 
+import com.study.springboot2study.pojo.Pet;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -39,12 +43,31 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer webMvcConfigurer() {
         return new WebMvcConfigurer() {
+            // 开启矩阵变量
             @Override
             public void configurePathMatch(PathMatchConfigurer configurer) {
                 UrlPathHelper urlPathHelper = new UrlPathHelper();
                 // 不移除;后面的内容，此时矩阵变量才是开启的
                 urlPathHelper.setRemoveSemicolonContent(false);
                 configurer.setUrlPathHelper(urlPathHelper);
+            }
+
+            // 自定义转换器（Converters)
+            @Override
+            public void addFormatters(FormatterRegistry registry) {
+                registry.addConverter(new Converter<String, Pet>() {
+                    @Override
+                    public Pet convert(String source) {// 此时source就是页面传过来的值
+                        if (!StringUtils.isEmpty(source)) {
+                            Pet pet = new Pet();
+                            String[] split = source.split(",");
+                            pet.setName(split[0]);
+                            pet.setAge(Integer.parseInt(split[1]));
+                            return pet;
+                        }
+                        return null;
+                    }
+                });
             }
         };
     }

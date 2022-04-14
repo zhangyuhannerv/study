@@ -1,5 +1,6 @@
 package com.study.springboot2study.controller;
 
+import com.study.springboot2study.pojo.Person;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -97,5 +98,14 @@ public class ParameterTestController {
         map.put("bossAge", bossAge);
         map.put("empAge", empAge);
         return map;
+    }
+
+    // ---
+    // POJO的封装
+    // 数据绑定，无论是get/post提交的都可以和对象进行绑定
+    // 注意：此时的前台的contentType是'application/x-www-form-urlencoded;charset=utf-8'
+    @PostMapping("/saveUser")
+    public Person saveUser(Person person) {
+        return person;
     }
 }

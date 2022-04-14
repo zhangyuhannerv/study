@@ -16,7 +16,15 @@ mysql完成剩下的课程->补习12->spring->springboot
 
 ​								   ->日语n4
 
-vue->js基础完成剩下的课程->补习9->软件设计师
+------
+
+spring->springmvc->springboot->springcloud
+
+kafka,Elasticsearch
+
+maven,docker
+
+设计模式，计算机组成原理，操作系统
 
 ## 要补习的知识
 
