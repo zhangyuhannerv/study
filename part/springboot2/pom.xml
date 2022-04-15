@@ -36,6 +36,12 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--xml处理包，除了返回json外这里配置还可以返回xml-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
         <!--spring配置注释处理器。能让yml/properties里有你绑定的对象的提示-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
