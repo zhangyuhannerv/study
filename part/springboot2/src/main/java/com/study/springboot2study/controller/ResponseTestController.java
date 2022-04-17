@@ -30,4 +30,27 @@ public class ResponseTestController {
         person.setUserName("zhansan");
         return person;
     }
+
+    /**
+     * 自定义messageConvertor application/xml jacksonXmlConvertor
+     * 浏览器发送请求，直接返回xml application/json jacksonJsonConvertor
+     * 如果ajax发送请求，返回json application/x-guigu xxxConverter(自定义的convertor来处理application/x-guigu)
+     * 如果硅谷app发送请求，返回自定义数据(属性值1；属性值2;属性值3;)
+     * <p>
+     * 步骤：
+     * 1.添加自定义的messageConvertor进系统底层
+     * 2.系统底层就会统计出所有的MessageConvertor能操作哪些数据
+     * 3.客户端内容协商(客户端要guigu，服务器恰好有guigu的convertor)
+     *
+     * @return
+     */
+    @GetMapping("/person1")
+    @ResponseBody
+    public Person person1() {
+        Person person = new Person();
+        person.setAge(28);
+        person.setBirth(new Date());
+        person.setUserName("zhansan");
+        return person;
+    }
 }
