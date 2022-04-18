@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 th:text="${msg}">
+    哈哈
+</h1>
+<!--$是从请求域里面取值-->
+<a href="www.baidu.com" th:href="${link}">去bilibili_1</a>
+<!--@是直接拼接地址，比如@{www.baidu.com},那么就是href=www.baidu.com;如果是/xxx，那么还会自动拼接上项目的前置路径。比如：/dtjc/xxx-->
+<a href="www.baidu.com" th:href="@{/link}">去bilibili_2</a>
+</body>
+</html>

@@ -42,6 +42,12 @@
             <artifactId>jackson-dataformat-xml</artifactId>
         </dependency>
 
+        <!--整合thymeleaf-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!--spring配置注释处理器。能让yml/properties里有你绑定的对象的提示-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
