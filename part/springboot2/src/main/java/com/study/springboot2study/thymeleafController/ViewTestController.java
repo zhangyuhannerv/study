@@ -1,4 +1,4 @@
-package com.study.springboot2study.controller;
+package com.study.springboot2study.thymeleafController;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
