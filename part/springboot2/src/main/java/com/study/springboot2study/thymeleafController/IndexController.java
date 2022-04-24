@@ -1,6 +1,7 @@
 package com.study.springboot2study.thymeleafController;
 
 import com.study.springboot2study.bean.LoginUser;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
  * @Version 1.0
  */
 @Controller
+@Slf4j
 public class IndexController {
 
     /**
@@ -57,13 +59,21 @@ public class IndexController {
      */
     @GetMapping("/main")
     public String mainPage(HttpSession session, Model model) {
-        // 前置的判断，是否登陆，后续会引入拦截器/过滤器机制
+
+
+        // 没配置拦截器之前的写法
+        /*// 前置的判断，是否登陆，后续会引入拦截器/过滤器机制
         if (session.getAttribute("loginUser") != null) {
             return "main";
         } else {
             model.addAttribute("msg", "当前未登陆，请重新登陆");
             return "login";// 返回登陆页面
-        }
+        }*/
+
+
+        log.info("handler方法执行");
+        // 配置拦截器之后的写法
+        return "main";
 
 
     }

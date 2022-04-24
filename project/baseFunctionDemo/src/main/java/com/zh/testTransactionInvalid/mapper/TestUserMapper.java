@@ -1,2 +1,7 @@
-package com.zh.testTransactionInvalid.mapper;public interface TestUserMapper {
+package com.zh.testTransactionInvalid.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zh.testTransactionInvalid.entity.TestUser;
+
+public interface TestUserMapper extends BaseMapper<TestUser> {
 }

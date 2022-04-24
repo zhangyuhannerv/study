@@ -18,11 +18,13 @@ mysql完成剩下的课程->补习12->spring->springboot
 
 ------
 
+jvm,juc
+
 spring->springmvc->springboot->springcloud
 
 kafka,Elasticsearch
 
-maven,docker
+maven,docker,k8s
 
 设计模式，计算机组成原理，操作系统
 

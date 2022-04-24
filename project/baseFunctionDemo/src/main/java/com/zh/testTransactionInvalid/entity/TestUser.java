@@ -1,10 +1,10 @@
-package com.zh.testTransactionInvalid;
+package com.zh.testTransactionInvalid.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * @ClassName User
+ * @ClassName TestUser
  * @Description TODO
  * @Author Zhangyuhan
  * @Date 2022/4/19
@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @TableName("usertest")
-public class User {
+public class TestUser {
     private Long id;
     private String name;
     private Integer age;
