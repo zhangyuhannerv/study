@@ -1,6 +1,7 @@
 package com.study.springboot2study.thymeleafController;
 
 import com.study.springboot2study.bean.LoginUser;
+import com.study.springboot2study.exception.UserTooManyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,7 @@ import java.util.List;
 public class TableController {
     @GetMapping("/basic_table")
     public String basicTable() {
-        // 测试springboot的自定义异常
+        // 测试springboot的异常
         int i = 10 / 0;
         return "table/basic_table";
     }
@@ -33,11 +34,18 @@ public class TableController {
 
         model.addAttribute("users", loginUsers);
 
+        // 测试springboot的异常
+        if (loginUsers.size() > 1) {
+            throw new UserTooManyException();
+        }
+
         return "table/dynamic_table";
     }
 
     @GetMapping("/responsive_table")
-    public String responsiveTable() {
+    // 测试springboot的异常
+    public String responsiveTable(int a) {
+        // public String responsiveTable() {
         return "table/responsive_table";
     }
 

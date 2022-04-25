@@ -26,7 +26,8 @@
     <div class="container ">
 
         <section class="error-wrapper text-center">
-            <h1><img alt="" src="images/500-error.png"></h1>
+            <!--            <h1><img alt="" src="images/500-error.png"></h1>-->
+            <h1 th:text="${status}"></h1>
             <h2>OOOPS!!!</h2>
             <h3 th:text="${message}">Something went wrong.</h3>
             <p class="nrml-txt" th:text="${trace}">Why not try refreshing you page? Or you can <a href="#">contact our support</a> if the problem

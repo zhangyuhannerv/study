@@ -6,6 +6,7 @@ import com.study.springboot2study.bean.User;
 import com.study.springboot2study.config.MyConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import javax.jws.soap.SOAPBinding;
@@ -28,6 +29,9 @@ import java.util.Arrays;
 // 注意：自动扫描默认是运行类所在的包及其子包
 // 如果想扫描别的兄弟包，可以扩大扫描范围,如下
 // @SpringBootApplication(scanBasePackages = "com.study")
+
+// 扫描原生的自定义的Servlet(和springboot扫描的一样,默认是启动类所在的包及其之下的子包）
+@ServletComponentScan
 public class MainApplication {
     public static void main(String[] args) {
         // 1.返回IOC容器
