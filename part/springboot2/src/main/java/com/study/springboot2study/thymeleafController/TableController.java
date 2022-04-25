@@ -19,6 +19,8 @@ import java.util.List;
 public class TableController {
     @GetMapping("/basic_table")
     public String basicTable() {
+        // 测试springboot的自定义异常
+        int i = 10 / 0;
         return "table/basic_table";
     }
 
