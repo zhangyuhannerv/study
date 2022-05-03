@@ -15,7 +15,7 @@ import java.io.IOException;
  * @Version 1.0
  */
 
-@WebServlet(urlPatterns = "/myServlet")
+// @WebServlet(urlPatterns = "/myServlet")
 // 效果：直接响应，没有经过springboot的拦截器
 public class MyServlet extends HttpServlet {
     @Override
