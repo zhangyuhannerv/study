@@ -15,6 +15,7 @@ import java.io.IOException;
  */
 @Slf4j
 // @WebFilter(urlPatterns = {"/css/*", "/images/*"})
+// 补充说明：/*是servlet里的原生写法，/**是spring家的写法
 public class MyFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

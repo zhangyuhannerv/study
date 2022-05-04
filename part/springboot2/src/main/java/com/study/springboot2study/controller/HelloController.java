@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @Version 1.0
  */
 
-// @Controller
+// @TestUserController
 // @ResponseBody
 @RestController// 上面两个注解的合体
 

@@ -14,21 +14,84 @@
         <version>2.6.4</version>
     </parent>
 
-    <!--这样能取缔springboot自动装配的版本8.0.28改为5.1.43-->
-    <!--<properties>
-        <mysql.version>5.1.43</mysql.version>
-    </properties>-->
+    <!--这样能取缔springboot自动装配的版本8.0.28改为5.1.49-->
+    <!--依赖的是maven的属性的就近优先原则-->
+    <properties>
+        <mysql.version>5.1.49</mysql.version>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+
+
+            <!--切换内置服务器示例，tomcat->undertow-->
+            <!--排除tomcat-->
+            <!--<exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>-->
         </dependency>
+
+        <!--加入undertow-->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>-->
+
         <!--spring父依赖里的mysqlDriver的版本是8.0.28-->
         <!--<dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>-->
+
+        <!--spring-jdbc-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+
+        <!--mysql驱动-->
+        <!--注意，数据库的版本要和驱动的版本对应-->
+        <!--spring默认的mysql驱动版本是最新的-->
+        <!--这里要改成我们本地的-->
+        <!--方法1：直接引入具体版本，依赖的是maven的依赖就近优先原则-->
+        <!--方法2：重新声明spring的定义版本，详见上面，依赖的是maven的属性就近优先原则-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <!--            <version>5.1.49</version>-->
+        </dependency>
+
+        <!--引入druid方式1：所有属性需要自己配置-->
+        <!--<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.9</version>
+        </dependency>-->
+
+        <!--引入druid方式2：官方starter-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.9</version>
+        </dependency>
+
+        <!--引入mybatis-starter-->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+
+        <!--引入测试场景-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
 
         <!--引入lombok简化开发-->
         <dependency>
@@ -37,10 +100,10 @@
         </dependency>
 
         <!--xml处理包，除了返回json外这里配置还可以返回xml-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>com.fasterxml.jackson.dataformat</groupId>-->
+        <!--            <artifactId>jackson-dataformat-xml</artifactId>-->
+        <!--        </dependency>-->
 
         <!--整合thymeleaf-->
         <dependency>

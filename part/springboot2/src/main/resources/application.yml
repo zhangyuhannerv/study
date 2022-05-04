@@ -50,16 +50,69 @@ spring:
     # 开启基于请求参数的内容协商。效果是能配个参数（默认是format)代替浏览器请求头的的Accept值。手动指定浏览器能接收哪些参数
     contentnegotiation:
       favor-parameter: true
-
   web:
     resources:
       #       手动指定自定义静态资源路径，默认的静态4个静态资源访问路径全部失效
       static-locations: classpath:/customeStaticFile
 #       禁用静态资源，所有的静态资源都访问不了
 #      add-mappings: false
+  datasource:
+    url: jdbc:mysql://127.0.0.1:10000/test
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+#    类型默认配置了，所以注掉
+#    type: com.zaxxer.hikari.HikariDataSource
+
+#   非druidStarter(没有引入druidStarter,只引了个jar包，其余都是自己定义详见DruidConfig.class)可以在这里写属性
+#    filters: stat,wall
+
+#   druidStarter（引入了druidStarter)的扩展属性
+    druid:
+      filters: stat,wall
+      filter:
+        stat:
+          enabled: true
+          slow-sql-millis: 1000
+          log-slow-sql: true
+        wall:
+          enabled: true
+          config:
+            # 示例：关闭所有的sql更新功能
+            update-allow: false
+      stat-view-servlet:
+        enabled: true
+        login-username: druid
+        login-password: druid
+        reset-enable: false
+        url-pattern: /druid/*
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: '*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*'
+      aop-patterns: com.study.springboot2study.*
+  jdbc:
+    template:
+#      3s没查出来就认为查询超时
+      query-timeout: 3
 server:
   servlet:
     context-path: /word
 #  默认的错误请求路径
 #  error:
 #    path: /error
+
+# 配置mybatis规则
+mybatis:
+  # 全局配置文件位置
+#  config-location: classpath:mybatis/mybatis-config.xml
+  # sql映射文件位置
+  mapper-locations: classpath:mybatis/mapper/*
+  # 全局配置
+  # 注意，一旦写了configuration，就不能写上面的config-location了。它们两个冲突
+  # 即mybatis的全局配置文件完全可以用configuration代替。在写了configuration后，全局配置文件可以省略掉
+  # 推荐这种写法
+  configuration:
+    # 开启驼峰名命规则
+    map-underscore-to-camel-case: true
+
