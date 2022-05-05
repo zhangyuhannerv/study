@@ -25,4 +25,22 @@ public class TestUserController {
     public TestUser getById(int id) {
         return testUserService.getById(id);
     }
+
+    @RequestMapping("/getTestUserById2")
+    @ResponseBody
+    public TestUser getById2(int id) {
+        return testUserService.getById2(id);
+    }
+
+    @RequestMapping("/insertTestUser")
+    @ResponseBody
+    public TestUser insertTestUser(TestUser testUser) {
+        return testUserService.insertTestUser(testUser);
+    }
+
+    @RequestMapping("/insertTestUser2")
+    @ResponseBody
+    public TestUser insertTestUser2(TestUser testUser) {
+        return testUserService.insertTestUser2(testUser);
+    }
 }

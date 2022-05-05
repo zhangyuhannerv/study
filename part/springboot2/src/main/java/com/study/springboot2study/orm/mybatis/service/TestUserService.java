@@ -20,4 +20,18 @@ public class TestUserService {
     public TestUser getById(int id) {
         return testUserMapper.getById(id);
     }
+
+    public TestUser getById2(int id) {
+        return testUserMapper.getById2(id);
+    }
+
+    public TestUser insertTestUser(TestUser testUser) {
+        testUserMapper.insertTestUser(testUser);
+        return testUser;
+    }
+
+    public TestUser insertTestUser2(TestUser testUser) {
+        testUserMapper.insertTestUser2(testUser);
+        return testUser;
+    }
 }

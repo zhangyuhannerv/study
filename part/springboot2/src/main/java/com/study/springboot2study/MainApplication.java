@@ -4,6 +4,7 @@ import com.study.springboot2study.bean.Book;
 import com.study.springboot2study.bean.Pet;
 import com.study.springboot2study.bean.User;
 import com.study.springboot2study.config.MyConfig;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
@@ -32,6 +33,9 @@ import java.util.Arrays;
 
 // 扫描原生的自定义的Servlet(和springboot扫描的一样,默认是启动类所在的包及其之下的子包）
 @ServletComponentScan
+
+// 不推荐mybatis使用这种扫描包的方式，推荐在接口行使用@Mapper注解
+// @MapperScan(basePackages = {"com.study.springboot2study.**.mapper"})
 public class MainApplication {
     public static void main(String[] args) {
         // 1.返回IOC容器
