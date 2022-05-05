@@ -27,6 +27,7 @@ public class CustomerHandlerExceptionResolver implements HandlerExceptionResolve
                                          HttpServletResponse response,
                                          Object handler,
                                          Exception ex) {
+        ex.printStackTrace();
         try {
             response.sendError(511, "我喜欢的错误");
         } catch (IOException e) {

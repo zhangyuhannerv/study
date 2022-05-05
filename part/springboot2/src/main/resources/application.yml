@@ -102,17 +102,22 @@ server:
 #  error:
 #    path: /error
 
-# 配置mybatis规则
-mybatis:
-  # 全局配置文件位置
+## 配置mybatis规则(配合mybatis-start使用）
+#mybatis:
+#  # 全局配置文件位置
 #  config-location: classpath:mybatis/mybatis-config.xml
-  # sql映射文件位置
+#  # sql映射文件位置
+#  mapper-locations: classpath:mybatis/mapper/*
+#  # 全局配置
+#  # 注意，一旦写了configuration，就不能写上面的config-location了。它们两个冲突
+#  # 即mybatis的全局配置文件完全可以用configuration代替。在写了configuration后，全局配置文件可以省略掉
+#  # 推荐这种写法
+#  configuration:
+#    # 开启驼峰名命规则
+#    map-underscore-to-camel-case: true
+
+# 配置mybatis-plus规则(配合mybatis-plus-starter使用）
+mybatis-plus:
+  # 配置sql映射文件位置，注意：它有默认值，所以要改成整合mybatis时的值
   mapper-locations: classpath:mybatis/mapper/*
-  # 全局配置
-  # 注意，一旦写了configuration，就不能写上面的config-location了。它们两个冲突
-  # 即mybatis的全局配置文件完全可以用configuration代替。在写了configuration后，全局配置文件可以省略掉
-  # 推荐这种写法
-  configuration:
-    # 开启驼峰名命规则
-    map-underscore-to-camel-case: true
 

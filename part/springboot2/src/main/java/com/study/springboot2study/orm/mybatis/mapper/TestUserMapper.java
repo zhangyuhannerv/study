@@ -1,5 +1,6 @@
 package com.study.springboot2study.orm.mybatis.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.study.springboot2study.bean.TestUser;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 // 注意，如果不想写@Mapper可以在任意一个配置类上写上@MapperScan注解（详见主运行类）
 // 但是不推荐使用@MapperScan注解，推荐使用@Mapper注解，便于分层
-public interface TestUserMapper {
+public interface TestUserMapper extends BaseMapper<TestUser> {
     TestUser getById(int id);
 
     /**

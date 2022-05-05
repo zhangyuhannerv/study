@@ -1,7 +1,9 @@
-package com.study.springboot2study.orm.mybatis.service;
+package com.study.springboot2study.orm.mybatis.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.springboot2study.bean.TestUser;
 import com.study.springboot2study.orm.mybatis.mapper.TestUserMapper;
+import com.study.springboot2study.orm.mybatis.service.ITestUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @Version 1.0
  */
 @Service
-public class TestUserService {
+public class TestUserService extends ServiceImpl<TestUserMapper, TestUser> implements ITestUserService {
     @Autowired
     TestUserMapper testUserMapper;
 

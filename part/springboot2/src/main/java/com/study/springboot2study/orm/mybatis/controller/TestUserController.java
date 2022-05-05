@@ -1,11 +1,14 @@
 package com.study.springboot2study.orm.mybatis.controller;
 
 import com.study.springboot2study.bean.TestUser;
-import com.study.springboot2study.orm.mybatis.service.TestUserService;
+import com.study.springboot2study.orm.mybatis.service.ITestUserService;
+import com.study.springboot2study.orm.mybatis.service.impl.TestUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @ClassName TestUserController
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TestUserController {
     @Autowired
-    TestUserService testUserService;
+    ITestUserService testUserService;
 
     @RequestMapping("/getTestUserById")
     @ResponseBody
@@ -42,5 +45,11 @@ public class TestUserController {
     @ResponseBody
     public TestUser insertTestUser2(TestUser testUser) {
         return testUserService.insertTestUser2(testUser);
+    }
+
+    @RequestMapping("/listTestUser")
+    @ResponseBody
+    public List<TestUser> listTestUser() {
+        return testUserService.list();
     }
 }

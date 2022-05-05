@@ -1,5 +1,6 @@
 package com.study.springboot2study.bean;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  */
 
 @Data
+@TableName("user")
 public class TestUser {
     private Integer id;
     private String name;
