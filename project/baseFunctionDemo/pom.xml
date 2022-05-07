@@ -83,6 +83,12 @@
             <version>3.17</version>
         </dependency>
 
+        <!--freemarker-->
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+        </dependency>
+
         <!--springboot发送邮件的依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

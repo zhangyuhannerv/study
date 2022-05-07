@@ -95,6 +95,26 @@ spring:
     template:
 #      3s没查出来就认为查询超时
       query-timeout: 3
+# redis部分，配合redis-starter使用
+  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    username: redis
+#    password: redis
+#    上面四个可以统合起来
+#    url: redis://redis:redis@127.0.0.1:6379
+    url: redis://127.0.0.1:6379
+    client-type: jedis
+#    lettuce:
+#      pool:
+#        max-active: 10
+#        min-idle: 5
+    jedis:
+      pool:
+        # 最大连接
+        max-active: 10
+        # 最小空闲
+        min-idle: 5
 server:
   servlet:
     context-path: /word

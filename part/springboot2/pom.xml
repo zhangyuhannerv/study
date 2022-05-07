@@ -80,6 +80,7 @@
             <version>1.2.9</version>
         </dependency>
 
+        <!--注意引入了任意orm框架后-->
         <!--引入mybatis-starter-->
         <!--<dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -93,6 +94,18 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.1</version>
+        </dependency>
+
+        <!--导入redis的starter场景,默认是lettuce客户端-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!--如果想把redis的客户端从lettuce切换为jedis。那么需要引入jedis的jar包，并且在配置里把spring.redis.client-type设置为jedis-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
         </dependency>
 
         <!--引入测试场景-->

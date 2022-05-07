@@ -2,6 +2,9 @@ package com.study.springboot2study.thymeleafController;
 
 import com.study.springboot2study.bean.LoginUser;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpSession;
 @Controller
 @Slf4j
 public class IndexController {
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
     /**
      * 登录页
@@ -72,6 +77,14 @@ public class IndexController {
 
 
         log.info("handler方法执行");
+
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        String main = operations.get("/main");
+        String dynamic_table = operations.get("/dynamic_table");
+
+        model.addAttribute("mainCount", main);
+        model.addAttribute("dynamic_tableCount", dynamic_table);
+
         // 配置拦截器之后的写法
         return "main";
 

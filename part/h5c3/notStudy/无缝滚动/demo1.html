@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    .box {
+      width: 1000px;
+      height: 130px;
+      border: 1px solid #ccc;
+      margin: 50px auto;
+      /* overflow: hidden; */
+    }
+
+    .item {
+      height: 130px;
+      width: 200px;
+      border: 1px solid red;
+    }
+
+    ul {
+      height: 100%;
+      position: relative;
+    }
+
+    ul>li {
+      float: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="box">
+    <ul class="list" id="list">
+      <li>
+        <div class="item">1</div>
+      </li>
+      <li>
+        <div class="item">2</div>
+      </li>
+      <li>
+        <div class="item">3</div>
+      </li>
+      <li>
+        <div class="item">4</div>
+      </li>
+      <li>
+        <div class="item">5</div>
+      </li>
+    </ul>
+  </div>
+  <script>
+    // 获取滚动区域
+    var list = document.getElementById('list')
+    let width = list.offsetWidth
+    // 将滚动区域里面的条目完整的复制一遍
+    list.innerHTML += list.innerHTML
+    // 将滚动区域的宽度扩充为原来的2倍以上即可
+    // 如果恰好为2倍。那么第十个盒子可能由于宽度不够导致换行
+    // list.style.width = width * 2 + 'px'
+    list.style.width = width * 2 + 50 + 'px'
+    // 滚动区域的向左移动的大小
+    var left = 0;
+    // 定时器
+    var time;
+    // 定义一个方法包装定时器
+    function move() {
+      time = setInterval(function() {
+        left -= 1;
+
+        if (left <= width * -1) {
+          left = 0;
+        }
+
+        list.style.left = left + 'px';
+
+      }, 20)
+    }
+    // 开始滚动
+    move()
+
+    // 获取滚动区域的容器
+    var box = document.getElementById('box')
+
+    // 鼠标放在容器上，停止滚动
+    box.onmouseenter = function() {
+      clearInterval(time)
+    }
+
+    // 鼠标移开容器，继续滚动
+    box.onmouseleave = function() {
+      move()
+    }
+  </script>
+</body>
+
+</html>

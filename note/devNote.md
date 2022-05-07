@@ -1609,7 +1609,40 @@ public void downLoadTemplate(String name, HttpServletResponse response) {
 }
 ```
 
-#### 
+#### 4.记录一个vue前台下载文件的小工具
+
+```js
+/**
+ * word/doc
+ * data就是后台返回的二进制流
+ * fileName就是你想要把这个流转为二进制的名称
+ */
+export function downloadDoc(data, fileName) {
+  let blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+  let link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.style.display = 'none'
+  link.setAttribute('download', fileName + '.doc')
+  link.click();
+}
+
+/**
+ * excel/xlsx
+ * data就是后台返回的二进制流
+ * fileName就是你想要把这个流转为二进制的名称
+ */
+export function downloadXlsx(data, fileName) {
+  const url = window.URL.createObjectURL(new Blob([data]))
+  const link = document.createElement('a')
+  link.style.display = 'none'
+  link.href = url
+  link.setAttribute('download', fileName + '.xlsx')
+  document.body.appendChild(link)
+  link.click()
+}
+```
+
+
 
 ### 学习
 

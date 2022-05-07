@@ -66,18 +66,43 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th class="hidden-phone">用户名</th>
-                                        <th class="hidden-phone">密码</th>
+                                        <th class="hidden-phone">名字</th>
+                                        <th class="hidden-phone">类型id</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="gradeU" th:each="user,status:${users}">
+                                    <tr class="gradeU" th:each="user,status:${page.records}">
                                         <td th:text="${status.count}"></td>
-                                        <td th:text="${user.username}"></td>
-                                        <td th:text="${user.password}"></td>
+                                        <td th:text="${user.name}"></td>
+                                        <td th:text="${user.typeid}"></td>
+                                        <td>
+                                            <a class="btn btn-danger btn-sm"
+                                               th:href="@{/deleteTestUserById/{id}(id=${user.id},pn=${page.current})}">
+                                                删除
+                                            </a>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    <div class="dataTables_info" id="dynamic-table_info">
+                                        当前第 [[${page.current}]] 页
+                                        共计 [[${page.pages}]] 页
+                                        总共 [[${page.total}]] 条记录
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="dataTables_paginate paging_bootstrap pagination">
+                                        <ul>
+                                            <li class="prev disabled"><a href="#">← Previous</a></li>
+                                            <li th:class="${num==page.current?'active':''}" th:each="num:${#numbers.sequence(1,page.pages)}">
+                                                <a th:href="@{/dynamic_table(pn=${num})}">[[${num}]]</a></li>
+                                            <li class="next disabled"><a href="#">Next → </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -542,6 +567,6 @@
 <script type="text/javascript" language="javascript" src="js/advanced-datatable/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="js/data-tables/DT_bootstrap.js"></script>
 <!--dynamic table initialization -->
-<script src="js/dynamic_table_init.js"></script>
+<!--<script src="js/dynamic_table_init.js"></script>-->
 </body>
 </html>
