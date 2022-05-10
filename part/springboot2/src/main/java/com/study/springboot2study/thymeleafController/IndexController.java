@@ -1,6 +1,8 @@
 package com.study.springboot2study.thymeleafController;
 
 import com.study.springboot2study.bean.LoginUser;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -24,6 +26,15 @@ import javax.servlet.http.HttpSession;
 @Controller
 @Slf4j
 public class IndexController {
+    Counter counter;
+
+    public IndexController(MeterRegistry meterRegistry) {
+        // 项目只要启动，那么metrics里面就会加一个指标监控，名称叫IndexController.mainPage.count
+        // 然后每次调用/main接口，计数器就会加1
+        // 访问这个新的指标的时候，就会展示/main访问的次数
+        counter = meterRegistry.counter("IndexController.mainPage.count");
+    }
+
     @Autowired
     StringRedisTemplate stringRedisTemplate;
 
@@ -64,7 +75,7 @@ public class IndexController {
      */
     @GetMapping("/main")
     public String mainPage(HttpSession session, Model model) {
-
+        counter.increment();
 
         // 没配置拦截器之前的写法
         /*// 前置的判断，是否登陆，后续会引入拦截器/过滤器机制

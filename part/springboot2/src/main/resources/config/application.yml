@@ -1,0 +1,3 @@
+# 测试配置文件加载优先级
+test-precedence:
+  value: 这是类路径的根目录下/config下的配置

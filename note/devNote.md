@@ -22,7 +22,9 @@ jvm,juc
 
 spring->springmvc->springboot->springcloud
 
-kafka,Elasticsearch
+kafka,rabbitmq,
+
+Elasticsearch
 
 maven,docker,k8s
 

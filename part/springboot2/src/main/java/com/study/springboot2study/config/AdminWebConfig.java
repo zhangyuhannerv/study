@@ -1,6 +1,8 @@
 package com.study.springboot2study.config;
 
 import com.study.springboot2study.interceptor.LoginInterceptor;
+import com.study.springboot2study.interceptor.UrlAccessCountStatByRedisInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
  * @ClassName AdminWebConfig
  * @Description 配置拦截器
  * 实现步骤：
- * 1.编写一个拦截器，实现HadlerInterceptor接口
+ * 1.编写一个拦截器，实现HandlerInterceptor接口
  * 2.拦截器注册到容器中（实现WebMvcConfigurer)
  * 3.指定拦截规则（如果是拦截所有=>/**,静态资源也会被拦截）
  * @Author Zhangyuhan
@@ -27,11 +29,21 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 // @EnableWebMvc // 全面接管springmvc,静态资源，视图解析器，欢迎页...所有spring官方的mvc自动配置全部失效,该注解要慎用
 @Configuration
 public class AdminWebConfig implements WebMvcConfigurer {
+    @Autowired
+    UrlAccessCountStatByRedisInterceptor urlAccessCountStatByRedisInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")// 添加拦截哪些请求,/**是拦截所有请求，注意此时静态资源也被拦截了
                 .excludePathPatterns("/", "/login", "/loginValid", "/css/**", "/fonts/**", "/images/**", "/js/**"); // 放行哪些请求
+
+        // 注意如果是new出来的，那么UrlAccessCountStatByRedisInterceptor里面注入RedisTemplate就没法用
+        // 因为只有容器中的组件，spring才会解析@Autowired等spring家的注解
+        registry.addInterceptor(urlAccessCountStatByRedisInterceptor)
+                .addPathPatterns("/**")// 添加拦截哪些请求,/**是拦截所有请求，注意此时静态资源也被拦截了
+                .excludePathPatterns("/css/**", "/fonts/**", "/images/**", "/js/**"); // 放行哪些请求
+
     }
 
     /**

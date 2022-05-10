@@ -7,11 +7,14 @@ import com.study.springboot2study.config.MyConfig;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.ConfigurableEnvironment;
 
 import javax.jws.soap.SOAPBinding;
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * @ClassName MainApplication
@@ -31,6 +34,9 @@ import java.util.Arrays;
 // 如果想扫描别的兄弟包，可以扩大扫描范围,如下
 // @SpringBootApplication(scanBasePackages = "com.study")
 
+// 同时也可以排除某些自动配置(比如，如果redis数据库失效，并且只想成功的启动项目，那么可以在这里手动的排除redis的配置）
+// @SpringBootApplication(exclude = RedisAutoConfiguration.class)
+
 // 扫描原生的自定义的Servlet(和springboot扫描的一样,默认是启动类所在的包及其之下的子包）
 @ServletComponentScan
 
@@ -40,7 +46,7 @@ public class MainApplication {
     public static void main(String[] args) {
         // 1.返回IOC容器
         ConfigurableApplicationContext run = SpringApplication.run(MainApplication.class, args);
-        // 2.查看容器里的组件
+        /*// 2.查看容器里的组件
         String[] beanDefinitionNames = run.getBeanDefinitionNames();
         for (String name : beanDefinitionNames) {
             System.out.println(name);
@@ -78,6 +84,20 @@ public class MainApplication {
 
         // 9测试@ImportResource注解
         System.out.println(run.containsBean("haha"));
-        System.out.println(run.containsBean("hehe"));
+        System.out.println(run.containsBean("hehe"));*/
+
+
+        // 10.获取到当前的环境配置(下面两处获取到的所有信息，都可以使用@Value(${})直接获取到,详见TestProfileController)
+        ConfigurableEnvironment environment = run.getEnvironment();
+        // 10.1这是操作系统的环境变量
+        Map<String, Object> systemEnvironment = environment.getSystemEnvironment();
+        System.out.println(systemEnvironment);
+        System.out.println("---");
+
+        // 10.2获取系统的属性
+        Map<String, Object> systemProperties = environment.getSystemProperties();
+        System.out.println(systemProperties);
     }
+
+
 }

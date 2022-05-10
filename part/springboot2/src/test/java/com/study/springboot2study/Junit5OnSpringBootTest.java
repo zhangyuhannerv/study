@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 /**
- * @ClassName Junit5TestOnSpringboot
+ * @ClassName Junit5OnSpringBootTest
  * @Description junit5在springboot下的基础使用（配合test-starter使用）
  * 具有spring的功能如：@Autowired,@Transactional等
  * @Author Zhangyuhan
@@ -17,7 +17,7 @@ import org.springframework.data.redis.core.ValueOperations;
  */
 @Slf4j
 @SpringBootTest
-public class Junit5TestOnSpringboot {
+public class Junit5OnSpringBootTest {
     @Autowired
     StringRedisTemplate redisTemplate;
 

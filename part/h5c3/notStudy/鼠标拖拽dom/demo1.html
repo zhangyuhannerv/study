@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>DIV拖拽</title>
+</head>
+<style>
+  #circle {
+    width: 150px;
+    height: 150px;
+    background-color: #0d0d0d;
+    border-radius: 50%;
+    cursor: move;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+  }
+
+  input {
+    outline: none;
+    caret-color: rgba(0, 0, 0, 0)
+  }
+</style>
+
+<body>
+  <div id="circle"></div>
+</body>
+<script>
+  var Dom = document.getElementById('circle');
+  var circleX = 0,
+    circleY = 0,
+    offsetX = 0,
+    offsetY = 0,
+    move = false; //判断是否摁住
+
+  //鼠标摁住
+  Dom.onmousedown = function(e) {
+    move = true;
+    circleX = Dom.offsetLeft;
+    circleY = Dom.offsetTop;
+    offsetX = e.clientX;
+    offsetY = e.clientY;
+    Dom.style.cursor = 'move';
+  }
+
+  //摁住移动--这里不能监听Dom的移动事件--因为鼠标滑动太快后会导致渲染失败-->事件失效
+  window.onmousemove = function(e) {
+    if (move) {
+      console.log('摁住移动===========')
+      Dom.style.left = e.clientX - (offsetX - circleX) + 'px';
+      Dom.style.top = e.clientY - (offsetY - circleY) + 'px';
+      //这里的距离需要好好的调试一下--
+    }
+  }
+
+  //鼠标松开
+  Dom.onmouseup = function(e) {
+    console.log('鼠标松开')
+    move = false;
+    Dom.style.cursor = 'default';
+  }
+</script>
+
+</html>

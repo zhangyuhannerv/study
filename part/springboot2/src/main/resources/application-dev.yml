@@ -1,0 +1,7 @@
+testProfile:
+  name: dev-张三
+server:
+  port: 8083
+test-bean:
+  name: 测试通过profile来自动装配
+  age: 15

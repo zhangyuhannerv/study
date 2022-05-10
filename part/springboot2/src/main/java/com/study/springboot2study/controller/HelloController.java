@@ -2,9 +2,11 @@ package com.study.springboot2study.controller;
 
 import com.study.springboot2study.bean.Car;
 import com.study.springboot2study.testYml.TestYmlPerson;
+import com.study.springbootstarterhelloautoconfigure.hello.service.HelloService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +30,9 @@ public class HelloController {
     Car car;
     @Autowired
     TestYmlPerson person;
+
+    @Autowired
+    HelloService helloService;
 
     // @RequestMapping("/")
     // public String index() {
@@ -62,5 +67,11 @@ public class HelloController {
     @RequestMapping("/1.png")
     public String testStaticRequest() {
         return "aaa";
+    }
+
+
+    @GetMapping("/sayHello")
+    public String sayHello() {
+        return helloService.sayHello("自定义的starter");
     }
 }

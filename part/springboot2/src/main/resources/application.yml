@@ -32,11 +32,42 @@ person:
       - name: 可达鸭
         weight: 30
     health: [ { name: 阿花,weight: 80 },{ name: 阿艹, weight: 90 } ]
-
+hello:
+  prefix: 你好啊
+  suffix: '!!!???'
 spring:
+  boot:
+    admin:
+      client:
+        url: http://127.0.0.1:8082 #这是管理微服务的综合平台（springboot2-admin-server)
+  application:
+    name: @project.artifactId@
   banner:
     image:
       bitdepth: 8
+  profiles:
+    active: dev # 激活某个特定的配置文件
+#    active: test # 激活某个特定的配置文件
+    # 激活某个配置文件的几个规则
+    # 0.环境标识符application-xxx.yml中的xxx是任意的。不过一般会通用这几个：dev，test，prod
+    # 1.没有标识的配置为默认配置文件，总会加载
+    # 2.如果配置了某个配置文件。那么特定的配置文件和默认的配置文件同时生效
+    # 3.如果默认配置文件和特定配置文件存在某些相同的配置，那么以特定配置文件（dev/test/prod)优先
+# 批量加载配置文件
+#    group:
+#      mytest:
+#        - test
+#        - test1
+#      myprod:
+#        - prod
+#        - prod1
+#    active: mytest
+  # 批量计在配置文件的几个规则
+  # 1.如果test,test1同时加载，出现同名配置，test1生效。即写在后面的最终生效
+  # 2.不影响@Profile的功能。如例子中的@Profile("test")仍然正常生效
+  # 3.当选择mytest时，会读取组名之下所有元素名称的配置文件。配置文件生效的有：mytest（组名）,test,test1。此时@Profile写test/test1/mytest都可以
+
+
   mvc:
     # 开启rest风格,注意：这里因为web开发只能发送get/post，所以需要这里开启来指定额外的发送方式。
     # 如果是客户端，那么可以直接发送DELETE或者PATCH或者PUT等。无需开启该项。
@@ -57,7 +88,7 @@ spring:
 #       禁用静态资源，所有的静态资源都访问不了
 #      add-mappings: false
   datasource:
-    url: jdbc:mysql://127.0.0.1:10000/test
+    url: jdbc:mysql://127.0.0.1:10000/test?useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -140,4 +171,48 @@ server:
 mybatis-plus:
   # 配置sql映射文件位置，注意：它有默认值，所以要改成整合mybatis时的值
   mapper-locations: classpath:mybatis/mapper/*
+
+# actuator(指标监控部分），和actuator-starter配合使用
+# management是所有actuator配置管理的起始部分
+management:
+# 配置所有端点
+  endpoints:
+    # 开启所有监控端点（如果不配置，实际上，默认也是开启所有监控端点的，即默认值是true）。
+    # 配合管理平台，能看到更详细的信息，如果管理平台没开启，那么这里还是注释掉,下面的关闭所有端点的配置项解开注释
+    enabled-by-default: true
+#    enabled-by-default: false # 关闭所有监控端点
+    web:
+      exposure:
+        include: '*' # 默认是在web下只暴露health端点
+# 每一个端点的详细配置
+  endpoint:
+    health:
+      show-details: always # 默认是never,即总是不展示详细信息
+      enabled: true # 如果想要只开启特定的端点，那么要在上面关闭所有的端点，然后在下面单独配置某个端点的时候开启它
+    info:
+      enabled: true
+    beans:
+      enabled: true
+    metrics: # 指标
+      enabled: true
+    env:
+      enabled: true
+
+# 在info里配置的信息在监控的/actuator/env里都能看到
+# info里的k-v是随便自定义的
+info:
+  appName: springboot2study
+  appVersion: 1.0.0
+  a: bbbbb
+  # 这里是直接从maven的配置文件pom.xml里取值
+  mavenProjectName: @project.artifactId@
+  mavenProjectVersin: @project.version@
+
+# 测试配置文件加载优先级
+# 具体springboot会找哪几个位置的配置文件，
+# 请看文档https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.external-config.files
+test-precedence:
+  value: 这是类路径的根目录下的配置
+
+
 
