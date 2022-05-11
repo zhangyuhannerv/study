@@ -87,7 +87,7 @@ public class MainApplication {
         System.out.println(run.containsBean("hehe"));*/
 
 
-        // 10.获取到当前的环境配置(下面两处获取到的所有信息，都可以使用@Value(${})直接获取到,详见TestProfileController)
+        /*// 10.获取到当前的环境配置(下面两处获取到的所有信息，都可以使用@Value(${})直接获取到,详见TestProfileController)
         ConfigurableEnvironment environment = run.getEnvironment();
         // 10.1这是操作系统的环境变量
         Map<String, Object> systemEnvironment = environment.getSystemEnvironment();
@@ -96,7 +96,7 @@ public class MainApplication {
 
         // 10.2获取系统的属性
         Map<String, Object> systemProperties = environment.getSystemProperties();
-        System.out.println(systemProperties);
+        System.out.println(systemProperties);*/
     }
 
 
