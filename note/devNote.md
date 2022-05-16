@@ -4473,6 +4473,28 @@ tcp6       0      0 :::8081                 :::*                    LISTEN      
 kill -9 16996
 ```
 
+#### 2.创建shell脚本并且运行
+
+* 创建文件,编辑内容并且保存
+
+  ```shell
+  vim hello.sh
+  ```
+
+* 提权
+
+  ```shell
+  chmod u+x hello.sh
+  ```
+
+* 执行
+
+  ```shell
+  bash hello.sh
+  ```
+
+  
+
 ### centos
 
 #### 1.Linux下文档类型转PDF乱码解决方式
@@ -4773,7 +4795,7 @@ ln -s /usr/bin/python3.6 /usr/bin/python
 
 ### ubuntu
 
-#### 1.ubuntu安装nginx
+#### 1.ubuntu安装nginx（nginx基础操作命令）
 
 ```bash
 # 切换至root用户
@@ -4892,7 +4914,48 @@ apt-get update
 apt-get install firewalld
 ```
 
+#### 7.rabbitmq-server基础操作命令
 
+前提：通信端口默认是5672端口，如果远程连接，别忘记先在防火墙上开启该端口
+
+查看运行状态
+
+\# service rabbitmq-server status
+
+启动
+
+\#service rabbitmq-server stop
+
+停止
+
+#service rabbitmq-server start
+
+重启rabbitmq服务
+
+\#service rabbitmq-server restart 
+
+查看log文件
+
+\#cd /var/log/rabbitmq/
+
+#vim ***.log
+
+查看已有插件列表
+
+\#rabbitmq-plugins list
+
+安装插件
+
+\#rabbitmq-plugins enable rabbitmq_management(这里以安装web管理客户端为例子，该客户端的端口是15672.别忘记在防火墙开启端口)
+
+编写配置文件（这里以开放外部访问为例子）
+
+#cd /etc/rabbitmq/
+#vim rabbitmq.config
+
+向rabbitmq.config文件中写入如下内容：
+
+[{rabbit, [{loopback_users, []}]}].
 
 ## windows
 
