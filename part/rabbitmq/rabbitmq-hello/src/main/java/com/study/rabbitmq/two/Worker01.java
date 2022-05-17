@@ -17,6 +17,9 @@ public class Worker01 {
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
 
+        System.out.println("C1等待接收消息");
+        // System.out.println("C2等待接收消息");
+
         // 消息
         channel.basicConsume(QUEUE_NAME, true, (consumerTag, message) -> {
             System.out.println("接收到的消息：" + new String(message.getBody()));
