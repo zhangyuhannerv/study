@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #main {
+      width: 500px;
+      height: 500px;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<div id="main">
+
+</div>
+
+<body>
+  <script src="../lib/echarts.min.js"></script>
+  <script src="../lib/jquery-3.5.1.js"></script>
+  <script>
+    let chartDom = document.getElementById('main');
+    let myChart = echarts.init(chartDom);
+    let option;
+
+    option = {
+      color: '#848484',
+      xAxis: {
+        type: 'category',
+        data: ['1车', '2车', '3车']
+      },
+      yAxis: {},
+      series: [{
+        symbolSize: 10,
+        symbol: 'emptyCircle',
+        data: [{
+            symbol: 'circle',
+            value: ['1车', 8.04],
+            symbolSize: 15,
+            itemStyle: {
+              color: '#173E9B'
+            }
+          },
+
+          ['1车', 6.95],
+          ['1车', 7.25],
+          ['2车', 7.58],
+          ['2车', 8.81],
+          ['2车', 7.81],
+          ['3车', 9.81],
+          ['3车', 10.81],
+          ['3车', 11.81],
+        ],
+        type: 'scatter'
+      }]
+    };
+
+    option && myChart.setOption(option, true);
+
+    let ctrlDown = false; // 改变量防止重复监听keydown事件
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && !ctrlDown) {
+        ctrlDown = true
+
+        myChart.on('click', function(params) {
+          console.log(params)
+        })
+      }
+    })
+
+    document.onkeyup = function() {
+      ctrlDown = false
+      myChart.off('click')
+    };
+  </script>
+</body>
+
+</html>
