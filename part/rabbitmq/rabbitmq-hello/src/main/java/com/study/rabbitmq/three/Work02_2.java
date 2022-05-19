@@ -20,7 +20,9 @@ public class Work02_2 {
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
         System.out.println("C2等待接收消息处理，处理时间较长");
-
+        // 设置不公平分发，也叫设置预取值
+        // channel.basicQos(1);
+        channel.basicQos(5);// 有五个坑位，五个坑位都满了就不能接收消息了
         // 采用手动应答
         channel.basicConsume(TASK_QUEUE_NAME, false, (consumerTag, message) -> {
             // 沉睡1s种，模拟处理场景

@@ -74,14 +74,17 @@
       })
 
       document.onkeyup = function() {
-        console.log('2222333')
-        ctrlDown = false
-        myChart.off('click')
+        if (ctrlDown) {
+          ctrlDown = false
+
+          myChart.off('click')
+        }
+
       };
     }
     ctrlListen()
 
-    // 证明不会重复监听
+    // 测试是否重复监听（测试结果:不会)
     // option && myChart.setOption(option, true);
     // ctrlListen()
   </script>
