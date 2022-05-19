@@ -19,7 +19,7 @@ public class Work02_2 {
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
-        System.out.println("C2等待接收消息处理，处理时间较短");
+        System.out.println("C2等待接收消息处理，处理时间较长");
 
         // 采用手动应答
         channel.basicConsume(TASK_QUEUE_NAME, false, (consumerTag, message) -> {

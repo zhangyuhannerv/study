@@ -30,13 +30,20 @@
       color: '#848484',
       xAxis: {
         type: 'category',
-        data: ['1车', '2车', '3车']
+        // data: ['1车', '2车', '3车']
       },
       yAxis: {},
       series: [{
         symbolSize: 10,
         symbol: 'emptyCircle',
-        data: [{
+        data: [
+          ['2车', 7.58],
+          ['2车', 8.81],
+          ['2车', 7.81],
+          ['3车', 9.81],
+          ['3车', 10.81],
+          ['3车', 11.81],
+          {
             symbol: 'circle',
             value: ['1车', 8.04],
             symbolSize: 15,
@@ -44,15 +51,8 @@
               color: '#173E9B'
             }
           },
-
-          ['1车', 6.95],
           ['1车', 7.25],
-          ['2车', 7.58],
-          ['2车', 8.81],
-          ['2车', 7.81],
-          ['3车', 9.81],
-          ['3车', 10.81],
-          ['3车', 11.81],
+          ['1车', 6.95],
         ],
         type: 'scatter'
       }]
@@ -61,20 +61,29 @@
     option && myChart.setOption(option, true);
 
     let ctrlDown = false; // 改变量防止重复监听keydown事件
-    document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey && !ctrlDown) {
-        ctrlDown = true
+    function ctrlListen() {
+      console.log(11)
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && !ctrlDown) {
+          ctrlDown = true
 
-        myChart.on('click', function(params) {
-          console.log(params)
-        })
-      }
-    })
+          myChart.on('click', function(params) {
+            console.log(params)
+          })
+        }
+      })
 
-    document.onkeyup = function() {
-      ctrlDown = false
-      myChart.off('click')
-    };
+      document.onkeyup = function() {
+        console.log('2222333')
+        ctrlDown = false
+        myChart.off('click')
+      };
+    }
+    ctrlListen()
+
+    // 证明不会重复监听
+    // option && myChart.setOption(option, true);
+    // ctrlListen()
   </script>
 </body>
 
