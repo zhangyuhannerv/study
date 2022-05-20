@@ -20,10 +20,9 @@ public class Task02 {
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMqUtils.getChannel();
-
+        // 开启队列持久化
         boolean duralbe = true;// 队列是否需要持久化（注意，如果参数改变，需要删除原队列，再重新创建新的队列，否则启动报错）
         channel.queueDeclare(TASK_QUEUE_NAME, duralbe, false, false, null);
-
         // 从控制台输入信息
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()) {
