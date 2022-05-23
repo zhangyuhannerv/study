@@ -7,6 +7,9 @@ import com.study.rabbitmq.utils.RabbitMqUtils;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * 验证发布确认模式：
@@ -100,10 +103,13 @@ public class ConfirmMessage {
         String queue_name = UUID.randomUUID().toString();
         // 声明队列（队列名，持久化，共享，自动删除，参数）
         channel.queueDeclare(UUID.randomUUID().toString(), true, false, false, null);
-        // 开始时间
-        long start = System.currentTimeMillis();
+        // 线程安全有序的的一个哈希表，适用于高并发的情况
+        // 1.轻松的将序号和消息进行关联
+        // 2.轻松的批量删除条目，只要给到序号
+        // 3.支持高并发（多线程）
+        ConcurrentSkipListMap<Long, String> outStandingConfirms = new ConcurrentSkipListMap<>();
 
-        // 准备消息的监听器，一定要在开始发布消息的前面，监听哪些消息成功，哪些消息失败了
+        // 准备消息的监听器，一定要在开始发布消息的前面，监听哪些消息成功，哪些消息失败了。监听器会单独开一个线程监听消息
         // addConfirmListener()参数解析：
         // 1.成功回调，监听哪些消息发布成功了
         // 2.失败回调，监听哪些消息发布失败了
@@ -112,19 +118,31 @@ public class ConfirmMessage {
         // 2.是否为批量确认
         channel.addConfirmListener((deliveryTag, multiple) -> {
             // 消息发布成功的回调
-            System.out.println("确认发布的消息：" + deliveryTag);
-
+            // 异步处理步骤2：删除掉已经确认的消息，剩下的就是未确认的消息
+            if (multiple) {// 如果是批量发消息，那么就批量的删除
+                ConcurrentNavigableMap<Long, String> confirmed = outStandingConfirms.headMap(deliveryTag);
+                confirmed.clear();
+            } else {// 如果是单独的发消息，直接删除
+                outStandingConfirms.remove(deliveryTag);
+            }
+            System.out.println("确认发布的消息序号：" + deliveryTag);
         }, (deliveryTag, multiple) -> {
             // 没有应答，消息发布失败的回调
-            System.out.println("未确认发布的消息：" + deliveryTag);
+            // 异步处理步骤3：打印一下未确认的消息（可以没有）
+            String message = outStandingConfirms.get(deliveryTag);
+            System.out.println("未确认发布的消息是：" + message);
 
         });
 
+        // 开始时间
+        long start = System.currentTimeMillis();
 
         // 批量发布消息(异步)
         for (int i = 0; i < MESSAGE_COUNT; i++) {
             String message = String.valueOf(i);
             channel.basicPublish("", queue_name, null, message.getBytes());
+            // 异步处理步骤1：此处记录下所有发送的消息,即消息的总和
+            outStandingConfirms.put(channel.getNextPublishSeqNo(), message);
         }
 
 
