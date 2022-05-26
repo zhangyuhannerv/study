@@ -40,10 +40,12 @@ public class Consumer01 {
         // 设置message的TTL（过期时间）为10000ms（10s）
         // 注意message的过期时间既可以在声明队列处设置，也可以在生产者发送消息的时候针对每条要发送的消息单独设置。后者较为常见
         // arguments.put("x-message-ttl", 10000);
-        channel.queueDeclare(NORMAL_QUEUE, false, false, true, arguments);
+        // 设置队列的最大长度。这里以6为例，当队列里的消息达到6个时，再向队列里发的消息都是死信消息
+        arguments.put("x-max-length", 6);
+        channel.queueDeclare(NORMAL_QUEUE, false, false, false, arguments);
 
         // 声明死信队列
-        channel.queueDeclare(DEAD_QUEUE, false, false, true, null);
+        channel.queueDeclare(DEAD_QUEUE, false, false, false, null);
 
         // 绑定交换机与key
         channel.queueBind(NORMAL_QUEUE, NORMAL_EXCHANGE, NORMAL_ROUTING_KEY);
