@@ -54,8 +54,20 @@ public class Consumer01 {
 
         System.out.println("c1等待接收消息....");
 
-        channel.basicConsume(NORMAL_QUEUE, true, (consumerTag, message) -> {
-            System.out.println("c1接收的消息是：" + new String(message.getBody()));
+        // 如果时自动应答，那么不存在通过拒绝将消息转为死信的情况，所以这里改为手动应答
+        channel.basicConsume(NORMAL_QUEUE, false, (consumerTag, message) -> {
+            String msg = new String(message.getBody());
+            if ("info5".equals(msg)) {
+                System.out.println("info5是被c1拒绝的");
+                // 参数解析
+                // 1.消息标签
+                // 2.是否重新入队
+                channel.basicReject(message.getEnvelope().getDeliveryTag(), false);
+            } else {
+                System.out.println("c1接收的消息是：" + msg);
+                // 第二个参数和上面不一样，false表示不批量应答
+                channel.basicAck(message.getEnvelope().getDeliveryTag(), false);
+            }
         }, (consumerTag) -> {
 
         });
