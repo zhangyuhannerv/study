@@ -17,6 +17,7 @@ public class RabbitMqUtils {
         //创建一个连接工厂
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost("192.168.220.21");
+        factory.setPort(5672);
         factory.setUsername("admin");
         factory.setPassword("123");
         Connection connection = factory.newConnection();
