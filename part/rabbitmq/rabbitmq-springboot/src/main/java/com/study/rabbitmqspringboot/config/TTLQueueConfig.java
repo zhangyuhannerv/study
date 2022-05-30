@@ -66,7 +66,7 @@ public class TTLQueueConfig {
      */
     @Bean
     public Queue queueA() {
-        return QueueBuilder.nonDurable(NORMAL_QUEUE_A).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(10000).build();
+        return QueueBuilder.durable(NORMAL_QUEUE_A).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(10000).build();
     }
 
     /**
@@ -75,7 +75,7 @@ public class TTLQueueConfig {
      */
     @Bean
     public Queue queueB() {
-        return QueueBuilder.nonDurable(NORMAL_QUEUE_B).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(40000).build();
+        return QueueBuilder.durable(NORMAL_QUEUE_B).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(40000).build();
     }
 
 
@@ -84,7 +84,7 @@ public class TTLQueueConfig {
      */
     @Bean
     public Queue queueD() {
-        return QueueBuilder.nonDurable(DEAD_QUEUE).build();
+        return QueueBuilder.durable(DEAD_QUEUE).build();
     }
 
     /**
