@@ -24,7 +24,10 @@ public class TTLQueueConfig {
      * 普通队列b
      */
     public static final String NORMAL_QUEUE_B = "normal_queue_b";
-
+    /**
+     * 普通队列c
+     */
+    public static final String NORMAL_QUEUE_C = "normal_queue_c";
     /**
      * 死信队列
      */
@@ -37,6 +40,10 @@ public class TTLQueueConfig {
      * 普通队列b路由key
      */
     public static final String NORMAL_ROUTING_KEY_B = "normal_routing_key_b";
+    /**
+     * 普通队列c路由key
+     */
+    public static final String NORMAL_ROUTING_KEY_C = "normal_routing_key_c";
     /**
      * 死信队列路由key
      */
@@ -78,6 +85,15 @@ public class TTLQueueConfig {
         return QueueBuilder.durable(NORMAL_QUEUE_B).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(40000).build();
     }
 
+    /**
+     * 声明普通队列c
+     * 不设置ttl,队列c里面的消息的过期时间是由生产者在发送消息的时候指定的
+     */
+    @Bean
+    public Queue queueC() {
+        return QueueBuilder.durable(NORMAL_QUEUE_C).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).build();
+    }
+
 
     /**
      * 声明死信队列
@@ -102,6 +118,14 @@ public class TTLQueueConfig {
     @Bean
     public Binding queueBindingB(Queue queueB, DirectExchange normalExchange) {
         return BindingBuilder.bind(queueB).to(normalExchange).with(NORMAL_ROUTING_KEY_B);
+    }
+
+    /**
+     * 声明普通队列c与普通交换机绑定 设置路由key
+     */
+    @Bean
+    public Binding queueBindingC(Queue queueC, DirectExchange normalExchange) {
+        return BindingBuilder.bind(queueC).to(normalExchange).with(NORMAL_ROUTING_KEY_C);
     }
 
     /**
