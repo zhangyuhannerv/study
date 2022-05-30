@@ -1,85 +1,116 @@
 package com.study.rabbitmqspringboot.config;
 
+
 import org.springframework.amqp.core.*;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.HashMap;
-import java.util.Map;
 
-/**
- * TTL队列，配置文件类
- */
 @Configuration
 public class TTLQueueConfig {
-    // 普通交换机
-    public static final String X_EXCHANGE = "X";
-    // 死信交换机
-    public static final String DEAD_LETTER_EXCHANGE_Y = "Y";
-    // 普通队列1
-    public static final String QUEUE_A = "QA";
-    // 普通队列2
-    public static final String QUEUE_B = "QB";
-    // 死信队列
-    public static final String DEAD_LETTER_QUEUE_D = "QD";
+    /**
+     * 普通交换机
+     */
+    public static final String NORMAL_EXCHANGE = "normal_exchange";
+    /**
+     * 死信交换机
+     */
+    public static final String DEAD_EXCHANGE = "dead_exchange";
+    /**
+     * 普通队列a
+     */
+    public static final String NORMAL_QUEUE_A = "normal_queue_a";
+    /**
+     * 普通队列b
+     */
+    public static final String NORMAL_QUEUE_B = "normal_queue_b";
 
-    // 声明普通交换机
-    @Bean()
-    public DirectExchange xExchange() {
-        return new DirectExchange(X_EXCHANGE);
+    /**
+     * 死信队列
+     */
+    public static final String DEAD_QUEUE = "dead_queue";
+    /**
+     * 普通队列a路由key
+     */
+    public static final String NORMAL_ROUTING_KEY_A = "normal_routing_key_a";
+    /**
+     * 普通队列b路由key
+     */
+    public static final String NORMAL_ROUTING_KEY_B = "normal_routing_key_b";
+    /**
+     * 死信队列路由key
+     */
+    public static final String DEAD_ROUTING_KEY = "dead_routing_key";
+
+    /**
+     * 声明普通交换机
+     * 使用直接交换机 发布订阅方式
+     * 默认持久化 消费者断开连接时不自动删除
+     */
+    @Bean
+    public DirectExchange normalExchange() {
+        return new DirectExchange(NORMAL_EXCHANGE);
     }
 
-    // 声明死信交换机
-    @Bean()
-    public DirectExchange yExchange() {
-        return new DirectExchange(DEAD_LETTER_EXCHANGE_Y);
+    /**
+     * 声明死信交换机
+     */
+    @Bean
+    public DirectExchange deadExchange() {
+        return new DirectExchange(DEAD_EXCHANGE);
     }
 
-    // 声明普通队列,有过期时间
+    /**
+     * 声明普通队列a
+     * 设置ttl时间为10秒
+     */
     @Bean
     public Queue queueA() {
-        Map<String, Object> arguments = new HashMap<>(3);
-        // 设置死信交换机
-        arguments.put("x-dead-letter-exchange", DEAD_LETTER_EXCHANGE_Y);
-        // 设置死信routingKey
-        arguments.put("x-dead-routing-key", "YD");
-        // 设置过期时间(10s)
-        arguments.put("x-message-ttl", 10000);
-        return QueueBuilder.nonDurable(QUEUE_A).withArguments(arguments).build();
+        return QueueBuilder.nonDurable(NORMAL_QUEUE_A).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(10000).build();
     }
 
+    /**
+     * 声明普通队列b
+     * 设置ttl时间为40秒
+     */
     @Bean
     public Queue queueB() {
-        Map<String, Object> arguments = new HashMap<>(3);
-        // 设置死信交换机
-        arguments.put("x-dead-letter-exchange", DEAD_LETTER_EXCHANGE_Y);
-        // 设置死信routingKey
-        arguments.put("x-dead-routing-key", "YD");
-        // 设置过期时间(10s)
-        arguments.put("x-message-ttl", 40000);
-        return QueueBuilder.nonDurable(QUEUE_B).withArguments(arguments).build();
+        return QueueBuilder.nonDurable(NORMAL_QUEUE_B).deadLetterExchange(DEAD_EXCHANGE).deadLetterRoutingKey(DEAD_ROUTING_KEY).ttl(40000).build();
     }
 
-    // 声明死信队列
+
+    /**
+     * 声明死信队列
+     */
     @Bean
     public Queue queueD() {
-        return QueueBuilder.nonDurable(DEAD_LETTER_QUEUE_D).build();
+        return QueueBuilder.nonDurable(DEAD_QUEUE).build();
     }
 
-    // 绑定
+    /**
+     * 声明普通队列a与普通交换机绑定 设置路由key
+     * 参数因为已经注册在容器中 会自动从容器中取 但是名字必须一样
+     */
     @Bean
-    public Binding queueABindingX(@Qualifier("queueA") Queue queue, @Qualifier("xExchange") DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("XA");
+    public Binding queueBindingA(Queue queueA, DirectExchange normalExchange) {
+        return BindingBuilder.bind(queueA).to(normalExchange).with(NORMAL_ROUTING_KEY_A);
     }
 
+    /**
+     * 声明普通队列b与普通交换机绑定 设置路由key
+     */
     @Bean
-    public Binding queueBBindingX(@Qualifier("queueB") Queue queue, @Qualifier("xExchange") DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("XB");
+    public Binding queueBindingB(Queue queueB, DirectExchange normalExchange) {
+        return BindingBuilder.bind(queueB).to(normalExchange).with(NORMAL_ROUTING_KEY_B);
     }
 
+    /**
+     * 声明死信队列与死信交换机绑定
+     */
     @Bean
-    public Binding queueDBindingY(@Qualifier("queueD") Queue queue, @Qualifier("yExchange") DirectExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("YD");
+    public Binding queueBindingD(Queue queueD, DirectExchange deadExchange) {
+        return BindingBuilder.bind(queueD).to(deadExchange).with(DEAD_ROUTING_KEY);
     }
+
 }
+
