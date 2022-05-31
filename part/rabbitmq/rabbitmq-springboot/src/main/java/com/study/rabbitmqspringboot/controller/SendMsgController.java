@@ -1,5 +1,6 @@
 package com.study.rabbitmqspringboot.controller;
 
+import com.study.rabbitmqspringboot.config.DelayedQueueConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,23 @@ public class SendMsgController {
             // 设置发送消息的时候参数
             // 这里只需设置过期时间
             message.getMessageProperties().setExpiration(ttl);
+            return message;
+        });
+    }
+
+    /**
+     * 发送消息：延迟的实现基于插件
+     * 测试：
+     * /come1/20000
+     * /come2/2000
+     */
+    @GetMapping("/sendDelayedMsg/{msg}/{delayedTime}")
+    public void sendDelayedMsg(@PathVariable("msg") String msg, @PathVariable("delayedTime") Integer delayedTime) {
+        log.info("当前时间：{}，发送一条时长是{}毫秒的延迟消息给延迟队列：{}", new Date(), delayedTime, msg);
+        rabbitTemplate.convertAndSend(DelayedQueueConfig.DELAYED_EXCHANGE_NAME, DelayedQueueConfig.DELAYED_ROUTING_KEY, msg, message -> {
+            // 设置发送消息的时候参数
+            // 这里的设置和上面不同，设置的延迟时间。单位仍然是毫秒
+            message.getMessageProperties().setDelay(delayedTime);
             return message;
         });
     }
