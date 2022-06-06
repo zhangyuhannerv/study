@@ -4,6 +4,11 @@ spring:
     port: 5672
     username: admin
     password: 123
+    # 开启发布消息，交换机回调
+    publisher-confirm-type: correlated
+    # 开启队列确认消息：消息退回
+    publisher-returns: true
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
