@@ -1,12 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>滚动的抽像方法</title>
+  <title>精校版</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .box {
+      width: 800px;
+      margin: 200px auto 0;
+    }
+
+    .parent,
+    .children {
+      width: 100px;
+      overflow: hidden;
+    }
+
+    .parent {
+      height: 50px;
+      border: 1px solid #ccc;
+    }
+
+    .children {
+      position: relative;
+    }
+  </style>
 </head>
+
 <body>
-  
+  <div class="box">
+    <div class="parent">
+      <div class="children">
+        <ul>
+          <li>1</li>
+          <li>2</li>
+          <li>3</li>
+          <li>4</li>
+          <li>5</li>
+          <li>6</li>
+          <li>7</li>
+          <li>8</li>
+          <li>9</li>
+          <li>10</li>
+          <li>11</li>
+          <li>12</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../jquery-3.1.1.min.js"></script>
+  <script>
+    const obj = {
+      rollTimer: {},
+      clearRollTime(id) {
+        if (this.rollTimer[id]) {
+          clearInterval(this.rollTimer[id])
+        }
+        this.rollTimer[id] = null;
+      },
+      // 滚动展示的公共方法
+      roll($itemContainerDom, $box, id) {
+        if ($itemContainerDom.height() <= $box.height()) {
+          return
+        }
+        // 把dom初始化到最底端
+        $itemContainerDom.css({
+          top: '0px'
+        })
+        // 复制一遍dom里的内容
+        let html = $itemContainerDom.html()
+        html += html
+        $itemContainerDom.html(html)
+
+        // dom滚动的方法
+        function moveDom() {
+          let top = Number($itemContainerDom.css('top').replace('px', ''))
+          let height = ($itemContainerDom.height() / 2) * -1
+          if (top < height) {
+            top = 0
+          } else {
+            top -= 1
+          }
+          $itemContainerDom.css({
+            top: top + 'px'
+          })
+        }
+
+        // 设置定时
+        let time = setInterval(moveDom, 20)
+
+        // 获取滚动区域的容器
+        let box = $box[0]
+
+        // 把所有触发的定时器存取，在重新查询的时候都要停止并清空
+        this.clearRollTime(id)
+        this.rollTimer[id] = time;
+
+        // 鼠标放在容器上，停止滚动
+        $box.hover(function() {
+          vibrationOverview.clearRollTime(id)
+        })
+
+        $box.mouseleave(function() {
+          time = setInterval(moveDom, 20)
+          vibrationOverview.rollTimer[id] = time;
+        })
+
+      }
+    }
+
+    let parent = $(".parent")
+    let children = $(".children")
+    obj.roll(children, parent, 'id')
+  </script>
 </body>
+
 </html>
