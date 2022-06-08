@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../lib/jstree/themes/default/style.min.css">
+  <style>
+    i.jstree-icon.icon {
+      background-color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="data1">
+
+  </div>
+
+
+  <button id="updateData">更新树data1的数据</button>
+  <script src="../lib/jQuery/jquery-3.1.1.min.js"></script>
+  <script src="../lib/jstree/jstree.min.js"></script>
+  <script>
+    // 使用自己拼接的数据渲染
+    $('#data1').jstree({
+      'core': {
+        'data': [{
+          id: '#1',
+          type: '父',
+          "text": "父亲1",
+          "children": [{
+              id: 'h1',
+              type: '子',
+              "text": "孩子1-1",
+            },
+            {
+              id: 'h2',
+              type: '子',
+              "text": "孩子1-2",
+            }
+          ]
+        }],
+        // themes: {
+        //   icons: false
+        // }
+      },
+      "plugins": ['checkbox'],
+      "checkbox": {
+        "tie_selection": false // 默认为true,true时不会监听check_node事件
+        //, "keep_selected_style": true
+        //, "three_state": false
+      }
+    });
+
+    $("#data1").on('check_node.jstree', function(node, selected) {
+      console.log(node)
+      console.log(selected)
+    })
+
+    $('#data1').on('uncheck_node.jstree', function(node, selected) {
+      console.log(node)
+      console.log(selected)
+    });
+
+    $("#updateData").click(function() {
+      let data2 = {
+        id: '#2',
+        type: '父',
+        "text": "父亲2",
+        "children": [{
+            id: 'h1',
+            type: '子',
+            text: "孩子2-1",
+            icon: 'icon',
+          },
+          {
+            id: 'h2',
+            type: '子',
+            text: "孩子2-2",
+          }
+        ]
+      }
+
+      $("#data1").jstree(true).settings.core.data = data2;
+      $("#data1").jstree(true).refresh();
+
+      // 这里重复监听，会重复打印
+      $("#data1").on('check_node.jstree', function(node, selected) {
+        console.log(node)
+        console.log(selected)
+      })
+
+      $('#data1').on('uncheck_node.jstree', function(node, selected) {
+        console.log(node)
+        console.log(selected)
+      });
+    })
+  </script>
+</body>
+
+</html>

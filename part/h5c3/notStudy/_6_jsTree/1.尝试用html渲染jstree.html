@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../lib/jstree/themes/default/style.min.css">
+</head>
+
+<body>
+  <div id="html" class="demo">
+    <ul>
+      <li data-jstree='{ "opened" : true,"id":"父1" }'>Root node
+        <ul>
+          <li data-jstree='{"icon":false, "selected" : false,"id":"子1" }'>Child node 1</li>
+          <li data-jstree='{"icon":false,"id":"子2"}'>Child node 2</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+
+  <script src="../lib/jQuery/jquery-3.1.1.min.js"></script>
+  <script src="../lib/jstree/jstree.min.js"></script>
+  <script>
+    // 使用html直接渲染，发现无法指定id
+    $('#html').jstree({
+      "plugins": ['checkbox'],
+      "checkbox": {
+        "tie_selection": false // 默认为true,true时不会监听check_node事件
+        //, "keep_selected_style": true
+        //, "three_state": false
+      }
+    });
+
+    $("#html").on('check_node.jstree', function(node, selected) {
+      console.log(node)
+      console.log(selected)
+    })
+
+    $('#html').on('uncheck_node.jstree', function(node, selected) {
+      console.log(node)
+      console.log(selected)
+    });
+  </script>
+</body>
+
+</html>
