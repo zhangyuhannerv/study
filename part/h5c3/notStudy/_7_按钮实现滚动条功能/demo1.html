@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="../lib/jQuery/jquery-3.1.1.min.js"></script>
+  <script>
+    /**
+     * 代码示例，实际copy要根据需求自定义调整
+     * 翻页，每次滚动可视区域的80%高度或宽度（例：滚动区域以id="scroll-panel"元素包裹）
+     * @param {string} type 翻页类型，上、下、左、右
+     * @param {string} id 滚动区域的包裹元素的id
+     * */
+    function movePage(type, id) {
+      // 例：let box = $('#scroll-panel')
+      let box = $('#' + id)
+      let viewHeight = box.height() // 可视高度
+      let viewWidth = box.width() // 可视宽度
+      let scrollHeight = box.scrollTop() // 已滚动的高度
+      let scrollWidth = box.scrollLeft() // 已滚动的宽度
+
+      switch (type) {
+        case 'down':
+          scrollHeight += viewHeight * 0.8
+          break
+        case 'up':
+          scrollHeight -= viewHeight * 0.8
+          break
+        case 'left':
+          scrollWidth -= viewWidth * 0.8
+          break
+        case 'right':
+          scrollWidth += viewWidth * 0.8
+          break
+      }
+
+      // 滚动条到顶部的垂直高度 (即网页被卷上去的高度)
+      box.scrollTop(scrollHeight)
+      box.scrollLeft(scrollWidth)
+    }
+  </script>
+</body>
+
+</html>
