@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script src="../lib/jQuery/jquery-3.1.1.min.js"></script>
+  <script src="../lib/jstree/jstree.min.js"></script>
+  <script>
+    // 下面的代码只是示例。不能完全照抄
+    $dom.jstree({
+      'core': {
+        data: treeData,
+        dblclick_toggle: false
+      },
+      "plugins": ['checkbox'],
+      "checkbox": {
+        "tie_selection": false, // 默认为true,true时不会监听check_node事件
+        whole_node: false // 只有点击复选框才算是选中，点击节点不选中
+      }
+    }).on('ready.jstree', function() {
+      $dom.jstree('close_all') // 初始化完成回调
+    }).on('refresh.jstree', function() {
+      $dom.jstree('close_all') // 更新数据回调
+    })
+  </script>
+</body>
+
+</html>
