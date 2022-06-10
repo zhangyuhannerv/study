@@ -1,0 +1,13 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: cloud-payment-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:10000/spring_cloud_study?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  type-aliases-package: com.study.springcloud.entities
