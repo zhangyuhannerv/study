@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    a {
+      display: block;
+      font-size: 18px;
+      margin: 100px;
+      width: 130px;
+    }
+
+    #msg {
+      width: 600px;
+      height: 130px;
+      background-color: gray;
+      color: white;
+      display: none;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="#">1</a>
+  <a href="#">2</a>
+  <a href="#">3</a>
+  <a href="#">4</a>
+  <div id="msg"></div>
+  <script type="text/javascript">
+    var msgs = ["1内容", "2内容", "3内容", "4内容"];
+    window.onload = function() {
+      var oAs = document.getElementsByTagName("a");
+      var oDiv = document.getElementById("msg");
+
+      //给标签绑定事件
+      for (var i = 0; i < oAs.length; i++) {
+        oAs[i].index = i; //给每个节点添加标记。
+        //鼠标移入显示
+        oAs[i].onmouseover = function() {
+          oDiv.style.display = "block";
+          oDiv.innerHTML = msgs[this.index]; //显示对应标记的内容
+          console.log(this);
+
+        }
+        /*                 oAs[i].οnmοuseοut=function(){
+                            oDiv.style.display="none";
+                    } */
+
+        //添加鼠标移动事件
+        oAs[i].onmousemove = function(ev) {
+          var e = ev || window.event;
+          oDiv.style.left = e.clientX + "px";
+          oDiv.style.top = e.clientY + "px";
+
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
