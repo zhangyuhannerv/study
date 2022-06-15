@@ -9,3 +9,8 @@ eureka:
     service-url:
       #      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/    #设置与eureka server交互的地址查询服务和注册服务都需要依赖这个地址
       defaultZone: http://127.0.0.1:7002/eureka/    #设置与eureka server交互的地址查询服务和注册服务都需要依赖这个地址
+  server:
+    # 关闭默认开启的自我保护机制，保证不可用服务被即时剔除
+    enable-self-preservation: false
+    # 更改默认的心跳时间90s->2s,2s钟之内某个服务没有发送心跳包，该服务立马移除注册表
+    eviction-interval-timer-in-ms: 2000

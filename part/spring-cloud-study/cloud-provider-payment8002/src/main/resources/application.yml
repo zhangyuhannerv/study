@@ -19,6 +19,12 @@ eureka:
     instance-id: payment8002
     # status服务实例悬浮显示ip和端口
     prefer-ip-address: true
+
+    # 心跳时间和续约时间在开发时设置小些，保证服务关闭后，注册中心能即时剔除服务
+    # 心跳发送时间：eureka客户端向服务端发送的心跳的时间间隔，单位为秒，默认30
+    lease-renewal-interval-in-seconds: 1
+    # 续约时间：eureka服务端在收到最后一次心跳后的等待时间上限，单位为秒，默认90，超时将剔除当前服务
+    lease-expiration-duration-in-seconds: 2
   client:
     #是否将自己注册进eurekaServer,默认true
     register-with-eureka: true
