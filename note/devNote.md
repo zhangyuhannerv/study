@@ -3,213 +3,21 @@
 **邮箱：1355166049@qq.com或zhangyuhannerv@gmail.com**
 
 ---
-- [随记](#随记)
-  - [学习路线](#学习路线)
-  - [要补习的知识](#要补习的知识)
-  - [java的各个工具包](#java的各个工具包)
-  - [利用本地的html文件通过ajax访问服务器](#利用本地的html文件通过ajax访问服务器)
-- [前端](#前端)
-  - [css](#css)
-    - [开发](#开发)
-      - [1.自适应宽度的input框](#1自适应宽度的input框)
-    - [学习](#学习)
-  - [html](#html)
-    - [开发](#开发-1)
-      - [1.容器滚动条出现的条件](#1容器滚动条出现的条件)
-    - [学习](#学习-1)
-  - [javascript](#javascript)
-    - [开发](#开发-2)
-      - [1.前台js获取时间的一个方法](#1前台js获取时间的一个方法)
-      - [2.在实际项目中，get请求的url经常会过长，导致数据丢失。（也可以看自己网页上收藏的formData使用相关的博客)](#2在实际项目中get请求的url经常会过长导致数据丢失也可以看自己网页上收藏的formdata使用相关的博客)
-      - [3.promise封装ajax，并且promise的链式调用的示例](#3promise封装ajax并且promise的链式调用的示例)
-      - [4.后台接口返回的数据出现了$ref，$data.***的字样](#4后台接口返回的数据出现了refdata的字样)
-    - [学习](#学习-2)
-  - [jQuery](#jquery)
-    - [开发](#开发-3)
-      - [1.前台往后台传json数组](#1前台往后台传json数组)
-      - [2.总结一下jQuery的ajax的contentType的格式](#2总结一下jquery的ajax的contenttype的格式)
-      - [3.实现jQuery的ajax上传文件并且监听上传进度(微调可以支持多文件上传，异步监听各个文件的上传进度，如果上传的是文件数组的话，也可以监听总的进度)](#3实现jquery的ajax上传文件并且监听上传进度微调可以支持多文件上传异步监听各个文件的上传进度如果上传的是文件数组的话也可以监听总的进度)
-      - [4.事件委托获取被点击的元素](#4事件委托获取被点击的元素)
-      - [5.实现回车搜索功能](#5实现回车搜索功能)
-      - [6.实现实时监听input或者textarea值变化并触发事件（不需要失去焦点)](#6实现实时监听input或者textarea值变化并触发事件不需要失去焦点)
-      - [7.利用jQuery的ajax导入写好的json静态文件](#7利用jquery的ajax导入写好的json静态文件)
-      - [8.多文件上传前后台完整demo（一起上传，不是一个个上传）](#8多文件上传前后台完整demo一起上传不是一个个上传)
-      - [9.利用jQuery实现让容器的滚动条滚动到某个内部元素的位置。让内部元素本来在中间，一下子跑到最上面](#9利用jquery实现让容器的滚动条滚动到某个内部元素的位置让内部元素本来在中间一下子跑到最上面)
-    - [学习](#学习-3)
-  - [layui](#layui)
-    - [开发](#开发-4)
-      - [1.删除动态表格鼠标悬浮背景颜色变色的效果](#1删除动态表格鼠标悬浮背景颜色变色的效果)
-      - [2.layui数据表格拼接日期输入框和下拉框](#2layui数据表格拼接日期输入框和下拉框)
-      - [3.将layui多文件上传的组件分割，切割出来的效果是将文件对象push进文件数组里去，后台可直接接收到一个文件数组](#3将layui多文件上传的组件分割切割出来的效果是将文件对象push进文件数组里去后台可直接接收到一个文件数组)
-      - [4.layui的时间日期控件要求点击完日期后，自动弹出时间选择框，而不是一定要手动点击选择时间才弹出时间选择框。](#4layui的时间日期控件要求点击完日期后自动弹出时间选择框而不是一定要手动点击选择时间才弹出时间选择框)
-      - [5.给layui的下拉框赋值，同时触发layui的下拉框选择事件](#5给layui的下拉框赋值同时触发layui的下拉框选择事件)
-      - [6.子页面获取父页面元素的值](#6子页面获取父页面元素的值)
-      - [7.子页面调用父页面的方法](#7子页面调用父页面的方法)
-      - [8.layui让父页面的某个按钮点击](#8layui让父页面的某个按钮点击)
-      - [9.layui中动态纵向合并单元格](#9layui中动态纵向合并单元格)
-      - [10.动态加载以上传的图片的方法](#10动态加载以上传的图片的方法)
-      - [11.layui弹出带遮罩得加载动画的示例](#11layui弹出带遮罩得加载动画的示例)
-      - [12.关于在layui的弹出层里再弹出一个弹出层导致新的弹出层重复弹出的问题](#12关于在layui的弹出层里再弹出一个弹出层导致新的弹出层重复弹出的问题)
-      - [13.关于之前的利用layui的上传文件组件遇到的问题](#13关于之前的利用layui的上传文件组件遇到的问题)
-      - [14.layui表格编辑使用键盘跳转](#14layui表格编辑使用键盘跳转)
-      - [15.layui在子弹窗写方法关闭当前子弹窗](#15layui在子弹窗写方法关闭当前子弹窗)
-      - [16.layui的动态表格，点击行触发表格的checkbox选中](#16layui的动态表格点击行触发表格的checkbox选中)
-      - [17.layui表格的高度自适应](#17layui表格的高度自适应)
-    - [学习](#学习-4)
-  - [echarts](#echarts)
-    - [开发](#开发-5)
-      - [1.echarts图关于堆叠属性stack的问题](#1echarts图关于堆叠属性stack的问题)
-      - [2.echarts的markLine/markArea在使用滚动条放大之后消失的问题](#2echarts的marklinemarkarea在使用滚动条放大之后消失的问题)
-    - [学习](#学习-5)
-  - [bootstrap](#bootstrap)
-    - [开发](#开发-6)
-      - [1.关于使用bootstrap的fileinput插件获取不到手动拖拽的文件对象的问题](#1关于使用bootstrap的fileinput插件获取不到手动拖拽的文件对象的问题)
-    - [学习](#学习-6)
-  - [jsTree的基本使用](#jstree的基本使用)
-    - [开发](#开发-7)
-      - [1.项目中的最常见使用代码实例](#1项目中的最常见使用代码实例)
-    - [学习](#学习-7)
-  - [node](#node)
-    - [开发](#开发-8)
-      - [1.node镜像管理](#1node镜像管理)
-  - [vue](#vue)
-    - [开发](#开发-9)
-      - [0.vue组件公共模板](#0vue组件公共模板)
-      - [1.vue自定义上传功能](#1vue自定义上传功能)
-      - [2.局部导入css文件](#2局部导入css文件)
-      - [3.ajax下载小文件（返回整体文件流，通过浏览器转成二进制触发下载）](#3ajax下载小文件返回整体文件流通过浏览器转成二进制触发下载)
-      - [4.记录一个vue前台下载文件的小工具](#4记录一个vue前台下载文件的小工具)
-    - [学习](#学习-8)
-  - [element-ui](#element-ui)
-    - [开发](#开发-10)
-      - [1.上传组件设置token](#1上传组件设置token)
-- [后端](#后端)
-  - [java](#java)
-    - [开发](#开发-11)
-      - [1.stream流处理将用','拼接的字符串转为Double集合](#1stream流处理将用拼接的字符串转为double集合)
-      - [2.java使用lambda表达式建立子线程任务并阻塞主线程](#2java使用lambda表达式建立子线程任务并阻塞主线程)
-      - [3.spring向静态类注入bean](#3spring向静态类注入bean)
-      - [4.java中的各种日期时间类型的操作（包括映射mysql）](#4java中的各种日期时间类型的操作包括映射mysql)
-      - [5.java代码实现word转pdf的几种方式](#5java代码实现word转pdf的几种方式)
-      - [6.java获得文件路径三种方法的区别](#6java获得文件路径三种方法的区别)
-      - [7.java获得当前系统的文件分隔符的方法](#7java获得当前系统的文件分隔符的方法)
-      - [8.java以特定的编码读取文件，以特定的编码写入文件](#8java以特定的编码读取文件以特定的编码写入文件)
-      - [9.删除单个文件的工具方法](#9删除单个文件的工具方法)
-      - [10.删除某个文件夹及其之内的所有文件(需要和上面删除单个文件的方法配合使用)](#10删除某个文件夹及其之内的所有文件需要和上面删除单个文件的方法配合使用)
-      - [11.使用stream根据条件过滤出某个枚举类的的特定枚举类型](#11使用stream根据条件过滤出某个枚举类的的特定枚举类型)
-      - [12.后台运行jar包与停止运行](#12后台运行jar包与停止运行)
-    - [异常整理](#异常整理)
-      - [1.java.lang.UnsupportedOperationException：null 使用List.Add()/List.addALL() 报错](#1javalangunsupportedoperationexceptionnull-使用listaddlistaddall-报错)
-    - [学习](#学习-9)
-  - [springboot](#springboot)
-    - [开发](#开发-12)
-      - [1.springboot中使用java代码控制事务](#1springboot中使用java代码控制事务)
-      - [2.springboot获取resouces下的文件的输入流InputStream（非配置文件,而是各种word或者excel的模板文件等)](#2springboot获取resouces下的文件的输入流inputstream非配置文件而是各种word或者excel的模板文件等)
-      - [3.获取相对路径下的配置文件信息](#3获取相对路径下的配置文件信息)
-      - [4.springboot下载文件](#4springboot下载文件)
-      - [5.springboot检查文件是否存在](#5springboot检查文件是否存在)
-      - [6.springboot动态加载服务器上的图片](#6springboot动态加载服务器上的图片)
-      - [7.使用ZipFile解压文件夹](#7使用zipfile解压文件夹)
-      - [8.事务的传播行为以及在spring中的配置](#8事务的传播行为以及在spring中的配置)
-      - [9.springboot整合druid不支持批量更新的问题](#9springboot整合druid不支持批量更新的问题)
-    - [学习](#学习-10)
-  - [maven](#maven)
-    - [开发](#开发-13)
-      - [1.关于项目得jar包都正常引用了，但是build时就是提示jar包不存在的解决办法](#1关于项目得jar包都正常引用了但是build时就是提示jar包不存在的解决办法)
-      - [2.pom文件的一般格式（将普通项目托付给maven管理)](#2pom文件的一般格式将普通项目托付给maven管理)
-      - [3.项目打成jar包时，将项目下的文件，以及所有的依赖打成一个jar包](#3项目打成jar包时将项目下的文件以及所有的依赖打成一个jar包)
-      - [4.部署项目时，在maven库上添加自己手动添加的jar 包](#4部署项目时在maven库上添加自己手动添加的jar-包)
-      - [](#)
-    - [学习](#学习-11)
-  - [mybatis](#mybatis)
-    - [开发](#开发-14)
-      - [1.mybatis中#和$的使用场景](#1mybatis中和的使用场景)
-      - [2.批量插入和批量更新](#2批量插入和批量更新)
-      - [3.Mybatis 实现if -- else --](#3mybatis-实现if----else---)
-      - [4.mybatis判断字符串相等时的注意事项](#4mybatis判断字符串相等时的注意事项)
-      - [5.mybatis自带的分页插件的使用](#5mybatis自带的分页插件的使用)
-      - [6. mybatis传入集合循环查询并用union组合](#6-mybatis传入集合循环查询并用union组合)
-      - [7.mybatis .and() 和 .or()的嵌套使用](#7mybatis-and-和-or的嵌套使用)
-    - [学习](#学习-12)
-- [数据库](#数据库)
-  - [mysql](#mysql)
-    - [开发](#开发-15)
-      - [1.mysql常见的函数和问题的汇总](#1mysql常见的函数和问题的汇总)
-      - [2.是否支持别名](#2是否支持别名)
-      - [3.union和union all 关键字](#3union和union-all-关键字)
-      - [4.mysql建表的几个必备字段](#4mysql建表的几个必备字段)
-      - [5.any 和 all 关键字](#5any-和-all-关键字)
-      - [6.mysql开放远程连接(5.7版本生效，8以上的没试过)](#6mysql开放远程连接57版本生效8以上的没试过)
-      - [7.mysql在导入.sql文件的时候报错  1067 - Invalid default value for ‘LOCK_TIME_‘](#7mysql在导入sql文件的时候报错--1067---invalid-default-value-for-lock_time_)
-      - [8.mysql的DATE_FORMAT()函数和STR_TO_DATE()函数的常用例子](#8mysql的date_format函数和str_to_date函数的常用例子)
-      - [9.mysql区间查询的方法](#9mysql区间查询的方法)
-      - [10.mysql比较date或者datetime](#10mysql比较date或者datetime)
-    - [学习](#学习-13)
-      - [1.mysql使用索引十诫](#1mysql使用索引十诫)
-      - [2.mysql优化索引十诫（附口诀)](#2mysql优化索引十诫附口诀)
-      - [3.mysql排序优化（为排序使用索引)](#3mysql排序优化为排序使用索引)
-      - [4.mysql show profile功能](#4mysql-show-profile功能)
-      - [5.mysql的myisam的读写锁(表锁)](#5mysql的myisam的读写锁表锁)
-      - [6.mysql的innodb的读写锁(行锁)](#6mysql的innodb的读写锁行锁)
-      - [7.mysql8的安装](#7mysql8的安装)
-      - [8.mysql主从复制的搭建](#8mysql主从复制的搭建)
-  - [redis](#redis)
-    - [开发](#开发-16)
-      - [1.redisTemplate存储zset的写法](#1redistemplate存储zset的写法)
-    - [学习](#学习-14)
-- [服务器](#服务器)
-  - [linux](#linux)
-    - [通用](#通用)
-      - [1.根据端口号查询占用pid](#1根据端口号查询占用pid)
-      - [2.创建shell脚本并且运行](#2创建shell脚本并且运行)
-    - [centos](#centos)
-      - [1.Linux下文档类型转PDF乱码解决方式](#1linux下文档类型转pdf乱码解决方式)
-      - [2.Centos7下配置openOffice](#2centos7下配置openoffice)
-      - [3.查看后台运行的java -jar项目的端口号，并杀死该进程](#3查看后台运行的java--jar项目的端口号并杀死该进程)
-      - [4.用windowd的cmd向linux服务器上传文件](#4用windowd的cmd向linux服务器上传文件)
-      - [5.linux查看日志最后几行](#5linux查看日志最后几行)
-      - [6.Centos 7 开放端口，查看端口占用及根据端口占用杀掉进程](#6centos-7-开放端口查看端口占用及根据端口占用杀掉进程)
-      - [7.查看cpu核心数](#7查看cpu核心数)
-      - [8.查看网址](#8查看网址)
-      - [9.解决centos8下python命令失效的问题](#9解决centos8下python命令失效的问题)
-    - [ubuntu](#ubuntu)
-      - [1.ubuntu安装nginx（nginx基础操作命令）](#1ubuntu安装nginxnginx基础操作命令)
-      - [2.ubuntu切换为root账号](#2ubuntu切换为root账号)
-      - [3.向ubuntu传输文件显示permission denied](#3向ubuntu传输文件显示permission-denied)
-      - [4.ubuntu中国大陆镜像源](#4ubuntu中国大陆镜像源)
-      - [5.设置静态ip](#5设置静态ip)
-      - [6.显示没有firewall-cmd命令](#6显示没有firewall-cmd命令)
-      - [7.rabbitmq-server基础操作命令](#7rabbitmq-server基础操作命令)
-  - [windows](#windows)
-    - [开发](#开发-17)
-      - [1.查看端口，查看进程，关闭进程](#1查看端口查看进程关闭进程)
-      - [2.根据端口直接关闭进程](#2根据端口直接关闭进程)
-  - [nginx](#nginx)
-    - [开发](#开发-18)
-    - [学习](#学习-15)
-- [项目](#项目)
-  - [git](#git)
-    - [开发](#开发-19)
-      - [1.在.gitignore中添加新的规则对已经被git管理了的文件不生效的解决办法](#1在gitignore中添加新的规则对已经被git管理了的文件不生效的解决办法)
-    - [学习](#学习-16)
-  - [github](#github)
-    - [开发](#开发-20)
-      - [1.github搜索自己想要的项目](#1github搜索自己想要的项目)
-    - [学习](#学习-17)
-- [工具](#工具)
-  - [1.前后端分别判断登陆设备的方法](#1前后端分别判断登陆设备的方法)
-  - [2.一个常用的javaweb返回体工具类](#2一个常用的javaweb返回体工具类)
+
+[toc]
+
+
 # 随记
 
-***
+---
 
 ## 学习路线
 
 mysql完成剩下的课程->补习12->spring->springboot
 
-​								   ->日语n4
+    ->日语n4
 
-------
+---
 
 jvm,juc
 
@@ -255,7 +63,7 @@ maven,docker,k8s
      --user-data-dir="C:\Users\13551\Desktop" --test-type --disable-web-security
   ```
 
-***
+---
 
 # 前端
 
@@ -270,11 +78,11 @@ maven,docker,k8s
 
    ```css
     <div class="dict_val1" contenteditable="true" id="lineLength"></div>
-   
+
     div[contenteditable] {
        height: 0.1458rem;
        line-height: 0.1458rem;
-   
+
        /*重要*/
        width: auto;
        min-width: 0.1458rem;
@@ -282,18 +90,15 @@ maven,docker,k8s
        overflow: hidden;
        outline: none;
        /*重要*/
-   
+
        color: #001631;
        padding: 0 0.0677rem;
       }
    ```
 
-   
-
    开启编辑状态的话只需把outline的none去掉就行，改为默认状态或自定义属性如 outline:#00FF00 dotted thick;
 
    或者不更改outLine状态，把div的border调出来也可以
-
 2. 传统的input方法 我比较推荐使用
    待解决的问题：只能实现下划线效果的自适应，不能实现四周带边框效果的自适应
 
@@ -305,12 +110,12 @@ maven,docker,k8s
 
    当点击编辑的时候给input 加上一个类 input_text_underline,这样文字就有下划线了。
 
-    ```css
+   ```css
    .input_text_underline {
-       text-decoration: underline;
-       text-decoration-color: #8F9AB4;
+      text-decoration: underline;
+      text-decoration-color: #8F9AB4;
    }
-    ```
+   ```
 
 ### 学习
 
@@ -353,14 +158,14 @@ function sendByPost(url, ids){
     var oForm = document.createElement("form");
     oForm.method="post";
     oForm.action=url;
-    
+  
     var hasitemsids_input = document.createElement("input");
     hasitemsids_input.type="hidden";
     hasitemsids_input.name="ids";
     hasitemsids_input.value=ids;
     oForm.appendChild(hasitemsids_input);
     document.body.appendChild(oForm);
-    
+  
     oForm.submit();
 }
 ```
@@ -419,7 +224,7 @@ request('/mainLine/getAllLineList',).then(res => {
 
 ### 开发
 
-#### 1.前台往后台传json数组  
+#### 1.前台往后台传json数组
 
 前台代码：
 
@@ -487,7 +292,6 @@ request('/mainLine/getAllLineList',).then(res => {
   “application/x-www-form-urlencoded;charset=utf-8”
 
   它就支持{key-value,key-value}的格式，各种具体的ajax详见ssmpj项目
-
 - 如果为
 
   contentType:"application/json;charset=utf-8",
@@ -497,11 +301,9 @@ request('/mainLine/getAllLineList',).then(res => {
   那么后台就用@RequestBody(JavaBean javaBean)
 
   来接收
-
 - 如果为false
 
   那么一般就是上传文件，详见ssmpj的图片上传与回显的例子
-
 - 如果为
 
   text/xml
@@ -541,7 +343,7 @@ let aj = {
             success(res) {
                 if (res.code == '200') {
                      $("[fileId='" + domId + "'] .file_progress").text("上传成功")
-                    
+                
                 } else {
                     $("[fileId='" + domId + "'] .file_progress").text("上传失败")
                 }
@@ -561,11 +363,11 @@ $.ajax(aj);
 	// 此时就能获取被点击的子元素，获取不到尝试加个parent()或children()试试
 	// 如过target里面还有元素，那么点击该元素也会触发，即会有事件冒泡
 	let dom = $(event.target);
-	
-	
+
+
 	// 或者不用event对象，直接用$(this)正常来说也能获取到
 	let dom= $(this);
-	
+
  })
 ```
 
@@ -692,7 +494,7 @@ public Map<String, Object> noiseFileUpload(@RequestParam("file") MultipartFile[]
     // 接收的参数有二进制的文件数组，还有其他的参数
    	// 自己做处理
     // ....
-    
+  
     // 返回
     Map<String, Object> map = new HashMap<>();
     return map;
@@ -710,16 +512,12 @@ public Map<String, Object> noiseFileUpload(@RequestParam("file") MultipartFile[]
 </ul>
 ```
 
-
-
 ```js
 $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset().top + $(".parent").scrollTop());
 // 上面的例子就是让父容器的滚动条滚动，让第三个孩子跑到最上面
 // 其中parent是父容器
 // children是子元素。
 ```
-
-
 
 ### 学习
 
@@ -739,7 +537,7 @@ $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset()
 }
 ```
 
-``` html
+```html
 <div id="CxDataQdTjSxDiv" class="tableContainer">
     <label class="tableTitle">区段超限情况统计（上行）</label>
     <table id="CxDataQdTjSxTab" class="layui-table"></table>
@@ -862,10 +660,10 @@ $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset()
                         <tbody id="jiShuList"></tbody>
                     </table>
                 </div>
-	      
+	  
 		 <div class="fr" style="margin-right: 20px;margin-bottom: 10px;">
 		                    <button type="button" class="layui-btn layui-btn-normal" id="jiShuFile">选择多文件</button>
-		                    <button type="button" class="layui-btn delete_btn" id="deleteSbManual"><i class="layui-icon">&#xe640;</i>删除
+		                    <button type="button" class="layui-btn delete_btn" id="deleteSbManual"><i class="layui-icon"></i>删除
 		                    </button>
   		 </div>
 ```
@@ -923,7 +721,7 @@ $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset()
                 }
             }
 
-       
+   
 	     $.ajax({
                 url: Hussar.ctxPath + '/sbinfo/uploadSbManual',
                 type: "post",
@@ -969,7 +767,7 @@ $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset()
         for (MultipartFile file : useFiles) {
             uploadSbFile(file, "1");
         }
-     
+   
         return jsonObject;
     }
 
@@ -1097,8 +895,6 @@ Let filter=$('#citySerch').attr('lay-filter');//获取该元素的lay-filter属�
 filter&&layui.event('form','select('+filter+')',{elem:$("#citySerch"),value:cityId});//触发该标签的select事件
 form.render('select');// 重新渲染下拉框
 ```
-
-
 
 #### 6.子页面获取父页面元素的值
 
@@ -1410,7 +1206,6 @@ $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox",
 #### 2.echarts的markLine/markArea在使用滚动条放大之后消失的问题
 
 * 问题：水平的markLine或者markArea当使用dataZoom放大的时候。只要markLine/markArea不完全在当前缩放的范围内（有部分在）那么它们就会整体消失
-
 * 解决方式：官方没有给出真正的解决方式。临时解决方式如下
 
   监听滚动条的滚动，获得使用滚动条缩放echarts缩放后的范围（x轴的最小值和最大值）。根据后台请求的markLineData/markAreaData重新计算边界。如果某个markLine/markArea的左侧边界小于缩放后的x轴左侧边界，那么就将它的左侧边界放大到x轴的左侧边界。右侧同理。替换掉原先的标记series。
@@ -1432,19 +1227,19 @@ $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox",
           if (e[0].xAxis < startValuex && e[1].xAxis > startValuex) {
               startCoordMile = startValuex;
           }
-  
+
           if (e[0].xAxis < endValuex && e[1].xAxis > endValuex) {
               endCoordMie = endValuex;
           }
-  
+
           markLineData.push({
               xAxis: startCoordMile
           })
-  
+
           markLineData.push({
               xAxis: endCoordMie
           })
-  
+
           markLineData.push([{
               xAxis: startCoordMile,
               yAxis: yMax,
@@ -1468,10 +1263,6 @@ $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox",
   })
   ```
 
-  
-
-  
-
 ### 学习
 
 ## bootstrap
@@ -1490,7 +1281,7 @@ $("#add_file").fileinput({
                 uploadAsync: true,               //采用同步上传
                 removeFromPreviewOnError: true,  //当文件不符合规则，就不显示预览
                 dropZoneEnabled: true,
-                dropZoneTitle: '拖拽文件到这里 &hellip;<br>只支持单文件上传',
+                dropZoneTitle: '拖拽文件到这里 …<br>只支持单文件上传',
                 maxFileCount: 100,
                 maxFileSize: 0,          //单位为kb，如果为0表示不限制文件大小
                 uploadExtraData: function (previewId, index) {
@@ -1546,7 +1337,7 @@ frame = document.getElementById('add_file').files[0];// 这能获得手动选择
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
-         
+     
             String path = fpPath+ File.separator+"source"+File.separator+guid+File.separator;
 
             File mkdir = new File(path);
@@ -1566,11 +1357,7 @@ frame = document.getElementById('add_file').files[0];// 这能获得手动选择
 
 ```
 
-
-
 ### 学习
-
-
 
 ## jsTree的基本使用
 
@@ -1599,8 +1386,6 @@ npm config set registry http://registry.npm.taobao.org/ #设置淘宝镜像
 npm config set registryhttps://registry.npmjs.org #设置默认镜像
 ```
 
-
-
 ## vue
 
 ### 开发
@@ -1610,7 +1395,7 @@ npm config set registryhttps://registry.npmjs.org #设置默认镜像
 ```vue
 <template>
   <div>
-    
+  
   </div>
 </template>
 
@@ -1626,8 +1411,6 @@ export default {
 
 ```
 
-
-
 #### 1.vue自定义上传功能
 
 前端
@@ -1639,8 +1422,6 @@ export function importData(params) {
   })
 }
 ```
-
-
 
 ```vue
 <template>
@@ -1683,7 +1464,7 @@ export function importData(params) {
                 })
 
             },
-            
+        
             importData() {
                 this.$refs.selectFile.dispatchEvent(new MouseEvent('click'))
             },
@@ -1705,14 +1486,12 @@ public DtoResult importData(@RequestParam("file") MultipartFile file) {
 }
 ```
 
-
-
 #### 2.局部导入css文件
 
 ```vue
 <template>
   <div>
-    
+  
   </div>
 </template>
 
@@ -1737,8 +1516,6 @@ export default {
 传统是读取服务器返回的流，这里是服务器流都已经整体返回了，然后才通过js转成文件触发下载
 
 该方式只适合下载小文件（一般是小于10M），如果文件过大，会导致浏览器占用内存过大，页面崩溃
-
-
 
 以下载excel为例子
 
@@ -1837,8 +1614,6 @@ export function downloadXlsx(data, fileName) {
 }
 ```
 
-
-
 ### 学习
 
 ## element-ui
@@ -1884,8 +1659,6 @@ mounted() {
 ```js
 
 ```
-
-
 
 # 后端
 
@@ -2000,15 +1773,13 @@ setUpdateTime(new Timestamp(new Date().getTime()));
  Timestamp timeStamp = new Timestamp(date.getTime());  // 给对象赋值该值插入就行了
 ```
 
-
-
 [**Java：String和Date、Timestamp之间的转换**](https://www.cnblogs.com/mybloging/p/8067698.html)
 
 1. String与Date（java.util.Date）互转
 
    1. String -> Date
 
-      ``` java
+      ```java
       String dateStr = "2010/05/04 12:34:23";  
       Date date = new Date();  
       //注意format的格式要与日期String的格式相匹配  
@@ -2020,7 +1791,6 @@ setUpdateTime(new Timestamp(new Date().getTime()));
           e.printStackTrace();  
       }  
       ```
-
    2. Date -> String
 
       ```java
@@ -2038,7 +1808,6 @@ setUpdateTime(new Timestamp(new Date().getTime()));
       	12.             e.printStackTrace();  
               		} 
       ```
-
 2. String与Timestamp互转
 
    1. String ->Timestamp
@@ -2056,10 +1825,9 @@ setUpdateTime(new Timestamp(new Date().getTime()));
           		  }  
       ```
 
-        注：String的类型必须形如： yyyy-mm-dd hh:mm:ss[.f...] 这样的格式，中括号表示可选，否则报错！！！
+      注：String的类型必须形如： yyyy-mm-dd hh:mm:ss[.f...] 这样的格式，中括号表示可选，否则报错！！！
 
-        如果String为其他格式，可考虑重新解析下字符串，再重组~~
-
+      如果String为其他格式，可考虑重新解析下字符串，再重组~~
    2. Timestamp -> String
 
       使用Timestamp的toString()方法或者借用DateFormat
@@ -2080,8 +1848,7 @@ setUpdateTime(new Timestamp(new Date().getTime()));
                       }  
       ```
 
-       很容易能够看出来，方法一的优势在于可以灵活的设置字符串的形式。
-
+      很容易能够看出来，方法一的优势在于可以灵活的设置字符串的形式。
 3. Date（ java.util.Date ）和Timestamp互转
 
    声明：查API可知，Date和Timesta是父子类关系
@@ -2099,8 +1866,7 @@ setUpdateTime(new Timestamp(new Date().getTime()));
               	   }  
       ```
 
-       很简单，但是此刻date对象指向的实体却是一个Timestamp，即date拥有Date类的方法，但被覆盖的方法的执行实体在Timestamp中。
-
+      很简单，但是此刻date对象指向的实体却是一个Timestamp，即date拥有Date类的方法，但被覆盖的方法的执行实体在Timestamp中。
    2. Date -> Timestamp
 
       父类不能直接向子类转化，可借助中间的String~~~~
@@ -2136,8 +1902,6 @@ System.out.println(file.getCanonicalPath());
 E:\workspace\Test\.\test.txt 
 E:\workspace\Test\test.txt 
 ```
-
- 
 
 getPath():
 
@@ -2367,8 +2131,6 @@ IDEA里面并没有检测出错误，实则报错：
 
 java.lang.UnsupportedOperationException: null
 
-
-
 原因：
 
 Arrays.asList转成的ArrayList实际上跟往常我们创建的new ArrayList是不同的。
@@ -2377,11 +2139,9 @@ Arrays.asList转成的ArrayList实际上跟往常我们创建的new ArrayList是
 
 ![img](https://www.freesion.com/images/372/12fde77461883b51add3859c5bfdc23c.png)
 
-而我们往常使用的 
+而我们往常使用的
 
 ![img](https://www.freesion.com/images/810/64f6f88277254496994cc617bb46e4f2.png)
-
-
 
 解决方案：
 
@@ -2390,8 +2150,6 @@ List<Integer> agentTeamIdsList =new ArrayList<>(Arrays.asList(agentIdArray));
 ```
 
 ### 学习
-
-
 
 ## springboot
 
@@ -2404,47 +2162,36 @@ List<Integer> agentTeamIdsList =new ArrayList<>(Arrays.asList(agentIdArray));
    - 编程式事务：就是直接在代码里手动开启事务，手动提交，手动回滚。优点就是可以灵活控制，缺点就是太麻烦了，太多重复的代码了。
    - 声明式事务：就是使用SpringAop配置事务，这种方式大大的简化了编码。需要注意的是切入点表达式一定要写正确。
    - 注解事务：直接在Service层的方法上面加上@Transactional注解，个人比较喜欢用这种方式。
-
 2. 事务回滚的原因
 
    在工作中，看过别人写的代码出现了事务不回滚的现象。当然，事务不回滚的都是采用的声明式事务或者是注解事务；编程式事务都是自己写代码手动回滚的，因此是不会出现不回滚的现象。
 
-    
+   再说下声明式事务和注解事务回滚的原理：当被切面切中或者是加了注解的方法中抛出了RuntimeException异常时，Spring会进行事务回滚。默认情况下是捕获到方法的RuntimeException异常，也就是说抛出只要属于运行时的异常（即RuntimeException及其子类）都能回滚；但当抛出一个不属于运行时异常时，事务是不会回滚的。
 
-     再说下声明式事务和注解事务回滚的原理：当被切面切中或者是加了注解的方法中抛出了RuntimeException异常时，Spring会进行事务回滚。默认情况下是捕获到方法的RuntimeException异常，也就是说抛出只要属于运行时的异常（即RuntimeException及其子类）都能回滚；但当抛出一个不属于运行时异常时，事务是不会回滚的。
-
-    
-
-     下面说说我经常见到的3种事务不回滚的产生原因：
+   下面说说我经常见到的3种事务不回滚的产生原因：
 
    - （1）声明式事务配置切入点表达式写错了，没切中Service中的方法
    - （2）Service方法中，把异常给try catch了，但catch里面只是打印了异常信息，没有手动抛出RuntimeException异常
    - （3）Service方法中，抛出的异常不属于运行时异常（如IO异常），因为Spring默认情况下是捕获到运行时异常就回滚
-
 3. 如何保证事务回滚
 
    正常情况下，按照正确的编码是不会出现事务回滚失败的。下面说几点保证事务能回滚的方法
 
    - （1）如果采用声明式事务，一定要确保切入点表达式书写正确
-
    - （2）如果Service层会抛出不属于运行时异常也要能回滚，那么可以将Spring默认的回滚时的异常修改为Exception，这样就可以保证碰到什么异常都可以回滚。具体的设置方式也说下。
 
-     - 声明式事务，在配置里面添加一个rollback-for，代码如下	
+     - 声明式事务，在配置里面添加一个rollback-for，代码如下
 
        ```xml
        <tx:method name="update*" propagation="REQUIRED" rollback-for="java.lang.Exception"/> 
        ```
-
      - 注解事务，直接在注解上面指定，代码如下
 
        ```java
-       @Transactional(rollbackFor=Exception.class)	
+       @Transactional(rollbackFor=Exception.class)
        ```
-
    - （3）只有非只读事务才能回滚的，只读事务是不会回滚的
-
    - （4）如果在Service层用了try catch，在catch里面再抛出一个 RuntimeException异常，这样出了异常才会回滚
-
    - （5）如果你不喜欢（4）的方式，你还可以直接在catch后面写一句回滚代码**TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();**来实现回滚，这样的话，就可以在抛异常后也能return 返回值；比较适合需要拿到Service层的返回值的场景。具体的用法可以参见考下面的伪代码
 
      ```java
@@ -2452,9 +2199,9 @@ List<Integer> agentTeamIdsList =new ArrayList<>(Arrays.asList(agentIdArray));
      @Transactional(rollbackFor = { Exception.class })  
      public boolean test() {  
          try {  
-             doDbSomeThing();    
+             doDbSomeThing();  
          } catch (Exception e) {  
-             e.printStackTrace();     
+             e.printStackTrace();   
              //就是这一句了, 加上之后抛了异常就能回滚（有这句代码就不需要再手动抛出运行时异常了）
              TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();  
              return false;
@@ -2474,8 +2221,6 @@ List<Integer> agentTeamIdsList =new ArrayList<>(Arrays.asList(agentIdArray));
 
 ***4.在@Transactional注解中如果不配置rollbackFor属性,那么事物只会在遇到RuntimeException的时候才会回滚,加上rollbackFor=Exception.class,可以让事物在遇到非运行时异常时也回滚***
 
-
-
 [原文链接](https://www.cnblogs.com/zeng1994/p/8257763.html)
 
 #### 2.springboot获取resouces下的文件的输入流InputStream（非配置文件,而是各种word或者excel的模板文件等)
@@ -2488,7 +2233,7 @@ List<Integer> agentTeamIdsList =new ArrayList<>(Arrays.asList(agentIdArray));
 ClassPathResource classPathResource = new ClassPathResource(filePath);
 try (InputStream is = classPathResource.getInputStream()) {// 读取resources下文件方式1（适用于静态)
 // try (InputStream is = this.getClass().getResourceAsStream(filePath)) {// 读取相resources下文件方式2(不适用于静态)
-    
+  
     // ....流对象各种处理代码
 }
 ```
@@ -2574,7 +2319,7 @@ public void downLoadLineStruImportTemplateFile(HttpServletResponse response) {
             "Content-disposition",
             "attachment;filename="
             + new String(("线路结构导入模板.xlsx").getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
-        
+    
         //循环将输入流中的内容读取到缓冲区当中
         while ((len = in.read(buffer)) > 0) {
             //输出缓冲区的内容到浏览器，实现文件下载
@@ -2694,8 +2439,6 @@ public void loadImg(@RequestParam("path") String path, HttpServletResponse respo
 }
 ```
 
-
-
 #### 7.使用ZipFile解压文件夹
 
 解压方法1（递归读取所有文件统一放到输出文件夹下。不再区分层级）
@@ -2784,7 +2527,6 @@ public static boolean unzip(String inFilePath, String outDirPath) {
 
 例如：methodA方法调用methodB方法时，methodB是继续在调用者methodA的事务中运行呢，还是为自己开启一个新事务运行，这就是由methodB的事务传播行为决定的。
 
-
 二、事务的7种传播行为
 Spring在TransactionDefinition接口中规定了7种类型的事务传播行为。
 事务传播行为是Spring框架独有的事务增强特性。
@@ -2798,8 +2540,6 @@ PROPAGATION_NOT_SUPPORTED：以非事务方式执行操作，如果当前存在�
 PROPAGATION_NEVER：以非事务方式执行，如果当前存在事务，则抛出异常。（never不支持事务，存在就异常）
 PROPAGATION_NESTED：如果当前存在事务，则在嵌套事务内执行。如果当前没有事务，则按REQUIRED属性执行。（nested存在就在嵌套的执行，没有就找是否存在外面的事务，有则加入，没有则新建）
 对事务的要求程度可以从大到小排序：mandatory / supports / required / requires_new / nested / not supported / never
-
- 
 
 三、实战
 1、描述
@@ -2817,6 +2557,7 @@ void test_PROPAGATION_REQUIRED() {
     throw new RuntimeException();
 }
 ```
+
 2、描述
 
 外围方法Propagation.REQUIRED
@@ -2838,6 +2579,7 @@ void test_PROPAGATION_REQUIRED() {
     throw new RuntimeException();
 }
 ```
+
 3、描述
 
 支持当前事务，如果当前存在事务，就加入该事务，如果当前不存在事务，就以非事务执行
@@ -2854,6 +2596,7 @@ void test_PROPAGATION_SUPPORTS() {
     throw new RuntimeException();
 }
 ```
+
 4、描述
 
 外围加入事务，默认Propagation.REQUIRED
@@ -2884,7 +2627,7 @@ spring:
     password: 123456a?
     db-name: dtjc_sbgl_dev
     filters: log4j,mergeStat
-    driverClassName: com.mysql.cj.jdbc.Driver    
+    driverClassName: com.mysql.cj.jdbc.Driver  
     #支持批量更新重点就是这里
     filter:
       wall:
@@ -2893,7 +2636,7 @@ spring:
 
 ```
 
-------
+---
 
 网上搜到的解决方式
 
@@ -2915,23 +2658,23 @@ public class DataSourcesConfig {
      * @return
      * @throws SQLException
      */
-    @Primary //默认数据源 在同样的DataSource中，首先使用被标注的DataSource  
+    @Primary //默认数据源 在同样的DataSource中，首先使用被标注的DataSource
     @Bean(name = "dataSource", destroyMethod = "close")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DruidDataSource Construction() throws SQLException {
-    
-        DruidDataSource datasource = new DruidDataSource();
-    
-        // filter
-        List<Filter> filters = new ArrayList<Filter>();
+
+    DruidDataSource datasource = new DruidDataSource();
+
+    // filter
+        List`<Filter>` filters = new ArrayList `<Filter>`();
         WallFilter wallFilter = new WallFilter();
         filters.add(wallFilter);
         datasource.setProxyFilters(filters);
-    
-        return datasource;
-    
+
+    return datasource;
+
     }
-    
+
     @Bean(name = "wallFilter")
     @DependsOn("wallConfig")
     public WallFilter wallFilter(WallConfig wallConfig) {
@@ -2939,7 +2682,7 @@ public class DataSourcesConfig {
         wallFilter.setConfig(wallConfig);
         return wallFilter;
     }
-    
+
     @Bean(name = "wallConfig")
     public WallConfig wallConfig() {
         WallConfig wallConfig = new WallConfig();
@@ -2954,15 +2697,11 @@ public class DataSourcesConfig {
 url: jdbc:mysql://192.168.1.9:3306/p?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
 到此结束；
 
-
-
 另外：
 
 pring boot开发环境下启动无异常，批量更新也成功了，但是在tomcat下运行启动会报错，批量更新可以成功，异常提示如下：Unable to register WallConfig with key wallConfig; nested exception is InstanceAlreadyExistsException:com.alibaba.druid.wall:name=wallConfig,type=WallConfig
 
 解决办法：在SpringBoot项目中配置文件加上spring.jmx.enabled=false
-
-
 
 ### 学习
 
@@ -2999,14 +2738,10 @@ mvn -U idea:idea
 使用情形二中的方法解决无效时，可以使用以下方法再次尝试
 
 1. ctrl + alt + shift + s 或 在界面菜单选择 File --> Project Structure
-
 2. 点击 Libraries 找到提示不存在的jar包（这里以junit为例），选中，然后右键打开菜单，选择Convert to Repository Library…
-
 3. 执行 maven update
 
    ![如图](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210713084001.png)
-
-   
 
    一般到此都能解决问题，如果还是解决不了，可能真的是人品问题，那就只能呵呵了。。
 
@@ -3121,10 +2856,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
 </dependency>
 ```
 
-#### 
-
-
-
 ### 学习
 
 ## mybatis
@@ -3188,7 +2919,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
            </foreach>
        </insert>
    ```
-
 2. 批量更新
 
    1. 更新多条数据，每条数据都不一样
@@ -3210,7 +2940,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                  }
              }
          }
-         
+
          ```
 
          ```xml
@@ -3223,7 +2953,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
          ```
 
          这种方式最大的问题就是效率问题，逐条更新，每次都会连接数据库，然后更新，再释放连接资源（虽然通过连接池可以将频繁连接数据的效率大大提高，抗不住数据量大），这中损耗在数据量较大的时候便会体现出效率问题。这也是在满足业务需求的时候，通常会使用上述提到的第二种批量更新的实现（当然这种方式也有数据规模的限制，后面会提到）。
-
       2. 逐条更新(mybatis实现)
 
          通过循环，依次执行多条update的sql
@@ -3246,12 +2975,11 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                      name=${item.name}
                  </set>
                  where id = ${item.id}
-             </foreach>      
+             </foreach>  
          </update>
          ```
 
          一条记录update一次，性能比较差，容易造成阻塞。
-
       3. sql批量更新(主力实现)
 
          1. 实际实践(传入的是List<Map<String, Object>>)
@@ -3284,7 +3012,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                         #{item.id}
                     </foreach>
                 </update>
-            
+
             ```
 
             另外文章的样板
@@ -3327,11 +3055,10 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                     id=#{i.id}
                 </foreach>
             </update>
-            
+
             ```
 
             [原文链接](https://blog.csdn.net/junehappylove/article/details/82215674)
-
          2. 下面逐步讲解
 
             一条sql语句来批量更新所有数据，下面直接看一下在mybatis中通常是怎么写的（去掉mybatis语法就是原生的sql语句了，所有就没单独说sql是怎么写的）
@@ -3350,7 +3077,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                     #{item.id,jdbcType=BIGINT}
                 </foreach>
              </update>
-            
+
             ```
 
             其中when...then...是sql中的"switch" 语法。这里借助mybatis的语法来拼凑成了批量更新的sql，上面的意思就是批量更新id在updateBatch参数所传递List中的数据的status字段。还可以使用实现同样的功能,代码如下:
@@ -3374,8 +3101,8 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
 
             属性说明
 
-            - prefix,suffix 表示在trim标签包裹的部分的前面或者后面添加内容 
-            - 如果同时有prefixOverrides,suffixOverrides 表示会用prefix,suffix覆盖Overrides中的内容。 
+            - prefix,suffix 表示在trim标签包裹的部分的前面或者后面添加内容
+            - 如果同时有prefixOverrides,suffixOverrides 表示会用prefix,suffix覆盖Overrides中的内容。
             - 如果只有prefixOverrides,suffixOverrides 表示删除开头的或结尾的xxxOverides指定的内容。
 
             上述代码转化成sql如下:
@@ -3388,7 +3115,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                     ...
                 end
                 where id in (...);
-            
+
             ```
 
             当然这是最简单的批量更新实现,有时候可能需要更新多个字段,那就需要将
@@ -3462,7 +3189,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                 </foreach>
             </update>
             ```
-
       4. 批量更新(单个字段,传参list),实际是sql批量更新的简化版本而已
 
          1. 单个字段方法1
@@ -3482,7 +3208,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                 </foreach>
               </update>
             ```
-
          2. 单个字段方法2
 
             ```xml
@@ -3506,7 +3231,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
             ```sql
             UPDATE t_goods SET NODE_ID = CASE WHEN GOODS_ID = ? THEN ? END WHERE GOODS_ID IN ( ? )
             ```
-
       5. sql批量更新(通过insert实现)
 
          传入的是List<Map<String,Object>>
@@ -3525,7 +3249,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
              signal_source=values(signal_source),rate=values(rate) 
          </insert>
          ```
-
    2. 更新多条数据,更新的内容一样.
 
       1. 传map/传String
@@ -3545,7 +3268,6 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
          ```sql
          UPDATE t_goods SET NODE_ID = ? WHERE GOODS_ID IN (1,2,5);
          ```
-
       2. 传map/传list
 
          NODE_ID从map中取出来,goodsIdList是用list拼接出来的
@@ -3632,7 +3354,7 @@ MyBatis是使用的OGNL表达式来进行解析的，这个地方有一个坑需
 
 ```java
 Page pages = new Page(Integer.valueOf(page), Integer.valueOf(limit));
-List<Map> list = dtjcXmGeneralreportService.getCxList(pages, csrwId,xlId,xb,ppbzId,Integer.valueOf(topSpeed));	
+List<Map> list = dtjcXmGeneralreportService.getCxList(pages, csrwId,xlId,xb,ppbzId,Integer.valueOf(topSpeed));
 ```
 
 service接口层
@@ -3712,7 +3434,7 @@ public class MybatisPlusConfig {
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
         return paginationInterceptor;
     }
-    
+  
     // 最新版
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -3720,7 +3442,7 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.H2));
         return interceptor;
     }
-    
+  
 }
 ```
 
@@ -3765,7 +3487,7 @@ public IPage<User> selectUserPage(Page<User> page, Integer state) {
 
 #### 6. mybatis传入集合循环查询并用union组合
 
-实例：接口  
+实例：接口
 
 ```java
 /**
@@ -3832,8 +3554,6 @@ ew.eq("dcjh_id", csrwInfo.getCsrwID()).and(wrapper -> wrapper.eq("wtlx", "0").or
 List<ErrorData> dataList = errorDataService.list(ew);
 ```
 
-
-
 ### 学习
 
 # 数据库
@@ -3842,20 +3562,16 @@ List<ErrorData> dataList = errorDataService.list(ew);
 
 ### 开发
 
-#### 1.mysql常见的函数和问题的汇总  
+#### 1.mysql常见的函数和问题的汇总
 
 1. 注意mysql里面关于字符串的截取下标一般都是从1开始
-
 2. Substring('str',a,b) 注意：a是起始位置，b是要截取得长度。且下标从1开始 ，如果a是0，那么无论b是多少都返回一个空串
-
 3. Round(num,a) num 如果为字符串，那么返回的也是数字。如果num为'a'或者'b'这种非数字类型的字符串，那么会把这种字符串当成数字0 ，并且a是0，那么就是0 ，a是1，就是0.0 。
 
    注意：如果num是整数(round(2234,2))，那么无论a是多少，返回的都是整数(2234)，如果num是整数型的字符串(round('2234',3))，那么返回的就是带0的小数(2234.000)。
 
    注意：abs(25.0)=>25.0      abs('25.0') =>25
-
 4. INSTR（str,substr） / instr(源字符串, 目标字符串) 获取子串第一次出现的索引，如果没有找到，则返回0（下标从1开始）
-
 5. 1.使用union all链接两个查询结果的时候，如果链接查询结果要有各自的顺序并且总结果要保留这种顺序，那么每个链接的子查询都必须两边加上（）并且在最后加上limit a,b，为了保证都各个子查询查询出全部的结果，ab的取值可以为0,10000000000000
 
    ```sql
@@ -3866,7 +3582,7 @@ List<ErrorData> dataList = errorDataService.list(ew);
    			xb,
    			lc,
    			cxlx,
-   			remove_end_zero(round(fz,2)) as fz,          
+   			remove_end_zero(round(fz,2)) as fz,      
    			remark, 
    			formatMile(lc,'m',0) as lc_str
    		FROM
@@ -3874,8 +3590,8 @@ List<ErrorData> dataList = errorDataService.list(ew);
    		WHERE
    			dcjh_id = #{dcjhId}
    		  	and xb = '上行'
-   			AND lc + 0 &gt;= #{startMileage} + 0
-   			AND lc + 0 &lt; #{endMileage} + 0
+   			AND lc + 0 >= #{startMileage} + 0
+   			AND lc + 0 < #{endMileage} + 0
    			AND flag = '0'
    		order by lc + 0 asc
    		LIMIT 0,10000000000000)
@@ -3893,15 +3609,15 @@ List<ErrorData> dataList = errorDataService.list(ew);
    		WHERE
    			dcjh_id = #{dcjhId}
    		  and xb = '下行'
-   		  AND lc + 0 &gt;= #{startMileage} + 0
-   		  AND lc + 0 &lt; #{endMileage} + 0
+   		  AND lc + 0 >= #{startMileage} + 0
+   		  AND lc + 0 < #{endMileage} + 0
    		  AND flag = '0'
    		order by lc + 0 desc
    		LIMIT 0,10000000000000)
    ) t
    ```
 
-#### 2.是否支持别名  
+#### 2.是否支持别名
 
 在mysql中
 
@@ -3914,14 +3630,11 @@ List<ErrorData> dataList = errorDataService.list(ew);
 1. 区别1：取结果的交集
 
    - union: 对两个结果集进行并集操作, 不包括重复行,相当于distinct, 同时进行默认规则的排序;
-
    - union all: 对两个结果集进行并集操作, 包括重复行, 即所有的结果全部显示, 不管是不是重复;
-
 2. 区别2：获取结果后的操作
 
    - union: 会对获取的结果进行排序操作
    - union all: 不会对获取的结果进行排序操作
-
 3. 区别3：
 
    - union看到结果中ID=3的只有一条
@@ -3931,7 +3644,6 @@ List<ErrorData> dataList = errorDataService.list(ew);
      union
      select * from student2 where id > 2 and id < 6
      ```
-
    - union all 结果中ID=3的结果有两个
 
      ```sql
@@ -3939,14 +3651,13 @@ List<ErrorData> dataList = errorDataService.list(ew);
      union all
      select * from student2 where id > 2 and id < 6
      ```
-
 4. 总结
 
    union all只是合并查询结果，并不会进行去重和排序操作，在没有去重的前提下，使用union all的执行效率要比union高
 
 #### 4.mysql建表的几个必备字段
 
-​	id(主键)，码表（在基础字典表中该字段是必须的)，排序（在基础字典表中该字段是必须的)，创建人，创建时间，修改时间，逻辑删除字段。
+    id(主键)，码表（在基础字典表中该字段是必须的)，排序（在基础字典表中该字段是必须的)，创建人，创建时间，修改时间，逻辑删除字段。
 
 #### 5.any 和 all 关键字
 
@@ -3956,7 +3667,7 @@ A = any('a','b') 等价于 A = 'a' or A = 'b'
 A = all('a','b') 等价于 A = 'a' and A = 'b'
 ```
 
-​	总结 ：any 相当于用or链接后面括号里的子元素，all 相当于用and链接后面括号里面的子元素
+    总结 ：any 相当于用or链接后面括号里的子元素，all 相当于用and链接后面括号里面的子元素
 
 #### 6.mysql开放远程连接(5.7版本生效，8以上的没试过)
 
@@ -4010,7 +3721,6 @@ sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AU
    DATE_FORMAT(updatetime,'%Y-%m-%d') -- 把mysql的datetime格式化成2021-09-23的字符串格式
    DATE_FORMAT(updatetime,'%Y-%m-%d %H:%i:%S') -- 把mysql的datetime格式化成2021-09-07 09:30:37的字符串格式
    ```
-
 2. 常用的STR_TO_DATE()格式
 
    ```sql
@@ -4023,15 +3733,15 @@ sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AU
 
    ```xml
    <if test='(startTime != "" and startTime != null) and (endTime == null or endTime == "")'>
-       AND csrw.endtime &gt;= #{startTime}
+       AND csrw.endtime >= #{startTime}
    </if>
-   
+
    <if test='(startTime == "" or startTime == null) and (endTime != null and endTime != "")'>
-       AND csrw.createtime &lt;= #{endTime}
+       AND csrw.createtime <= #{endTime}
    </if>
-   
+
    <if test='(startTime != "" and startTime != null) and (endTime != null and endTime != "")'>
-       AND !(csrw.endtime &lt; #{startTime} OR csrw.endtime &gt; #{startTime})
+       AND !(csrw.endtime < #{startTime} OR csrw.endtime > #{startTime})
    </if>
    ```
 
@@ -4108,9 +3818,6 @@ VAR 引号不可丢，SQL 优化有诀窍。**
    ## 针对特定的sql进行诊断
    show profile cpu,block io for query Query_ID;/*Query_ID为#3步骤中show profiles列表中的Query_ID*/
    ```
-
-   
-
 2. show profile的常用查询参数。
 
    ①ALL：显示所有的开销信息。
@@ -4130,7 +3837,6 @@ VAR 引号不可丢，SQL 优化有诀窍。**
    ⑧SOURCE：显示和Source_function，Source_file，Source_line相关的开销信息。
 
    ⑨SWAPS：显示交换次数开销信息。
-
 3. 日常开发需注意的结论。（出现下述结论都需要优化)
 
    ①converting HEAP to MyISAM：查询结果太大，内存不够，数据往磁盘上搬了。
@@ -4140,7 +3846,6 @@ VAR 引号不可丢，SQL 优化有诀窍。**
    ③Copying to tmp table on disk：把内存中临时表复制到磁盘上，危险！！！
 
    ④locked。
-
 4. 总结
 
    1.show profile默认是关闭的，并且开启后只存活于当前会话，也就说每次使用前都需要开启。
@@ -4158,8 +3863,6 @@ lock table emp read;
 lock table emp write;
 
 ```
-
-
 
 myisam是写锁调度优于读锁调度,所以mysiam要偏读（因为写会阻塞其他线程对当前表的任何操作)
 
@@ -4209,9 +3912,6 @@ show status like 'innodb_row_lock%'
    ```shell
    rpm -qa | grep -i mysql
    ```
-
-   
-
 2. 删除mysql
 
    ```shell
@@ -4220,22 +3920,18 @@ show status like 'innodb_row_lock%'
    ```
 
    一般用rpm -e 的命令删除mysql,这样表面上删除了mysql,可是mysql的一些残余程序仍然存在,并且通过第一步的方式也查找不到残余,而yum命令比较强大,可以完全删除mysql.(ps:用rpm删除后再次安装的时候会提示已经安装了,这就是rpm没删除干净的原因)
-
 3. 把所有出现的目录统统删除
 
    ```shell
    find / -name mysql
    ```
 
-
    查找mysql的一些目录，把所有出现的目录删除，可以使用rm -rf 路径，删除时请注意，一旦删除无法恢复。
-
 4. 删除配置文件
 
    ```shell
    rm -rf /etc/my.cnf
    ```
-
 5. 删除mysql的默认密码
 
    ```shell
@@ -4244,7 +3940,7 @@ show status like 'innodb_row_lock%'
 
    删除mysql的默认密码,如果不删除,以后安装mysql这个sercret中的默认密码不会变,使用其中的默认密码就可能会报类似Access denied for user ‘root@localhost’ (using password:yes)的错误.
 
-***
+---
 
 五步完成之后，这样mysql就全部删除干净了，若没安装过mysql可忽略以上步骤
 
@@ -4253,38 +3949,29 @@ show status like 'innodb_row_lock%'
    ```shell
    sudo rpm -Uvh https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
    ```
-
 2. 安装Mysql 8.0
 
    ```shell
    sudo yum --enablerepo=mysql80-community install mysql-community-server
    ```
 
-
    提示下载插件选择：y
 
-
    看到complet(完毕)就是安装完啦
-
 3. 启动mysql服务
 
    ```shell
    sudo service mysqld start
    ```
 
-
    显示如下：
 
    启动完成
-
 4. 查看mysql服务运行状态
 
    ```shell
    service mysqld status
    ```
-
-   
-
 5. 查看root临时密码
 
    安装完mysql之后，使用下列命令生成一个临时的密码让root用户登录
@@ -4292,9 +3979,6 @@ show status like 'innodb_row_lock%'
    ```shell
    grep "A temporary password" /var/log/mysqld.log
    ```
-
-   
-
 6. 更改临时密码
 
    输入：
@@ -4333,14 +4017,12 @@ show status like 'innodb_row_lock%'
      ```sql
      set global validate_password.length=6;
      ```
-
    - validate_password.policy 验证密码的复杂程度，我们把它改成0
      输入：
 
      ```sql
      set global validate_password.policy=0;
      ```
-
    - validate_password.check_user_name 用户名检查，用户名和密码不能相同，我们也把它关掉
 
      输入：
@@ -4348,7 +4030,6 @@ show status like 'innodb_row_lock%'
      ```sql
      set global validate_password.check_user_name=off;
      ```
-
    - 再执行修改密码的命令
 
      输入：
@@ -4359,11 +4040,6 @@ show status like 'innodb_row_lock%'
 
      密码设成功
      用mysql客户连接报不允许连接的错误，那是因为没开通远程访问的权限
-
-   
-
-
-
 7. 配置远程访问
 
    输入：
@@ -4415,10 +4091,9 @@ show status like 'innodb_row_lock%'
    flush privileges;
    ```
 
-
    配置成功
 
-***
+---
 
 **如果客户端连接mysql报错，并且其他配置都正常的情况下**
 
@@ -4445,32 +4120,28 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    - 两台服务器的防火墙都开放了各自mysql的服务端口（下面以默认的3306为例子）
    - 从库无法同步主库之前的数据。如果主库之前有数据，那么先把主库的数据导入到从库中。保证两台服务器在做主从复制之前的数据一致性
    - 尽量保证两台服务器的my.cnf文件只有server-id不同。其他的配置都相同
-
 1. 修改主服务器的配置
 
    ```shell
    vi /etc/my.cnf
    ```
 
-   
-
    ```shell
    [mysqld]
    # 启用主从配置(主服务器)
-   
+
    # 主服务器id
    server-id=1
-   
+
    # 二进制日志
    log-bin=mysqlbin
-   
+
    # 设置忽略复制的数据库
    # binlog-ignore-db=mysql
-   
-   # 设置需要复制的数据库
-   # binlog-do-db=dtjc                 
-   ```
 
+   # 设置需要复制的数据库
+   # binlog-do-db=dtjc             
+   ```
 2. 重启mysql服务器
 
    ```shell
@@ -4478,7 +4149,6 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```
 
    mysqld 无效的话把mysqld换成mysql
-
 3. 运行
 
    ```sql
@@ -4492,7 +4162,6 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```
 
    后续需要使用**file**和**position**这两个字段
-
 4. 为从服务器生成专门的账号用来做主从复制,同时赋予做从服务器的权限
 
    ```sql
@@ -4500,7 +4169,6 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    grant replication slave,replication client on *.* to 'repl'@'%';
    flush privileges;
    ```
-
 5. 修改从服务器的配置
 
    ```shell
@@ -4510,20 +4178,19 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```shell
    [mysqld]
    # 启用主从配置(主服务器)
-   
+
    # 从服务器id
    server-id=2
-   
+
    # 二进制日志
    log-bin=mysqlbin
-   
+
    # 设置忽略复制的数据库
    # binlog-ignore-db=mysql
-   
-   # 设置需要复制的数据库
-   # binlog-do-db=dtjc    
-   ```
 
+   # 设置需要复制的数据库
+   # binlog-do-db=dtjc  
+   ```
 6. 重启mysql服务
 
    ```sql
@@ -4531,15 +4198,13 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```
 
    mysqld 无效的话把mysqld换成mysql
-
 7. slave节点测试repl用户远程连接mater节点
 
    ```sql
    mysql -h192.168.220.10 -P3306 -urepl -p123456Aa?
    ```
 
-    链接成功，即可进行下一步，否则要排错
-
+   链接成功，即可进行下一步，否则要排错
 8. 退出master节点的登陆，登陆本机的mysql,运行以下命令
 
    ```sql
@@ -4547,7 +4212,6 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```
 
    **master_log_file就是主服务器的file字段，883就是主服务器的position字段**
-
 9. 如果第8步的mysql没有报错的话，查看slave状态
 
    ```sql
@@ -4634,8 +4298,6 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    reset slave all;
    ```
 
-   
-
 ## redis
 
 ### 开发
@@ -4689,8 +4351,6 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
 
 ```
 
-
-
 ### 学习
 
 # 服务器
@@ -4702,7 +4362,7 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
 #### 1.根据端口号查询占用pid
 
 ```shell
-netstat -nap|grep 8080	
+netstat -nap|grep 8080
 tcp6       0      0 :::8081                 :::*                    LISTEN      16996/java
 kill -9 16996
 ```
@@ -4714,20 +4374,87 @@ kill -9 16996
   ```shell
   vim hello.sh
   ```
-
 * 提权
 
   ```shell
   chmod u+x hello.sh
   ```
-
 * 执行
 
   ```shell
   bash hello.sh
   ```
 
-  
+#### 3.后台运行命令
+
+    如果使用nohup命令提交作业，那么在缺省情况下该作业的所有输出都被重定向到一个名为nohup.out的文件中，除非另外指定	了输出文件：
+
+```shell
+  nohup command > myout.file 2>&1 &
+```
+
+  在上面的例子中，输出被重定向到myout.file文件中。
+
+```shell
+  nohup command >/dev/null 2>&1 &
+```
+
+  上面的例子是不输出日志文件。
+
+#### 4.开放端口，查看端口占用及根据端口占用杀掉进程
+
+1. 开放端口
+
+   ```shell
+   firewall-cmd --zone=public --add-port=5672/tcp --permanent   # 开放5672端口
+   firewall-cmd --zone=public --remove-port=5672/tcp --permanent  #关闭5672端口
+   firewall-cmd --reload   # 配置立即生效
+   ```
+2. 查看防火墙所有开放的端口
+
+   ```shell
+   firewall-cmd --zone=public --list-ports
+   ```
+3. 关闭防火墙
+
+   如果要开放的端口太多，嫌麻烦，可以关闭防火墙，安全性自行评估
+
+   ```shell
+   systemctl stop firewalld.service
+   ```
+4. 查看防火墙状态
+
+   ```shell
+    firewall-cmd --state
+   ```
+5. 查看和监听端口
+
+   ```shell
+   netstat -lnpt
+   ```
+
+   ![图片示意图](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708231956.png)
+6. 检查端口被哪个进程占用
+
+   ```shell
+   netstat -lnpt |grep 5672
+   ```
+
+   ![图片示意](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708232118.png)
+7. 查看进程的详细信息
+
+   ```shell
+   ps 6832
+   ```
+
+   ![图片示意](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708232827.png)
+8. 中止进程
+
+   ```shell
+   kill -9 6832
+   ```
+
+[原文链](https://www.cnblogs.com/heqiuyong/p/10460150.htm)
 
 ### centos
 
@@ -4744,7 +4471,6 @@ kill -9 16996
    安装命令：
 
    yum –y install fontconfig
-
 2. 在/usr/share/fonts目录下新建一个目录chinese
 
    操作命令：
@@ -4754,21 +4480,17 @@ kill -9 16996
    mkdir chinese
 
    cd chinese
-
 3. 修改文件夹权限
 
    操作命令：
 
    chmod -R 755 /usr/share/fonts/chinese/
-
-4. 将本地字体上传至服务器  
+4. 将本地字体上传至服务器
 
    操作步骤：
 
    1. 将C:\Windows\Fonts目录下的字体拷贝到一个新建文件夹（因为文件夹权限无法直接上传，所以需要创建一个新建文件夹）
-
    2. 将需要的字体上传到服务器的/usr/share/fonts/chinese目录下
-
 5. 安装ttmkfdir
 
    安装命令：
@@ -4776,12 +4498,11 @@ kill -9 16996
    yum -y install ttmkfdir
 
    ttmkfdir -e /usr/share/X11/fonts/encodings/encodings.dir
-
 6. 修改fonts.conf配置文件
 
    操作命令：
 
-   vi /etc/fonts/fonts.conf  
+   vi /etc/fonts/fonts.conf
 
    ```xml
     <!-- Font directory list -->
@@ -4792,7 +4513,6 @@ kill -9 16996
    <!-- the following element will be removed in the future -->
    <dir>~/.fonts</dir>
    ```
-
 7. 刷新Liunx字体缓存
 
    操作命令：
@@ -4804,37 +4524,27 @@ kill -9 16996
    fc-cache –fv
 
    fc-list :lang=ZH
-
 8. 重启服务器(完成配置)
 
-[原文链接](https://blog.csdn.net/weixin_45606229/article/details/111060060  )
+[原文链接](https://blog.csdn.net/weixin_45606229/article/details/111060060)
 
 ---
 
 #### 2.Centos7下配置openOffice
 
 1. 下载tar.gz包。下载地址：http://www.openoffice.org/zh-cn/ (需要下载rpm格式的)
-
 2. 通过xftp上传到linux中。我的目录在/opt/openoffice中
-
 3. 解压文件：tar -zxvf Apache_OpenOffice_4.1.6_Linux_x86-64_install-rpm_zh-CN.tar.gz，解压后进入zh-CN目录中。
-
-4. cd RPMS/ 里面都是rpm文件，我们需要安装这些文件 
-
+4. cd RPMS/ 里面都是rpm文件，我们需要安装这些文件
 5. 安装rpm文件： rpm -ivh *.rpm
-
 6. 进入desktop-integration/目录：cd desktop-integration/
-
 7. 安装openoffice:rpm -ivh openoffice4.1.6-redhat-menus-4.1.6-9790.noarch.rpm
-
 8. 安装成功后会在/opt下出现一个openoffice4文件。
-
 9. 启动服务
 
    ```she
    /opt/openoffice4/program/soffice -headless -accept="socket,host=127.0.0.1,port=8100;urp;" -nofirststartwizard
    ```
-
 10. 查看启动状态
 
     ```shell
@@ -4903,8 +4613,6 @@ scp -P 221 -r local_dir username@servername:remote_dir
 
 例如：scp -r test root@192.168.0.101:/var/www/ 把当前目录下的test目录上传到服务器的/var/www/ 目录
 
-
-
 ---
 
 #### 5.linux查看日志最后几行
@@ -4924,68 +4632,6 @@ tail -n 1000：显示最后1000行tail -n +1000：从1000行开始显示，显�
 ```
 
  [原文链接](https://www.cnblogs.com/keta/p/9627227.html)
-
-#### 6.Centos 7 开放端口，查看端口占用及根据端口占用杀掉进程
-
-1. 开放端口    
-
-   ```shell
-   firewall-cmd --zone=public --add-port=5672/tcp --permanent   # 开放5672端口
-   firewall-cmd --zone=public --remove-port=5672/tcp --permanent  #关闭5672端口
-   firewall-cmd --reload   # 配置立即生效
-   ```
-
-2. 查看防火墙所有开放的端口  
-
-   ```shell
-   firewall-cmd --zone=public --list-ports
-   ```
-
-3. 关闭防火墙
-
-   如果要开放的端口太多，嫌麻烦，可以关闭防火墙，安全性自行评估
-
-   ```shell
-   systemctl stop firewalld.service
-   ```
-
-4. 查看防火墙状态
-
-   ```shell
-    firewall-cmd --state
-   ```
-
-5. 查看和监听端口
-
-   ```shell
-   netstat -lnpt
-   ```
-
-   ![图片示意图](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708231956.png)
-
-6. 检查端口被哪个进程占用
-
-   ```shell
-   netstat -lnpt |grep 5672
-   ```
-
-   ![图片示意](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708232118.png)
-
-7. 查看进程的详细信息
-
-   ```shell
-   ps 6832
-   ```
-
-   ![图片示意](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708232827.png)
-
-8. 中止进程
-
-   ```shell
-   kill -9 6832
-   ```
-
-[原文链接](https://www.cnblogs.com/heqiuyong/p/10460150.htm)
 
 #### 7.查看cpu核心数
 
@@ -5066,8 +4712,6 @@ service nginx reload #方式1
 
 **注意：nginx方式1和方式2不能互相调用**
 
-
-
 nginx文件安装完成之后的文件位置：
 
 - /usr/sbin/nginx：主程序
@@ -5120,7 +4764,7 @@ http://mirrors.aliyun.com/ubuntu
   vim /etc/netplan/50-cloud-init.yaml
   ```
 
-  配置如下,注意格式 冒号后边有个空格 
+  配置如下,注意格式 冒号后边有个空格
 
   ```yaml
   network:
@@ -5139,7 +4783,6 @@ http://mirrors.aliyun.com/ubuntu
   ```shell
   sudo netplan apply
   ```
-
 
 #### 6.显示没有firewall-cmd命令
 
@@ -5166,7 +4809,7 @@ apt-get install firewalld
 
 重启rabbitmq服务
 
-\#service rabbitmq-server restart 
+\#service rabbitmq-server restart
 
 查看log文件
 
@@ -5235,19 +4878,13 @@ netstat  -aon|findstr "8088"
 taskkill /pid 5544 -t -f
 ```
 
-
-
-
-
- 
-
 ## nginx
 
 ### 开发
 
 1.解决单页面应用，刷新后出现404或者404的错误
 
-在location里加上  try_files  $uri $uri/ /index.html; 
+在location里加上  try_files  $uri $uri/ /index.html;
 
 具体配置如下：
 
@@ -5259,7 +4896,7 @@ server {
     #charset koi8-r;
 
     #access_log  logs/host.access.log  main;
-	
+
     location / {
     root   study/project_mall;
     index  index.html index.htm;
@@ -5268,8 +4905,6 @@ server {
     }
 }
 ```
-
-
 
 ### 学习
 
@@ -5291,8 +4926,6 @@ git rm -r --cached .
 git add .
 git commit -m 'update .gitignore'
 ```
-
-
 
 ### 学习
 
@@ -5494,4 +5127,3 @@ public class DtoResult<T> implements Serializable {
 
 }
 ```
-
