@@ -39,4 +39,12 @@ public class PaymentController {
             return new CommonResult<>(500, "查询失败,没有对应记录", payment);
         }
     }
+
+    /**
+     * 测试手写轮询算法的接口
+     */
+    @GetMapping("/lb")
+    public String getPaymentLB() {
+        return serverPort;
+    }
 }

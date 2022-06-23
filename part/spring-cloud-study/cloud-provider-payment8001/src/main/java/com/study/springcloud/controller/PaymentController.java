@@ -65,4 +65,12 @@ public class PaymentController {
         //看看discoveryClient具备那些信息
         return this.discoveryClient;
     }
+
+    /**
+     * 测试手写轮询算法的接口
+     */
+    @GetMapping("/lb")
+    public String getPaymentLB() {
+        return serverPort;
+    }
 }
