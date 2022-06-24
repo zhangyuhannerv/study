@@ -5,3 +5,15 @@ eureka:
     register-with-eureka: false
     service-url:
       defaultZone: http://localhost:7001/eureka,http://localhost:7002/eureka
+
+#设置feign客户端的超时时间（openFeign默认整合了ribbon)
+ribbon:
+  #建立连接所允许的时间，适用于网络正常情况下，两端连接所用的时间
+  ConnectTimeout: 5000
+  #建立连接后从服务读取到可用资源所花费的时间（我个人理解为服务响应的时间）,默认为1000（1秒钟）
+  ReadTimeout: 5000
+logging:
+  level:
+    #feign日志以什么级别监听哪个端口
+    #这里是以debug的级别打印调用feign接口的full信息
+    com.study.springcloud.service.IPaymentFeignService: debug

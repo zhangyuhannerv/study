@@ -12,6 +12,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @RestController
@@ -71,6 +72,16 @@ public class PaymentController {
      */
     @GetMapping("/lb")
     public String getPaymentLB() {
+        return serverPort;
+    }
+
+    /**
+     * 测试feign的超时控制
+     */
+    @GetMapping("/feign/timeout")
+    public String paymentFeignTimeout() throws InterruptedException {
+        // 线程暂停3秒钟
+        TimeUnit.SECONDS.sleep(3);
         return serverPort;
     }
 }
