@@ -6,18 +6,13 @@
 
 [toc]
 
-
 # 随记
-
----
 
 ## 学习路线
 
+jlpt n4->n3->n2
+
 mysql完成剩下的课程->补习12->spring->springboot
-
-    ->日语n4
-
----
 
 jvm,juc
 
@@ -78,11 +73,11 @@ maven,docker,k8s
 
    ```css
     <div class="dict_val1" contenteditable="true" id="lineLength"></div>
-
+   
     div[contenteditable] {
        height: 0.1458rem;
        line-height: 0.1458rem;
-
+   
        /*重要*/
        width: auto;
        min-width: 0.1458rem;
@@ -90,7 +85,7 @@ maven,docker,k8s
        overflow: hidden;
        outline: none;
        /*重要*/
-
+   
        color: #001631;
        padding: 0 0.0677rem;
       }
@@ -343,7 +338,7 @@ let aj = {
             success(res) {
                 if (res.code == '200') {
                      $("[fileId='" + domId + "'] .file_progress").text("上传成功")
-                
+              
                 } else {
                     $("[fileId='" + domId + "'] .file_progress").text("上传失败")
                 }
@@ -1227,19 +1222,19 @@ $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox",
           if (e[0].xAxis < startValuex && e[1].xAxis > startValuex) {
               startCoordMile = startValuex;
           }
-
+  
           if (e[0].xAxis < endValuex && e[1].xAxis > endValuex) {
               endCoordMie = endValuex;
           }
-
+  
           markLineData.push({
               xAxis: startCoordMile
           })
-
+  
           markLineData.push({
               xAxis: endCoordMie
           })
-
+  
           markLineData.push([{
               xAxis: startCoordMile,
               yAxis: yMax,
@@ -1337,7 +1332,7 @@ frame = document.getElementById('add_file').files[0];// 这能获得手动选择
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             String uuid = UUID.randomUUID().toString().replaceAll("-","");
-     
+   
             String path = fpPath+ File.separator+"source"+File.separator+guid+File.separator;
 
             File mkdir = new File(path);
@@ -1464,7 +1459,7 @@ export function importData(params) {
                 })
 
             },
-        
+      
             importData() {
                 this.$refs.selectFile.dispatchEvent(new MouseEvent('click'))
             },
@@ -2319,7 +2314,7 @@ public void downLoadLineStruImportTemplateFile(HttpServletResponse response) {
             "Content-disposition",
             "attachment;filename="
             + new String(("线路结构导入模板.xlsx").getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
-    
+  
         //循环将输入流中的内容读取到缓冲区当中
         while ((len = in.read(buffer)) > 0) {
             //输出缓冲区的内容到浏览器，实现文件下载
@@ -2662,19 +2657,19 @@ public class DataSourcesConfig {
     @Bean(name = "dataSource", destroyMethod = "close")
     @ConfigurationProperties(prefix = "spring.datasource")
     public DruidDataSource Construction() throws SQLException {
-
+    
     DruidDataSource datasource = new DruidDataSource();
-
+    
     // filter
         List`<Filter>` filters = new ArrayList `<Filter>`();
         WallFilter wallFilter = new WallFilter();
         filters.add(wallFilter);
         datasource.setProxyFilters(filters);
-
+    
     return datasource;
-
+    
     }
-
+    
     @Bean(name = "wallFilter")
     @DependsOn("wallConfig")
     public WallFilter wallFilter(WallConfig wallConfig) {
@@ -2682,7 +2677,7 @@ public class DataSourcesConfig {
         wallFilter.setConfig(wallConfig);
         return wallFilter;
     }
-
+    
     @Bean(name = "wallConfig")
     public WallConfig wallConfig() {
         WallConfig wallConfig = new WallConfig();
@@ -2940,7 +2935,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                  }
              }
          }
-
+         
          ```
 
          ```xml
@@ -3012,7 +3007,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                         #{item.id}
                     </foreach>
                 </update>
-
+            
             ```
 
             另外文章的样板
@@ -3055,7 +3050,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                     id=#{i.id}
                 </foreach>
             </update>
-
+            
             ```
 
             [原文链接](https://blog.csdn.net/junehappylove/article/details/82215674)
@@ -3077,7 +3072,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                     #{item.id,jdbcType=BIGINT}
                 </foreach>
              </update>
-
+            
             ```
 
             其中when...then...是sql中的"switch" 语法。这里借助mybatis的语法来拼凑成了批量更新的sql，上面的意思就是批量更新id在updateBatch参数所传递List中的数据的status字段。还可以使用实现同样的功能,代码如下:
@@ -3115,7 +3110,7 @@ mvn install:install-file -Dfile=aspose-words-16.4.0-jdk16.jar -DgroupId=com.aspo
                     ...
                 end
                 where id in (...);
-
+            
             ```
 
             当然这是最简单的批量更新实现,有时候可能需要更新多个字段,那就需要将
@@ -3582,7 +3577,7 @@ List<ErrorData> dataList = errorDataService.list(ew);
    			xb,
    			lc,
    			cxlx,
-   			remove_end_zero(round(fz,2)) as fz,      
+   			remove_end_zero(round(fz,2)) as fz,    
    			remark, 
    			formatMile(lc,'m',0) as lc_str
    		FROM
@@ -3735,11 +3730,11 @@ sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_AU
    <if test='(startTime != "" and startTime != null) and (endTime == null or endTime == "")'>
        AND csrw.endtime >= #{startTime}
    </if>
-
+   
    <if test='(startTime == "" or startTime == null) and (endTime != null and endTime != "")'>
        AND csrw.createtime <= #{endTime}
    </if>
-
+   
    <if test='(startTime != "" and startTime != null) and (endTime != null and endTime != "")'>
        AND !(csrw.endtime < #{startTime} OR csrw.endtime > #{startTime})
    </if>
@@ -4129,18 +4124,18 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```shell
    [mysqld]
    # 启用主从配置(主服务器)
-
+   
    # 主服务器id
    server-id=1
-
+   
    # 二进制日志
    log-bin=mysqlbin
-
+   
    # 设置忽略复制的数据库
    # binlog-ignore-db=mysql
-
+   
    # 设置需要复制的数据库
-   # binlog-do-db=dtjc             
+   # binlog-do-db=dtjc           
    ```
 2. 重启mysql服务器
 
@@ -4178,16 +4173,16 @@ ALTER USER ‘root’@’%’ IDENTIFIED WITH mysql_native_password BY ‘123456
    ```shell
    [mysqld]
    # 启用主从配置(主服务器)
-
+   
    # 从服务器id
    server-id=2
-
+   
    # 二进制日志
    log-bin=mysqlbin
-
+   
    # 设置忽略复制的数据库
    # binlog-ignore-db=mysql
-
+   
    # 设置需要复制的数据库
    # binlog-do-db=dtjc  
    ```
