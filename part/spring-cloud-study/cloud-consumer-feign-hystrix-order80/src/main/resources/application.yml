@@ -5,3 +5,26 @@ eureka:
     register-with-eureka: false
     service-url:
       defaultZone: http://127.0.0.1:7001/eureka,http://127.0.0.1:7002/eureka
+
+#关于hystrix请求超时时服务降级的说明
+#这里有三个规定时间：
+#1.在方法上使用@HystrixProperty规定的时间
+#2.yml的feign里ribbon/loadbalance全局设定的时间（默认1s）
+#3.yml的hystrix里全局设定的超时时间
+#当在方法上使用@HystrixCommand设置了服务降级时，超时时间取这三个时间的最小值
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
