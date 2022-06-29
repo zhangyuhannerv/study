@@ -10,21 +10,27 @@
 
 ## 学习路线
 
-jlpt n4->n3->n2
+jlpt ~~n5~~->n4->n3->n2
 
-mysql完成剩下的课程->补习12->spring->springboot
+java：~~stream~~,~~lambda~~，~~IO流~~，注解，反射，~~枚举~~，网络编程，Juc，websocket,nio
+
+~~mysql~~,~~redis~~
 
 jvm,juc
 
-spring->springmvc->springboot->springcloud
+~~spring~~->springmvc->~~springboot~~->springcloud
 
-kafka,rabbitmq,
+zookeeper,~~nginx~~,~~linux~~
+
+kafka,~~rabbitmq~~,
 
 Elasticsearch
 
 maven,docker,k8s
 
-设计模式，计算机组成原理，操作系统
+设计模式，~~计算机网络~~，~~数据结构与算法~~，计算机组成原理，操作系统，编译原理
+
+项目:谷粒学院，尚融宝
 
 ## 要补习的知识
 
@@ -34,13 +40,10 @@ maven,docker,k8s
 4. jstree的demo
 5. java底层：2进制，10进制，移位，源码，补码，反码
 6. 前端关于滚动条的各个属性:clientHeight offsetHeight scrollHeight offsetTop scrollTop
-7. Java8新特性 lambda stream等
-8. Redis6->redis实站
-9. 操作系统，计算机组成原理，数据库概论可看可不看，编译原理
+8. redis实战
 10. js高级
 11. mysql游标的使用
-12. java:IO流，注解，反射，枚举，网络编程，JUC
-13. idea，maven
+13. idea工具的系统使用
 
 ## java的各个工具包
 
