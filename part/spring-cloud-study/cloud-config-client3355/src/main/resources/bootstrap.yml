@@ -1,0 +1,23 @@
+server:
+  port: 3355
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      # 下面四个配置合起来就是http://127.0.0.1:3344/master/config-dev.yml。会把请求返回的内容加载到本地的配置中
+      label: master #分支名称
+      name: config #config-dev文件的-的前半部分
+      profile: dev #config-dev文件的-的后半部分
+      uri: http://127.0.0.1:3344
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:7001/eureka,http://127.0.0.1:7002/eureka
+#暴漏监控端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
