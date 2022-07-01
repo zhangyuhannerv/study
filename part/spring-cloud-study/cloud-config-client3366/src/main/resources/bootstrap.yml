@@ -1,5 +1,5 @@
 server:
-  port: 3355
+  port: 3366
 spring:
   application:
     name: config-client
@@ -19,7 +19,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:7001/eureka,http://127.0.0.1:7002/eureka
-
 #暴漏监控端点
 management:
   endpoints:

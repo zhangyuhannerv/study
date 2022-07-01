@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cloud-config-client3355</artifactId>
+    <artifactId>cloud-config-client3366</artifactId>
 
     <dependencies>
         <!--添加消息总线RabbitMq的支持-->
