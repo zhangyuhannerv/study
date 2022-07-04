@@ -12,6 +12,11 @@
     <artifactId>cloud-consumer-order80</artifactId>
 
     <dependencies>
+        <!--sleuth监控服务调用链路-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
         <!--注意：eureka-client自行引入了ribbon（自己查看依赖树），所以不需要额外引入依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

@@ -9,6 +9,12 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
+  zipkin:
+    base-url: http://127.0.0.1:9411
+  sleuth:
+    sampler:
+      #采样值介于0-1之间，1表示全部采集
+      probability: 1
 mybatis:
   mapperLocations: classpath:mapper/*.xml
   type-aliases-package: com.study.springcloud.entities

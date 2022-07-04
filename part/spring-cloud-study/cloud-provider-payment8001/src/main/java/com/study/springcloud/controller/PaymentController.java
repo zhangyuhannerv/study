@@ -84,4 +84,12 @@ public class PaymentController {
         TimeUnit.SECONDS.sleep(3);
         return serverPort;
     }
+
+    /**
+     * 测试sleuth链路调用监控
+     */
+    @GetMapping("/zipkin")
+    public String paymentZipkin() {
+        return "hi ,i'am paymentzipkin server fall back，welcome to atguigu，O(∩_∩)O哈哈~";
+    }
 }

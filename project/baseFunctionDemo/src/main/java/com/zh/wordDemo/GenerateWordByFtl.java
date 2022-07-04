@@ -1,15 +1,8 @@
-package com.zh.worldDemo;
+package com.zh.wordDemo;
 
-import org.junit.Test;
 import freemarker.core.ParseException;
 import freemarker.template.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
