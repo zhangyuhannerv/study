@@ -1,0 +1,51 @@
+### 解题思路
+
+此处撰写解题思路
+1、先遍历数组把数据加入哈希表，同时判断数组是否存在相同元素
+2、利用target - nums[i]的number值，在哈希表中判断是否存在。
+3，如果存在，再用number去nums数组获取第二个下标值
+
+### 代码
+
+* java
+
+```java
+class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        int [] res =new int[2];
+        int number =0;
+        boolean bol =false;//判断数组是否出现重复数据
+        Set<Integer> set =new HashSet<Integer>();
+        for(int i=0;i<nums.length;i++){
+            if(!set.add(nums[i]))
+                bol =true;
+            
+        }
+
+        for(int i=0;i<nums.length;i++){
+            number=target -nums[i];
+            if(bol){
+                 if(set.contains(number)){
+                        res[0]=i; 
+                        break;
+                }
+            }
+            else{
+                 if(set.contains(number) && number != nums[i]){//防止出现target=10 ,数组元素=5，10-5=5进入判断
+                        res[0]=i; 
+                        break;
+                }
+            }
+          
+        }
+        for(int i=0;i<nums.length;i++){
+            if(nums[i] ==number && i !=res[0]){ // i !=res[0]防止出现重复元素导致获取的下标错误
+                res[1]=i;
+                break;
+            }
+        }
+        return res;
+    }
+}
+```
+

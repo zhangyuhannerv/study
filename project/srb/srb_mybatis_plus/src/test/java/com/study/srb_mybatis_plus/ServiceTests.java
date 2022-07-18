@@ -33,4 +33,10 @@ public class ServiceTests {
         boolean res = userService.saveBatch(list);
         System.out.println("结果是" + res);
     }
+
+    @Test
+    void testListAllByName() {
+        List<User> users = userService.listAllByName("Tom");
+        users.forEach(System.out::println);
+    }
 }

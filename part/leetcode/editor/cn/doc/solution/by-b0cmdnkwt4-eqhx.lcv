@@ -1,0 +1,70 @@
+### 解题思路
+
+执行用时：1 ms, 在所有 Java 提交中击败了100.00%的用户
+内存消耗：41.2 MB, 在所有 Java 提交中击败了86.23%的用户
+通过测试用例：
+1568 / 1568
+
+    核心思路就是两个链表一起遍历，但是两个链表可能长短相同，同时值也不涉及进位。但也可能长短不一，也可能长度相同但因为最后两个节点值相加大于等于10，那就涉及到了进位。总之，新建节点可以帮我们解决上诉问题，从而一次遍历就可以得到答案。
+    所以本题的关键点就在于进位以及进位是否会涉及新建节点、新建的节点和要返回链表的最后一个节点一定要连接起来。
+
+我题解写的可能不好，具体思路直接看代码。
+
+### 代码
+
+* java
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode temp1 = l1;
+
+        //如果temp1比temp2短，new新节点时要注意和之前的链表相连接，所以这里需要这个cur1的辅助节点。
+        ListNode cur1 = new ListNode(0,temp1);
+
+        ListNode temp2 = l2;
+        int count = 0;
+        while (temp1 != null || temp2 != null) {
+           //为了一次遍历就能获取答案，所以对于短的链表我们要为它补上节点，使他和长链表一样长。
+
+            if (temp1 == null) {
+                //新建节点，保证temp1不比temp2短
+                temp1 = new ListNode(0);
+                //将新建的节点与temp1链表相连接，这很重要！
+                cur1.next = temp1;
+            }
+
+            //新建节点，保证temp2不比temp1短，因为我们最后用l1，也就是temp1做返回值，所以不必关注temp2的链表节点之间的连接关系
+            if (temp2 == null) temp2 = new ListNode(0);
+            
+            if ((temp1.val + temp2.val) >= 10 || (temp1.val + temp2.val + count) >= 10) {
+                if (temp1.next == null && temp2.next == null) temp1.next = new ListNode(0);
+                temp1.val = ((temp1.val + temp2.val) % 10 + count) % 10;
+                if (count > 0) count--;
+                count++;
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+                cur1 = cur1.next;
+                continue;
+            }
+            temp1.val = temp1.val + temp2.val + count;
+            if (count > 0) count--;
+            temp1 = temp1.next;
+            temp2 = temp2.next;
+            cur1 = cur1.next;
+        }
+        return l1;
+    }
+}
+```
+

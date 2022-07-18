@@ -19,8 +19,8 @@ public class MapperTests {
     @Test
     public void testInsert() {
         User user = new User();
-        user.setName("建国");
-        user.setAge(74);
+        user.setName("建华");
+        user.setAge(78);
         user.setEmail("jianguo@qq.com");
         int res = userMapper.insert(user);
         System.out.println("结果：" + res);
@@ -44,7 +44,7 @@ public class MapperTests {
     @Test
     void testUpdate() {
         User user = new User();
-        user.setId(1L);
+        user.setUid(1L);
         user.setAge(74);
         // 更新这里是动态sql，如果对象的某个属性为null，那么就不会更新该字段。
         // email和name都没有更新
@@ -56,5 +56,11 @@ public class MapperTests {
     void testDelete() {
         int result = userMapper.deleteById(1L);
         System.out.println("结果：" + result);
+    }
+
+    @Test
+    void testSelectAllByName() {
+        List<User> users = userMapper.selectAllByName("Jack");
+        users.forEach(System.out::println);
     }
 }
