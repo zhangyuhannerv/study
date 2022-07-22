@@ -34,7 +34,11 @@
         autoFitView: true // 是否自动调整地图视野使绘制的 Marker点都处于视口的可见范围
       });
       //关键字查询
-      placeSearch.search('铁科院');
+      placeSearch.search('中国国际神经科学研究所', function (status, result) {
+        // 查询成功时，result即对应匹配的POI信息
+        console.log(status);
+        console.log(result)
+      });
     });
 
   </script>

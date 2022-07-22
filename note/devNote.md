@@ -5277,7 +5277,7 @@ taskkill /pid 5544 -t -f
 
 ### 开发
 
-1.解决单页面应用，刷新后出现404或者404的错误
+#### 1.解决单页面应用，刷新后出现404或者404的错误
 
 在location里加上  try_files  $uri $uri/ /index.html;
 
@@ -5301,7 +5301,38 @@ server {
 }
 ```
 
+#### 2.nginx配置文件下载（城轨的应用是配置apk下载）
 
+1. 修改配置文件
+   ```ng
+   server {
+           listen       80;
+           server_name  app.com.cn;
+    
+           location /app {
+               alias /var/www/app;
+               autoindex on;
+               default_type application/octet-stream;
+           }
+       }
+   ```
+
+   **alias指定虚拟目录**
+
+   **autoindex on;打开目录浏览功能** 
+
+   **default_type application/octet-stream;设置相应的MIME类型**
+
+   **当Url路径中包含`/app/`时，MIME类型会被重置为`application/octet-stream`**
+
+2. 重新加载生效 
+
+   ```shell
+   nginx -t
+   nginx -s reload
+   ```
+
+   
 
 # 项目
 
