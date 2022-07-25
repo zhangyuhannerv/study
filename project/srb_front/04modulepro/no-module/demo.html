@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 模块化解决全局变量污染的问题 -->
+  <!-- 如果都用let，那么会报变量重复定义的错误 -->
+  <script src="a.js"></script>
+  <script src="b.js"></script>
+  <script>
+    console.log(star);
+  </script>
+</body>
+
+</html>
