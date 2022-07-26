@@ -17,3 +17,7 @@ mybatis-plus: #mybatis
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath:com/study/srb/core/mapper/xml/*.xml
+#设置日志级别。因为yml里自定义程度有限。固转到logback-spring.xml里自定义配置logback
+#logging:
+#  level:
+#    root: ERROR

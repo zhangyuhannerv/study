@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <contextName>studySrb</contextName>
+    <!-- 日志的输出目录 -->
+    <property name="log.path" value="D:/javaTest/log/srb"/>
+
+    <!-- magenta:洋红 -->
+    <!-- boldMagenta:粗红-->
+    <!-- cyan:青色 -->
+    <!-- white:白色 -->
+    <!-- magenta:洋红 -->
+    <!--控制台日志格式：彩色日志-->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) %highlight([%-5level]) %green(%logger) %msg%n"/>
+    <!--文件日志格式-->
+    <property name="FILE_LOG_PATTERN"
+              value="%date{yyyy-MM-dd HH:mm:ss} [%-5level] %thread %file:%line %logger %msg%n"/>
+    <!--编码-->
+    <property name="ENCODING"
+              value="UTF-8"/>
+
+    <!-- 控制台日志 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
+        </encoder>
+    </appender>
+
+    <!-- 文件日志 -->
+    <!--当设置滚动日志的时候，这个就没用了-->
+    <!--<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${log.path}/log.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
+        </encoder>
+    </appender>-->
+
+    <!--滚动文件日志-->
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!--  要区别于其他的appender中的文件名字  -->
+        <file>${log.path}/log-rolling.log</file>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>${ENCODING}</charset>
+        </encoder>
+
+
+        <!-- 设置滚动日志记录的滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志归档路径以及格式 -->
+            <fileNamePattern>${log.path}/info/log-rolling-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--归档日志文件保留的最大数量(这个最大数量这么理解：15就是保留从当前时间起向前15天的日志)-->
+            <maxHistory>15</maxHistory>
+
+            <!--进一步设置策略，在time的基础上设置size-->
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--<maxFileSize>1KB</maxFileSize>-->
+                <!--真正的生产环境，日志的分片一般设置为500MB-->
+                <maxFileSize>500MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+    <!-- 日志记录器  -->
+    <!--这里的名字是有作用的，是日志打印的范围-->
+    <!--当配置了多环境时，这里就不要配置了-->
+    <!--<logger name="com.study.srb" level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </logger>-->
+
+
+    <!-- 多环境配置 -->
+    <!--name属性与spring.profile.active的值有关-->
+    <!-- 开发环境和测试环境 -->
+    <springProfile name="dev,test">
+        <logger name="com.study.srb" level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <!--真正的开发不用写到文件里-->
+            <!--<appender-ref ref="ROLLING_FILE"/>-->
+        </logger>
+    </springProfile>
+
+    <!--生成环境-->
+    <springProfile name="prod">
+        <logger name="com.study.srb" level="ERROR">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ROLLING_FILE"/>
+        </logger>
+    </springProfile>
+</configuration>
