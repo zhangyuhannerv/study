@@ -1,0 +1,23 @@
+#配置连接数据库的四大参数，spring会根据四大参数创建数据源
+spring:
+  #数据库的四大参数配置，spring会根据四大参数创建数据源
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/mysql_web?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+  initialSize: 5
+  minIdle: 5
+  maxActive: 20
+  maxWait: 60000
+  timeBetweenEvictionRunMillis: 60000
+  minEvictableIdleTimeMills: 300000
+  validationQuery: SELECT 1 FORM DUAL
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+
+
