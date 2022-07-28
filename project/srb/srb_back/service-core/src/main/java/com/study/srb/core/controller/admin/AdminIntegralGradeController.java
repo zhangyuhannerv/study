@@ -84,7 +84,7 @@ public class AdminIntegralGradeController {
     }
 
     @ApiOperation("更新积分等级")
-    @PostMapping("/update")
+    @PutMapping("/update")
     public R updateById(
             @ApiParam(value = "积分等级对象", required = true)
             @RequestBody IntegralGrade integralGrade) {
