@@ -2,7 +2,7 @@
 <configuration>
     <contextName>studySrb</contextName>
     <!-- 日志的输出目录 -->
-    <property name="log.path" value="D:/javaTest/log/srb"/>
+    <property name="log.path" value="/Users/zhangyuhan/Work/java-test-file/log/srb"/>
 
     <!-- magenta:洋红 -->
     <!-- boldMagenta:粗红-->
