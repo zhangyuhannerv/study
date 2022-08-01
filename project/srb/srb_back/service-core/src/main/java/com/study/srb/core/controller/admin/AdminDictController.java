@@ -1,6 +1,8 @@
 package com.study.srb.core.controller.admin;
 
 
+import com.alibaba.excel.EasyExcel;
+import com.study.srb.core.pojo.dto.ExcelDictDto;
 import com.study.srb.core.service.DictService;
 import com.study.srb.exception.BusinessException;
 import com.study.srb.result.R;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * <p>
@@ -43,6 +47,19 @@ public class AdminDictController {
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UPLOAD_ERROR, e);
         }
+    }
+
+    @ApiOperation("excel数据的导出")
+    @GetMapping("/export")
+    public void download(HttpServletResponse response) throws IOException {
+        // 这里注意 有同学反应使用swagger 会导致各种问题，请直接用浏览器或者用postman
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
+        String fileName = URLEncoder.encode("mydict", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+        EasyExcel.write(response.getOutputStream(), ExcelDictDto.class).sheet("模板")
+                .doWrite(dictService.listDictData());
     }
 
 }

@@ -44,8 +44,8 @@ public class ExcelDictDTOListener extends AnalysisEventListener<ExcelDictDto> {
     private void saveData() {
         log.info("{}条数据被存储到数据库......", list.size());
         // 调用mapper层的save方法：save list 对象
-        // TODO
-        list.clear();
+        dictMapper.insertBatch(list);
         log.info("{}条数据存储到数据库成功", list.size());
+        list.clear();
     }
 }
