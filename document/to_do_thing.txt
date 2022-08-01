@@ -28,11 +28,11 @@ jetbrains升级
 ---
 迁移注意：
 sudyFiles(直接存到移动硬盘)√
-nginx conf
+nginx conf √
 dev-env（cut）√
-城轨的上传文件（放弃）
-workProject
+城轨的上传文件（放弃）√
+workProject √
 maven（copy）√
-虚拟机的实例
+虚拟机的实例（放弃）√
 ---
 
