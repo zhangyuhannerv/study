@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "aliyun.sms")
+@ConfigurationProperties(prefix = "aliyun.sms", ignoreInvalidFields = true)
 public class SmsProperties implements InitializingBean {
     private String regionId;
     private String keyId;
