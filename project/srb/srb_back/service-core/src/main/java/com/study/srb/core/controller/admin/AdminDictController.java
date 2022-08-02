@@ -3,6 +3,7 @@ package com.study.srb.core.controller.admin;
 
 import com.alibaba.excel.EasyExcel;
 import com.study.srb.core.pojo.dto.ExcelDictDto;
+import com.study.srb.core.pojo.entity.Dict;
 import com.study.srb.core.service.DictService;
 import com.study.srb.exception.BusinessException;
 import com.study.srb.result.R;
@@ -18,6 +19,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * <p>
@@ -62,5 +64,12 @@ public class AdminDictController {
                 .doWrite(dictService.listDictData());
     }
 
+    @ApiOperation("根据上级id获取节点数据")
+    @GetMapping("/listByParentId/{parentId}")
+    public R listByParentId(@ApiParam(value = "上级节点id", required = true)
+                            @PathVariable Long parentId) {
+        List<Dict> dictList = dictService.listByParentId(parentId);
+        return R.ok().data("list", dictList);
+    }
 }
 

@@ -43,17 +43,41 @@
         <el-button @click="dialogVisible = false">取消</el-button>
       </div>
     </el-dialog>
+    <!-- table -->
+    <el-table :data="list" border row-key="id" lazy :load="load">
+      <el-table-column label="名称" align="left" prop="name" />
+      <el-table-column label="编码" prop="dictCode" />
+      <el-table-column label="值" align="left" prop="value" />
+    </el-table>
   </div>
 </template>
 <script>
+import dictApi from '@/api/core/dict'
 export default {
   data() {
     return {
       dialogVisible: false, // 对话框是否显示
-      BASE_API: process.env.VUE_APP_BASE_API
+      BASE_API: process.env.VUE_APP_BASE_API,
+      list: [] // 数据字典列表
     }
   },
+  created() {
+    this.fetchData()
+  },
   methods: {
+    fetchData() {
+      dictApi.listByParentId(1).then((e) => {
+        this.list = e.data.list
+      })
+    },
+    // 加载表格的子节点
+    load(tree, treeNode, resolve) {
+      // 获取数据
+      dictApi.listByParentId(tree.id).then((e) => {
+        resolve(e.data.list)
+      })
+    },
+
     // 选择多于一个文件时
     fileUploadExceed() {
       this.$message.warning('只能选取一个文件')
