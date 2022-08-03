@@ -9,4 +9,6 @@ public interface FileService {
      * @return 返回文件上传后的访问路径
      */
     String upload(InputStream inputStream, String module, String fileName);
+
+    void removeFile(String url);
 }

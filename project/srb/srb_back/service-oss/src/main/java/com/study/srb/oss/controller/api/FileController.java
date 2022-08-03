@@ -37,4 +37,13 @@ public class FileController {
             throw new BusinessException(ResponseEnum.UPLOAD_ERROR, e);
         }
     }
+
+    @ApiOperation("删除OSS文件")
+    @DeleteMapping("/remove")
+    public R remove(
+            @ApiParam(value = "要删除的文件路径", required = true)
+            @RequestParam("url") String url) {
+        fileService.removeFile(url);
+        return R.ok().message("删除成功");
+    }
 }

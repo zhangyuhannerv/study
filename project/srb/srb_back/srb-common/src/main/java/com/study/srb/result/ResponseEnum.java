@@ -15,6 +15,7 @@ public enum ResponseEnum {
     BAD_SQL_GRAMMAR_ERROR(-101, "sql语法错误"),
     SERVLET_ERROR(-102, "servlet请求异常"), //-2xx 参数校验
     UPLOAD_ERROR(-103, "文件上传错误"),
+    DELETE_ERROR(-105, "文件删除错误"),
     EXPORT_DATA_ERROR(104, "数据导出失败"),
 
 

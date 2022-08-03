@@ -62,4 +62,34 @@ public class FileServiceImpl implements FileService {
             }
         }
     }
+
+    @Override
+    public void removeFile(String url) {
+        // 创建OSSClient实例。
+        OSS ossClient = new OSSClientBuilder().build(OssProperties.ENDPOINT, OssProperties.KEY_ID, OssProperties.KEY_SECRET);
+        try {
+            // 删除文件或目录。如果要删除目录，目录必须为空。
+            String host = "https://" + OssProperties.BUCKET_NAME + "." + OssProperties.ENDPOINT + "/";
+            String objectName = url.substring(host.length());
+            ossClient.deleteObject(OssProperties.BUCKET_NAME, objectName);
+        } catch (OSSException oe) {
+            log.info("Caught an OSSException, which means your request made it to OSS, "
+                    + "but was rejected with an error response for some reason.");
+            log.info("Error Message:" + oe.getErrorMessage());
+            log.info("Error Code:" + oe.getErrorCode());
+            log.info("Request ID:" + oe.getRequestId());
+            log.info("Host ID:" + oe.getHostId());
+            throw new BusinessException(ResponseEnum.DELETE_ERROR, oe);
+        } catch (ClientException ce) {
+            log.info("Caught an ClientException, which means the client encountered "
+                    + "a serious internal problem while trying to communicate with OSS, "
+                    + "such as not being able to access the network.");
+            log.info("Error Message:" + ce.getMessage());
+            throw new BusinessException(ResponseEnum.DELETE_ERROR, ce);
+        } finally {
+            if (ossClient != null) {
+                ossClient.shutdown();
+            }
+        }
+    }
 }
