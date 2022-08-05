@@ -28,5 +28,6 @@ module.exports = {
   // 修改默认的3000端口号
   server: {
     port: 3001
-  }
+  },
+  modules: ['@nuxtjs/axios']
 }

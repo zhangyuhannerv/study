@@ -4,6 +4,7 @@
     "dev": "nuxt"
   },
   "dependencies": {
+    "@babel/preset-env": "~7.12.17",
     "@nuxtjs/axios": "^5.12.3",
     "nuxt": "^2.14.10"
   }
