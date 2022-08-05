@@ -1,0 +1,59 @@
+[
+  {
+    "name": "about",
+    "path": "/about",
+    "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/about.vue",
+    "chunkName": "pages/about",
+    "_name": "_aec11288"
+  },
+  {
+    "name": "lend",
+    "path": "/lend",
+    "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/lend/index.vue",
+    "chunkName": "pages/lend/index",
+    "_name": "_a61ddeda"
+  },
+  {
+    "path": "/user",
+    "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/user.vue",
+    "chunkName": "pages/user",
+    "children": [
+      {
+        "name": "user",
+        "path": "",
+        "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/user/index.vue",
+        "chunkName": "pages/user/index",
+        "_name": "_efab0f22"
+      },
+      {
+        "name": "user-user1",
+        "path": "user1",
+        "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/user/user1.vue",
+        "chunkName": "pages/user/user1",
+        "_name": "_6c1b793a"
+      },
+      {
+        "name": "user-user2",
+        "path": "user2",
+        "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/user/user2.vue",
+        "chunkName": "pages/user/user2",
+        "_name": "_6bff4a38"
+      }
+    ],
+    "_name": "_72f65a28"
+  },
+  {
+    "name": "lend-id",
+    "path": "/lend/:id",
+    "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/lend/_id.vue",
+    "chunkName": "pages/lend/_id",
+    "_name": "_24a01bbb"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/zhangyuhan/Work/study/project/srb_front/nuxt-app/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_6f515cfe"
+  }
+]
