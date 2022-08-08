@@ -103,26 +103,49 @@
   </header>
 </template>
 <script>
-import "~/assets/font/iconfont.css";
-import cookie from "js-cookie";
+import '~/assets/font/iconfont.css'
+import cookie from 'js-cookie'
 
 export default {
   data() {
     return {
-      userInfo: null,
-    };
+      userInfo: null
+    }
   },
 
   mounted() {
-    this.showInfo();
+    this.showInfo()
   },
 
   methods: {
     //显示用户信息
-    showInfo() {},
+    showInfo() {
+      // 判断cookie中是否有用户信息
+      let userInfo = cookie.get('userInfo')
+      if (!userInfo) {
+        console.log('cookie不存在')
+        this.userInfo = null
+        return
+      }
+      userInfo = JSON.parse(userInfo)
+      // 首先需要校验token是否合法
+      this.$axios({
+        url: '/api/core/userInfo/checkToken',
+        methods: 'get'
+        // headers: {
+        //   token: userInfo.token
+        // }
+      }).then((response) => {
+        // 校验成功才赋值
+        this.userInfo = userInfo
+      })
+    },
 
     //退出
-    logout() {},
-  },
-};
+    logout() {
+      cookie.set('userInfo', '')
+      window.location.href = '/login'
+    }
+  }
+}
 </script>

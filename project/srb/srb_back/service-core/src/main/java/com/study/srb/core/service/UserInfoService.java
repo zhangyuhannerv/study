@@ -19,4 +19,6 @@ public interface UserInfoService extends IService<UserInfo> {
     void register(RegisterVO registerVO);
 
     UserInfoVO login(LoginVo loginVo, String ip);
+
+    
 }

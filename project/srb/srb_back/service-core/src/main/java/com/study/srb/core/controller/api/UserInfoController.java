@@ -1,7 +1,7 @@
 package com.study.srb.core.controller.api;
 
 
-import com.study.srb.core.pojo.entity.UserInfo;
+import com.study.srb.base.util.JwtUtils;
 import com.study.srb.core.pojo.vo.LoginVo;
 import com.study.srb.core.pojo.vo.RegisterVO;
 import com.study.srb.core.pojo.vo.UserInfoVO;
@@ -74,6 +74,18 @@ public class UserInfoController {
         String ip = request.getRemoteAddr();
         UserInfoVO userInfoVO = userInfoService.login(loginVo, ip);
         return R.ok().data("userInfo", userInfoVO);
+    }
+
+    @ApiOperation("校验令牌")
+    @GetMapping("/checkToken")
+    public R checkToken(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        boolean result = JwtUtils.checkToken(token);
+        if (result) {
+            return R.ok();
+        } else {
+            return R.setResult(ResponseEnum.LOGIN_AUTH_ERROR);
+        }
     }
 }
 

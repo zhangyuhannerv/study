@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import '~/assets/css/register.css'
-import cookie from 'js-cookie'
+import "~/assets/css/register.css";
+import cookie from "js-cookie";
 
 export default {
   data() {
@@ -43,12 +43,19 @@ export default {
         userType: 1,
       },
       isValid: true, //表单校验是否成功
-    }
+    };
   },
 
   methods: {
     //登录
-    login() {},
+    login() {
+      this.$axios
+        .$post("/api/core/userInfo/login", this.userInfo)
+        .then((response) => {
+          cookie.set("userInfo", response.data.userInfo);
+          window.location.href = "/user";
+        });
+    },
   },
-}
+};
 </script>
