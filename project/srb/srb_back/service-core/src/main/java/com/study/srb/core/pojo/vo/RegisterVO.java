@@ -1,4 +1,4 @@
-package com.study.srb.core.pojo.dto.vo;
+package com.study.srb.core.pojo.vo;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

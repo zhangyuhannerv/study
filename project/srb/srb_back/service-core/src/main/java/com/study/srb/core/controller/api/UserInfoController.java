@@ -1,7 +1,10 @@
 package com.study.srb.core.controller.api;
 
 
-import com.study.srb.core.pojo.dto.vo.RegisterVO;
+import com.study.srb.core.pojo.entity.UserInfo;
+import com.study.srb.core.pojo.vo.LoginVo;
+import com.study.srb.core.pojo.vo.RegisterVO;
+import com.study.srb.core.pojo.vo.UserInfoVO;
 import com.study.srb.core.service.UserInfoService;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.R;
@@ -14,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -56,6 +60,20 @@ public class UserInfoController {
         userInfoService.register(registerVO);
 
         return R.ok().message("注册成功");
+    }
+
+    @ApiOperation("会员登陆")
+    @PostMapping("/login")
+    public R login(@RequestBody LoginVo loginVo, HttpServletRequest request) {
+        String mobile = loginVo.getMobile();
+        String password = loginVo.getPassword();
+
+        Assert.notEmpty(mobile, ResponseEnum.MOBILE_NULL_ERROR);
+        Assert.notEmpty(password, ResponseEnum.PASSWORD_NULL_ERROR);
+
+        String ip = request.getRemoteAddr();
+        UserInfoVO userInfoVO = userInfoService.login(loginVo, ip);
+        return R.ok().data("userInfo", userInfoVO);
     }
 }
 
