@@ -29,5 +29,9 @@ module.exports = {
   server: {
     port: 3001
   },
-  modules: ['@nuxtjs/axios']
+  modules: ['@nuxtjs/axios'],
+  axios: {
+    baseURL: 'http://icanhazip.com'
+  },
+  plugins: ['~/plugins/axios']
 }

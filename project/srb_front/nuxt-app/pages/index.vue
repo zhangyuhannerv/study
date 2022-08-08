@@ -14,7 +14,7 @@
 export default {
   // 服务器端数据渲染
   async asyncData({ $axios }) {
-    let response = await $axios.$get("http://icanhazip.com/");
+    let response = await $axios.$get("/");
     return {
       ip1: response,
     };
