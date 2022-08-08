@@ -1,5 +1,6 @@
 package com.study.srb.core.service;
 
+import com.study.srb.core.pojo.dto.vo.RegisterVO;
 import com.study.srb.core.pojo.entity.UserInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UserInfoService extends IService<UserInfo> {
 
+    void register(RegisterVO registerVO);
 }

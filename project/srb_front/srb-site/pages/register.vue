@@ -31,17 +31,13 @@
           <li>
             <span class="dis">短信验证码</span>
             <input class="input" v-model="userInfo.code" />
-            <span class="info">
-              请输入验证码
-            </span>
+            <span class="info"> 请输入验证码 </span>
           </li>
 
           <li>
             <span class="dis">密码</span>
             <input type="password" v-model="userInfo.password" class="input" />
-            <span class="info">
-              6-24个字符，英文、数字组成，区分大小写
-            </span>
+            <span class="info"> 6-24个字符，英文、数字组成，区分大小写 </span>
           </li>
 
           <li class="agree">
@@ -50,9 +46,7 @@
             <span>请查看协议</span>
           </li>
           <li class="btn">
-            <button @click="register()">
-              下一步
-            </button>
+            <button @click="register()">下一步</button>
           </li>
         </ul>
       </div>
@@ -68,9 +62,7 @@
         <ul>
           <li class="scses">
             {{ this.userInfo.mobile }} 恭喜您注册成功！
-            <NuxtLink class="blue" to="/login">
-              请登录
-            </NuxtLink>
+            <NuxtLink class="blue" to="/login"> 请登录 </NuxtLink>
           </li>
         </ul>
       </div>
@@ -79,7 +71,7 @@
 </template>
 
 <script>
-import '~/assets/css/register.css'
+import "~/assets/css/register.css";
 export default {
   data() {
     return {
@@ -90,18 +82,51 @@ export default {
       sending: false, // 是否发送验证码
       second: 10, // 倒计时间
       leftSecond: 0, //剩余时间
-    }
+    };
   },
 
   methods: {
     //发短信
-    send() {},
+    send() {
+      if (!this.userInfo.mobile) {
+        this.$message.error("请输入手机号码");
+        return;
+      }
+
+      // 防止重复提交
+      if (this.sending) return;
+      this.sending = true;
+      // 启用倒计时
+      this.timeDown();
+
+      this.$axios
+        .$get("/api/sms/send/" + this.userInfo.mobile)
+        .then((response) => {
+          this.$message.success(response.message);
+        });
+    },
 
     //倒计时
-    timeDown() {},
+    timeDown() {
+      this.leftSecond = this.second;
+      const timer = setInterval(() => {
+        this.leftSecond--;
+        if (this.leftSecond <= 0) {
+          // 停止计时器
+          clearInterval(timer);
+          this.sending = false;
+        }
+      }, 1000);
+    },
 
     //注册
-    register() {},
+    register() {
+      this.$axios
+        .$post("/api/core/userInfo/register", this.userInfo)
+        .then((response) => {
+          this.step = 2;
+        });
+    },
   },
-}
+};
 </script>

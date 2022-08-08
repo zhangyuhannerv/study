@@ -40,13 +40,13 @@ public class ApiSmsController {
         Assert.notEmpty(mobile, ResponseEnum.MOBILE_NULL_ERROR);
         // 校验手机号码的合法性
         // 垃圾工具，我的手机号居然通过不了验证
-//        Assert.isTrue(RegexValidateUtils.checkCellphone(mobile), ResponseEnum.MOBILE_ERROR);
+        Assert.isTrue(RegexValidateUtils.checkCellphone(mobile), ResponseEnum.MOBILE_ERROR);
 
         // 生成验证码
         String fourBitRandom = RandomUtils.getFourBitRandom();
         HashMap<String, Object> map = new HashMap<>();
         map.put("code", fourBitRandom);
-        smsService.send(mobile, SmsProperties.TEMPLATE_CODE, map);
+//        smsService.send(mobile, SmsProperties.TEMPLATE_CODE, map);
 
         // 将验证码存入redis
         redisTemplate.opsForValue().set("srb:sms:code:" + mobile, fourBitRandom, 5, TimeUnit.MINUTES);
