@@ -122,4 +122,12 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
                 .eq(userType != null, "user_type", userType);
         return baseMapper.selectPage(pageParam, userInfoQueryWrapper);
     }
+
+    @Override
+    public void lock(Long id, Integer status) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        userInfo.setStatus(status);
+        baseMapper.updateById(userInfo);
+    }
 }
