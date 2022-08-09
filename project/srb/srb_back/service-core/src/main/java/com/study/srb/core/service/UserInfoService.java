@@ -1,9 +1,12 @@
 package com.study.srb.core.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.study.srb.core.pojo.entity.UserInfo;
+import com.study.srb.core.pojo.query.UserInfoQuery;
 import com.study.srb.core.pojo.vo.LoginVo;
 import com.study.srb.core.pojo.vo.RegisterVO;
-import com.study.srb.core.pojo.entity.UserInfo;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.study.srb.core.pojo.vo.UserInfoVO;
 
 /**
@@ -20,5 +23,6 @@ public interface UserInfoService extends IService<UserInfo> {
 
     UserInfoVO login(LoginVo loginVo, String ip);
 
-    
+
+    IPage<UserInfo> listPage(Page<UserInfo> pageParam, UserInfoQuery userInfoQuery);
 }
