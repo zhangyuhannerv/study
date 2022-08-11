@@ -517,6 +517,8 @@ $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset()
 // children是子元素。
 ```
 
+#### 10. 利用jQuery的ajax实现文件上传。前后台代码示例
+
 ### 学习
 
 ## layui
@@ -4003,6 +4005,8 @@ List<ErrorData> dataList = errorDataService.list(ew);
    这里注意 return 中的第三个参数，是一个 lambda 表达式，这也是 MP 中批量插入的核心逻辑，可以看到，MP 先对数据进行分片（默认分片大小是 1000），分片完成之后，也是一条一条的插入。继续查看 executeBatch 方法，就会发现这里的 sqlSession 其实也是一个批处理的 sqlSession，并非普通的 sqlSession。
 
    综上，MP 中的批量插入方案跟我们 2.1 小节的批量插入思路其实是一样的。入股想要批量插入大数据量的效率最高，就采用2.1的方式
+
+#### 9.mybatis-plus里使用QueryWrapper关于时间日期比较的问题
 
 ### 学习
 

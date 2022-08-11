@@ -12,6 +12,7 @@ import com.study.srb.result.ResponseEnum;
 import com.study.srb.util.RegexValidateUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -86,6 +87,15 @@ public class UserInfoController {
         } else {
             return R.setResult(ResponseEnum.LOGIN_AUTH_ERROR);
         }
+    }
+
+
+    @ApiOperation("校验手机号是否注册")
+    @GetMapping("/checkMobile/{mobile}")
+    public boolean checkMobile(
+            @ApiParam(value = "手机号", required = true)
+            @PathVariable String mobile) {
+        return userInfoService.check(mobile);
     }
 }
 
