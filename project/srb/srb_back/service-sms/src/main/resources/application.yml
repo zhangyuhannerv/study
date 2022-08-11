@@ -27,6 +27,8 @@ feign:
       default:
         connect-timeout: 1000 #连接超时配置
         read-timeout: 600000 #执行超时配置
+  sentinel:
+    enabled: true
 # 配置feign的日志打印
 logging:
   level:
