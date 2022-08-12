@@ -22,7 +22,8 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @RestController
 @RequestMapping("/api/sms")
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 public class ApiSmsController {
     @Resource
     private SmsService smsService;

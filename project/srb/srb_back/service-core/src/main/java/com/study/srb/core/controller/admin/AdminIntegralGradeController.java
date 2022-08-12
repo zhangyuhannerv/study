@@ -25,7 +25,8 @@ import java.util.List;
  * @since 2022-07-25
  */
 @Api(tags = "积分等级管理")
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 @RestController
 @RequestMapping("/admin/core/integralGrade")
 @Slf4j

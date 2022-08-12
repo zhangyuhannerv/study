@@ -32,7 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/api/core/userInfo")
 @Slf4j
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 public class UserInfoController {
     @Resource
     private RedisTemplate redisTemplate;

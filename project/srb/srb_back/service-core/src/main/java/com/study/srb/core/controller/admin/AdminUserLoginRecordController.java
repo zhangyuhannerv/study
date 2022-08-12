@@ -25,7 +25,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin/core/userLoginRecord")
 @Slf4j
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 public class AdminUserLoginRecordController {
     @Resource
     private UserLoginRecordService userLoginRecordService;

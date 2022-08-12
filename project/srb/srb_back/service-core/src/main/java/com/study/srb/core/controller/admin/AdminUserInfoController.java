@@ -27,7 +27,8 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/admin/core/userInfo")
 @Slf4j
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 public class AdminUserInfoController {
     @Resource
     private UserInfoService userInfoService;
