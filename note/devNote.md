@@ -517,6 +517,155 @@ $(".parent").scrollTop($(".children:eq(2)").offset().top - $(".parent").offset()
 // children是子元素。
 ```
 
+#### 10. 利用jQuery的ajax实现文件上传。前后台代码示例
+
+```html
+<form class="layui-form addArea" lay-filter="addForm">
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">线别</label>
+      <div class="layui-input-inline">
+        <select id="add-xianbie" lay-filter="addXianbie">
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">行别</label>
+      <div class="layui-input-inline">
+        <select id="add-xingbie" lay-filter="addXingbie">
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">期次</label>
+      <div class="layui-input-inline">
+        <select id="add-period">
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">文件上传</label>
+      <div class="layui-input-inline">
+        <input id="add-file-name" class="layui-input" type="text" readonly placeholder="点击选择文件">
+      </div>
+      <div class="layui-form-mid" style="padding: 0!important;">
+        <button type="button" class="layui-btn button-delete" id="removeFile">删除文件</button>
+      </div>
+    </div>
+  </div>
+  <!-- 这里的accept特指接收.xlsx文件,如果加上multipart属性还能多选文件 -->
+  <input type="file" id="add-file" class="layui-hide"
+         accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="button" class="layui-btn" id="confirmAdd">提交</button>
+      <button type="button" class="layui-btn layui-btn-primary" id="cancelAdd">取消</button>
+    </div>
+  </div>
+</form>
+```
+
+```js
+// 显示的input和隐藏的input type=file的交互
+$("#add-file-name").click(function () {
+  $("#add-file").click()
+})
+
+$("#add-file").on('change', function (e) {
+  let event = e || window.event;
+  //获取 文件 个数 取消的时候使用
+  let files = event.target.files;
+  if (files && files.length > 0) {
+    $("#add-file-name").val(files[0].name)
+  } else {
+    $("#add-file-name").val('')
+  }
+})
+
+$("#removeFile").click(function () {
+  $("#add-file").val('')
+  $("#add-file-name").val('')
+})
+
+
+// ajax文件和参数一起请求的方法
+$("#confirmAdd").click(function () {
+  if (!$("#add-xianbie").val()) {
+    Hussar.info("请选择线别")
+    return
+  }
+  if (!$("#add-xingbie").val()) {
+    Hussar.info("请选择行别")
+    return
+  }
+  if (!$("#add-period").val()) {
+    Hussar.info("请选择期次")
+    return
+  }
+  if (!$("#add-file").val()) {
+    Hussar.info("请选择文件")
+    return
+  }
+
+  // 拼接form数据
+  let param = new FormData(); //创建form对象
+  param.append('xianbie', $("#add-xianbie").val());//通过append向form对象添加数据
+  param.append('xingbie', $("#add-xingbie").val());//通过append向form对象添加数据
+  param.append('period', $("#add-period").val());//通过append向form对象添加数据
+  // 这里如果写.files而不是.files[0]那么就能就能向后台一次发送多个文件
+  param.append('file', $("#add-file")[0].files[0]);//通过append向form对象添加数据
+
+  let load = layer.msg('正在读取文件并保存数据，请耐心等待', {icon: 16, shade: 0.7, time: 0});
+  $.ajax({
+    url: Hussar.ctxPath + '/tJcsjCjLj/addNewLjcjRecord',
+    type: 'post',
+    async: true,
+    contentType: false,
+    processData: false,
+    data: param,
+    success(res) {
+      if (!res) {
+        layer.close(load)
+        Hussar.error("新增失败")
+        return
+      }
+
+      layer.closeAll()
+      Hussar.success("新增成功")
+      initTable()
+    }, error() {
+      layer.close(load)
+      Hussar.error("新增失败")
+
+    }
+  })
+})
+```
+
+```java
+/**
+     * 上传文件
+     */
+@PostMapping("/addNewLjcjRecord")
+@ResponseBody
+// 这里文件的接收能通过这种写法@RequestParam("file[]") MultipartFile[] file来接收多个文件
+public boolean addNewLjcjRecord(@RequestParam("file") MultipartFile file,
+                                @RequestParam("xianbie") String xianbie,
+                                @RequestParam("xingbie") String xingbie,
+                                @RequestParam("period") String period) {
+  return cjLjService.addNewLjcjRecord(xianbie, xingbie, period, file);
+}
+
+```
+
+
+
 ### 学习
 
 ## layui
@@ -2326,7 +2475,94 @@ public class A {
 }
 ```
 
+#### 2.Date类型的相关判断
 
+##### 1.两个日期之间相差的天数，日期为单位（比如相差两秒，可能就相差一天，1.12:23:59：59和13:01:00：00就相差一天）：
+
+```java
+/**
+     * date2比date1多的天数
+     * @param date1
+     * @param date2
+     * @return
+     */
+private static int differentDays(Date date1,Date date2) {
+  Calendar cal1 = Calendar.getInstance();
+  cal1.setTime(date1);
+
+  Calendar cal2 = Calendar.getInstance();
+  cal2.setTime(date2);
+  int day1= cal1.get(Calendar.DAY_OF_YEAR);
+  int day2 = cal2.get(Calendar.DAY_OF_YEAR);
+
+  int year1 = cal1.get(Calendar.YEAR);
+  int year2 = cal2.get(Calendar.YEAR);
+  if(year1 != year2) {//同一年
+    int timeDistance = 0 ;
+    for(int i = year1 ; i < year2 ; i ++)
+    {
+      if(i%4==0 && i%100!=0 || i%400==0)    //闰年
+      {
+        timeDistance += 366;
+      }
+      else    //不是闰年
+      {
+        timeDistance += 365;
+      }
+    }
+
+    return timeDistance + (day2-day1) ;
+  } else {// 不同年
+    System.out.println("判断day2 - day1 : " + (day2-day1));
+    return day2-day1;
+  }
+}
+```
+
+##### 2.两个日期之间相差的天数，以毫秒数精确计算（比如相差22小时可能是同一天）：
+
+```java
+/**
+     * 通过秒毫秒数判断两个时间的间隔的天数
+     * @param date1
+     * @param date2
+     * @return
+     */
+public static int differentDaysByMillisecond(Date date1,Date date2)
+{
+  int days = (int) ((date2.getTime() - date1.getTime()) / (1000*3600*24));
+  return days;
+}
+```
+
+##### 3.两个日期是否是同一天（）
+
+```java
+
+public static boolean isSameDay(Date date1, Date date2) {
+  LocalDate localDate1 = date1.toInstant()
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate();
+  LocalDate localDate2 = date2.toInstant()
+    .atZone(ZoneId.systemDefault())
+    .toLocalDate();
+  return localDate1.isEqual(localDate2);
+
+}
+```
+
+另一种方式
+
+```java
+public static boolean isSameDay(Date date1, Date date2) {
+    SimpleDateFormat fmt = new SimpleDateFormat("yyyyMMdd");
+    return fmt.format(date1).equals(fmt.format(date2));
+}
+```
+
+判断日期是否是同一天，也可以参考这篇文章，方法比较全：
+
+[判断同一天](https://blog.csdn.net/w605283073/article/details/103335373)
 
 ## springboot
 
@@ -2879,6 +3115,50 @@ url: jdbc:mysql://192.168.1.9:3306/p?useUnicode=true&characterEncoding=UTF-8&all
 pring boot开发环境下启动无异常，批量更新也成功了，但是在tomcat下运行启动会报错，批量更新可以成功，异常提示如下：Unable to register WallConfig with key wallConfig; nested exception is InstanceAlreadyExistsException:com.alibaba.druid.wall:name=wallConfig,type=WallConfig
 
 解决办法：在SpringBoot项目中配置文件加上spring.jmx.enabled=false
+
+#### 10.springboot使用poi导出带有数据的模版
+
+```java
+@Override
+public void downloadLjcjImportTemplate(String xianbie, String xingbie, HttpServletResponse response) {
+  // 设置返回头
+  response.setHeader(
+    "Content-disposition",
+    "attachment;filename="
+    + new String(("路基u型槽沉降模版.xlsx").getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+
+  // 从库里查询数据
+  QueryWrapper<TTzCjDmjcd> qw = new QueryWrapper<>();
+  qw.eq("xianbie", xianbie);
+  qw.eq("xingbie", xingbie);
+  qw.eq("jcd_lx", "6");
+  qw.orderByAsc("jcd_lc");
+  List<TTzCjDmjcd> exportList = dmjcdService.list(qw);
+  // 利用模版文件的输入流创建Workbook对象
+  // 同时获取响应流
+  try (Workbook wb = new XSSFWorkbook(
+    Objects.requireNonNull(this.getClass().getClassLoader().getResourceAsStream("template/ljuxccj.xlsx")));
+       OutputStream out = response.getOutputStream()) {
+    // 对Workbook进行一些数据的写入
+    Sheet sheet = wb.getSheetAt(0);
+    for (int i = 0; i < exportList.size(); i++) {
+      TTzCjDmjcd item = exportList.get(i);
+      Row row = sheet.createRow(i + 1);
+      Cell cell = row.createCell(0);
+      cell.setCellValue(item.getJcdBh());
+    }
+    // 将workbook写入到响应流
+    wb.write(out);
+  } catch (Exception e) {
+    e.printStackTrace();
+  }
+}
+
+// controller层直接调用这个方法，不需要写额外的代码
+// 前台通过window.location.href = controller层的地址的方式实现文件下载
+```
+
+
 
 ### 学习
 
@@ -4003,6 +4283,32 @@ List<ErrorData> dataList = errorDataService.list(ew);
    这里注意 return 中的第三个参数，是一个 lambda 表达式，这也是 MP 中批量插入的核心逻辑，可以看到，MP 先对数据进行分片（默认分片大小是 1000），分片完成之后，也是一条一条的插入。继续查看 executeBatch 方法，就会发现这里的 sqlSession 其实也是一个批处理的 sqlSession，并非普通的 sqlSession。
 
    综上，MP 中的批量插入方案跟我们 2.1 小节的批量插入思路其实是一样的。入股想要批量插入大数据量的效率最高，就采用2.1的方式
+
+#### 9.mybatis-plus里使用QueryWrapper关于时间日期比较的问题
+
+首先明确。springmvc默认不支持将前台传过来的日期/日期时间字符串在到达controller层之前直接转成Date/LocalDate/LocalDateTime类型的，所以接收还是要用字符串类型接收
+
+mp的条件构造器不支持时间日期字符串与mysql的date/datetime类型的字段的比较
+
+所以在比较的时候。要这么写
+
+```java
+//query:startDate->String,endDate->String，例子：2020-08-01
+//jcrq:mysql->date类型的
+
+// 应该同样适用2020-08-01 08:00:00的字符串和mysql中datetime类型的比较
+
+// 可以这么理解。统一转成时间戳再进行比较
+
+QueryWrapper<TSjfxJcjl> qw = new QueryWrapper<>();
+qw
+ 	.apply(!StringUtils.isEmpty(query.getStartDate()),
+         "UNIX_TIMESTAMP(jcrq) >= UNIX_TIMESTAMP('" + query.getStartDate() + "')")
+  .apply(!StringUtils.isEmpty(query.getEndDate()),
+         "UNIX_TIMESTAMP(jcrq) <= UNIX_TIMESTAMP('" + query.getEndDate() + "')")
+```
+
+
 
 ### 学习
 

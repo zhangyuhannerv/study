@@ -14,7 +14,8 @@ import javax.annotation.Resource;
 import java.io.IOException;
 
 @Api("阿里云文件管理")
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 @RestController
 @RequestMapping("/api/oss/file")
 public class FileController {

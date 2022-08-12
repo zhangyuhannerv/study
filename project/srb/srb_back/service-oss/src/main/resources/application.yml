@@ -6,6 +6,10 @@ spring:
     active: dev # 环境设置
   application:
     name: service-oss # 服务名
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
 
 #阿里云oss
 aliyun:

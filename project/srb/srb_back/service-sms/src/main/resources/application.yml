@@ -5,7 +5,10 @@ spring:
     active: dev # 环境设置
   application:
     name: service-sms # 服务名
-  #spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
   redis:
     host: 127.0.0.1
     port: 6379
@@ -18,7 +21,19 @@ spring:
         max-wait: -1    #最大阻塞等待时间，负值表示没限制，默认-1
         max-idle: 8     #最大空闲连接，默认8
         min-idle: 0     #最小空闲连接，默认0
-  #阿里云短信
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 1000 #连接超时配置
+        read-timeout: 600000 #执行超时配置
+  sentinel:
+    enabled: true
+# 配置feign的日志打印
+logging:
+  level:
+    com.study.srb.sms.client.CoreUserInfoClient: debug #以什么级别监听哪个端口
+#阿里云短信
 aliyun:
   sms:
     region-id: cn-hangzhou

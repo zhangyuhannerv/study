@@ -1,18 +1,22 @@
 package com.study.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.base.util.JwtUtils;
 import com.study.srb.core.mapper.UserAccountMapper;
+import com.study.srb.core.mapper.UserInfoMapper;
 import com.study.srb.core.mapper.UserLoginRecordMapper;
-import com.study.srb.core.pojo.entity.UserLoginRecord;
-import com.study.srb.core.pojo.vo.LoginVo;
-import com.study.srb.core.pojo.vo.RegisterVO;
 import com.study.srb.core.pojo.entity.UserAccount;
 import com.study.srb.core.pojo.entity.UserInfo;
-import com.study.srb.core.mapper.UserInfoMapper;
+import com.study.srb.core.pojo.entity.UserLoginRecord;
+import com.study.srb.core.pojo.query.UserInfoQuery;
+import com.study.srb.core.pojo.vo.LoginVo;
+import com.study.srb.core.pojo.vo.RegisterVO;
 import com.study.srb.core.pojo.vo.UserInfoVO;
 import com.study.srb.core.service.UserInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.ResponseEnum;
 import com.study.srb.util.MD5;
@@ -99,5 +103,39 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         userInfoVO.setUserType(userType);
         // 返回
         return userInfoVO;
+    }
+
+    @Override
+    public IPage<UserInfo> listPage(Page<UserInfo> pageParam, UserInfoQuery userInfoQuery) {
+        if (userInfoQuery == null) {
+            return baseMapper.selectPage(pageParam, null);
+        }
+
+        String mobile = userInfoQuery.getMobile();
+        Integer status = userInfoQuery.getStatus();
+        Integer userType = userInfoQuery.getUserType();
+
+        QueryWrapper<UserInfo> userInfoQueryWrapper = new QueryWrapper<>();
+        userInfoQueryWrapper
+                .eq(StringUtils.isNotBlank(mobile), "mobile", mobile)
+                .eq(status != null, "status", status)
+                .eq(userType != null, "user_type", userType);
+        return baseMapper.selectPage(pageParam, userInfoQueryWrapper);
+    }
+
+    @Override
+    public void lock(Long id, Integer status) {
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        userInfo.setStatus(status);
+        baseMapper.updateById(userInfo);
+    }
+
+    @Override
+    public boolean check(String mobile) {
+        QueryWrapper<UserInfo> userInfoQueryWrapper = new QueryWrapper<>();
+        userInfoQueryWrapper.eq("mobile", mobile);
+        Integer count = baseMapper.selectCount(userInfoQueryWrapper);
+        return count > 0;
     }
 }

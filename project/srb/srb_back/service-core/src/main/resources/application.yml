@@ -4,6 +4,10 @@ server:
 spring:
   profiles:
     active: dev # 环境设置
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
   application:
     name: service-core # 服务名
   datasource: # mysql数据库连接

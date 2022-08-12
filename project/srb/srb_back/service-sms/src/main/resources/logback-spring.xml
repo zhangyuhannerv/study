@@ -79,7 +79,7 @@
     <!--name属性与spring.profile.active的值有关-->
     <!-- 开发环境和测试环境 -->
     <springProfile name="dev,test">
-        <logger name="com.study.srb" level="INFO">
+        <logger name="com.study.srb" level="DEBUG">
             <appender-ref ref="CONSOLE"/>
             <!--真正的开发不用写到文件里-->
             <!--<appender-ref ref="ROLLING_FILE"/>-->

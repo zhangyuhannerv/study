@@ -3,8 +3,8 @@ package com.study.srb.sms.controller.api;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.R;
 import com.study.srb.result.ResponseEnum;
+import com.study.srb.sms.client.CoreUserInfoClient;
 import com.study.srb.sms.service.SmsService;
-import com.study.srb.sms.util.SmsProperties;
 import com.study.srb.util.RandomUtils;
 import com.study.srb.util.RegexValidateUtils;
 import io.swagger.annotations.Api;
@@ -22,10 +22,14 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @RestController
 @RequestMapping("/api/sms")
-@CrossOrigin
+// 在gataway里配置了跨域，和@CrossRoigin冲突
+// @CrossOrigin
 public class ApiSmsController {
     @Resource
     private SmsService smsService;
+
+    @Resource
+    private CoreUserInfoClient coreUserInfoClient;
 
     @Resource
     private RedisTemplate redisTemplate;
@@ -41,6 +45,11 @@ public class ApiSmsController {
         // 校验手机号码的合法性
         // 垃圾工具，我的手机号居然通过不了验证
         Assert.isTrue(RegexValidateUtils.checkCellphone(mobile), ResponseEnum.MOBILE_ERROR);
+
+        // 判断手机是否已经被注册
+        boolean res = coreUserInfoClient.checkMobile(mobile);
+        log.info("result={}", res);
+        Assert.isTrue(!res, ResponseEnum.MOBILE_EXIST_ERROR);
 
         // 生成验证码
         String fourBitRandom = RandomUtils.getFourBitRandom();
