@@ -16,7 +16,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:10000/srb-hfb?serverTimezone=GMT%2B8&characterEncoding=utf-8
+    url: jdbc:mysql://localhost:10000/srb_hfb?serverTimezone=GMT%2B8&characterEncoding=utf-8
     username: root
     password: root
     hikari:

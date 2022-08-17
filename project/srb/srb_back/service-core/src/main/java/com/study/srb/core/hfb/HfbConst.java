@@ -19,7 +19,7 @@ public class HfbConst {
     //用户绑定异步回调
     public static final String USERBIND_NOTIFY_URL = "http://localhost/api/core/userBind/notify";
     //用户绑定同步回调
-    public static final String USERBIND_RETURN_URL = "http://localhost:3000/user";
+    public static final String USERBIND_RETURN_URL = "http://localhost:3001/user";
 
     /**
      * 充值
