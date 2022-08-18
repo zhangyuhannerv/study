@@ -1,21 +1,24 @@
 package com.study.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.core.enums.UserBindEnum;
 import com.study.srb.core.hfb.FormHelper;
 import com.study.srb.core.hfb.HfbConst;
 import com.study.srb.core.hfb.RequestHelper;
-import com.study.srb.core.pojo.entity.UserBind;
 import com.study.srb.core.mapper.UserBindMapper;
+import com.study.srb.core.mapper.UserInfoMapper;
+import com.study.srb.core.pojo.entity.UserBind;
+import com.study.srb.core.pojo.entity.UserInfo;
 import com.study.srb.core.pojo.vo.UserBindVo;
 import com.study.srb.core.service.UserBindService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.ResponseEnum;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +32,8 @@ import java.util.Map;
  */
 @Service
 public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> implements UserBindService {
+    @Resource
+    private UserInfoMapper userInfoMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -78,5 +83,28 @@ public class UserBindServiceImpl extends ServiceImpl<UserBindMapper, UserBind> i
         paramMap.put("sign", RequestHelper.getSign(paramMap));
         // 生成动态表单字符串并返回
         return FormHelper.buildForm(HfbConst.USERBIND_URL, paramMap);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void notify(Map<String, Object> paramMap) {
+        String bindCode = (String) paramMap.get("bindCode");
+        String agentUserId = (String) paramMap.get("agentUserId");
+
+        // 更新用户绑定表
+        QueryWrapper<UserBind> userBindQueryWrapper = new QueryWrapper<>();
+        userBindQueryWrapper.eq("user_id", agentUserId);
+        UserBind userBind = baseMapper.selectOne(userBindQueryWrapper);
+        userBind.setBindCode(bindCode);
+        userBind.setStatus(UserBindEnum.BIND_OK.getStatus());
+        baseMapper.updateById(userBind);
+
+        // 更新用户表
+        UserInfo userInfo = userInfoMapper.selectById(agentUserId);
+        userInfo.setBindCode(bindCode);
+        userInfo.setBindStatus(UserBindEnum.BIND_OK.getStatus());
+        userInfo.setName(userBind.getName());
+        userInfo.setIdCard(userBind.getIdCard());
+        userInfoMapper.updateById(userInfo);
     }
 }

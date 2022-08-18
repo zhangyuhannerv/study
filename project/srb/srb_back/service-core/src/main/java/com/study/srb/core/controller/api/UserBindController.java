@@ -1,6 +1,8 @@
 package com.study.srb.core.controller.api;
 
+import com.alibaba.fastjson.JSON;
 import com.study.srb.base.util.JwtUtils;
+import com.study.srb.core.hfb.RequestHelper;
 import com.study.srb.core.pojo.vo.UserBindVo;
 import com.study.srb.core.service.UserBindService;
 import com.study.srb.result.R;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Api("会员账号绑定")
 @RestController
@@ -33,5 +36,23 @@ public class UserBindController {
         // 根据userId做账户绑定,生成一个动态表单的字符串
         String formStr = userBindService.commitBindUser(userBindVo, userId);
         return R.ok().data("formStr", formStr);
+    }
+
+    @ApiOperation("账户绑定异步回调")
+    @PostMapping("notify")
+    public String notify(HttpServletRequest request) {
+        // 汇付宝向尚荣宝发起回调请求时携带的参数
+        Map<String, Object> paramMap = RequestHelper.switchMap(request.getParameterMap());
+        log.info("账户绑定异步回调接收的参数如下：" + JSON.toJSONString(paramMap));
+
+        // 校验签名
+        if (!RequestHelper.isSignEquals(paramMap)) {
+            log.error("用户账号绑定异步回调签名验证错误：" + JSON.toJSONString(paramMap));
+            return "fail";
+        }
+
+        log.error("验签成功！开始账户绑定");
+        userBindService.notify(paramMap);
+        return "success";
     }
 }
