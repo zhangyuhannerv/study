@@ -187,3 +187,9 @@ youtube
 ## v2ray GitHub
 
 - [v2ray 源码](https://github.com/v2ray/v2ray-core)
+
+# 我的v2ray
+
+uuid:54152e15-c623-4b2a-b193-1999083d312a
+
+port:13675
