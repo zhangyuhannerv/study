@@ -200,11 +200,11 @@ export default {
     let BASE_API = process.env.BASE_API
     return {
       active: 0, //步骤
-      borrowerStatus: null,
-      submitBtnDisabled: false,
+      borrowerStatus: null, // 审核通过与否
+      submitBtnDisabled: false, // 防止表单重复提交
       //借款人信息
       borrower: {
-        borrowerAttachList: []
+        borrowerAttachList: [] // 附件列表
       },
       educationList: [], //学历列表
       industryList: [], //行业列表
@@ -218,6 +218,44 @@ export default {
     save() {
       this.submitBtnDisabled = true
       this.active = 1
+    },
+    onUploadSuccessIdCard1(response, file) {
+      this.onUploadSuccess(response, file, 'idCard1')
+    },
+    onUploadSuccessIdCard2(response, file) {
+      this.onUploadSuccess(response, file, 'idCard2')
+    },
+    onUploadSuccessHouse(response, file) {
+      this.onUploadSuccess(response, file, 'house')
+    },
+    onUploadSuccessCar(response, file) {
+      this.onUploadSuccess(response, file, 'car')
+    },
+    onUploadSuccess(response, file, imageType) {
+      if (response.code === 0) {
+        // 业务成功,填充borrower.borrowAttachList列表
+        this.borrower.borrowerAttachList.push({
+          imageName: file.name,
+          imageUrl: response.data.url,
+          imageType
+        })
+      } else {
+        // 业务失败
+        this.$message.error(response.message)
+      }
+    },
+    onUploadRemove(file) {
+      // 调用远程的删除接口
+      this.$axios
+        .$delete('/api/oss/file/remove?url=' + file.response.data.url)
+        .then((response) => {
+          // 从borrower.borrowAttachList列表中删除对象
+          this.borrower.borrowerAttachList = this.borrower.borrowerAttachList.filter(
+            // return true，那么当前对象保留在数组里面
+            // return false，那么当前对象从数组里移除
+            (item) => item.imageUrl !== file.response.data.url
+          )
+        })
     }
   }
 }
