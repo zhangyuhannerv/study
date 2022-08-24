@@ -199,7 +199,7 @@ export default {
   data() {
     let BASE_API = process.env.BASE_API
     return {
-      active: 0, //步骤
+      active: null, //步骤
       borrowerStatus: null, // 审核通过与否
       submitBtnDisabled: false, // 防止表单重复提交
       //借款人信息
@@ -215,9 +215,31 @@ export default {
     }
   },
   created() {
-    this.initSelected()
+    this.getUserInfo()
   },
   methods: {
+    getUserInfo() {
+      this.$axios
+        .$get('/api/core/borrower/auth/getBorrowerStatus')
+        .then((response) => {
+          this.borrowerStatus = response.data.borrowerStatus
+          if (this.borrowerStatus === 0) {
+            // 未认证
+            this.active = 0
+            this.initSelected()
+          } else if (this.borrowerStatus === 1) {
+            // 认证中
+            this.active = 1
+          } else if (this.borrowerStatus === 2) {
+            // 认证成功
+            this.active = 2
+          } else if (this.borrowerStatus === -1) {
+            // 认证失败
+            this.active = 2
+          }
+        })
+    },
+
     initSelected() {
       // 学历列表
       this.$axios
@@ -253,7 +275,11 @@ export default {
 
     save() {
       this.submitBtnDisabled = true
-      this.active = 1
+      this.$axios
+        .$post('/api/core/borrower/auth/save', this.borrower)
+        .then((response) => {
+          this.active = 1
+        })
     },
     onUploadSuccessIdCard1(response, file) {
       this.onUploadSuccess(response, file, 'idCard1')
