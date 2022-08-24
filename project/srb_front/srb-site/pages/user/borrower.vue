@@ -214,7 +214,43 @@ export default {
       uploadUrl: BASE_API + '/api/oss/file/upload' //文件上传地址
     }
   },
+  created() {
+    this.initSelected()
+  },
   methods: {
+    initSelected() {
+      // 学历列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/education')
+        .then((response) => {
+          this.educationList = response.data.dictList
+        })
+      // 行业列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/industry')
+        .then((response) => {
+          this.industryList = response.data.dictList
+        })
+      // 收入列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/income')
+        .then((response) => {
+          this.incomeList = response.data.dictList
+        })
+      // 还款人员列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/returnSource')
+        .then((response) => {
+          this.returnSourceList = response.data.dictList
+        })
+      // 联系人关系列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/relation')
+        .then((response) => {
+          this.contactsRelationList = response.data.dictList
+        })
+    },
+
     save() {
       this.submitBtnDisabled = true
       this.active = 1
