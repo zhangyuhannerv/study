@@ -1,6 +1,8 @@
 package com.study.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.study.srb.core.enums.BorrowerStatusEnum;
 import com.study.srb.core.mapper.BorrowerAttachMapper;
 import com.study.srb.core.mapper.UserInfoMapper;
@@ -72,5 +74,22 @@ public class BorrowerServiceImpl extends ServiceImpl<BorrowerMapper, Borrower> i
         }
 
         return (Integer) objects.get(0);
+    }
+
+    @Override
+    public IPage<Borrower> listPage(IPage<Borrower> pageParam, String keyword) {
+        if (StringUtils.isBlank(keyword)) {
+            return baseMapper.selectPage(pageParam, null);
+        }
+
+        QueryWrapper<Borrower> borrowerQueryWrapper = new QueryWrapper<>();
+        borrowerQueryWrapper
+                .like("name", keyword)
+                .or()
+                .like("id_card", keyword)
+                .or()
+                .like("mobile", keyword)
+                .orderByDesc("id");
+        return baseMapper.selectPage(pageParam, borrowerQueryWrapper);
     }
 }
