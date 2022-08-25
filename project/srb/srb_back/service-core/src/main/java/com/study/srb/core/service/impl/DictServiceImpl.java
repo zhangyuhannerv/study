@@ -105,6 +105,20 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         return this.listByParentId(dict.getId());
     }
 
+    @Override
+    public String getNameByParentDictCodeAndValue(String dictCode, Integer value) {
+        QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
+        dictQueryWrapper.eq("dict_code", dictCode);
+        Dict parentDict = baseMapper.selectOne(dictQueryWrapper);
+        if (parentDict == null) {
+            return "";
+        }
+        dictQueryWrapper.clear();
+        dictQueryWrapper.eq("parent_id", parentDict.getId()).eq("value", value);
+        Dict dict = baseMapper.selectOne(dictQueryWrapper);
+        return dict == null ? "" : dict.getName();
+    }
+
 
     /**
      * 判断当前id所在的节点下是否有子节点

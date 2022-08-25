@@ -3,6 +3,7 @@ package com.study.srb.core.controller.admin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.srb.core.pojo.entity.Borrower;
+import com.study.srb.core.pojo.vo.BorrowerDetailVO;
 import com.study.srb.core.service.BorrowerService;
 import com.study.srb.result.R;
 import io.swagger.annotations.Api;
@@ -39,5 +40,12 @@ public class AdminBorrowerController {
         IPage<Borrower> pageParam = new Page<>(page, limit);
         IPage<Borrower> pageModel = borrowerService.listPage(pageParam, keyword);
         return R.ok().data("pageModel", pageModel);
+    }
+
+    @ApiOperation("获取借款人信息")
+    @GetMapping("/show/{id}")
+    public R show(@ApiParam(value = "借款人id", required = true) @PathVariable Long id) {
+        BorrowerDetailVO borrowerDetailVO = borrowerService.getBorrowerDetailVOById(id);
+        return R.ok().data("borrowerDetailVO", borrowerDetailVO);
     }
 }
