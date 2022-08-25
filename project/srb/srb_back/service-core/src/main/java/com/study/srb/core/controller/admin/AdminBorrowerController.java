@@ -3,6 +3,7 @@ package com.study.srb.core.controller.admin;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.study.srb.core.pojo.entity.Borrower;
+import com.study.srb.core.pojo.vo.BorrowerApprovalVO;
 import com.study.srb.core.pojo.vo.BorrowerDetailVO;
 import com.study.srb.core.service.BorrowerService;
 import com.study.srb.result.R;
@@ -47,5 +48,12 @@ public class AdminBorrowerController {
     public R show(@ApiParam(value = "借款人id", required = true) @PathVariable Long id) {
         BorrowerDetailVO borrowerDetailVO = borrowerService.getBorrowerDetailVOById(id);
         return R.ok().data("borrowerDetailVO", borrowerDetailVO);
+    }
+
+    @ApiOperation("借款额度审批")
+    @PostMapping("/approval")
+    public R approval(@RequestBody BorrowerApprovalVO borrowerApprovalVO) {
+        borrowerService.approval(borrowerApprovalVO);
+        return R.ok().message("审批完成");
     }
 }

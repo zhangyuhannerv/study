@@ -5,12 +5,16 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.core.enums.BorrowerStatusEnum;
+import com.study.srb.core.enums.IntegralEnum;
 import com.study.srb.core.mapper.BorrowerAttachMapper;
 import com.study.srb.core.mapper.BorrowerMapper;
 import com.study.srb.core.mapper.UserInfoMapper;
+import com.study.srb.core.mapper.UserIntegralMapper;
 import com.study.srb.core.pojo.entity.Borrower;
 import com.study.srb.core.pojo.entity.BorrowerAttach;
 import com.study.srb.core.pojo.entity.UserInfo;
+import com.study.srb.core.pojo.entity.UserIntegral;
+import com.study.srb.core.pojo.vo.BorrowerApprovalVO;
 import com.study.srb.core.pojo.vo.BorrowerDetailVO;
 import com.study.srb.core.pojo.vo.BorrowerVO;
 import com.study.srb.core.service.BorrowerAttachService;
@@ -44,6 +48,9 @@ public class BorrowerServiceImpl extends ServiceImpl<BorrowerMapper, Borrower> i
 
     @Resource
     private BorrowerAttachService borrowerAttachService;
+
+    @Resource
+    private UserIntegralMapper userIntegralMapper;
 
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -134,5 +141,72 @@ public class BorrowerServiceImpl extends ServiceImpl<BorrowerMapper, Borrower> i
         // 附件列表
         borrowerDetailVO.setBorrowerAttachVOList(borrowerAttachService.selectBorrowerAttachVOList(id));
         return borrowerDetailVO;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void approval(BorrowerApprovalVO borrowerApprovalVO) {
+        // 获取借款额度申请id
+        Long borrowerId = borrowerApprovalVO.getBorrowerId();
+
+        // 获取借款额度申请对象
+        Borrower borrower = baseMapper.selectById(borrowerId);
+
+        // 设置审批是否通过
+        borrower.setStatus(borrowerApprovalVO.getStatus());
+        baseMapper.updateById(borrower);
+
+        // 获取用户id
+        Long userId = borrower.getUserId();
+        // 获取用户对象
+        UserInfo userInfo = userInfoMapper.selectById(userId);
+        // 获取用户的原始积分
+        Integer integral = userInfo.getIntegral();
+
+        // 计算基本信息积分
+        UserIntegral userIntegral = new UserIntegral();
+        userIntegral.setUserId(userId);
+        userIntegral.setIntegral(borrowerApprovalVO.getInfoIntegral());
+        userIntegral.setContent("借款人基本信息");
+        userIntegralMapper.insert(userIntegral);
+
+        // 定义累计积分
+        int currentIntegral = integral + borrowerApprovalVO.getInfoIntegral();
+
+        // 身份证积分
+        if (borrowerApprovalVO.getIsIdCardOk()) {
+            userIntegral = new UserIntegral();
+            userIntegral.setUserId(userId);
+            userIntegral.setIntegral(IntegralEnum.BORROWER_IDCARD.getIntegral());
+            userIntegral.setContent(IntegralEnum.BORROWER_IDCARD.getMsg());
+            userIntegralMapper.insert(userIntegral);
+            currentIntegral += IntegralEnum.BORROWER_IDCARD.getIntegral();
+        }
+
+        // 房产积分
+        if (borrowerApprovalVO.getIsHouseOk()) {
+            userIntegral = new UserIntegral();
+            userIntegral.setUserId(userId);
+            userIntegral.setIntegral(IntegralEnum.BORROWER_HOUSE.getIntegral());
+            userIntegral.setContent(IntegralEnum.BORROWER_HOUSE.getMsg());
+            userIntegralMapper.insert(userIntegral);
+            currentIntegral += IntegralEnum.BORROWER_HOUSE.getIntegral();
+        }
+        // 车辆积分
+        if (borrowerApprovalVO.getIsCarOk()) {
+            userIntegral = new UserIntegral();
+            userIntegral.setUserId(userId);
+            userIntegral.setIntegral(IntegralEnum.BORROWER_CAR.getIntegral());
+            userIntegral.setContent(IntegralEnum.BORROWER_CAR.getMsg());
+            userIntegralMapper.insert(userIntegral);
+            currentIntegral += IntegralEnum.BORROWER_CAR.getIntegral();
+        }
+
+        // 重设用户积分
+        userInfo.setIntegral(currentIntegral);
+        // 修改审核状态
+        userInfo.setBorrowAuthStatus(borrowerApprovalVO.getStatus());
+        // 更新userInfo
+        userInfoMapper.updateById(userInfo);
     }
 }
