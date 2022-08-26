@@ -1,7 +1,9 @@
 package com.study.srb.core.service;
 
-import com.study.srb.core.pojo.entity.BorrowInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.study.srb.core.pojo.entity.BorrowInfo;
+
+import java.math.BigDecimal;
 
 /**
  * <p>
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface BorrowInfoService extends IService<BorrowInfo> {
 
+    BigDecimal getBorrowAmount(Long userId);
 }
