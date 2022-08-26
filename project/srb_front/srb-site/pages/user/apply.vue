@@ -125,13 +125,67 @@ export default {
       borrowInfoStatus: null, //审批状态
       //借款申请
       borrowInfo: {
-        borrowYearRate: '12',
+        borrowYearRate: '12'
       },
       borrowAmount: 0, //借款额度
       submitBtnDisabled: false,
       returnMethodList: [], //还款方式列表
-      moneyUseList: [], //资金用途列表
+      moneyUseList: [] //资金用途列表
     }
   },
+  watch: {
+    // 这是监听对象的某个属性的写法
+    'borrowInfo.amount'(value) {
+      if (value > this.borrowAmount) {
+        let _this = this
+        this.$alert('您的借款额度不足', {
+          type: 'error',
+          callback() {
+            _this.borrowInfo.amount = _this.borrowAmount
+          }
+        })
+      }
+    }
+  },
+  mounted() {
+    // 获取借款额度
+    this.getBorrowAmount()
+    // 初始化下拉列表
+    this.initSelected()
+  },
+  methods: {
+    //初始化下拉列表  的数据
+    initSelected() {
+      //还款方式列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/returnMethod')
+        .then((response) => {
+          this.returnMethodList = response.data.dictList
+        })
+
+      //资金用途列表
+      this.$axios
+        .$get('/api/core/dict/findByDictCode/moneyUse')
+        .then((response) => {
+          this.moneyUseList = response.data.dictList
+        })
+    },
+    // 获取借款额度
+    getBorrowAmount() {
+      this.$axios
+        .$get('/api/core/borrowInfo/auth/getBorrowAmount')
+        .then((response) => {
+          this.borrowAmount = response.data.borrowAmount
+        })
+    },
+    // 提交借款申请
+    save() {
+      this.$axis
+        .$post('/api/core/borrowInfo/auth/save', this.borrowInfo)
+        .then((response) => {
+          this.active++
+        })
+    }
+  }
 }
 </script>
