@@ -12,15 +12,6 @@ ${requestScope.参数名}对应request.getAttribute(参数名）方法，适用�
 
     }
 
-济南金域医学检验中心
-周一，周三，周五下午两点到四点
-第二天上午十点中出结果
-费用150
-带身份证就ok
-
-wifi密码
-Pxxx1dao8
-
 数据表格数据提取为json对象
 foods = table.cache{"tab"}
 
