@@ -2,6 +2,9 @@ package com.study.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.study.srb.core.enums.BorrowInfoStatusEnum;
+import com.study.srb.core.enums.BorrowerStatusEnum;
+import com.study.srb.core.enums.UserBindEnum;
 import com.study.srb.core.mapper.BorrowInfoMapper;
 import com.study.srb.core.mapper.IntegralGradeMapper;
 import com.study.srb.core.mapper.UserInfoMapper;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * <p>
@@ -49,5 +53,33 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
         }
 
         return integralGrade.getBorrowAmount();
+    }
+
+    @Override
+    public void saveBorrowInfo(BorrowInfo borrowInfo, Long userId) {
+        // 获取userInfo信息
+        UserInfo userInfo = userInfoMapper.selectById(userId);
+
+        // 判断用户绑定状态
+        Assert.isTrue(Objects.equals(userInfo.getBindStatus(), UserBindEnum.BIND_OK.getStatus()),
+                ResponseEnum.USER_NO_BIND_ERROR);
+
+        // 判断借款人额度申请状态
+        Assert.isTrue(Objects.equals(userInfo.getBorrowAuthStatus(), BorrowerStatusEnum.AUTH_OK.getStatus()),
+                ResponseEnum.USER_NO_AMOUNT_ERROR);
+
+        // 判断借款人额度是否充足
+        BigDecimal borrowAmount = this.getBorrowAmount(userId);
+        Assert.isTrue(borrowInfo.getAmount().compareTo(borrowAmount) <= 0,
+                ResponseEnum.USER_AMOUNT_LESS_ERROR);
+
+        // 存储borrowInfo数据
+        borrowInfo.setUserId(userId);
+        // 年化利率比百分比转小数
+        BigDecimal borrowYearRate = borrowInfo.getBorrowYearRate();
+        borrowInfo.setBorrowYearRate(borrowYearRate.divide(new BigDecimal(100)));
+        // 设置借款申请的审核状态
+        borrowInfo.setStatus(BorrowInfoStatusEnum.CHECK_RUN.getStatus());
+        baseMapper.insert(borrowInfo);
     }
 }

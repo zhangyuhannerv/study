@@ -180,7 +180,7 @@ export default {
     },
     // 提交借款申请
     save() {
-      this.$axis
+      this.$axios
         .$post('/api/core/borrowInfo/auth/save', this.borrowInfo)
         .then((response) => {
           this.active++

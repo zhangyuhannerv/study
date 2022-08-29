@@ -2,14 +2,13 @@ package com.study.srb.core.controller.api;
 
 
 import com.study.srb.base.util.JwtUtils;
+import com.study.srb.core.pojo.entity.BorrowInfo;
 import com.study.srb.core.service.BorrowInfoService;
 import com.study.srb.result.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +38,15 @@ public class BorrowInfoController {
         Long userId = JwtUtils.getUserId(token);
         BigDecimal borrowAmount = borrowInfoService.getBorrowAmount(userId);
         return R.ok().data("borrowAmount", borrowAmount);
+    }
+
+    @ApiOperation("提交借款申请")
+    @PostMapping("/auth/save")
+    public R save(@RequestBody BorrowInfo borrowInfo, HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Long userId = JwtUtils.getUserId(token);
+        borrowInfoService.saveBorrowInfo(borrowInfo, userId);
+        return R.ok().message("提交成功");
     }
 
 }
