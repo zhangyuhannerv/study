@@ -95,4 +95,9 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
 
         return (Integer) objects.get(0);
     }
+
+    @Override
+    public List<BorrowInfo> selectList() {
+        return null;
+    }
 }
