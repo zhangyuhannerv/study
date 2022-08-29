@@ -121,7 +121,7 @@
 export default {
   data() {
     return {
-      active: 0, //步骤
+      active: null, //步骤
       borrowInfoStatus: null, //审批状态
       //借款申请
       borrowInfo: {
@@ -148,10 +148,7 @@ export default {
     }
   },
   mounted() {
-    // 获取借款额度
-    this.getBorrowAmount()
-    // 初始化下拉列表
-    this.initSelected()
+    this.getBorrowInfoStatus()
   },
   methods: {
     //初始化下拉列表  的数据
@@ -184,6 +181,28 @@ export default {
         .$post('/api/core/borrowInfo/auth/save', this.borrowInfo)
         .then((response) => {
           this.active++
+        })
+    },
+    // 获取借款审批状态
+    getBorrowInfoStatus() {
+      this.$axios
+        .$get('/api/core/borrowInfo/auth/getBorrowInfoStatus')
+        .then((response) => {
+          this.borrowInfoStatus = response.data.borrowInfoStatus
+          if (this.borrowInfoStatus === 0) {
+            // 未提交过借款申请
+            this.active = 0
+            // 获取借款额度
+            this.getBorrowAmount()
+            // 初始化下拉列表
+            this.initSelected()
+          } else if (this.borrowInfoStatus === 1) {
+            // 审批中
+            this.active = 1
+          } else {
+            // 审批完成（审批成功/失败）
+            this.active = 2
+          }
         })
     }
   }

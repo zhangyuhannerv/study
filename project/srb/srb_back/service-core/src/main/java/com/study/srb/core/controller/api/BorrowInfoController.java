@@ -49,5 +49,14 @@ public class BorrowInfoController {
         return R.ok().message("提交成功");
     }
 
+    @ApiOperation("获取借款申请审批状态")
+    @GetMapping("/auth/getBorrowInfoStatus")
+    public R getBorrowerStatus(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Long userId = JwtUtils.getUserId(token);
+        Integer status = borrowInfoService.getStatusByUserId(userId);
+        return R.ok().data("borrowInfoStatus", status);
+    }
+
 }
 
