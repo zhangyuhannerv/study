@@ -12,6 +12,7 @@ import com.study.srb.core.pojo.entity.BorrowInfo;
 import com.study.srb.core.pojo.entity.IntegralGrade;
 import com.study.srb.core.pojo.entity.UserInfo;
 import com.study.srb.core.service.BorrowInfoService;
+import com.study.srb.core.service.DictService;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.ResponseEnum;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
 
     @Resource
     private IntegralGradeMapper integralGradeMapper;
+
+    @Resource
+    private DictService dictService;
 
     @Override
     public BigDecimal getBorrowAmount(Long userId) {
@@ -98,6 +102,20 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
 
     @Override
     public List<BorrowInfo> selectList() {
-        return null;
+        List<BorrowInfo> borrowInfos = baseMapper.selectBorrowInfoList();
+        for (BorrowInfo borrowInfo : borrowInfos) {
+            String returnMethod =
+                    dictService.getNameByParentDictCodeAndValue("returnMethod", borrowInfo.getReturnMethod());
+
+            String moneyUse =
+                    dictService.getNameByParentDictCodeAndValue("moneyUse", borrowInfo.getMoneyUse());
+
+            String status = BorrowInfoStatusEnum.getMsgByStatus(borrowInfo.getStatus());
+
+            borrowInfo.getParam().put("returnMethod", returnMethod);
+            borrowInfo.getParam().put("moneyUse", moneyUse);
+            borrowInfo.getParam().put("status", status);
+        }
+        return borrowInfos;
     }
 }
