@@ -6,12 +6,16 @@ import com.study.srb.core.enums.BorrowInfoStatusEnum;
 import com.study.srb.core.enums.BorrowerStatusEnum;
 import com.study.srb.core.enums.UserBindEnum;
 import com.study.srb.core.mapper.BorrowInfoMapper;
+import com.study.srb.core.mapper.BorrowerMapper;
 import com.study.srb.core.mapper.IntegralGradeMapper;
 import com.study.srb.core.mapper.UserInfoMapper;
 import com.study.srb.core.pojo.entity.BorrowInfo;
+import com.study.srb.core.pojo.entity.Borrower;
 import com.study.srb.core.pojo.entity.IntegralGrade;
 import com.study.srb.core.pojo.entity.UserInfo;
+import com.study.srb.core.pojo.vo.BorrowerDetailVO;
 import com.study.srb.core.service.BorrowInfoService;
+import com.study.srb.core.service.BorrowerService;
 import com.study.srb.core.service.DictService;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.ResponseEnum;
@@ -19,7 +23,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -40,6 +46,12 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
 
     @Resource
     private DictService dictService;
+
+    @Resource
+    private BorrowerMapper borrowerMapper;
+
+    @Resource
+    private BorrowerService borrowerService;
 
     @Override
     public BigDecimal getBorrowAmount(Long userId) {
@@ -117,5 +129,36 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
             borrowInfo.getParam().put("status", status);
         }
         return borrowInfos;
+    }
+
+    @Override
+    public Map<String, Object> getBorrowInfoDetail(Long id) {
+        // 查询借款对象：BorrowInfo
+        BorrowInfo borrowInfo = baseMapper.selectById(id);
+        String returnMethod =
+                dictService.getNameByParentDictCodeAndValue("returnMethod", borrowInfo.getReturnMethod());
+
+        String moneyUse =
+                dictService.getNameByParentDictCodeAndValue("moneyUse", borrowInfo.getMoneyUse());
+
+        String status = BorrowInfoStatusEnum.getMsgByStatus(borrowInfo.getStatus());
+
+        borrowInfo.getParam().put("returnMethod", returnMethod);
+        borrowInfo.getParam().put("moneyUse", moneyUse);
+        borrowInfo.getParam().put("status", status);
+
+        // 查询借款人对象：Borrower(BorrowDetailVO)
+        QueryWrapper<Borrower> borrowerQueryWrapper = new QueryWrapper<>();
+        borrowerQueryWrapper.eq("user_id", borrowInfo.getUserId());
+        Borrower borrower = borrowerMapper.selectOne(borrowerQueryWrapper);
+
+        BorrowerDetailVO borrowerDetailVO = borrowerService.getBorrowerDetailVOById(borrower.getId());
+
+
+        // 组装集合结果
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("borrowInfo", borrowInfo);
+        result.put("borrower", borrowerDetailVO);
+        return result;
     }
 }

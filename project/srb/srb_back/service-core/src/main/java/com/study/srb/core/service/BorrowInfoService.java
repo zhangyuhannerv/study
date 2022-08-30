@@ -5,6 +5,7 @@ import com.study.srb.core.pojo.entity.BorrowInfo;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -23,4 +24,6 @@ public interface BorrowInfoService extends IService<BorrowInfo> {
     Integer getStatusByUserId(Long userId);
 
     List<BorrowInfo> selectList();
+
+    Map<String, Object> getBorrowInfoDetail(Long id);
 }
