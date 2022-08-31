@@ -13,6 +13,7 @@ import com.study.srb.core.pojo.entity.BorrowInfo;
 import com.study.srb.core.pojo.entity.Borrower;
 import com.study.srb.core.pojo.entity.IntegralGrade;
 import com.study.srb.core.pojo.entity.UserInfo;
+import com.study.srb.core.pojo.vo.BorrowInfoApprovalVO;
 import com.study.srb.core.pojo.vo.BorrowerDetailVO;
 import com.study.srb.core.service.BorrowInfoService;
 import com.study.srb.core.service.BorrowerService;
@@ -20,6 +21,7 @@ import com.study.srb.core.service.DictService;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.ResponseEnum;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -160,5 +162,21 @@ public class BorrowInfoServiceImpl extends ServiceImpl<BorrowInfoMapper, BorrowI
         result.put("borrowInfo", borrowInfo);
         result.put("borrower", borrowerDetailVO);
         return result;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void approval(BorrowInfoApprovalVO borrowInfoApprovalVO) {
+        // 修改借款审核的状态borrow_info
+        Long borrowInfoId = borrowInfoApprovalVO.getId();
+        BorrowInfo borrowInfo = baseMapper.selectById(borrowInfoId);
+        borrowInfo.setStatus(borrowInfoApprovalVO.getStatus());
+        baseMapper.updateById(borrowInfo);
+
+        // 如果审核通过则产生新的标的记录lend
+        if (Objects.equals(borrowInfoApprovalVO.getStatus(), BorrowInfoStatusEnum.CHECK_OK.getStatus())) {
+            // 审核通过。创建新的标的
+            // TODO
+        }
     }
 }
