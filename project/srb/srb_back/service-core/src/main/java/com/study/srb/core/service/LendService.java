@@ -5,6 +5,8 @@ import com.study.srb.core.pojo.entity.BorrowInfo;
 import com.study.srb.core.pojo.entity.Lend;
 import com.study.srb.core.pojo.vo.BorrowInfoApprovalVO;
 
+import java.util.List;
+
 /**
  * <p>
  * 标的准备表 服务类
@@ -16,4 +18,6 @@ import com.study.srb.core.pojo.vo.BorrowInfoApprovalVO;
 public interface LendService extends IService<Lend> {
 
     void createLend(BorrowInfoApprovalVO borrowInfoApprovalVO, BorrowInfo borrowInfo);
+
+    List<Lend> selectList();
 }
