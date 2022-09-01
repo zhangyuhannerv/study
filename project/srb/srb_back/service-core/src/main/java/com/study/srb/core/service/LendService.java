@@ -6,6 +6,7 @@ import com.study.srb.core.pojo.entity.Lend;
 import com.study.srb.core.pojo.vo.BorrowInfoApprovalVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -20,4 +21,6 @@ public interface LendService extends IService<Lend> {
     void createLend(BorrowInfoApprovalVO borrowInfoApprovalVO, BorrowInfo borrowInfo);
 
     List<Lend> selectList();
+
+    Map<String, Object> getLendDetail(Long id);
 }

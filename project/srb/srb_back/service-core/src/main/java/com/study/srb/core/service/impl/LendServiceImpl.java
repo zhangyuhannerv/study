@@ -1,11 +1,16 @@
 package com.study.srb.core.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.core.enums.LendStatusEnum;
+import com.study.srb.core.mapper.BorrowerMapper;
 import com.study.srb.core.mapper.LendMapper;
 import com.study.srb.core.pojo.entity.BorrowInfo;
+import com.study.srb.core.pojo.entity.Borrower;
 import com.study.srb.core.pojo.entity.Lend;
 import com.study.srb.core.pojo.vo.BorrowInfoApprovalVO;
+import com.study.srb.core.pojo.vo.BorrowerDetailVO;
+import com.study.srb.core.service.BorrowerService;
 import com.study.srb.core.service.DictService;
 import com.study.srb.core.service.LendService;
 import com.study.srb.core.util.LendNoUtils;
@@ -17,7 +22,9 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -31,6 +38,12 @@ import java.util.List;
 public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements LendService {
     @Resource
     private DictService dictService;
+
+    @Resource
+    private BorrowerService borrowerService;
+
+    @Resource
+    private BorrowerMapper borrowerMapper;
 
     @Override
     public void createLend(BorrowInfoApprovalVO borrowInfoApprovalVO, BorrowInfo borrowInfo) {
@@ -90,5 +103,27 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
             lend.getParam().put("status", status);
         }
         return lendList;
+    }
+
+    @Override
+    public Map<String, Object> getLendDetail(Long id) {
+        // 查询标的 lend
+        Lend lend = baseMapper.selectById(id);
+        String returnMethod = dictService.getNameByParentDictCodeAndValue("returnMethod", lend.getReturnMethod());
+        String status = LendStatusEnum.getMsgByStatus(lend.getStatus());
+        lend.getParam().put("returnMethod", returnMethod);
+        lend.getParam().put("status", status);
+
+        // 查询借款人对象：Borrower(BorrowDetailVO)
+        QueryWrapper<Borrower> borrowerQueryWrapper = new QueryWrapper<>();
+        borrowerQueryWrapper.eq("user_id", lend.getUserId());
+        Borrower borrower = borrowerMapper.selectOne(borrowerQueryWrapper);
+
+        BorrowerDetailVO borrowerDetailVO = borrowerService.getBorrowerDetailVOById(borrower.getId());
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("lend", lend);
+        result.put("borrower", borrowerDetailVO);
+        return result;
     }
 }

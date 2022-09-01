@@ -6,5 +6,11 @@ export default {
       url: `/admin/core/lend/list`,
       method: 'get'
     })
+  },
+  show(id) {
+    return request({
+      url: `/admin/core/lend/show/${id}`,
+      method: 'get'
+    })
   }
 }
