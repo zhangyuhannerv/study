@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      background-color: #333;
+      height: 100%;
+      color: green;
+      /*绿色yyds*/
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /**
+    *css var函数
+    *定义:root { --变量名: color}
+    *引用var(--变量名)
+    */
+    :root {
+      --borderColor: #03A9F3;
+    }
+
+    div {
+      cursor: pointer;
+      text-align: center;
+      padding: 10px;
+      width: 200px;
+      height: 100px;
+      transition: all .4s ease;
+
+      /* 重点是下面这三个属性 */
+      background: linear-gradient(to left, var(--borderColor), var(--borderColor)) left top no-repeat, linear-gradient(to bottom, var(--borderColor), var(--borderColor)) left top no-repeat, linear-gradient(to left, var(--borderColor), var(--borderColor)) right top no-repeat, linear-gradient(to bottom, var(--borderColor), var(--borderColor)) right top no-repeat, linear-gradient(to left, var(--borderColor), var(--borderColor)) left bottom no-repeat, linear-gradient(to bottom, var(--borderColor), var(--borderColor)) left bottom no-repeat, linear-gradient(to left, var(--borderColor), var(--borderColor)) right bottom no-repeat, linear-gradient(to left, var(--borderColor), var(--borderColor)) right bottom no-repeat;
+      background-size: 2px 20px, 20px 2px, 2px 20px, 20px 2px;
+      border: 1px solid transparent;
+    }
+
+    div:hover {
+      border: 1px solid var(--borderColor)
+    }
+  </style>
+</head>
+
+<body>
+  <div>我可是四角边框哦</div>
+</body>
+
+</html>
