@@ -18,7 +18,7 @@ java：~~stream~~,~~lambda~~，~~IO流~~，注解，反射，~~枚举~~，网络
 
 jvm,juc
 
-~~spring~~->springmvc->~~springboot~~->springcloud
+~~spring~~->springmvc->~~springboot~~->~~springcloud~~
 
 zookeeper,~~nginx~~,~~linux~~
 
@@ -60,6 +60,14 @@ maven,docker,k8s
   ```xml
      --user-data-dir="C:\Users\13551\Desktop" --test-type --disable-web-security
   ```
+
+## 远程请求http的三种方式
+
+1.ajax远程调用，远程服务器必须开放跨域访问权限
+
+2.form表单远程调用，不受跨域限制，缺点是需要组装表单
+
+3.java代码远程调用（常用的有java.net.HttpURLConnection)
 
 ---
 

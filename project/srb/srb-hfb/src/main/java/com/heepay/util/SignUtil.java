@@ -22,7 +22,6 @@ public class SignUtil {
     }
 
     /**
-     *
      * @param paramMap
      * @return
      */
@@ -35,25 +34,25 @@ public class SignUtil {
     }
 
     /**
-     *
      * @param paramMap
      * @return
      */
     public static void isSignEquals(Map<String, Object> paramMap) {
-        String sign = (String)paramMap.get("sign");
+        String sign = (String) paramMap.get("sign");
         String md5Str = getSign(paramMap);
-        if(!sign.equals(md5Str)) {
+        if (!sign.equals(md5Str)) {
             throw new HfbException(ResultCodeEnum.SIGN_ERROR);
         }
     }
 
     /**
      * 加密
+     *
      * @param paramMap
      * @return
      */
     public static String getSign(Map<String, Object> paramMap) {
-        if(paramMap.containsKey("sign")) {
+        if (paramMap.containsKey("sign")) {
             paramMap.remove("sign");
         }
         TreeMap<String, Object> sorted = new TreeMap<>(paramMap);
@@ -69,7 +68,6 @@ public class SignUtil {
     }
 
     /**
-     *
      * @param paramMap
      * @return
      */
@@ -87,15 +85,15 @@ public class SignUtil {
         return postData;
     }
 
-    public static String sendRequest(Map<String, Object> paramMap, String url){
+    public static String sendRequest(Map<String, Object> paramMap, String url) {
         String result = "";
         try {
             String postdata = getPostData(paramMap);
-            log.info(String.format("--> 发送请求到汇付宝：post data %1s", postdata));
+            log.info(String.format("--> 发送请求到商户平台（尚融宝）：post data %1s", postdata));
             byte[] reqData = postdata.getBytes("utf-8");
-            byte[] respdata = HttpUtil.doPost(url,reqData);
+            byte[] respdata = HttpUtil.doPost(url, reqData);
             result = new String(respdata);
-            log.info(String.format("--> 汇付宝应答结果：result data %1s", result));
+            log.info(String.format("--> 商户平台（尚融宝）应答结果：result data %1s", result));
         } catch (Exception ex) {
             ex.printStackTrace();
         }

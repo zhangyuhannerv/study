@@ -29,7 +29,7 @@ public class HfbConst {
     //充值异步回调
     public static final String RECHARGE_NOTIFY_URL = "http://localhost/api/core/userAccount/notify";
     //充值同步回调
-    public static final String RECHARGE_RETURN_URL = "http://localhost:3000/user";
+    public static final String RECHARGE_RETURN_URL = "http://localhost:3001/user";
 
     /**
      * 投标
