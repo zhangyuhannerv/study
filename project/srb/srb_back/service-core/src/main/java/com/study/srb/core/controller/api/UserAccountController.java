@@ -1,7 +1,9 @@
 package com.study.srb.core.controller.api;
 
 
+import com.alibaba.fastjson.JSON;
 import com.study.srb.base.util.JwtUtils;
+import com.study.srb.core.hfb.RequestHelper;
 import com.study.srb.core.service.UserAccountService;
 import com.study.srb.result.R;
 import io.swagger.annotations.Api;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.Map;
 
 /**
  * <p>
@@ -45,6 +48,28 @@ public class UserAccountController {
         // 组装表单字符串，用于远程提交数据
         String formStr = userAccountService.commitCharge(chargeAmt, userId);
         return R.ok().data("formStr", formStr);
+    }
+
+    @ApiOperation(value = "用户充值异步回调")
+    @PostMapping("/notify")
+    public String notify(HttpServletRequest request) {
+        Map<String, Object> paramMap = RequestHelper.switchMap(request.getParameterMap());
+        log.info("用户充值异步回调：" + JSON.toJSONString(paramMap));
+
+        //校验签名
+        if (RequestHelper.isSignEquals(paramMap)) {
+            //充值成功交易
+            if ("0001".equals(paramMap.get("resultCode"))) {
+                return userAccountService.notify(paramMap);
+            } else {
+                log.info("用户充值异步回调充值失败：" + JSON.toJSONString(paramMap));
+                // 这里返回success的原因是告诉汇付宝不要重试了
+                return "success";
+            }
+        } else {
+            log.info("用户充值异步回调签名错误：" + JSON.toJSONString(paramMap));
+            return "fail";
+        }
     }
 }
 
