@@ -447,7 +447,15 @@ export default {
     },
 
     //计算收益
-    getInterestCount() {},
+    getInterestCount() {
+      this.$axios
+        .$get(
+          `/api/core/lend/getInterestCount/${this.invest.investAmount}/${this.lend.lendYearRate}/${this.lend.period}/${this.lend.returnMethod}`
+        )
+        .then((response) => {
+          this.interestCount = response.data.interestCount
+        })
+    },
 
     //投资
     commitInvest() {}

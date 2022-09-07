@@ -3,6 +3,7 @@ package com.study.srb.core.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.core.enums.LendStatusEnum;
+import com.study.srb.core.enums.ReturnMethodEnum;
 import com.study.srb.core.mapper.BorrowerMapper;
 import com.study.srb.core.mapper.LendMapper;
 import com.study.srb.core.pojo.entity.BorrowInfo;
@@ -13,7 +14,7 @@ import com.study.srb.core.pojo.vo.BorrowerDetailVO;
 import com.study.srb.core.service.BorrowerService;
 import com.study.srb.core.service.DictService;
 import com.study.srb.core.service.LendService;
-import com.study.srb.core.util.LendNoUtils;
+import com.study.srb.core.util.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -25,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * <p>
@@ -125,5 +127,21 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
         result.put("lend", lend);
         result.put("borrower", borrowerDetailVO);
         return result;
+    }
+
+    @Override
+    public BigDecimal getInterestCount(BigDecimal invest, BigDecimal yearRate, Integer totalmonth, Integer returnMethod) {
+        BigDecimal interestCount;
+        if (Objects.equals(returnMethod, ReturnMethodEnum.ONE.getMethod())) {
+            interestCount = Amount1Helper.getInterestCount(invest, yearRate, totalmonth);
+        } else if (Objects.equals(returnMethod, ReturnMethodEnum.TWO.getMethod())) {
+            interestCount = Amount2Helper.getInterestCount(invest, yearRate, totalmonth);
+        } else if (Objects.equals(returnMethod, ReturnMethodEnum.THREE.getMethod())) {
+            interestCount = Amount3Helper.getInterestCount(invest, yearRate, totalmonth);
+        } else {
+            interestCount = Amount4Helper.getInterestCount(invest, yearRate, totalmonth);
+        }
+
+        return interestCount;
     }
 }
