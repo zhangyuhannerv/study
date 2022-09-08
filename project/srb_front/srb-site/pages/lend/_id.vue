@@ -458,7 +458,78 @@ export default {
     },
 
     //投资
-    commitInvest() {}
+    commitInvest() {
+      //校验用户是否登录
+      let userInfo = cookie.get('userInfo')
+      // console.log(typeof userInfo)
+      // console.log(!userInfo) //true
+      if (!userInfo) {
+        window.location.href = '/login'
+        return
+      }
+
+      //校验当前用户是否是投资人
+      let userInfoObj = JSON.parse(userInfo)
+      if (userInfoObj.userType == 2) {
+        //借款人
+        this.$message.error('借款人无法投资')
+        return
+      }
+
+      // console.log(this.lend.investAmount)
+      // console.log(this.invest.investAmount)
+      // console.log(this.lend.amount)
+      //判断标的是否超卖：标的已投金额 + 本次投资金额 > 标的总金额
+      if (
+        this.lend.investAmount + Number(this.invest.investAmount) >
+        this.lend.amount
+      ) {
+        this.$message.error('标的可投资金额不足')
+        return
+      }
+
+      //是否是100的整数倍
+      // console.log(this.invest.investAmount)
+      // console.log(Number(this.invest.investAmount))
+      // console.log(typeof Number(this.invest.investAmount))
+      // return
+      if (
+        Number(this.invest.investAmount) === 0 ||
+        this.invest.investAmount % this.lend.lowestAmount != 0
+      ) {
+        this.$message.error(`投资金额必须是${this.lend.lowestAmount}的整数倍`)
+        return
+      }
+
+      //余额的判断
+      if (this.invest.investAmount > this.account) {
+        this.$message.error('余额不足，请充值')
+        return
+      }
+
+      //数据提交
+      this.$alert(
+        '<div style="size: 18px;color: red;">您即将前往汇付宝确认标的</div>',
+        '前往汇付宝资金托管平台',
+        {
+          dangerouslyUseHTMLString: true,
+          confirmButtonText: '立即前往',
+          callback: (action) => {
+            console.log('action', action)
+            if (action === 'confirm') {
+              this.invest.lendId = this.lend.id
+              this.$axios
+                .$post('/api/core/lendItem/auth/commitInvest', this.invest)
+                .then((response) => {
+                  // console.log(response.data.formStr)
+                  // debugger
+                  document.write(response.data.formStr)
+                })
+            }
+          }
+        }
+      )
+    }
   }
 }
 </script>

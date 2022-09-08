@@ -1,7 +1,10 @@
 package com.study.srb.core.service;
 
-import com.study.srb.core.pojo.entity.LendItem;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.study.srb.core.pojo.entity.LendItem;
+import com.study.srb.core.pojo.vo.InvestVO;
+
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +16,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LendItemService extends IService<LendItem> {
 
+    String commitInvest(InvestVO investVO);
+
+    void notify(Map<String, Object> paramMap);
 }

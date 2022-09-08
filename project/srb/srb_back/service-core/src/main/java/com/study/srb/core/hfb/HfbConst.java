@@ -39,7 +39,7 @@ public class HfbConst {
     //充值异步回调
     public static final String INVEST_NOTIFY_URL = "http://localhost/api/core/lendItem/notify";
     //充值同步回调
-    public static final String INVEST_RETURN_URL = "http://localhost:3000/user";
+    public static final String INVEST_RETURN_URL = "http://localhost:3001/user";
 
     /**
      * 放款
@@ -54,7 +54,7 @@ public class HfbConst {
     //充值异步回调
     public static final String WITHDRAW_NOTIFY_URL = "http://localhost/api/core/userAccount/notifyWithdraw";
     //充值同步回调
-    public static final String WITHDRAW_RETURN_URL = "http://localhost:3000/user";
+    public static final String WITHDRAW_RETURN_URL = "http://localhost:3001/user";
 
     /**
      * 还款扣款
@@ -64,6 +64,6 @@ public class HfbConst {
     //充值异步回调
     public static final String BORROW_RETURN_NOTIFY_URL = "http://localhost/api/core/lendReturn/notifyUrl";
     //充值同步回调
-    public static final String BORROW_RETURN_RETURN_URL = "http://localhost:3000/user";
+    public static final String BORROW_RETURN_RETURN_URL = "http://localhost:3001/user";
 
 }
