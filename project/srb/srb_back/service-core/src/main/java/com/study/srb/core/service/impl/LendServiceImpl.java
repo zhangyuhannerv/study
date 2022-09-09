@@ -1,21 +1,27 @@
 package com.study.srb.core.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.srb.core.enums.LendStatusEnum;
 import com.study.srb.core.enums.ReturnMethodEnum;
+import com.study.srb.core.hfb.HfbConst;
+import com.study.srb.core.hfb.RequestHelper;
 import com.study.srb.core.mapper.BorrowerMapper;
 import com.study.srb.core.mapper.LendMapper;
+import com.study.srb.core.mapper.UserAccountMapper;
+import com.study.srb.core.mapper.UserInfoMapper;
 import com.study.srb.core.pojo.entity.BorrowInfo;
 import com.study.srb.core.pojo.entity.Borrower;
 import com.study.srb.core.pojo.entity.Lend;
 import com.study.srb.core.pojo.vo.BorrowInfoApprovalVO;
 import com.study.srb.core.pojo.vo.BorrowerDetailVO;
-import com.study.srb.core.service.BorrowerService;
-import com.study.srb.core.service.DictService;
-import com.study.srb.core.service.LendService;
+import com.study.srb.core.service.*;
 import com.study.srb.core.util.*;
+import com.study.srb.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -37,6 +43,7 @@ import java.util.Objects;
  * @since 2022-07-25
  */
 @Service
+@Slf4j
 public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements LendService {
     @Resource
     private DictService dictService;
@@ -46,6 +53,18 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
 
     @Resource
     private BorrowerMapper borrowerMapper;
+
+    @Resource
+    private UserInfoMapper userInfoMapper;
+
+    @Resource
+    private UserAccountMapper userAccountMapper;
+
+    @Resource
+    private LendItemService lendItemService;
+
+    @Resource
+    private TransFlowService transFlowService;
 
     @Override
     public void createLend(BorrowInfoApprovalVO borrowInfoApprovalVO, BorrowInfo borrowInfo) {
@@ -143,5 +162,53 @@ public class LendServiceImpl extends ServiceImpl<LendMapper, Lend> implements Le
         }
 
         return interestCount;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void makeLoan(Long id) {
+        // 获取标的信息
+        Lend lend = baseMapper.selectById(id);
+
+        // 调用汇付宝接口
+        // 拼接参数
+        Map<String, Object> map = new HashMap<>();
+        map.put("agentId", HfbConst.AGENT_ID);
+        map.put("agentProjectCode", lend.getLendNo());
+        map.put("agentBillNo", LendNoUtils.getLoanNo());
+
+        // 月年化
+        BigDecimal monthRate = lend.getServiceRate().divide(new BigDecimal(12), 8, RoundingMode.DOWN);
+        // 平台服务费 = 已投金额 * 月年化 * 投资时长
+        BigDecimal realAmount = lend.getInvestAmount().multiply(monthRate).multiply(new BigDecimal(lend.getPeriod()));
+        map.put("mchFee", realAmount);
+
+        map.put("timestamp", RequestHelper.getTimestamp());
+        map.put("sign", RequestHelper.getSign(map));
+
+
+        // 提交远程请求
+        JSONObject result = RequestHelper.sendRequest(map, HfbConst.MAKE_LOAD_URL);
+        log.info("放款结果:" + result.toJSONString());
+
+        // 放款失败的处理
+        if (!"0000".equals(result.getString("resultCode"))) {
+            throw new BusinessException(result.getString("resultMsg"));
+        }
+
+        // 放款成功
+
+//        （1）标的状态和标的平台收益：更新标的相关信息
+        lend.setRealAmount(realAmount);// 平台收益
+        lend.setStatus(LendStatusEnum.PAY_RUN.getStatus());// 更新标的的状态为还款中
+        lend.setPaymentTime(LocalDateTime.now());// 放款时间
+        baseMapper.updateById(lend);
+
+//        （2）给借款账号转入金额
+        userAccountMapper.updateAccount();
+//        （3）增加借款交易流水
+//        （4）解冻并扣除投资人资金
+//        （5）增加投资人交易流水
+//        （6）生成借款人还款计划和出借人回款计划
     }
 }
