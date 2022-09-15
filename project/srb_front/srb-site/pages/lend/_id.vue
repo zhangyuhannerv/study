@@ -391,16 +391,27 @@
 import '~/assets/css/index.css'
 import '~/assets/css/detail.css'
 import cookie from 'js-cookie'
-import user from '../../../srb-admin/mock/user'
 
 export default {
   async asyncData({ $axios, params }) {
     let lendId = params.id
     let response = await $axios.$get('/api/core/lend/show/' + lendId)
 
+    //投资记录
+    let responseLendItemList = await $axios.$get(
+      '/api/core/lendItem/list/' + lendId
+    )
+
+    //还款计划
+    let responseLendReturnList = await $axios.$get(
+      '/api/core/lendReturn/list/' + lendId
+    )
+
     return {
       lend: response.data.lendDetail.lend, //标的详情
-      borrower: response.data.lendDetail.borrower //借款人信息
+      borrower: response.data.lendDetail.borrower, //借款人信息
+      lendItemList: responseLendItemList.data.list, //投资记录
+      lendReturnList: responseLendReturnList.data.list //还款计划
     }
   },
 
@@ -413,7 +424,8 @@ export default {
         investAmount: 100 //投资金额
       },
       interestCount: 0, //将获得收益
-      userType: 0 //用户类型
+      userType: 0, //用户类型
+      lendItemReturnList: [] //回款计划
     }
   },
 
@@ -424,6 +436,9 @@ export default {
 
     //判断登录人的用户类型
     this.fetchUserType()
+
+    //回款计划
+    this.fetchLendItemReturnList()
   },
 
   methods: {
@@ -529,6 +544,15 @@ export default {
           }
         }
       )
+    },
+
+    //回款计划
+    fetchLendItemReturnList() {
+      this.$axios
+        .$get('/api/core/lendItemReturn/auth/list/' + this.$route.params.id)
+        .then((response) => {
+          this.lendItemReturnList = response.data.list
+        })
     }
   }
 }

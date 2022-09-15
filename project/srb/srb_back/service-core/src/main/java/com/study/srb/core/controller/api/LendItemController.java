@@ -4,19 +4,19 @@ package com.study.srb.core.controller.api;
 import com.alibaba.fastjson.JSON;
 import com.study.srb.base.util.JwtUtils;
 import com.study.srb.core.hfb.RequestHelper;
+import com.study.srb.core.pojo.entity.LendItem;
 import com.study.srb.core.pojo.vo.InvestVO;
 import com.study.srb.core.service.LendItemService;
 import com.study.srb.result.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -71,6 +71,15 @@ public class LendItemController {
             return "fail";
         }
         return "success";
+    }
+
+    @ApiOperation("获取列表")
+    @GetMapping("/list/{lendId}")
+    public R list(
+            @ApiParam(value = "标的id", required = true)
+            @PathVariable Long lendId) {
+        List<LendItem> list = lendItemService.selectByLendId(lendId);
+        return R.ok().data("list", list);
     }
 }
 
