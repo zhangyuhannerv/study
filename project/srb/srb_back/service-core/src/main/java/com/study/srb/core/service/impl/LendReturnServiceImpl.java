@@ -11,9 +11,11 @@ import com.study.srb.core.hfb.RequestHelper;
 import com.study.srb.core.mapper.*;
 import com.study.srb.core.pojo.bo.TransFlowBO;
 import com.study.srb.core.pojo.entity.Lend;
+import com.study.srb.core.pojo.entity.LendItem;
 import com.study.srb.core.pojo.entity.LendItemReturn;
 import com.study.srb.core.pojo.entity.LendReturn;
 import com.study.srb.core.service.*;
+import com.study.srb.core.util.LendNoUtils;
 import com.study.srb.exception.Assert;
 import com.study.srb.result.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -163,10 +165,26 @@ public class LendReturnServiceImpl extends ServiceImpl<LendReturnMapper, LendRet
         List<LendItemReturn> lendItemReturnList = lendItemReturnService.selectLendItemReturnList(lendReturn.getId());
         for (LendItemReturn item : lendItemReturnList) {
             // 更新回款状态
+            item.setStatus(1);
+            item.setRealReturnTime(LocalDateTime.now());
+            lendItemReturnMapper.updateById(item);
+
+            // 更新出借信息
+            LendItem lendItem = lendItemMapper.selectById(item.getLendItemId());
+            lendItem.setRealAmount(lendItem.getRealAmount().add(item.getInterest()));// 动态的实际收益
+            lendItemMapper.updateById(lendItem);
 
             // 投资账号转入金额
-
+            String investBindCode = userBindService.getBindCodeByUserId(item.getInvestUserId());
+            userAccountMapper.updateAccount(investBindCode, item.getTotal(), new BigDecimal(0));
             // 回款流水
+            TransFlowBO investTransFlowBO = new TransFlowBO(
+                    LendNoUtils.getReturnItemNo(),
+                    investBindCode,
+                    item.getTotal(),
+                    TransTypeEnum.INVEST_BACK,
+                    "还款到账，项目编号：" + lend.getLendNo() + "，项目名称：" + lend.getTitle());
+            transFlowService.saveTransFlow(investTransFlowBO);
         }
     }
 }
