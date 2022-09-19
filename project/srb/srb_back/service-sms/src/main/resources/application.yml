@@ -21,6 +21,12 @@ spring:
         max-wait: -1    #最大阻塞等待时间，负值表示没限制，默认-1
         max-idle: 8     #最大空闲连接，默认8
         min-idle: 0     #最小空闲连接，默认0
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: /srbhost
+    username: admin
+    password: 123456
 feign:
   client:
     config:

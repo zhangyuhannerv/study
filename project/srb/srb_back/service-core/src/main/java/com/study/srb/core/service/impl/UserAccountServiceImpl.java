@@ -2,6 +2,7 @@ package com.study.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.study.srb.base.dto.SmsDTO;
 import com.study.srb.core.enums.TransTypeEnum;
 import com.study.srb.core.hfb.FormHelper;
 import com.study.srb.core.hfb.HfbConst;
@@ -14,8 +15,11 @@ import com.study.srb.core.pojo.entity.UserInfo;
 import com.study.srb.core.service.TransFlowService;
 import com.study.srb.core.service.UserAccountService;
 import com.study.srb.core.service.UserBindService;
+import com.study.srb.core.service.UserInfoService;
 import com.study.srb.core.util.LendNoUtils;
 import com.study.srb.exception.Assert;
+import com.study.srb.rabbitmq.constant.MQConst;
+import com.study.srb.rabbitmq.service.MQService;
 import com.study.srb.result.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,6 +52,13 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
 
     @Resource
     private UserAccountService userAccountService;
+
+    @Resource
+    private UserInfoService userInfoService;
+
+    @Resource
+    private MQService mqService;
+
 
     @Override
     public String commitCharge(BigDecimal chargeAmt, Long userId) {
@@ -97,6 +108,12 @@ public class UserAccountServiceImpl extends ServiceImpl<UserAccountMapper, UserA
         );
         transFlowService.saveTransFlow(transFlowBO);
 
+        // 发消息
+        String mobile = userInfoService.getMobileByBindCode(bindCode);
+        SmsDTO smsDTO = new SmsDTO();
+        smsDTO.setMobile(mobile);
+        smsDTO.setMessage("充值成功");
+        mqService.sendMessage(MQConst.EXCHANGE_TOPIC_SMS, MQConst.ROUTING_SMS_ITEM, smsDTO);
         return "success";
     }
 

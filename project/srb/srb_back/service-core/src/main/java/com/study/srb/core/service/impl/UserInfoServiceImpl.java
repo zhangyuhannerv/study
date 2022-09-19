@@ -160,7 +160,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         // 组装结果对象
         UserIndexVO userIndexVO = new UserIndexVO();
         userIndexVO.setUserId(userId);
- 
+
         userIndexVO.setUserType(userInfo.getUserType());
         userIndexVO.setName(userInfo.getName());
         userIndexVO.setNickName(userInfo.getNickName());
@@ -173,5 +173,13 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         userIndexVO.setLastLoginTime(userLoginRecord.getCreateTime());
 
         return userIndexVO;
+    }
+
+    @Override
+    public String getMobileByBindCode(String bindCode) {
+        QueryWrapper<UserInfo> userInfoQueryWrapper = new QueryWrapper<>();
+        userInfoQueryWrapper.eq("bind_code", bindCode);
+        UserInfo userInfo = baseMapper.selectOne(userInfoQueryWrapper);
+        return userInfo.getMobile();
     }
 }

@@ -31,4 +31,6 @@ public interface UserInfoService extends IService<UserInfo> {
     boolean check(String mobile);
 
     UserIndexVO getIndexUserInfo(Long userId);
+
+    String getMobileByBindCode(String bindCode);
 }
