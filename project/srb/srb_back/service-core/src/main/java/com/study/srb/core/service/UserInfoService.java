@@ -7,6 +7,7 @@ import com.study.srb.core.pojo.entity.UserInfo;
 import com.study.srb.core.pojo.query.UserInfoQuery;
 import com.study.srb.core.pojo.vo.LoginVo;
 import com.study.srb.core.pojo.vo.RegisterVO;
+import com.study.srb.core.pojo.vo.UserIndexVO;
 import com.study.srb.core.pojo.vo.UserInfoVO;
 
 /**
@@ -28,4 +29,6 @@ public interface UserInfoService extends IService<UserInfo> {
     void lock(Long id, Integer status);
 
     boolean check(String mobile);
+
+    UserIndexVO getIndexUserInfo(Long userId);
 }

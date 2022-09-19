@@ -4,6 +4,7 @@ package com.study.srb.core.controller.api;
 import com.study.srb.base.util.JwtUtils;
 import com.study.srb.core.pojo.vo.LoginVo;
 import com.study.srb.core.pojo.vo.RegisterVO;
+import com.study.srb.core.pojo.vo.UserIndexVO;
 import com.study.srb.core.pojo.vo.UserInfoVO;
 import com.study.srb.core.service.UserInfoService;
 import com.study.srb.exception.Assert;
@@ -97,6 +98,15 @@ public class UserInfoController {
             @ApiParam(value = "手机号", required = true)
             @PathVariable String mobile) {
         return userInfoService.check(mobile);
+    }
+
+    @ApiOperation("获取个人空间用户信息")
+    @GetMapping("/auth/getIndexUserInfo")
+    public R getIndexUserInfo(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        Long userId = JwtUtils.getUserId(token);
+        UserIndexVO userIndexVO = userInfoService.getIndexUserInfo(userId);
+        return R.ok().data("userIndexVO", userIndexVO);
     }
 }
 
