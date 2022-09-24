@@ -2,26 +2,25 @@
 
 ## v2ray 一键脚本安装
 
-```
+从下面脚本选择一个能用的
+
+脚本1
+
+```bash
 bash <(curl -sL https://raw.githubusercontent.com/hijkpw/scripts/master/goV2.sh)
 ```
 
-执行之后出现以下内容 ，说明安装成功：
+脚本2
 
-![img](https://ubuntu520.com/images/install_v2ray.png)
+```bash
+bash <(curl -s -L https://git.io/v2ray.sh)
+```
 
 记住端口号和 UUID ，客户端配置的时候需要用到，当然，你也可以使用如下命令查看配置：
 
 > cat /etc/v2ray/config.json
 
 ## 使用 v2ray
-
-### 同步服务器的时间
-
-```
-yum -y install ntpdate
-ntpdate ntp1.aliyun.com
-```
 
 ### 开启 v2ray
 
@@ -164,32 +163,62 @@ systemctl restart v2ray
 }
 ```
 
-# 运行效果
-
-访问一下 Youtube，1080p 超高清，很顺畅不卡顿：
-
-![youtube](https://ubuntu520.com/images/ss7.png)
-
-youtube
-
-## v2ray 使用相关问题
-
-- 客户端突然无法访问了
-  解决：https://github.com/v2ray/v2ray-core/issues/1871
-  （更换端口）
-
 # V2ray 相关
 
-## v2ray 官网
+v2ray 官网
 
 - [V2Ray 的使用手册](https://www.v2ray.com/)
 
-## v2ray GitHub
+v2ray GitHub
 
 - [v2ray 源码](https://github.com/v2ray/v2ray-core)
 
+V2Ray 客户端使用教程:
+
+* https://233v2.com/post/4/
+
+客户端突然无法访问了
+
+* 解决：https://github.com/v2ray/v2ray-core/issues/1871
+  （更换端口）
+
+v2ray常用命令
+
+`v2ray info` 查看 V2Ray 配置信息
+`v2ray config` 修改 V2Ray 配置
+`v2ray link` 生成 V2Ray 配置文件链接
+`v2ray infolink` 生成 V2Ray 配置信息链接
+`v2ray qr` 生成 V2Ray 配置二维码链接
+`v2ray ss` 修改 Shadowsocks 配置
+`v2ray ssinfo` 查看 Shadowsocks 配置信息
+`v2ray ssqr` 生成 Shadowsocks 配置二维码链接
+`v2ray status` 查看 V2Ray 运行状态
+`v2ray start` 启动 V2Ray
+`v2ray stop` 停止 V2Ray
+`v2ray restart` 重启 V2Ray
+`v2ray log` 查看 V2Ray 运行日志
+`v2ray update` 更新 V2Ray
+`v2ray update.sh` 更新 V2Ray 管理脚本
+`v2ray uninstall` 卸载 V2Ray
+
 # 我的v2ray
+
+## 1.华纳云
 
 uuid:54152e15-c623-4b2a-b193-1999083d312a
 
 port:13675
+
+## 2.hostwinds
+
+ 地址 (Address) = 104.168.141.120
+
+ 端口 (Port) = 35711
+
+ 用户ID (User ID / UUID) = cc20d153-fd09-4a4f-9d57-c3fe312469d6
+
+ 额外ID (Alter Id) = 0
+
+ 传输协议 (Network) = tcp
+
+ 伪装类型 (header type) = none
