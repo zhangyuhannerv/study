@@ -1,0 +1,4 @@
+本意提高插入表的性能优化，想到了线程池ThreadPoolExecutor，
+而用的是Spring Boot项目，可以用Spring提供的对ThreadPoolExecutor封装的线程池ThreadPoolTaskExecutor，
+直接使用注解启用。
+本项目是使用示例
