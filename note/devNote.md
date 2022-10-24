@@ -3033,6 +3033,66 @@ void test_PROPAGATION_SUPPORTS() {
 ————————————————
 原文链接：https://blog.csdn.net/qq_38262266/article/details/108709840
 
+***
+
+
+
+B为主方法, C子方法, 操作B的是否有事务, 操作C的传播属性 ,这个地方的情况太多,直接在下面表格中的`本文中的解释`部分说明
+
+```java
+@Service
+@Slf4j
+public class Transaction3ServiceImpl implements Transaction3Service {
+
+    @Autowired
+    private Transaction4Service transaction4Service;
+    
+    @Autowired(required = false)
+    private StudentMapper mapper;
+
+    @Override
+    @Transactional(rollbackFor = Exception.class) //如果不存在事务,注释掉此行来表示
+    public void B(){
+        mapper.saveStudent(new Student("ZZZDC"));
+        transaction4Service.C();
+        // int zdc = 1/0; //如发生异常用此替代
+    }
+}
+@Service
+@Slf4j
+public class Transaction4ServiceImpl implements Transaction4Service {
+
+    @Autowired(required = false)
+    private StudentMapper mapper;
+
+    @Override 
+    @Transactional(rollbackFor = Exception.class) //传播行为会在这里操作
+    public void C() {
+        mapper.saveStudent(new Student("ZDDDC"));
+        //int zdc = 1/0;  如发生异常用此替代
+    }
+}
+链接：https://juejin.cn/post/7032652904498462751
+来源：稀土掘金
+```
+
+| 传播行为      | 本文中的解释                                                 |
+| ------------- | ------------------------------------------------------------ |
+| REQUIRED      | 如果B存在事务,则C加入该事务`(如果发生异常,则BC一起回滚)`;如果B不存在事务,则C创建一个新的事务`(B不回滚,如果C发生异常则只有C部分回滚)` |
+| SUPPORTS      | 如果B存在事务,则C加入该事务`(如果发生异常,则BC一起回滚)`;如果B不存在事务,则C以非事务的方式继续运行`(BC任何情况都不回滚)` |
+| MANDATORY     | 如果B存在事务,则C加入该事务`(如果发生异常,则一起回滚)`;如果B不存在事务,则C抛出异常.`(C直接报错,无事务B不回滚)` |
+| REQUIRES_NEW  | 如果B不存在事务,C重新创建一个新的事务`(无事务B发生异常不回滚,有事C发生异常则C回滚)`;如果B存在事务,C挂起B得事务并重新创建一个新的事务`(这是两个事务,自己部分有异常,则自己部分回滚)` |
+| NOT_SUPPORTED | 如果B不存在事务,C以非事务的方式运行`(任何情况都不回滚)`;如果B存在事务,C暂停当前的事务并以非事务的方式运行`(B部分报错,则B部分回滚,C不回滚;非事务C部分报错,则都不会回滚)` |
+| NEVER         | 如果B不存在事务,C以非事务的方式运行`(任何情况都不回滚)`,如果B存在事务,C则抛出异常`(C报错,B因为异常回滚)` |
+| NESTED        | 和REQUIRED效果一样.                                          |
+
+
+
+作者：我也不会呀
+链接：https://juejin.cn/post/7032652904498462751
+来源：稀土掘金
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 #### 9.springboot整合druid不支持批量更新的问题
 
 轻骑兵的解决方式
