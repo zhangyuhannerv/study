@@ -20,7 +20,7 @@ public class TestUserController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    public boolean delete() {
-        return testUserService.testFunc();
+    public void delete() {
+        testUserService.testFunc();
     }
 }
