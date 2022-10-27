@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -65,6 +66,11 @@ public class ExcelExport {
                     }
                 }
             }
+            // 设置头部信息（必须设置）
+            response.setHeader(
+                    "Content-disposition",
+                    "attachment;filename="
+                            + new String(("伸缩调节器导出.xlsx").getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
             wb.write(out);
         } catch (Exception e) {
             e.printStackTrace();
