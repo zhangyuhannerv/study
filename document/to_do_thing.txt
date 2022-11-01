@@ -1,6 +1,6 @@
-整理枚举过滤的笔记
+整理枚举过滤的笔记 √
 ---
-整理druid允许多条更新的spring配置
+整理druid允许多条更新的spring配置 √
 ---
 整理返回包的工具类
 ---
@@ -13,7 +13,7 @@
 jetbrains升级（放弃）√
 ---
 整理easyExcel导入导出数据代码
-整理RedisTemplate的Api
+整理RedisTemplate的Api √
 整理RabbitTemplate的Api
 整理RestTemplate的Api
 整理常用的java工具和js工具
@@ -21,7 +21,7 @@ jetbrains升级（放弃）√
 从hostwinds过滤到华纳云 √
 买一年jetbrains试试 （放弃）
 显示器邮递回家/卖掉 √
-卖掉家里的台式机机箱，显示器，没用的线，鼠标和键盘。配上我这里闲置的键鼠
+卖掉家里的台式机机箱，显示器，没用的线，鼠标和键盘。配上我这里闲置的键鼠 √
 电脑支架装上放卧室 √
 蓝牙键盘给爸用 √
 驾驶证放自己这，顺便看看要不要换新证 (放弃)
