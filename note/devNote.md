@@ -1382,6 +1382,9 @@ $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox",
     let id = data.id
     let cols;
     if (data.xianbie) {
+      // 当宽度超过当前窗口的宽度时，可以加上下面这行代码。让弹窗宽度自适应为80%
+      // 但是注意：此时表头右固定会失效
+     	// $(".dataDetailLayer").width($(document.body).width() * 0.8)
       cols = [[ //表头
         {type: 'numbers', title: '序号', width: 80}
         , {field: 'yskm', title: '预算科目', align: 'center', width: 90}
@@ -1445,7 +1448,7 @@ $(document).on("click", "td div.laytable-cell-checkbox div.layui-form-checkbox",
     });
   }
   ```
-
+  
   
 
 ### 学习
