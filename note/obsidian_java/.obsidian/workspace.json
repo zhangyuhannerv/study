@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "厚积薄发/1.告别非空判断.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               }
             }
@@ -137,5 +137,7 @@
     "collapsed": true
   },
   "active": "7b1aa7bfb80f7484",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "厚积薄发/1.告别非空判断.md"
+  ]
 }
