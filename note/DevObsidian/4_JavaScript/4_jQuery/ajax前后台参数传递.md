@@ -196,7 +196,7 @@
 	}
 	```
 
-1. post方式向后台对象数组，后台直接封装为list
+4. post方式向后台对象数组，后台直接封装为list
 	前台代码
 	```js
 	 var sbUseHistory = table.cache["SbUseHistoryInfoTable"];
@@ -252,7 +252,7 @@
         }
     }
 	```
-3. 上传文件并监听上传进度
+5. 上传文件并监听上传进度
 	```js
 	let formData = new FormData();
 	// 这里的file对象可以用其他的框架上传插件来获取，比如layui的或者bootstrap的,或者只是input type='file'的等等等等。
@@ -292,7 +292,7 @@
 	$.ajax(aj);
 	```
 	后台使用@RequestParam一个个提取参数
-4. 上传一个或多个文件完整示例（按照3的方式微调可以监听上传进度）
+6. 上传一个或多个文件完整示例（按照3的方式微调可以监听上传进度）
 	```html
 	<form class="layui-form addArea" lay-filter="addForm">
 	  <div class="layui-form-item">
@@ -434,3 +434,92 @@
 	  return cjLjService.addNewLjcjRecord(xianbie, xingbie, period, file);
 	}
 	```
+7. 多文件上传（一起上传,监听上传进度）
+	```html
+	<!--上传按钮-->
+	<button type="button" id="uploadBtn">点击我进行多文件上传</button>
+	
+	<!--#uploadFileInputDiv是html里一个隐藏的div-->
+	<!--多文件上传需要用到该容器-->
+	<div id="uploadFileInputDiv" class="layui-hide">
+	
+	</div>
+	```
+	```js
+	$("#uploadBtn").click(function(){
+		// 在隐藏的div里拼接dom元素
+		let html = '<input type="file" id="multiInput" name="filename" multiple="multiple" hidden>';
+		$("#uploadFileInputDiv").html(html);
+		
+		// 给拼接的dom元素监听事件
+		$("#uploadFileInputDiv input").on('change', function () {
+		
+		    let formData = new FormData();        //每一次需重新创建
+		    let files = $("#uploadFileInputDiv input")[0].files;
+		    for (let i = 0; i < files.length; i++) {
+		        let file = files[i];
+		        formData.append('file', file);
+		    }
+		    formData.append('testTaskId', $("#csrw_id").val());
+		    formData.append('fileId', fileId);
+		    uploadMultiFile(formData);
+		})
+		
+		// 触发dom元素的点击事件
+		$("#uploadFileInputDiv input").click();
+	
+	})
+	
+	// 文件上传的前台代码
+	function uploadMultiFile(formData) {
+	    let aj = {
+	        //上传文件数据
+	        url: "/MultiFileUpload",
+	        type: 'POST',
+	        cache: false,
+	        data: formData,
+	        processData: false,
+	        contentType: false,
+	        async: true,
+	        xhr() {
+	            let xhr = new XMLHttpRequest();
+	            xhr.upload.addEventListener('progress', e => {
+	                let progressRate = Math.round((e.loaded / e.total) * 100) + '%';// 上传进度
+	            })
+	            return xhr;
+	        },
+	        success(res) {
+	            layer.close(progressLayer);
+	            if (res.code === 500) {
+	                Hussar.info("上传文件失败");
+	                fileUpload.reload();
+	                return;
+	            }
+	
+	            Hussar.success("上传成功！");
+	        },
+	        error() {
+	            layer.close(progressLayer);
+	            Hussar.info("上传文件失败");
+	        }
+	    }
+	    $.ajax(aj);
+	}
+	```
+	```java
+	@RequestMapping("/MultiFileUpload")
+	@ResponseBody
+	public Map<String, Object> noiseFileUpload(@RequestParam("file[]") MultipartFile[] file,
+	                                           @RequestParam("testTaskId") String testTaskId,
+	                                           @RequestParam("fileId") String fileId) {
+	   
+	    // 接收的参数有二进制的文件数组，还有其他的参数
+	   	// 自己做处理
+	    // ....
+	  
+	    // 返回
+	    Map<String, Object> map = new HashMap<>();
+	    return map;
+	}
+	```
+	
