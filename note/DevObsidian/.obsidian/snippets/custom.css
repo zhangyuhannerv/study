@@ -1,0 +1,9 @@
+/*.markdown-preview-view::after {  This was the previous line*/  
+/* 自定义背景图 */
+
+.markdown-source-view,
+.markdown-preview-view{
+  background-image: url(https://w.wallhaven.cc/full/pk/wallhaven-pk8pzj.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+} 

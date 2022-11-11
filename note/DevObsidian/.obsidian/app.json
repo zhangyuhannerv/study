@@ -1,4 +1,5 @@
 {
   "promptDelete": false,
-  "readableLineLength": true
+  "readableLineLength": true,
+  "attachmentFolderPath": "valut"
 }
