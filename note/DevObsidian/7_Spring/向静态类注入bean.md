@@ -1,4 +1,3 @@
-###### 向静态类注入bean
 ```java
 @Component
 public class DtjcProjectGeneralReportUtil {
