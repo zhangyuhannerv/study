@@ -1,35 +1,64 @@
 {
   "main": {
-    "id": "78e91391b0534cbf",
+    "id": "c5ecf9c168731b54",
     "type": "split",
     "children": [
       {
-        "id": "861f6f7b86620682",
+        "id": "872653d4aa032222",
         "type": "tabs",
         "children": [
           {
-            "id": "b0d203376d3c2f0f",
+            "id": "79f447171d171bde",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {}
+              "type": "markdown",
+              "state": {
+                "file": "1_git/1_general/在.gitignore中添加新的规则对已经被git管理了的文件不生效的解决办法.md",
+                "mode": "preview",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "ff2857f7fb9a0c73",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1_git/2_github/github高级搜索.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e33427f4147f1478",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1_git/3_gitlab/Gitlab在服务器上的安装.md",
+                "mode": "source",
+                "source": false
+              }
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "6768e48fd79b734e",
+    "id": "d1ec9aa45b4b6195",
     "type": "split",
     "children": [
       {
-        "id": "7011f6375a153f5c",
+        "id": "c9c5a812baf5eb27",
         "type": "tabs",
         "children": [
           {
-            "id": "7bba356221369d3d",
+            "id": "04eef03ff4799a29",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -39,7 +68,7 @@
             }
           },
           {
-            "id": "fbbfb3f200363050",
+            "id": "673d1e14f5d7451c",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -54,7 +83,7 @@
             }
           },
           {
-            "id": "72c8cc49434e6cbb",
+            "id": "2921ff837cf7f64d",
             "type": "leaf",
             "state": {
               "type": "starred",
@@ -65,23 +94,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 266.5
+    "width": 300
   },
   "right": {
-    "id": "0c66f162803f7113",
+    "id": "9885dbf34308e4a1",
     "type": "split",
     "children": [
       {
-        "id": "d3e51cb09e68c8c3",
+        "id": "ad32e7bf3d9e4da4",
         "type": "tabs",
         "children": [
           {
-            "id": "d25e5eb78ae695ce",
+            "id": "cac5c2b8a1d97393",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "10_redis/1_ResidTemplate/常用api总结.md",
+                "file": "1_git/3_gitlab/Gitlab在服务器上的安装.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -93,19 +122,19 @@
             }
           },
           {
-            "id": "5eca2d7e55b1d284",
+            "id": "21b9577aa1cd753b",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "10_redis/1_ResidTemplate/常用api总结.md",
+                "file": "1_git/3_gitlab/Gitlab在服务器上的安装.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
             }
           },
           {
-            "id": "59428cb80a88be3a",
+            "id": "0f591f41b07f7b61",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -116,12 +145,12 @@
             }
           },
           {
-            "id": "6fdccfe0094f2c12",
+            "id": "cb4ec451ceebb937",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
-                "file": "10_redis/1_ResidTemplate/常用api总结.md"
+                "file": "1_git/3_gitlab/Gitlab在服务器上的安装.md"
               }
             }
           }
@@ -132,17 +161,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "7bba356221369d3d",
+  "active": "e33427f4147f1478",
   "lastOpenFiles": [
-    "10_redis/1_ResidTemplate/存储zset的写法.md",
-    "1_Java/0_studyEveryday/业务开发时，接口不能对外暴露的解决办法.md",
-    "8_SpringBoot/使用poi导出带有数据的模版.md",
-    "1_Java/0_studyEveryday/判断访问设备的方法.md",
-    "1_Java/0_studyEveryday/常用的返回体封装工具类.md",
-    "8_SpringBoot/整合druid不支持批量更新的问题.md",
-    "7_Spring/用法整理.md",
-    "7_Spring/向静态类注入bean.md",
-    "8_SpringBoot/事务的传播行为以及在spring中的配置.md",
-    "1_Java/3_util/unzip解压.md"
+    "1_git/Untitled.md",
+    "1_git/2_github/github高级搜索.md",
+    "1_git/1_general/在.gitignore中添加新的规则对已经被git管理了的文件不生效的解决办法.md"
   ]
 }
