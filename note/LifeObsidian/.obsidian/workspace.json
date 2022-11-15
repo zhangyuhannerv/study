@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "0b40f71f64d5fb74",
+        "id": "cf0087cbc8527611",
         "type": "tabs",
         "children": [
           {
-            "id": "0989c30f2c3e8cc0",
+            "id": "232c4089e143dbd7",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -81,7 +81,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "1_v2ray/快速搭建v2ray.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -98,7 +97,6 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "1_v2ray/快速搭建v2ray.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -120,9 +118,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1_v2ray/快速搭建v2ray.md"
-              }
+              "state": {}
             }
           }
         ]
@@ -132,11 +128,11 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "31cd9e34e5a10313",
+  "active": "232c4089e143dbd7",
   "lastOpenFiles": [
+    "2_todo/toCost.md",
     "2_todo/toSee.md",
     "2_todo/toDo.md",
-    "2_todo/toCost.md",
     "1_v2ray/快速搭建v2ray.md"
   ]
 }
