@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "6dbf4135430c7e4d",
+        "id": "11773b63fe57c8a1",
         "type": "tabs",
         "children": [
           {
-            "id": "d12ede2e080f28b1",
+            "id": "8dd278e1e3aae3e6",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "0_essays/学习路线.md",
+                "file": "4_JavaScript/4_jQuery/ajax前后台参数传递.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "0_essays/学习路线.md",
+                "file": "4_JavaScript/4_jQuery/ajax前后台参数传递.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "0_essays/学习路线.md",
+                "file": "4_JavaScript/4_jQuery/ajax前后台参数传递.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "0_essays/学习路线.md"
+                "file": "4_JavaScript/4_jQuery/ajax前后台参数传递.md"
               }
             }
           }
@@ -136,8 +136,10 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "d12ede2e080f28b1",
+  "active": "8dd278e1e3aae3e6",
   "lastOpenFiles": [
+    "4_JavaScript/4_jQuery/ajax前后台参数传递.md",
+    "0_essays/学习路线.md",
     "12_mysql/show profile功能.md",
     "12_mysql/mysql在导入.sql文件的时候报错  1067 - Invalid default value for ‘LOCK_TIME_‘.md",
     "12_mysql/DATE_FORMAT()和STR_TO_DATE().md",
@@ -145,8 +147,6 @@
     "12_mysql/主从复制的搭建.md",
     "12_mysql/安装.md",
     "12_mysql/锁.md",
-    "12_mysql/索引.md",
-    "12_mysql/字段create_time和update_time的策略.md",
-    "12_mysql/比较date或者datetime.md"
+    "12_mysql/索引.md"
   ]
 }

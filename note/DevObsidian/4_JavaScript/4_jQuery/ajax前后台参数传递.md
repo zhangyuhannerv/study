@@ -522,4 +522,31 @@
 	    return map;
 	}
 	```
+
+	注意：有的时候`@RequestParam("file[]") MultipartFile[] file`获取到的文件数组的长度为0
+	此时，可以用如下的方式获取文件数组or集合
+
+	```java
+	@PostMapping("/import_v1")  
+	@ResponseBody  
+	public Tip import_v1(@RequestParam("xianbie") Integer xianbie,  
+	                     @RequestParam("xingbie") Integer xingbie,  
+	                     @RequestParam("lx") Integer lx,  
+	                     @RequestParam("jcfs") Integer jcfs,  
+	                     @RequestParam("jcrq") String jcrq,  
+	                     @RequestParam("jcry") String jcry,  
+	                     HttpServletRequest request) {  
+	    SjfxMhJcjl jcjl = new SjfxMhJcjl();  
+	    jcjl.setXianbie(xianbie);  
+	    jcjl.setXingbie(xingbie);  
+	    jcjl.setLx(lx);  
+	    jcjl.setJcfs(jcfs);  
+	    jcjl.setJcrq(Timestamp.valueOf(jcrq));  
+	    jcjl.setJcry(jcry);  
+	    MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;  
+	    List<MultipartFile> files = multipartRequest.getFiles("file");  
+	    return sjfxMhJcjlService.Import_v1(files, jcjl);  
+	}
+	```
+		
 	
