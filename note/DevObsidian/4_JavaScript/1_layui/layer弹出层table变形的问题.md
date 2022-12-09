@@ -93,3 +93,45 @@ function initDataDetailTable(data) {
   });
 }
 ```
+
+解决方案2:表格的各个表头的宽度固定，根据表头的总高度以及弹窗的样式自己算出layer的宽度。
+同时给个合适的高度。（弹窗的宽，高都是固定值）
+```js
+layer.open({  
+        title: '区间：' + util.formatMile(requestData.startMile) + ' - ' + util.formatMile(requestData.endMile),  
+        type: 1,  
+        content: $(".chartLayer"),  
+        area: ['628px', '410px'],  
+        success(layero, index) {  
+            table.render({  
+                elem: '#chartLayerTable'  
+                , height: 313  
+                , url: Hussar.ctxPath + '/sjfxMhJcsj/' + url //数据接口  
+                , page: false //开启分页  
+                , cols: [[ //表头  
+                    {title: '序号', type: 'numbers', align: 'center'}  
+                    , {  
+                        field: 'mile', title: '里程', width: 130, align: 'center', templet(row) {  
+                            return util.formatMile(row.mile)  
+                        }  
+                    }  
+                    , {field: 'lx', title: '检测项', width: 120, align: 'center'}  
+                    , {field: 'value', title: '检测值', width: 80, align: 'center'}  
+                    , {field: 'pp', title: '评判', width: 90, align: 'center'}  
+                    , {field: 'date', title: '检测日期', width: 120, align: 'center'}  
+                ]],  
+                where: requestData,  
+                done(res) {  
+	                // 这里可以利用假数据算出设置的弹窗高度最高可以容纳几个表格数据。当表格的数据量多于这个值的时候，重置弹窗的宽度，在原先的基础上加上17px
+                    if (res.data.length > 9) {  
+                        layer.style(index, {  
+                            width: '645px',  
+                        });  
+                    }  
+                }  
+  
+            });  
+        }  
+    })  
+}
+```
