@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "3_nginx/配置文件下载（城轨的应用是配置apk下载）.md",
+                "file": "1_linux/1_general/端口管理.md",
                 "mode": "preview",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "3_nginx/配置文件下载（城轨的应用是配置apk下载）.md",
+                "file": "1_linux/1_general/端口管理.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "3_nginx/配置文件下载（城轨的应用是配置apk下载）.md",
+                "file": "1_linux/1_general/端口管理.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "3_nginx/配置文件下载（城轨的应用是配置apk下载）.md"
+                "file": "1_linux/1_general/端口管理.md"
               }
             }
           }
@@ -187,8 +187,8 @@
   },
   "active": "9c903bf7cfaebfef",
   "lastOpenFiles": [
-    "3_nginx/解决单页面应用，刷新后出现404或者404的错误.md",
     "3_nginx/配置文件下载（城轨的应用是配置apk下载）.md",
+    "3_nginx/解决单页面应用，刷新后出现404或者404的错误.md",
     "2_windows/根据端口直接关闭进程.md",
     "2_windows/查看端口，查看进程，关闭进程.md",
     "1_linux/3_ubuntu/rabbitmq-server管理.md",
