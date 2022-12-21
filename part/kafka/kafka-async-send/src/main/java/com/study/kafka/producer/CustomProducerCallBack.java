@@ -9,7 +9,7 @@ import java.util.Properties;
  * 异步发送带回调
  */
 public class CustomProducerCallBack {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 0.配置
         Properties properties = new Properties();
         // 连接集群
@@ -21,7 +21,7 @@ public class CustomProducerCallBack {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
         // 2.发送数据
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 500; i++) {
             kafkaProducer.send(new ProducerRecord<>("first", "hello" + i), new Callback() {
                 @Override
                 public void onCompletion(RecordMetadata metadata, Exception e) {
@@ -30,6 +30,7 @@ public class CustomProducerCallBack {
                     }
                 }
             });
+            Thread.sleep(1);
         }
 
         // 3.关闭资源
