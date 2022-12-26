@@ -23,7 +23,7 @@ public class CustomProducer {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
         // 2.发送数据
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 500; i++) {
             kafkaProducer.send(new ProducerRecord<>("first", "hello" + i));
         }
 
