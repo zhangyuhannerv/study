@@ -23,8 +23,8 @@ public class CustomProducer {
         KafkaProducer<String, String> kafkaProducer = new KafkaProducer<>(properties);
 
         // 2.发送数据
-        for (int i = 0; i < 500; i++) {
-            kafkaProducer.send(new ProducerRecord<>("first", "hello" + i));
+        for (int i = 0; i < 1; i++) {
+            kafkaProducer.send(new ProducerRecord<>("track_trackdata", "hello" + i));
         }
 
         // 3.关闭资源
