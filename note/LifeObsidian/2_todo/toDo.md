@@ -13,5 +13,8 @@
 ## 20230106
 - [x] 城轨正式二维码不对
 - [x] 研究nginx前端部署时访问后端的地址(还是我想的对。轻骑兵md有毛病)
-- [ ] xtsz_rwgl_rwxx，track_trackdata,kafka消息入库
+- [x] xtsz_rwgl_rwxx，track_trackdata,kafka消息入库
+## 20230112
+- [ ] 测试windows通过向日葵访问mac
+- [ ] 房补承诺书带着按手印重新上传申请
 

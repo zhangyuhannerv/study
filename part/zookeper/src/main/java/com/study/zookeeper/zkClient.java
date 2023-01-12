@@ -1,17 +1,19 @@
 package com.study.zookeeper;
 
-import org.apache.zookeeper.*;
+import org.apache.zookeeper.CreateMode;
+import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class zkClient {
     // 连接集群。注意','左右不能有空格
-    private String connectString = "192.168.220.21:2181,192.168.220.22:2181,192.168.220.23:2181";
+    private String connectString = "127.0.0.1:2181";
     // 200秒
     private int sessionTimeOut = 200000;
     private ZooKeeper zkClient;
