@@ -15,6 +15,6 @@
 - [x] 研究nginx前端部署时访问后端的地址(还是我想的对。轻骑兵md有毛病)
 - [x] xtsz_rwgl_rwxx，track_trackdata,kafka消息入库
 ## 20230112
-- [ ] 测试windows通过向日葵访问mac
-- [ ] 房补承诺书带着按手印重新上传申请
+- [x] 测试windows通过向日葵访问mac
+- [x] 房补承诺书带着按手印重新上传申请
 
