@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>示例文件</title>
+</head>
+<body>
+<!--由于没有前端代码，所以只能照着示范敲敲-->
+<script>
+    // 获取当前登录的用户
+    var username
+    var toName
+
+    // 创建websocket对象
+    var ws = new WebSocket("ws://localhost:8081/chat")
+
+    // 给ws绑定事件
+    ws.onopen = function () {
+        // 在建立连接之后要做什么事情
+        // 显示当前用户在线状态
+    }
+    // 接收到服务端推送的消息后触发
+    ws.onmessage = function (evt) {
+        // 获取服务端推送过来的消息
+        var dataStr = evt.data;
+        // 将dataStr转换为json对象
+        var res = JSON.parse(dataStr);
+        // 判断是否是系统消息
+        if (res.isSystem) {
+            // 系统消息
+            var names = res.message
+            // 1.好友列表展示
+            var userListStr = "";
+            // 2.系统广播的展示
+            var broadcastListStr = "";
+            for (var name of names) {
+                if (name === username) {
+                    continue
+                }
+                userListStr += name
+                broadcastListStr += name
+            }
+            // 渲染好友列表和系统广播
+            // ...
+        } else {
+            // 不是系统消息
+
+        }
+    }
+
+    ws.onclose = function () {
+
+    }
+</script>
+</body>
+</html>
