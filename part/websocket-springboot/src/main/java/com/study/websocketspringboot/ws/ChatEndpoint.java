@@ -1,5 +1,7 @@
 package com.study.websocketspringboot.ws;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.study.websocketspringboot.pojo.Message;
 import com.study.websocketspringboot.util.MessageUtils;
 import lombok.Data;
 import org.springframework.stereotype.Component;
@@ -73,13 +75,36 @@ public class ChatEndpoint {
     // 接收到客户端发送的数据时被调用
     @OnMessage
     public void onMessage(String message, Session session) {
+        try {
+            // 将message转换成message对象
+            ObjectMapper mapper = new ObjectMapper();
+            Message mess = mapper.readValue(message, Message.class);
+            // 获取要将数据发送给的用户
+            String toName = mess.getToName();
+            // 获取消息数据
+            String data = mess.getMessage();
+            // 获取当前登录的用户
+            String username = String.valueOf(httpSession.getAttribute("user"));
+            // 获取推送给指定用户的消息格式的数据
+            String resultMessage = MessageUtils.getMessage(false, username, data);
+            // 发送数据
+            onlineUsers.get(toName).session.getBasicRemote().sendText(resultMessage);
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     // 连接关闭的时候被调用
     @OnClose
     public void onClose(Session session) {
-
+        String username = (String) this.httpSession.getAttribute("user");
+        // 从容器中删除指定的用户
+        onlineUsers.remove(username);
+        // 获取推送的消息
+        String message = MessageUtils.getMessage(true, null, getNames());
+        // 推送消息
+        broadAllUsers(message);
     }
 }
