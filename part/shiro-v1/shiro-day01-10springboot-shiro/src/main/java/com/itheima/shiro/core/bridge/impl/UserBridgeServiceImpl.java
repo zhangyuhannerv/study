@@ -11,17 +11,16 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Description：用户信息桥接（后期会做缓存）
  */
 @Component("userBridgeService")
 public class UserBridgeServiceImpl implements UserBridgeService {
-
     @Autowired
-    UserAdapter userAdapter;
+    private UserAdapter userAdapter;
 
     @Override
     public User findUserByLoginName(String loginName) {
@@ -29,47 +28,34 @@ public class UserBridgeServiceImpl implements UserBridgeService {
     }
 
     @Override
-    public List<String> findResourcesIds(String userId) {
+    public List<String> findResourceIds(String userId) {
         List<Resource> resources = userAdapter.findResourceByUserId(userId);
-        List<String> ids = new ArrayList<>();
-        for (Resource resource : resources) {
-            ids.add(resource.getId());
-        }
-        return ids;
+        return resources.parallelStream().map(Resource::getId).collect(Collectors.toList());
     }
 
     @Override
     public AuthorizationInfo getAuthorizationInfo(ShiroUser shiroUser) {
-        //查询用户对应的角色标识
-        List<String> roleList = this.findRoleList(shiroUser.getId());
-        //查询用户对于的资源标识
-        List<String> resourcesList = this.findResourcesList(shiroUser.getId());
-        //构建鉴权信息对象
+        // 查询用户对应的角色标识
+        List<String> roleList = findRoleList(shiroUser.getId());
+        // 查询用户对应的资源标识
+        List<String> resourceList = findResourceList(shiroUser.getId());
+        // 构建鉴权信息对象
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         simpleAuthorizationInfo.addRoles(roleList);
-        simpleAuthorizationInfo.addStringPermissions(resourcesList);
+        simpleAuthorizationInfo.addStringPermissions(resourceList);
+
         return simpleAuthorizationInfo;
     }
 
     @Override
-    public List<String> findRoleList(String userId){
+    public List<String> findRoleList(String userId) {
         List<Role> roles = userAdapter.findRoleByUserId(userId);
-        List<String> roleLabel = new ArrayList<>();
-        for (Role role : roles) {
-            roleLabel.add(role.getLabel());
-        }
-        return roleLabel;
+        return roles.parallelStream().map(Role::getLabel).collect(Collectors.toList());
     }
 
     @Override
-    public List<String> findResourcesList(String userId){
+    public List<String> findResourceList(String userId) {
         List<Resource> resources = userAdapter.findResourceByUserId(userId);
-        List<String> resourceLabel = new ArrayList<>();
-        for (Resource resource : resources) {
-            resourceLabel.add(resource.getLabel());
-        }
-        return resourceLabel;
+        return resources.parallelStream().map(Resource::getLabel).collect(Collectors.toList());
     }
-
-
 }
