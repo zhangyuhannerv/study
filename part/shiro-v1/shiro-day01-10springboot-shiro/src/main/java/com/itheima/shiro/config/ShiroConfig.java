@@ -30,54 +30,55 @@ import java.util.Map;
 @ComponentScan(basePackages = "com.itheima.shiro.core")
 @Log4j2
 public class ShiroConfig {
-
-    //创建cookie对象
-    @Bean(name = "simpleCookie")
-    public SimpleCookie simpleCookie(){
+    // 创建cookie对象
+    @Bean
+    public SimpleCookie simpleCookie() {
         SimpleCookie simpleCookie = new SimpleCookie();
-        simpleCookie.setName("ShiroSession");
-        return  simpleCookie;
+        simpleCookie.setName("ShiroSession");// 只是个名字
+        return simpleCookie;
     }
 
-    //创建权限管理器
-    @Bean("securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(){
+    // 创建权限管理器
+    @Bean
+    public DefaultWebSecurityManager securityManager(ShiroDbRealm shiroDbRealm,
+                                                     DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        //管理realm
-        securityManager.setRealm(shiroDbRealm());
-        //管理会话
-        securityManager.setSessionManager(sessionManager());
+        // 管理realm
+        securityManager.setRealm(shiroDbRealm);
+        // 管理会话
+        securityManager.setSessionManager(sessionManager);
         return securityManager;
     }
 
-    //自定义realm
-    @Bean("shiroDbRealm")
-    public ShiroDbRealm shiroDbRealm(){
-        return new  ShiroDbRealmImpl();
+    // 自定义realm交给spring管理
+    @Bean
+    public ShiroDbRealm shiroDbRealm() {
+        return new ShiroDbRealmImpl();
     }
 
-    //会话管理器
-    @Bean("sessionManager")
-    public DefaultWebSessionManager sessionManager(){
+    // 会话管理器
+    @Bean
+    public DefaultWebSessionManager sessionManager(SimpleCookie simpleCookie) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //关闭会话更新
+        // 关闭会话更新
         sessionManager.setSessionValidationSchedulerEnabled(false);
-        //生效cookie
+        // 生效cookie
         sessionManager.setSessionIdCookieEnabled(true);
-        //指定cookie的生成策略
-        sessionManager.setSessionIdCookie(simpleCookie());
-        //指定全局会话超时时间
-        sessionManager.setGlobalSessionTimeout(3600000);
+        // 指定cookie的生成策略
+        sessionManager.setSessionIdCookie(simpleCookie);
+        // 指定全局会话的超时时间
+        sessionManager.setGlobalSessionTimeout(3600000);// 1个小时超时
         return sessionManager;
     }
 
-    //创建生命周期的管理
-    @Bean("lifecycleBeanPostProcessor")
-    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
-        return  new LifecycleBeanPostProcessor();
+    // 创建生命周期的管理
+    @Bean
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
     }
 
-    //aop增强（使用注解鉴权方式）
+    // aop增强（使用注解鉴权）
+
     /**
      * @Description AOP式方法级权限检查
      */
@@ -93,43 +94,44 @@ public class ShiroConfig {
      * @Description 配合DefaultAdvisorAutoProxyCreator事项注解权限校验
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor() {
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager webSecurityManager) {
         AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(defaultWebSecurityManager());
+        aasa.setSecurityManager(webSecurityManager);
         return new AuthorizationAttributeSourceAdvisor();
     }
 
-    /**
-     * @Description 过滤器链定义
-     */
-    private Map<String,String> filterChainDefinitionMap(){
-       List<Object> list =  PropertiesUtil.propertiesShiro.getKeyList();
-        Map<String,String> map = new LinkedHashMap<>();
-        for (Object o : list) {
+    // shiro过滤器管理
+    private Map<String, String> filterChainDefinitionMap() {
+        // 加载配置文件的过滤器链转换成map
+        List<Object> keyList = PropertiesUtil.propertiesShiro.getKeyList();
+        Map<String, String> map = new LinkedHashMap<>();
+        for (Object o : keyList) {
             String key = o.toString();
-            String val = PropertiesUtil.getShiroValue(key);
-            map.put(key, val);
+            String value = PropertiesUtil.getShiroValue(key);
+            map.put(key, value);
         }
+
         return map;
     }
 
     /**
-     * @Description 加载自定义过滤器
+     * 加载自定义过滤器
+     *
+     * @return
      */
-    private Map<String, Filter> filters(){
-        Map<String,Filter> map = new HashMap<>();
+    private Map<String, Filter> filters() {
+        Map<String, Filter> map = new HashMap<>();
         map.put("roles-or", new RolesOrAuthorizationFilter());
         return map;
     }
 
-    //shiro过滤器管理
-    @Bean("shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(){
+    @Bean
+    public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager webSecurityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        shiroFilterFactoryBean.setSecurityManager(defaultWebSecurityManager());
-        //过滤器
+        shiroFilterFactoryBean.setSecurityManager(webSecurityManager);
+        // 增加一个自定义的过滤器
         shiroFilterFactoryBean.setFilters(filters());
-        //过滤器链
+        // 过滤器链
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap());
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setUnauthorizedUrl("/login");

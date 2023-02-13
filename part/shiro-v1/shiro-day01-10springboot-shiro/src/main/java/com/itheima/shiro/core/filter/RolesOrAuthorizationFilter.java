@@ -29,9 +29,8 @@ public class RolesOrAuthorizationFilter extends AuthorizationFilter {
 
         Set<String> roles = CollectionUtils.asSet(rolesArray);
         for (String role : roles) {
-            boolean flag = subject.hasRole(role);
-            if (flag){
-                return flag;
+            if (subject.hasRole(role)) {
+                return true;
             }
         }
         return false;

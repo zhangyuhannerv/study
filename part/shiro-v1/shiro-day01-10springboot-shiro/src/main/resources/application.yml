@@ -40,3 +40,7 @@ spring:
       properties:
         log-base-dir: /Users/zhangyuhan/Work/log/study_shiro_itheima
         transaction-manager-unique-name: spring-shiro
+server:
+  port: 8001
+  servlet:
+    context-path: /shiro
