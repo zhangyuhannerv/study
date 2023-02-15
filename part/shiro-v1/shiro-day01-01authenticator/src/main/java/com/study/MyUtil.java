@@ -4,7 +4,7 @@ import java.io.File;
 
 public class MyUtil {
     public static void main(String[] args) {
-        String fileDir = "/Users/zhangyuhan/Work/study/part/shiro-v1/shiro-day01-11shiro-redis-realm";
+        String fileDir = "/Users/zhangyuhan/Work/study/part/shiro-v1/shiro-day01-12shiro-redis-SessionManagerB";
         removePrefix(new File(fileDir));
 
     }
