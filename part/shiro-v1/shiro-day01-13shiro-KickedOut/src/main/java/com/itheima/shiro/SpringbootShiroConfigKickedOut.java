@@ -22,16 +22,16 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
         "com.itheima.shiro.service", "com.itheima.shiro.config", "com.itheima.shiro.intialize"})
 @EnableAspectJAutoProxy
 @EnableTransactionManagement
-public class SpringbootShiroConfigRetryLimit extends SpringBootServletInitializer {
+public class SpringbootShiroConfigKickedOut extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootShiroConfigRetryLimit.class, args);
+        SpringApplication.run(SpringbootShiroConfigKickedOut.class, args);
     }
 
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(SpringbootShiroConfigRetryLimit.class);
+        return application.sources(SpringbootShiroConfigKickedOut.class);
     }
 
     @Bean

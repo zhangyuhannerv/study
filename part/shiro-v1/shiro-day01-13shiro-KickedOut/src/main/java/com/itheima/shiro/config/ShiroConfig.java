@@ -2,6 +2,7 @@ package com.itheima.shiro.config;
 
 
 import com.itheima.shiro.core.ShiroDbRealm;
+import com.itheima.shiro.core.filter.KickedOutAuthorizationFilter;
 import com.itheima.shiro.core.filter.RolesOrAuthorizationFilter;
 import com.itheima.shiro.core.impl.RedisSessionDao;
 import com.itheima.shiro.core.impl.ShiroDbRealmImpl;
@@ -173,6 +174,7 @@ public class ShiroConfig {
     private Map<String, Filter> filters() {
         Map<String, Filter> map = new HashMap<String, Filter>();
         map.put("role-or", new RolesOrAuthorizationFilter());
+        map.put("kicked-out", new KickedOutAuthorizationFilter(redissonClient(), redisSessionDao(), shiroSessionManager()));
         return map;
     }
 
