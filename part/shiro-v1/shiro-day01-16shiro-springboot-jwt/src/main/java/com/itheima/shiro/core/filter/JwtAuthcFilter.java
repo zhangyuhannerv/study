@@ -63,6 +63,7 @@ public class JwtAuthcFilter extends FormAuthenticationFilter {
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/json; charset=utf-8");
             response.getWriter().write(JSONObject.toJSONString(baseResponse));
+            return false;
         }
         // 如果没有：走原始方式
         return super.onAccessDenied(request, response);

@@ -11,7 +11,7 @@ itheima:
         timeout: 6000
         global-session-timeout: 360000
     jwt:
-      hex-encode-secret-key: 2234adfa
+      base64EncodeSecretKey: 2234adfa
   datasource:
     shiro:
       work-id: 10

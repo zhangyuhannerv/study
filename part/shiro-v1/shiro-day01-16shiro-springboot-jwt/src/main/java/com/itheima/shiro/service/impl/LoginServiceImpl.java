@@ -86,6 +86,7 @@ public class LoginServiceImpl implements LoginService {
             claims.put("shiroUser", JSONObject.toJSONString(shiroUser));
             jwtToken = jwtTokenManager.issuedToken("system", subject.getSession().getTimeout(), sessionId, claims);
         } catch (Exception e) {
+            e.printStackTrace();
             return new BaseResponse(ShiroConstant.LOGIN_FAILURE_CODE, ShiroConstant.LOGIN_FAILURE_MESSAGE);
         }
 
