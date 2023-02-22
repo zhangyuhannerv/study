@@ -16,11 +16,6 @@
     top: 20px;
     left: 20px;
   }
-
-  input {
-    outline: none;
-    caret-color: rgba(0, 0, 0, 0)
-  }
 </style>
 
 <body>
@@ -35,7 +30,7 @@
     move = false; //判断是否摁住
 
   //鼠标摁住
-  Dom.onmousedown = function(e) {
+  Dom.onmousedown = function (e) {
     move = true;
     circleX = Dom.offsetLeft;
     circleY = Dom.offsetTop;
@@ -45,7 +40,7 @@
   }
 
   //摁住移动--这里不能监听Dom的移动事件--因为鼠标滑动太快后会导致渲染失败-->事件失效
-  window.onmousemove = function(e) {
+  window.onmousemove = function (e) {
     if (move) {
       console.log('摁住移动===========')
       Dom.style.left = e.clientX - (offsetX - circleX) + 'px';
@@ -55,7 +50,7 @@
   }
 
   //鼠标松开
-  Dom.onmouseup = function(e) {
+  Dom.onmouseup = function (e) {
     console.log('鼠标松开')
     move = false;
     Dom.style.cursor = 'default';
