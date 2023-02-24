@@ -10,8 +10,8 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
 
-        <RollingFile name="RollingFileDebug" fileName="D:/logs/producer/debug.log"
-                     filePattern="D:/logs/producer/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileDebug" fileName="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/debug.log"
+                     filePattern="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log">
             <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
             <Filters>
                 <ThresholdFilter level="DEBUG"/>
@@ -26,8 +26,8 @@
             <DefaultRolloverStrategy max="20" min="0" />
         </RollingFile>
 
-        <RollingFile name="RollingFileInfo" fileName="D:/logs/producer/info.log"
-                     filePattern="D:/logs/producer/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileInfo" fileName="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/info.log"
+                     filePattern="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
             <Filters>
                 <ThresholdFilter level="INFO"/>
                 <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -41,8 +41,8 @@
             <DefaultRolloverStrategy max="20" min="0" />
         </RollingFile>
 
-        <RollingFile name="RollingFileWarn" fileName="D:/logs/producer/warn.log"
-                     filePattern="D:/logs/producer/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileWarn" fileName="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/warn.log"
+                     filePattern="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
             <Filters>
                 <ThresholdFilter level="WARN"/>
                 <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
@@ -56,8 +56,8 @@
             <DefaultRolloverStrategy max="20" min="0" />
         </RollingFile>
 
-        <RollingFile name="RollingFileError" fileName="D:/logs/producer/error.log"
-                     filePattern="D:/logs/producer/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileError" fileName="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/error.log"
+                     filePattern="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
             <ThresholdFilter level="ERROR"/>
             <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
             <Policies>
@@ -68,8 +68,8 @@
             <DefaultRolloverStrategy max="20" min="0" />
         </RollingFile>
 
-        <RollingFile name="RollingFileFatal" fileName="D:/logs/producer/fatal.log"
-                     filePattern="D:/logs/producer/$${date:yyyy-MM}/fatal-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="RollingFileFatal" fileName="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/fatal.log"
+                     filePattern="/Users/zhangyuhan/Work/log/study_shiro_itheima/producer/$${date:yyyy-MM}/fatal-%d{yyyy-MM-dd}-%i.log">
             <ThresholdFilter level="FATAL"/>
             <PatternLayout pattern="[%d{HH:mm:ss:SSS}] [%p] - %l - %m%n"/>
             <Policies>

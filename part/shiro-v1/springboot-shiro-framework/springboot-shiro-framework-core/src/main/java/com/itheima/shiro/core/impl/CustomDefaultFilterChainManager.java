@@ -34,7 +34,7 @@ public class CustomDefaultFilterChainManager extends DefaultFilterChainManager {
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         Map<String, Filter> defaultFilters = getFilters();
         //apply global settings if necessary:
         for (Filter filter : defaultFilters.values()) {
@@ -85,11 +85,11 @@ public class CustomDefaultFilterChainManager extends DefaultFilterChainManager {
     }
 
     /**
-     * @Description 加载自定义过滤器的对象
      * @param customFilters 自定义过滤器的map架构
      * @return
+     * @Description 加载自定义过滤器的对象
      */
-    public void setCustomFilters(Map<String,Filter> customFilters){
+    public void setCustomFilters(Map<String, Filter> customFilters) {
         for (Map.Entry<String, Filter> entry : customFilters.entrySet()) {
             addFilter(entry.getKey(), entry.getValue(), false);
         }

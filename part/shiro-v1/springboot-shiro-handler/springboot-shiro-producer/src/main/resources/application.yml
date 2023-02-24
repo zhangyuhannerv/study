@@ -8,7 +8,7 @@ itheima:
       data-source-name: shiro-data-source
       xa-data-source-class-name: com.alibaba.druid.pool.xa.DruidXADataSource
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://127.0.0.1:3306/shiro
+      url: jdbc:mysql://127.0.0.1:10000/study_shiro_itheima?useSSL=false
       password: root
       username: root
       initial-size: 20
@@ -38,7 +38,7 @@ spring:
   jta:
     atomikos:
       properties:
-        log-base-dir: D:/logs/producer
+        log-base-dir: /Users/zhangyuhan/Work/log/study_shiro_itheima/producer
         transaction-manager-unique-name: producer
 dubbo:
   application:
@@ -46,12 +46,12 @@ dubbo:
     id: producer-01
     logger: log4j2
   registry:
-    address: zookeeper://192.168.1.111:2181
+    address: zookeeper://127.0.0.1:2181
   protocol:
     name: dubbo
     port: 21188
     threads: 200
-    accesslog: D:/logs/producer.log
+    accesslog: /Users/zhangyuhan/Work/log/study_shiro_itheima/producer.log
 server:
   tomcat:
     uri-encoding: utf-8

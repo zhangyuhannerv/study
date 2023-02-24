@@ -5,7 +5,6 @@ import com.itheima.shiro.constant.SuperConstant;
 import com.itheima.shiro.core.ShiroDbRealm;
 import com.itheima.shiro.core.filter.*;
 import com.itheima.shiro.core.impl.*;
-import com.itheima.shiro.properties.PropertiesUtil;
 import lombok.extern.log4j.Log4j2;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
@@ -27,8 +26,6 @@ import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -65,7 +62,7 @@ public class ShiroConfig {
                     .setMasterConnectionMinimumIdleSize(shiroRedisProperties.getConnectionMinimumidleSize())
                     .setMasterConnectionPoolSize(shiroRedisProperties.getConnectPoolSize()).setTimeout(shiroRedisProperties.getTimeout());
         }
-        RedissonClient redissonClient =  Redisson.create(config);
+        RedissonClient redissonClient = Redisson.create(config);
         log.info("=====初始化redissonClientForShiro完成======");
         return redissonClient;
     }
@@ -73,20 +70,20 @@ public class ShiroConfig {
     /**
      * @Description 创建cookie对象
      */
-    @Bean(name="sessionIdCookie")
-    public SimpleCookie simpleCookie(){
+    @Bean(name = "sessionIdCookie")
+    public SimpleCookie simpleCookie() {
         SimpleCookie simpleCookie = new SimpleCookie();
         simpleCookie.setName("ShiroSession");
         return simpleCookie;
     }
 
     /**
-     * @Description 权限管理器
      * @param
      * @return
+     * @Description 权限管理器
      */
-    @Bean(name="securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(){
+    @Bean(name = "securityManager")
+    public DefaultWebSecurityManager defaultWebSecurityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(shiroDbRealm());
         securityManager.setSessionManager(shiroSessionManager());
@@ -97,17 +94,18 @@ public class ShiroConfig {
      * @Description 密码比较器
      */
     @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher (){
-        RetryLimitCredentialsMatcher matcher = new RetryLimitCredentialsMatcher(SuperConstant.HASH_ALGORITHM,redissonClient());
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        RetryLimitCredentialsMatcher matcher = new RetryLimitCredentialsMatcher(SuperConstant.HASH_ALGORITHM, redissonClient());
         matcher.setHashIterations(SuperConstant.HASH_INTERATIONS);
         return matcher;
     }
+
     /**
      * @Description 自定义RealmImpl
      */
-    @Bean(name="shiroDbRealm")
-    public ShiroDbRealm shiroDbRealm(){
-        ShiroDbRealm shiroDbRealm =new ShiroDbRealmImpl();
+    @Bean(name = "shiroDbRealm")
+    public ShiroDbRealm shiroDbRealm() {
+        ShiroDbRealm shiroDbRealm = new ShiroDbRealmImpl();
         shiroDbRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return shiroDbRealm;
     }
@@ -117,8 +115,8 @@ public class ShiroConfig {
      * @Description 自定义session会话存储的实现类 ，使用Redis来存储共享session，达到分布式部署目的
      */
     @Bean("redisSessionDao")
-    public SessionDAO redisSessionDao(){
-        RedisSessionDao sessionDAO =   new RedisSessionDao();
+    public SessionDAO redisSessionDao() {
+        RedisSessionDao sessionDAO = new RedisSessionDao();
         sessionDAO.setGlobalSessionTimeout(shiroRedisProperties.getGlobalSessionTimeout());
         return sessionDAO;
     }
@@ -126,8 +124,8 @@ public class ShiroConfig {
     /**
      * @Description 会话管理器
      */
-    @Bean(name="sessionManager")
-    public ShiroSessionManager shiroSessionManager(){
+    @Bean(name = "sessionManager")
+    public ShiroSessionManager shiroSessionManager() {
         ShiroSessionManager sessionManager = new ShiroSessionManager();
         sessionManager.setSessionDAO(redisSessionDao());
         sessionManager.setSessionValidationSchedulerEnabled(false);
@@ -180,9 +178,8 @@ public class ShiroConfig {
     }
 
 
-
     @Bean
-    public CustomDefaultFilterChainManager defaultFilterChainManager(){
+    public CustomDefaultFilterChainManager defaultFilterChainManager() {
         CustomDefaultFilterChainManager defaultFilterChainManager = new CustomDefaultFilterChainManager();
         defaultFilterChainManager.setCustomFilters(filters());
         defaultFilterChainManager.setLoginUrl("/login");
@@ -192,17 +189,18 @@ public class ShiroConfig {
     }
 
     @Bean
-    public CustomPathMatchingFilterChainResolver chainResolver(){
+    public CustomPathMatchingFilterChainResolver chainResolver() {
         CustomPathMatchingFilterChainResolver chainResolver = new CustomPathMatchingFilterChainResolver();
         //指定过滤器管理者
         chainResolver.setDefaultFilterChainManager(defaultFilterChainManager());
         return chainResolver;
     }
+
     /**
      * @Description Shiro过滤器
      */
     @Bean("shiroFilter")
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(){
+    public ShiroFilterFactoryBean shiroFilterFactoryBean() {
         CustomShiroFilterFactoryBean shiroFilter = new CustomShiroFilterFactoryBean();
         shiroFilter.setChainResolver(chainResolver());
         shiroFilter.setSecurityManager(defaultWebSecurityManager());

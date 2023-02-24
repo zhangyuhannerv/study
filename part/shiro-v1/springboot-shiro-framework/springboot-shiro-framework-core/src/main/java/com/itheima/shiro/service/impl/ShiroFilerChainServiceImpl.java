@@ -4,7 +4,6 @@ import com.itheima.shiro.core.bridge.FilterChainBridgeService;
 import com.itheima.shiro.core.impl.CustomDefaultFilterChainManager;
 import com.itheima.shiro.service.ShiroFilerChainService;
 import com.itheima.shiro.vo.FilterChainVo;
-import org.apache.shiro.web.filter.mgt.DefaultFilterChainManager;
 import org.apache.shiro.web.filter.mgt.NamedFilterList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,12 +39,8 @@ public class ShiroFilerChainServiceImpl implements ShiroFilerChainService {
     @PostConstruct
     public void init() {
         defaultFilterChains = new LinkedHashMap<>();
-        executorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                initFilterChains(filterChainBridgeService.findFilterChainList()) ;
-            }
-        }, 0, 120, TimeUnit.SECONDS);
+        executorService.scheduleAtFixedRate(() -> initFilterChains(filterChainBridgeService.findFilterChainList()),
+                0, 120, TimeUnit.SECONDS);
     }
 
     @Override
@@ -60,7 +55,7 @@ public class ShiroFilerChainServiceImpl implements ShiroFilerChainService {
             String[] filterNames = filterName.split(",");
             for (String name : filterNames) {
                 //注册所有filter，包含自定义的过滤器
-                switch(name){
+                switch (name) {
                     case "anon":
                         defaultFilterChainManager.addToChain(url, name);
                         break;
@@ -71,10 +66,10 @@ public class ShiroFilerChainServiceImpl implements ShiroFilerChainService {
                         defaultFilterChainManager.addToChain(url, name, urlFilterVo.getRoles());
                         break;
                     case "perms":
-                        defaultFilterChainManager.addToChain(url, name,urlFilterVo.getPermissions());
+                        defaultFilterChainManager.addToChain(url, name, urlFilterVo.getPermissions());
                         break;
                     case "role-or":
-                        defaultFilterChainManager.addToChain(url, name,urlFilterVo.getRoles());
+                        defaultFilterChainManager.addToChain(url, name, urlFilterVo.getRoles());
                         break;
                     case "kicked-out":
                         defaultFilterChainManager.addToChain(url, name);
@@ -86,7 +81,7 @@ public class ShiroFilerChainServiceImpl implements ShiroFilerChainService {
                         defaultFilterChainManager.addToChain(url, name, urlFilterVo.getRoles());
                         break;
                     case "jwt-perms":
-                        defaultFilterChainManager.addToChain(url, name,urlFilterVo.getPermissions());
+                        defaultFilterChainManager.addToChain(url, name, urlFilterVo.getPermissions());
                         break;
                     default:
                         break;
