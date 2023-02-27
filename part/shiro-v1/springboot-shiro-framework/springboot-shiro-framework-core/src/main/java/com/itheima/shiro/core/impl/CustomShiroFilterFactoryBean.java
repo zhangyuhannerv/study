@@ -16,7 +16,7 @@ import org.springframework.beans.factory.BeanInitializationException;
 @Log4j2
 public class CustomShiroFilterFactoryBean extends ShiroFilterFactoryBean {
 
-    PathMatchingFilterChainResolver chainResolver ;
+    PathMatchingFilterChainResolver chainResolver;
 
     public void setChainResolver(PathMatchingFilterChainResolver chainResolver) {
         this.chainResolver = chainResolver;
