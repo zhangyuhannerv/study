@@ -1,6 +1,6 @@
 package com.zh.work_demo;
 
-import com.zh.FileCut.FileCut;
+import com.zh.fileOperation.FileCut;
 import org.junit.Test;
 
 import java.io.File;

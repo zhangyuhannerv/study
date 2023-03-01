@@ -1,16 +1,13 @@
 package com.zh.work_demo;
 
-import com.zh.FileCut.FileCut;
+import com.zh.fileOperation.FileCut;
 import org.junit.Test;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 /**
  * @ClassName _5获取图片的长宽

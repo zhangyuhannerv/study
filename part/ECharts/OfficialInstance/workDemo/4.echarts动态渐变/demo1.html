@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div style="width: 500px;height:500px " id="d1">
+  </div>
+  <script src="../lib/echarts.min.js"></script>
+  <script src="../lib/jquery-3.5.1.js"></script>
+  <script>
+    let mile = 0;
+    let value = Math.random() * 1000;
+    let data = []
+    function randomData() {
+      mile += 0.25;
+      value = value + Math.random() * 21 - 10;
+
+      return [mile, Math.round(value)]
+    }
+
+    for (var i = 0; i < 1000; i++) {
+      data.push(randomData());
+    }
+
+    let option = {
+      title: {
+        text: 'Dynamic Data & Time Axis'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          animation: false
+        }
+      },
+      xAxis: {
+        type: 'value',
+        scale: true,
+        show: false,
+        min: function (value) {
+          return value.min
+        },
+        max: function (value) {
+          return value.max
+        }
+      },
+      yAxis: {
+        type: 'value',
+        splitLine: {
+          show: false
+        }
+      },
+      series: [
+        {
+          name: 'Fake Data',
+          type: 'line',
+          showSymbol: false,
+          data: data
+        }
+      ],
+      backgroundColor: '#000',
+    };
+
+    let myChart = echarts.init($("#d1")[0])
+    myChart.setOption(option)
+
+    setInterval(function () {
+      for (var i = 0; i < 50; i++) {
+        data.shift();
+        data.push(randomData());
+      }
+      myChart.setOption({
+        series: [
+          {
+            data: data
+          }
+        ]
+      });
+    }, 125);
+
+  </script>
+</body>
+
+</html>
