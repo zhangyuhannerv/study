@@ -30,7 +30,7 @@
 
 ctrl+鼠标左键点击打开链接，下载最新的rpm包
 
-![图片加载失败。请确认你能访问github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210719165359.png)
+![图片加载失败。请确认你能访问github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210719165359.png)
 
 ## 2.上传rpm文件。注意：linux的运营规范里明确规定了第三方软件包放在/opt/文件夹下
 
@@ -137,7 +137,7 @@ cd /opt/gitlab/bin
 gitlab-rails console
 ```
 
-![图片加载失败。请确认你能连接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210719172042.png)
+![图片加载失败。请确认你能连接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210719172042.png)
 
 出现上述结果证明进入控制台成功
 
@@ -187,15 +187,15 @@ u.save!
 
 点击左上角的menu，在展开的下拉菜单中点击admin。进入到管理者面板
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720090423.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720090423.png)
 
 点击user区域的view lastest users能够进入到用户管理区
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720090624.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720090624.png)
 
 点击 newUser能够添加用户。可能新增的用户。无法直接为其设置密码。此时可以先设置姓名，用户名，邮箱等。保存并退出后再点击edit按钮即可手动指定新建用户的默认密码。
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720090646.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720090646.png)
 
 注意：
 
@@ -217,11 +217,11 @@ u.save!
 
 鼠标悬浮于右上角的 project information，点击弹出的菜单里的members选项即可邀请成员
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720092603.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720092603.png)
 
 在 max role列可以修改用户的角色。因为Maintainer相当于该项目的root。所以建议一个项目最多两到三个Maintainer角色。
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720093040.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720093040.png)
 
 ## 4.特别注意：取消main branch protect
 
@@ -231,7 +231,7 @@ gitlab默认对main分支提供保护。只有Maintainer才能对main分支执�
 
 点击settings里的Repositoy
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720094409.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720094409.png)
 
 点击protected branches 右侧的expand可以在展开的下拉框里看到一条默认的main分支保护规则。
 
@@ -239,7 +239,7 @@ gitlab默认对main分支提供保护。只有Maintainer才能对main分支执�
 
 建议在Allowed to merge 和 Allowed to push 里添加developer角色。 
 
-![图片加载失败，请确认你能链接到github](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210720094552.png)
+![图片加载失败，请确认你能链接到github](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210720094552.png)
 
 ***
 

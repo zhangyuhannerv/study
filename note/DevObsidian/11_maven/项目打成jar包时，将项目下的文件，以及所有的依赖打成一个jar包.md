@@ -20,7 +20,7 @@
 或
 添加了新的插件后，右侧maven的plugins列表会多出个命令选项:**assembly**。鼠标左键双击该命令选项下的第一个命令**assembly:assembly**。
 实际上和上面的是一样的。但是推荐这种方式（简单，方便，图形化操作，还能应用上maven在idea里面设置的setting.xml配置)
-![github连接失败。图片无法展示](https://raw.githubusercontent.com/tulu-zulu/study/main/img/202111051728272.png)
+![github连接失败。图片无法展示](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/202111051728272.png)
 执行成功后会在target文件夹下除了普通的jar外还多出一个以-jar-with-dependencies结尾的JAR包. 这个JAR包就包含了项目所依赖的所有JAR的CLASS.
 
 用这个包含所有CLASS的单独的jar包通过exe4j转出的exe文件就能成功执行
