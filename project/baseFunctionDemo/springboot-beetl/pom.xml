@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.baseDemo</groupId>
-    <artifactId>file-monitor-echarts-show</artifactId>
+    <artifactId>springboot-beetl</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>file-monitor-echarts-show</name>
     <description>file-monitor-echarts-show</description>
