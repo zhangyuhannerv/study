@@ -5,7 +5,7 @@
 其他同事提交代码时把idea中的 .iml 文件也一起提交了，该文件中配置的jdk lib 路径与自己电脑中的该路径不一致。
 
 解决方法很简单，执行一下 maven update 即可，也可以手动修改 .iml 文件中的该路径。
-![](https://raw.githubusercontent.com/tulu-zulu/study/main/img/20210713083737.png)
+![](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210713083737.png)
 
 情形二：
 
@@ -25,7 +25,7 @@
     
 3.  执行 maven update
 
-	 ![如图](https://raw.githubusercontent.com/tulu-zulu/study/main/img/20210713084001.png)
+	 ![如图](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210713084001.png)
     
     一般到此都能解决问题，如果还是解决不了，可能真的是人品问题，那就只能呵呵了。。
     

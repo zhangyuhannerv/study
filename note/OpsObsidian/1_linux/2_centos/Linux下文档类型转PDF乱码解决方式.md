@@ -1,5 +1,5 @@
 在Linux系统下进行文本类型转PDF时出现乱码。
-![问题示意图](https://raw.githubusercontent.com/Takatsukun/study/main/img/20210708223956.png)
+![问题示意图](https://cdn.jsdelivr.net/gh/Zhangyuhannerv/picture-host-1@main/20210708223956.png)
 
 解决方案：
 
