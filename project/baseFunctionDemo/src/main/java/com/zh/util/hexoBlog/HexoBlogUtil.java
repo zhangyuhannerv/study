@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class HexoBlogUtil {
     private static final String parentPath = "/Users/zhangyuhan/Work/study/note/";
@@ -34,7 +32,7 @@ public class HexoBlogUtil {
         bf.write("---");
         bf.newLine();
         // 写标题
-        bf.write("title: " + title);
+        bf.write("title: '" + title + "'");
         bf.newLine();
         // 写日期
         bf.write("date: " + getDate());
@@ -47,7 +45,7 @@ public class HexoBlogUtil {
         bf.newLine();
         for (int i = 0; i < categories.size(); i++) {
             if (i != categories.size() - 1) {
-                bf.write("  - " + categories.get(i));
+                bf.write("  - '" + categories.get(i) + "'");
                 bf.newLine();
             }
         }
@@ -55,7 +53,7 @@ public class HexoBlogUtil {
         bf.write("tags: ");
         bf.newLine();
         for (String tag : tags) {
-            bf.write("  - " + tag);
+            bf.write("  - '" + tag + "'");
             bf.newLine();
         }
 
@@ -94,7 +92,7 @@ public class HexoBlogUtil {
 
     public void transferNoteToBlog(File sourceFile, File targetFile) throws IOException {
         List<String> categoriesAndTags = getCategoriesAndTags(sourceFile);
-        writeFrontMatter(targetFile, categoriesAndTags.get(categoriesAndTags.size() - 1) + ".md", categoriesAndTags, categoriesAndTags);
+        writeFrontMatter(targetFile, categoriesAndTags.get(categoriesAndTags.size() - 1), categoriesAndTags, categoriesAndTags);
         writeContent(sourceFile, targetFile);
         num++;
     }
@@ -102,12 +100,15 @@ public class HexoBlogUtil {
     public void transfer(File dir) throws IOException {
         File[] files = dir.listFiles();
         for (File file : files) {
+            if (file.getName().startsWith(".")) {
+                continue;
+            }
             if (file.isFile()) {
                 String targetFilePath = file.getAbsolutePath().replace(parentPath, targetPath);
                 targetFilePath = targetFilePath.replace("Obsidian", "");
                 File targetFile = new File(targetFilePath);
                 transferNoteToBlog(file, targetFile);
-            } else if (!file.getName().startsWith(".")) {
+            } else {
                 transfer(file);
             }
         }
@@ -118,7 +119,7 @@ public class HexoBlogUtil {
         for (File file : files) {
             if (file.isFile()) {
                 list.add(file.getName());
-            } else {
+            } else if (!file.getName().startsWith(".")) {
                 listFileName(file, list);
             }
         }
@@ -142,11 +143,21 @@ public class HexoBlogUtil {
         listFileName(sourceDir, sourceNames);
         List<String> targetNames = new ArrayList<>();
         listFileName(targetDir, targetNames);
+        System.out.println(sourceNames.size());
+        System.out.println(targetNames.size());
+
+        Set<String> set = new HashSet<>();
+
+
         for (String sourceName : sourceNames) {
             if (!targetNames.contains(sourceName)) {
                 System.out.println(sourceName);
             }
-        }
 
+            if (set.contains(sourceName)) {
+                System.out.println(sourceName);
+            }
+            set.add(sourceName);
+        }
     }
 }

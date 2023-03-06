@@ -21,7 +21,7 @@ public class FileCopy {
             bufferedReader = new BufferedReader(new FileReader(sourceFile));
             bufferedWriter = new BufferedWriter(new FileWriter(targetFile, append));
             while ((text = bufferedReader.readLine()) != null) {
-                // 没读取一行就写入
+                // 每读取一行就写入
                 bufferedWriter.write(text);
                 // 写入一行后插个换行符
                 // readLine()时读取一行的内容，但是读取到的内容不带换行符
