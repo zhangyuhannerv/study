@@ -1,1 +1,0 @@
-`var index = layer.msg('正在删除文件，请耐心等待', {icon: 16, shade: 0.7, time: 0});`
