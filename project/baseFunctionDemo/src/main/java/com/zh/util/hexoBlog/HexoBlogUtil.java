@@ -1,6 +1,7 @@
 package com.zh.util.hexoBlog;
 
 import com.zh.util.fileOperation.FileCopy;
+import com.zh.util.fileOperation.FileModify;
 import org.junit.Test;
 
 import java.io.BufferedWriter;
@@ -125,6 +126,24 @@ public class HexoBlogUtil {
         }
     }
 
+    public String uuid() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    public void addCover(File dir) {
+        File[] files = dir.listFiles();
+        for (File file : files) {
+            if (file.getName().startsWith(".")) {
+                continue;
+            }
+            if (file.isFile()) {
+                FileModify.modifyFileContent(file, "", "");
+            } else {
+                addCover(file);
+            }
+        }
+    }
+
     @Test
     public void start() {
         try {
@@ -133,6 +152,11 @@ public class HexoBlogUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void addCover() {
+        addCover(new File(targetPath));
     }
 
     @Test
