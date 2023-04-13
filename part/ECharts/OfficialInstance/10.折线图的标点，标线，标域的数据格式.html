@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .box {
+      width: 600px;
+      height: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box" id="d1">
+
+  </div>
+  <script src="../echarts/echarts.min.js"></script>
+  <script>
+    var chartDom = document.getElementById('d1');
+    var myChart = echarts.init(chartDom);
+    var option;
+
+    option = {
+      xAxis: {
+        type: 'value'
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          type: 'line',
+          data: [
+            [1, 2],
+            [3, 4]
+          ],
+          markPoint: {
+            symbol: 'circle',
+            symbolSize: 6,
+            data: [
+              {
+                coord: [2, 2]
+              }
+            ]
+          },
+          markLine: {
+            data: [
+              {
+                yAxis: 3,
+                label: {
+                  formatter: function () {
+                    return 'aaa';
+                  }
+                }
+              },
+              [
+                {
+                  coord: [0.5, 2]
+                },
+                {
+                  coord: [1, 4]
+                }
+              ]
+            ]
+          },
+          markArea: {
+            data: [
+              [
+                {
+                  name: 'aa',
+                  xAxis: '1'
+                },
+                {
+                  xAxis: '1.5'
+                }
+              ],
+              [
+                {
+                  name: 'bb',
+                  xAxis: '2.5'
+                },
+                {
+                  xAxis: '3'
+                }
+              ]
+            ]
+          }
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+  </script>
+</body>
+
+</html>
