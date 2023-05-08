@@ -167,7 +167,7 @@
       },
       getToolTipe(params) {
         const ev = window.event || event;
-        const path = event.path || (event.composedPath && event.composedPath());
+        const path = ev.path || (ev.composedPath && ev.composedPath());
         console.log(belongs);
         if (params[0].value[2] == belongs) {
           let html = "";
