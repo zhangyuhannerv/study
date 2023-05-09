@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FileMonitorEchartsShowApplication {
+public class BeetlDemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(FileMonitorEchartsShowApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BeetlDemoApplication.class, args);
+    }
 
 }

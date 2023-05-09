@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <title>地图展示</title>
+    <link type="text/css" rel="stylesheet" href="/css/baiduMap.css"/>
+</head>
+<body>
+<div id="allmap"></div>
+<div id="r-result">
+    <input type="button" onclick="add_overlay();" value="添加点，圆，矩形，折现，直线"/>
+    <input type="button" onclick="busSearch();" value="搜索大兴机场线并标注"/>
+    <input type="button" onclick="markHalfSearchLine();" value="标注大兴机场线的一半"/>
+    <input type="button" onclick="markStation();" value="标注车站"/>
+    <input type="button" onclick="flyToJinan();" value="定位到济南千佛山"/>
+    <input type="button" onclick="flyToBeijing();" value="定位到北京天安门广场"/>
+    <input type="button" onclick="remove_overlay();" value="删除标注"/>
+</div>
+</body>
+</html>
+<script type="text/javascript"
+        src="//api.map.baidu.com/api?type=webgl&v=1.0&ak=IbXfwx2WS9MzvKUak4xAMUCEj5p3ECSz"></script>
+<script src="https://code.bdstatic.com/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="/js/gis/baiduMap.js"></script>
+<script src="/js/gis/baiduMapDrawOverlay.js"></script>
+<script src="/js/gis/baiduMapSearchBusAndSubwayLine.js"></script>
