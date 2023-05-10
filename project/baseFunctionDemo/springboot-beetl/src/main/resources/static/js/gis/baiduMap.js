@@ -5,7 +5,6 @@ var point = new BMapGL.Point(116.404, 39.915);
 map.centerAndZoom(point, 15);  // 初始化地图,设置中心点坐标和地图级别
 map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 
-
 function flyToBeijing() {
     map.reset()
 }
@@ -13,6 +12,10 @@ function flyToBeijing() {
 function flyToJinan() {
     map.flyTo(new BMapGL.Point(117.05274833198338, 36.63647205417621), 15);
 }
+
+
+
+
 
 
 
