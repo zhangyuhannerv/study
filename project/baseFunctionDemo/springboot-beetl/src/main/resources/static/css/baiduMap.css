@@ -3,9 +3,11 @@ html, body {
 }
 
 #allmap {
-    height: 80%;
+    height: 60%;
 }
 
 #r-result {
     width: 100%;
+    height: 40%;
+    overflow: auto;
 }
