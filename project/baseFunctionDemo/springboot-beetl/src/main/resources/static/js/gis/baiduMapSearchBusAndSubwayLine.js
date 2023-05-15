@@ -84,7 +84,9 @@ function markStation() {
         marker.setIcon(stationIcon)
         map.addOverlay(marker)
     })
+}
 
+function openIconDynamic() {
     let tempZoomLevel
     map.addEventListener('zoomend', function (type, target) {
         let currentZoomLevel = parseInt(type.target.zoomLevel)
@@ -107,6 +109,17 @@ function markStation() {
             marker.setIcon(stationIcon)
         })
     });
+}
+
+function closeIconDynamic() {
+    map.addEventListener('zoomend', function () {
+        stationIcon.setSize(sizeArr[3])
+        stationIcon.setImageSize(sizeArr[3])
+
+        stationArr.forEach(marker => {
+            marker.setIcon(stationIcon)
+        })
+    })
 }
 
 
