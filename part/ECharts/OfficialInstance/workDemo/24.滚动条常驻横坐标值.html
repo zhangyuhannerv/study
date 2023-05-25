@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>滚动条常驻横坐标值</title>
+  <style>
+    .dataZoomLabel {
+      position: absolute;
+      height: 100%;
+      line-height: 30px;
+    }
+
+    .dataZoomStartLabel {
+      left: 0;
+    }
+
+    .dataZoomEndLabel {
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div style="width: 500px;height:500px " id="d1">
+  </div>
+  <div style="width:500px;height: 30px;position: relative;">
+    <span class="dataZoomStartLabel dataZoomLabel">11</span>
+    <span class="dataZoomEndLabel dataZoomLabel">22</span>
+    <div style="height: 100%;" id="d2">
+    </div>
+  </div>
+
+
+  <script src="./lib/echarts.min.js"></script>
+  <script src="./lib/jquery-3.5.1.js"></script>
+  <script>
+    let data = []
+    for (let i = 0; i < 500; i++) {
+      data.push([i, Math.random() * (15 - 10) + 10])
+    }
+    // 1.实例化对象
+    var mychart = echarts.init(document.getElementById('d1'));
+    // 2.指定配置项数据
+    var option = {
+      tooltip: {
+      },
+      xAxis: [
+        {
+          type: 'value',
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value',
+          scale: true
+        }
+      ],
+      // 系列，数据放在这里
+      series: [
+        {
+          type: 'line',
+          symbol: 'none',
+          data,
+          lineStyle: {
+            opacity: 1,
+          }
+        }
+      ],
+      dataZoom: [
+        {
+          type: 'inside'
+        }
+      ]
+    };
+    mychart.setOption(option)
+
+    var mychart1 = echarts.init(document.getElementById('d2'));
+    option.xAxis[0].show = false
+    option.yAxis[0].show = false
+    option.series[0].lineStyle.opacity = 0
+    option.dataZoom = [
+      {
+        type: 'slider',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        brushSelect: false,
+        showDetail: false,
+        showDataShadow: false,
+      }
+    ]
+    mychart1.setOption(option)
+
+    echarts.connect([mychart, mychart1])
+
+    let width = $("#d2").width()
+    mychart1.on('dataZoom', function (params) {
+      console.log(params);
+      let startWidth = params.start / 100 * width
+      let endWidth = width - params.end / 100 * width
+      $(".dataZoomStartLabel").css('left', startWidth)
+      $(".dataZoomEndLabel").css('right', endWidth)
+    })
+
+
+
+  </script>
+</body>
+
+</html>
