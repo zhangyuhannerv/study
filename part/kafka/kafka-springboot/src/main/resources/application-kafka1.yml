@@ -1,0 +1,23 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all
+      retries: 2
+      properties:
+        retry-backoff-ms: 1000
+      compressionType: gzip
+      batch-size: 16384
+      buffer-memory: 33554432
+    consumer:
+      group-id: chdygl
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      autoOffsetReset: latest
+      enable-auto-commit: false
+      auto-commit-interval: 2000
+      fetchMinSize: 1
+      fetchMaxWait: 500
+      maxPollRecords: 500
