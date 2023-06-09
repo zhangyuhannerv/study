@@ -12,4 +12,9 @@ public class ConsumerController {
     public void consumerTopic(String msg) {
         log.info("收到消息：" + msg);
     }
+
+    @KafkaListener(topics = "tktest")
+    public void tktest(String msg) {
+        log.info("receiveMsg：" + msg);
+    }
 }
