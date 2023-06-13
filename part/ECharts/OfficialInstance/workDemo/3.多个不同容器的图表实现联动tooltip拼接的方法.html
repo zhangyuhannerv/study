@@ -168,8 +168,7 @@
       getToolTipe(params) {
         const ev = window.event || event;
         const path = ev.path || (ev.composedPath && ev.composedPath());
-        console.log(belongs);
-        if (params[0].value[2] == belongs) {
+        if (params[0].value[2] == path[2].className) {
           let html = "";
           dataArr.forEach((item, index) => {
             // debugger
