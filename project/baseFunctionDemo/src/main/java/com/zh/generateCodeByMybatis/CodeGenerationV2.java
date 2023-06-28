@@ -53,6 +53,7 @@ public class CodeGenerationV2 {
                             .enableChainModel()
                             .naming(NamingStrategy.underline_to_camel)//数据表映射实体命名策略：默认下划线转驼峰underline_to_camel
                             .columnNaming(NamingStrategy.underline_to_camel)//表字段映射实体属性命名规则：默认null，不指定按照naming执行
+                            .enableTableFieldAnnotation()
 //                            .idType(IdType.AUTO)//添加全局主键类型
                             .formatFileName("%s")//格式化实体名称，%s取消首字母I,
                             .mapperBuilder()
