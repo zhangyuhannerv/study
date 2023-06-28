@@ -1,9 +1,6 @@
 package com.zh.generateCodeByMybatis;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
-import com.baomidou.mybatisplus.generator.config.OutputFile;
-
-import java.util.Collections;
 
 /**
  * @ClassName Run
@@ -12,7 +9,7 @@ import java.util.Collections;
  * @Date 2022/4/8
  * @Version 1.0
  */
-public class Run {
+public class CodeGenerationV1 {
     public static void main(String[] args) {
         String url = "jdbc:mysql://123.123.122.138:3306/djxt_test";
         String user = "djxt_test";
