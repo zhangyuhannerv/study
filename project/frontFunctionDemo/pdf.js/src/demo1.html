@@ -8,8 +8,7 @@
   <title>Document</title>
   <style>
     div {
-      width: 500px;
-      height: 500px;
+      height: 98vh;
     }
   </style>
 </head>
@@ -23,9 +22,13 @@
   </script>
 
   <script>
-    $(function() {
-      let pdfSrc = '../pdfDir/01.pdf'
-      $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + encodeURIComponent(pdfSrc))
+    $(function () {
+      let pdfSrc = '/pdf.js/pdfDir/01.pdf'
+      // 从后台接口读取||从静态资源服务器的url上读取
+      // $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + encodeURIComponent(pdfSrc))
+
+      // 从本地路径读取
+      $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + pdfSrc)
     })
   </script>
 </body>
