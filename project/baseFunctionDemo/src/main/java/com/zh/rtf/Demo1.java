@@ -61,7 +61,6 @@ public class Demo1 {
 
             //获取表格内容
             List<XWPFTable> tables = doc.getTables();
-            List<XWPFPicture> pictures = new ArrayList<>();
             for (int i = 1; i < tables.size(); i++) {
                 XWPFTable table = tables.get(i);
                 //迭代行，默认从0开始
