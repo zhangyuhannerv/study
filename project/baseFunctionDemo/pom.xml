@@ -83,6 +83,25 @@
             <version>3.17</version>
         </dependency>
 
+        <!--aspose.words-->
+        <dependency>
+            <groupId>com.aspose.word</groupId>
+            <artifactId>aspose.words</artifactId>
+            <version>16.4.0-jdk16</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/aspose-words-16.4.0-jdk16.jar</systemPath>
+        </dependency>
+
+        <!--ftp-->
+        <dependency>
+            <groupId>org.apache</groupId>
+            <artifactId>common-net</artifactId>
+            <version>3.6</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/lib/commons-net-3.6.jar</systemPath>
+        </dependency>
+
+
         <!--freemarker-->
         <dependency>
             <groupId>org.freemarker</groupId>
