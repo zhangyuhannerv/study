@@ -3,6 +3,8 @@ package com.zh.rtf;
 import org.apache.poi.xwpf.usermodel.*;
 import org.junit.Test;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -18,10 +20,10 @@ public class Demo1 {
     public static final String FIlE_PATH = "/rtf/";
     public static final String IMAGE_PATH = "/img/";
     public static final String WORD_PATH = "/word/";
-    public static final String FILE_NAME = "综合报表_广州地铁-22下行18015016(2023-08-17_06_30_02)_20230817_092025_1(1).rtf";
+    public static final String FILE_NAME = "综合报表_广州地铁22上行18015016(2023-08-17_06_50_15)_20230817_092537_1(1).rtf";
 
     public static final String FILE = ROOT_PATH + FIlE_PATH + FILE_NAME;
-    public static final String WORD_FILE = ROOT_PATH + WORD_PATH + "demo.docx";
+    public static final String WORD_FILE = ROOT_PATH + WORD_PATH + "demo1.docx";
 
 
     /**
@@ -46,16 +48,16 @@ public class Demo1 {
               XWPFDocument doc = new XWPFDocument(is)
         ) {
             // 获取图片内容
-//            List<XWPFPictureData> allPictures = doc.getAllPictures();
-//            System.out.println(allPictures.size());
-//
-//            for (XWPFPictureData pic : allPictures) {
-//                byte[] bytev = pic.getData();
-//                File imgFile = new File(ROOT_PATH + IMAGE_PATH + pic.getFileName());
-//                FileOutputStream fos = new FileOutputStream(imgFile);
-//                fos.write(bytev);
-//                fos.close();
-//            }
+            List<XWPFPictureData> allPictures = doc.getAllPictures();
+            System.out.println(allPictures.size());
+
+            for (XWPFPictureData pic : allPictures) {
+                byte[] bytev = pic.getData();
+                File imgFile = new File(ROOT_PATH + IMAGE_PATH + pic.getFileName());
+                FileOutputStream fos = new FileOutputStream(imgFile);
+                fos.write(bytev);
+                fos.close();
+            }
 
             //获取表格内容
             List<XWPFTable> tables = doc.getTables();
