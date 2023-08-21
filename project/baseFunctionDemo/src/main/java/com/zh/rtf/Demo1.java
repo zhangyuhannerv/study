@@ -1,4 +1,4 @@
-package com.zh.readRtfFile;
+package com.zh.rtf;
 
 import org.apache.poi.xwpf.usermodel.*;
 import org.junit.Test;
