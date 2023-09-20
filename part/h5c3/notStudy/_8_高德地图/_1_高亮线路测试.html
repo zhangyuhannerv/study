@@ -16,7 +16,8 @@
 <body>
   <div id="map-container"></div>
 
-  <script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=a45b8935299e65fa1631dbef2d05d6cf&plugin=AMap.LineSearch"></script>
+  <script type="text/javascript"
+    src="https://webapi.amap.com/maps?v=2.0&key=a45b8935299e65fa1631dbef2d05d6cf&plugin=AMap.LineSearch"></script>
   <script>
     // 初始化地图
     var map = new window.AMap.Map('map-container', {
@@ -54,6 +55,22 @@
       } else {
         for (var i = 0; i < lineNum; i++) {
           var pathArr = lineArr[i].path;
+
+          let pathData = 'lng,lat\r\n'
+          lineArr[i].path.forEach(e => {
+            pathData += e.lng + ',' + e.lat + '\r\n'
+          });
+          // 导出线路数据
+          // exportTxt('pathData', pathData)
+
+          let stationData = 'name,lng,lat\r\n'
+          lineArr[i].via_stops.forEach(e => {
+            stationData += e.name + ',' + e.location.lng + ',' + e.location.lat + '\r\n'
+          })
+          // 导出车站数据
+          // exportTxt('stationData', stationData)
+
+
           if (i == 0) // 只绘制一条线路，就是需要高亮的地铁线路
             drawbusLine(pathArr);
         }
@@ -71,6 +88,20 @@
         outlineColor: 'white',
         strokeWeight: 10 // 线宽
       })
+    }
+
+    // 将js数据导出为文本文件
+    function exportTxt(name, data) {
+      const urlObject = window.URL || window.webkitURL || window;
+      const export_blob = new Blob([data]);
+
+      const save_link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+      save_link.href = urlObject.createObjectURL(export_blob);
+      save_link.download = name;
+
+      const ev = document.createEvent("MouseEvents");
+      ev.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      save_link.dispatchEvent(ev);
     }
   </script>
 </body>
