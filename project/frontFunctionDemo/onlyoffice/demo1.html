@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    iframe {
+      min-width: 100%;
+      min-height: 100%;
+      position: absolute;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="placeholder"></div>
+
+  <script src="http://192.168.10.168/web-apps/apps/api/documents/api.js"></script>
+  <script language="javascript" type="text/javascript">
+    var docEditor = new DocsAPI.DocEditor("placeholder", {
+      "document": {
+        "fileType": "docx",
+        "key": "Khirz6zTPdfd7",
+        "title": "Example Document Title.docx",
+        "url": "http://61.50.112.66:10003/files/v2/-root-es_tool-corpus-new-道岔-word-高速可动心轨道岔伤损分析和养护维修.docx"
+      },
+      "documentType": "word",
+    });
+  </script>
+</body>
+
+</html>
