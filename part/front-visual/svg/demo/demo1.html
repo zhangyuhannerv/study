@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>环形进度条</title>
+  <style>
+    .text {
+      text-anchor: middle;
+    }
+
+    body {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <svg height="700" width="700">
+    <circle cx="350" cy="350" r="300" fill="none" stroke="grey" stroke-width="40" stroke-linecap="round">
+
+    </circle>
+
+    <circle class="progress" cx="350" cy="350" r="300" fill="none" stroke="red" stroke-width="40" stroke-linecap="round"
+      stroke-dasharray="0,10000">
+
+    </circle>
+
+    <text class="text" x="350" y="350" font-size="200" fill="red">
+      0
+    </text>
+  </svg>
+  <script src="./demo1.js"></script>
+</body>
+
+</html>
