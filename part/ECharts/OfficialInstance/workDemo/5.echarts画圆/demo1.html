@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      height: 500px;
+      width: 1000px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="d1">
+
+  </div>
+  <script src="../lib/echarts.min.js"></script>
+  <script src="../lib/jquery-3.5.1.js"></script>
+  <script>
+    let r = 50;// 圆的半径
+    let a = 200;// 矩形的一边长
+    let yuanchang = Math.PI * 2 * r
+    let zongchang = 2 * a + yuanchang
+    let bili = zongchang * 250 / 43000
+    let dingdian = [
+      [-100, 50],
+      [100, 50],
+      [100, -50],
+      [-100, -50]
+    ]
+
+
+
+    let arr = []
+    let len
+    let jiaodu
+    let x
+    let y
+    for (let i = 0; i < zongchang; i += bili) {
+      if (i <= a) {
+        len = i
+        x = i - 100
+        y = 50
+      } else if (i <= a + (yuanchang * 0.25)) {
+        len = i - a
+        jiaodu = (Math.PI / 2 - len / r)
+        x = 100 + r * Math.cos(jiaodu)
+        y = r * Math.sin(jiaodu)
+      } else if (i <= a + (yuanchang * 0.5)) {
+        len = i - (a + (yuanchang * 0.25))
+        jiaodu = (Math.PI * 2 - len / r)
+        x = 100 + r * Math.cos(jiaodu)
+        y = r * Math.sin(jiaodu)
+      } else if (i <= 2 * a + (yuanchang * 0.5)) {
+        len = i - (a + (yuanchang * 0.5))
+        x = 100 - len
+        y = -50
+      } else if (i <= 2 * a + 0.75 * yuanchang) {
+        len = i - (2 * a + (yuanchang * 0.5))
+        jiaodu = (Math.PI * 1.5 - len / r)
+        x = -100 + r * Math.cos(jiaodu)
+        y = r * Math.sin(jiaodu)
+      } else {
+        len = i - (2 * a + (yuanchang * 0.75))
+        jiaodu = (Math.PI - len / r)
+        x = -100 + r * Math.cos(jiaodu)
+        y = r * Math.sin(jiaodu)
+      }
+      arr.push([x, y])
+    }
+
+    arr.push([-100, 50])
+
+    let myChart = echarts.init($("#d1")[0])
+    let option = {
+      xAxis: {
+        type: 'value',
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: arr,
+          type: 'line',
+        }
+      ]
+    };
+    myChart.setOption(option)
+  </script>
+</body>
+
+</html>
