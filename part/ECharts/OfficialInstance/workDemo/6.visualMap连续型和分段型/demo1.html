@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      height: 500px;
+      width: 1000px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="d1">
+
+  </div>
+  <script src="../lib/echarts.min.js"></script>
+  <script src="../lib/jquery-3.5.1.js"></script>
+  <script>
+    let myChart = echarts.init($("#d1")[0])
+    let option = {
+      xAxis: {
+        type: 'category',
+      },
+      yAxis: {
+        type: 'category',
+      },
+      visualMap: {
+        type: 'continuous',
+        min: 0,
+        max: 100,
+        inRange: {
+          color: ['#fff', '#333'] // 连续渐变色
+        },
+        outOfRange: {
+          color: '#999' // 数据超出渐变范围的颜色
+        },
+        bottom: 20 //可自定义视觉组件所在位置
+      },
+      series: [{
+        type: 'heatmap',
+        data: [[2, 2, 3], [4, 2, 6], [2, 6, 9], [4, 6, 12]]
+      }]
+    };
+    myChart.setOption(option)
+  </script>
+</body>
+
+</html>
