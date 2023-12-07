@@ -1,4 +1,4 @@
-package com.zh.ImageCodeDemo;
+package com.zh.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
