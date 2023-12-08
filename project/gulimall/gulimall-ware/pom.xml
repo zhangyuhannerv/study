@@ -6,7 +6,7 @@
     <artifactId>gulimall-ware</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>gulimall-ware</name>
-    <description>gulimall-ware</description>
+    <description>库存</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

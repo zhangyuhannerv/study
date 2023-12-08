@@ -6,7 +6,7 @@
     <artifactId>gulimall-member</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>gulimall-member</name>
-    <description>gulimall-member</description>
+    <description>用户</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
