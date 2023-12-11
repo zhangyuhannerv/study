@@ -1,5 +1,6 @@
 package com.study.gulimall.product;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.study.gulimall.product.entity.BrandEntity;
 import com.study.gulimall.product.service.BrandService;
 import org.junit.runner.RunWith;
@@ -16,9 +17,17 @@ public class GulimallProductApplicationTest {
     @org.junit.Test
     public void contextLoads() {
         BrandEntity brandEntity = new BrandEntity();
-        brandEntity.setDescript("");
+        brandEntity.setBrandId(1L);
+        brandEntity.setDescript("遥遥领先");
         brandEntity.setName("华为");
-        brandService.save(brandEntity);
+        brandService.updateById(brandEntity);
         System.out.println("保存成功");
+    }
+
+    @org.junit.Test
+    public void testList() {
+        QueryWrapper ew = new QueryWrapper();
+        ew.eq("brand_id", 1L);
+        System.out.println(brandService.list(ew));
     }
 }

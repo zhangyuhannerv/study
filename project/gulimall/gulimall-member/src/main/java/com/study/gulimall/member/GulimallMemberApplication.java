@@ -1,4 +1,4 @@
-package com.study.gulimall.gulimall.member;
+package com.study.gulimall.member;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
