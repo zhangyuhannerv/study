@@ -4,6 +4,12 @@ spring:
     password: root
     url: jdbc:mysql://127.0.0.1:10000/gulimall_pms?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: gulimall-product
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
