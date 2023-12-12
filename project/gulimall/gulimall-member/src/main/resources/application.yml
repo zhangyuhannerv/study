@@ -17,3 +17,10 @@ mybatis-plus:
       id-type: auto
 server:
   port: 8000
+#设置feign的超时时间
+#feign:
+#  client:
+#    config:
+#      default:
+#        connect-timeout: 5000
+#        read-timeout: 5000
