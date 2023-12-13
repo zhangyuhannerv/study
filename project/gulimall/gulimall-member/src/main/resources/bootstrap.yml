@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: gulimall-member
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        # 命名空间(一定要写命名空间的id)
+        namespace: 6b4b07cd-adb1-45b1-8413-0236e1e0628c
+        # 配置组
+        group: dev
+      discovery:
+        server-addr: 127.0.0.1:8848

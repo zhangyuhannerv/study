@@ -6,6 +6,8 @@ import com.study.gulimall.member.entity.MemberEntity;
 import com.study.gulimall.member.feign.CouponFeignService;
 import com.study.gulimall.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -20,13 +22,21 @@ import java.util.Map;
  * @date 2023-12-11 16:29:13
  */
 @RestController
+@RefreshScope
 @RequestMapping("member/member")
 public class MemberController {
     @Autowired
     private MemberService memberService;
     @Autowired
     private CouponFeignService couponFeignService;
+    @Value("${user.age}")
+    private String userAge;
 
+    /**
+     * 测试feign
+     *
+     * @return
+     */
     @RequestMapping("/coupons")
     public R coupons() {
         MemberEntity memberEntity = new MemberEntity();
@@ -34,6 +44,15 @@ public class MemberController {
         R coupons = couponFeignService.memberCoupons();
         return R.ok().put("member", memberEntity).put("coupons", coupons.get("coupons"));
     }
+
+    /**
+     * 测试nacos注册中心
+     */
+    @RequestMapping("/testNacosConfig")
+    public R testNacosConfig() {
+        return R.ok().put("userName", userAge);
+    }
+
 
     /**
      * 列表
