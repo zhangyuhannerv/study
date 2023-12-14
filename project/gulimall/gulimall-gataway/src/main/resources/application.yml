@@ -3,5 +3,15 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: to-baidu # http://localhost:88/?url=baidu就会跳转到baidu
+          uri: https://www.baidu.com
+          predicates:
+            - Query=url,baidu
+        - id: to-qq # http://localhost:88/?url=qq就会跳转到qq
+          uri: https://www.qq.com
+          predicates:
+            - Query=url,qq
 server:
   port: 88
