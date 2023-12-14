@@ -5,13 +5,31 @@ spring:
         server-addr: 127.0.0.1:8848
     gateway:
       routes:
+        # 测试网关1
         - id: to-baidu # http://localhost:88/?url=baidu就会跳转到baidu
           uri: https://www.baidu.com
           predicates:
             - Query=url,baidu
+        # 测试网关2
         - id: to-qq # http://localhost:88/?url=qq就会跳转到qq
           uri: https://www.qq.com
           predicates:
             - Query=url,qq
+        # 商品网关
+        - id: gulimall-product
+          uri: lb://gulimall-product
+          predicates:
+            - Path=/api/product/**
+          filters:
+            # 去掉api前缀
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 所有带有api前缀的请求无特殊条件都路由到renren-fast微服务
+        - id: renren-fast
+          uri: lb://renren-fast
+          predicates:
+            - Path=/api/**
+          # 重写路径，将api替换为renren-fast
+          filters:
+            - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 server:
   port: 88
