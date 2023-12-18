@@ -53,7 +53,12 @@ export default {
       console.log(data);
     },
     remove(node, data) {
-      console.log(data);
+      let ids = [data.catId];
+      this.$http({
+        url: this.$http.adornUrl("/product/category/delete"),
+        method: "post",
+        data: this.$http.adornData(ids, false)
+      }).then(({ data }) => {});
     }
   },
   created() {
