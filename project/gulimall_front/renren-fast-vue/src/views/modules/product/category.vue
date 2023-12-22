@@ -7,6 +7,9 @@
       :props="defaultProps"
       :expand-on-click-node="false"
       :default-expanded-keys="expandedKey"
+      draggable
+      :allow-drop="allowDrop"
+      @node-drop="handleDrop"
     >
       <span class="custom-tree-node" slot-scope="{ node, data }">
         <span>{{ node.label }}</span>
@@ -80,7 +83,9 @@ export default {
         showStatus: 1,
         sort: 0,
 
-      }
+      },
+      maxLevel: 0,
+      updateNodes: []
     };
   },
   methods: {
@@ -199,7 +204,65 @@ export default {
         })
         .catch(() => {
         });
-    }
+    },
+    allowDrop(draggingNode, dropNode, type) {
+      // 被拖动的当前节点以及所在的父节点总层数不能大于3
+      // 被拖动的当前节点总层数
+      this.countNodeLevel(draggingNode.data);
+      // 当前拖动的节点+父节点所在的深度不大于3
+      let deep = this.maxLevel - draggingNode.data.catLevel + 1
+
+      if (type === 'inner') {
+        return (deep + dropNode.level) <= 3
+      } else {
+        return (deep + dropNode.parent.level) <= 3
+      }
+
+    },
+    // 统计被拖动节点的总层数
+    countNodeLevel(node) {
+      this.maxLevel = node.catLevel
+      // 找到所有子节点，找到最大深度
+      if (node.children && node.children.length) {
+        for (let i = 0; i < node.children.length; i++) {
+          if (node.children[i].catLevel > this.maxLevel) {
+            this.maxLevel = node.children[i].catLevel
+          }
+          this.countNodeLevel(node.children[i])
+        }
+      }
+    },
+    handleDrop(draggingNode, dropNode, dropType, ev) {
+      this.updateNodes = []
+      // 当前节点最新的父节点id
+      let pCid = dropType === 'inner' ? dropNode.data.catId : dropNode.parent.data.catId
+      if (!pCid) {
+        pCid = 0
+      }
+      // 当前节点的最新顺序
+      let siblings = null
+      if (dropType === 'inner') {
+        siblings = dropNode.childNodes
+      } else {
+        siblings = dropNode.parent.childNodes
+      }
+
+      for (let i = 0; i < siblings.length; i++) {
+        if (siblings[i].data.catId === draggingNode.data.catId) {
+          // 如果遍历到当前正在拖拽的节点,需要额外更新父id
+          this.updateNodes.push({
+            catId: siblings[i].data.catId,
+            sort: i,
+            parentCid: pCid
+          })
+        } else {
+          this.updateNodes.push({catId: siblings[i].data.catId, sort: i})
+        }
+      }
+
+      // 当前节点的最新层级
+      console.log(this.updateNodes)
+    },
   },
   created() {
     this.getMenus();
