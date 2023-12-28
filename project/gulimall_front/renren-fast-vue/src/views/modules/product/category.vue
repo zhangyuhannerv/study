@@ -249,11 +249,25 @@ export default {
 
       for (let i = 0; i < siblings.length; i++) {
         if (siblings[i].data.catId === draggingNode.data.catId) {
-          // 如果遍历到当前正在拖拽的节点,需要额外更新父id
+          // 修改之前的层级
+          let catLevel = draggingNode.level
+
+          // 修改之后的层级不等于修改之前的层级
+          if (catLevel !== siblings[i].level) {
+            // 当前节点的层级发生了变化,修改它的层级
+            catLevel = siblings[i].level
+
+            // 继续修改子节点的层级
+            this.updateChildNodeLevel(siblings[i])
+
+          }
+
+          // 如果遍历到当前正在拖拽的节点,需要额外更新父id和层级
           this.updateNodes.push({
             catId: siblings[i].data.catId,
             sort: i,
-            parentCid: pCid
+            parentCid: pCid,
+            catLevel,
           })
         } else {
           this.updateNodes.push({catId: siblings[i].data.catId, sort: i})
@@ -263,6 +277,20 @@ export default {
       // 当前节点的最新层级
       console.log(this.updateNodes)
     },
+
+    updateChildNodeLevel(node) {
+      if (node.childNodes && node.childNodes.length) {
+        for (let i = 0; i < node.childNodes.length; i++) {
+          let cNode = node.childNodes[i].data
+          this.updateNodes.push({
+            catId: cNode.catId,
+            catLevel: node.childNodes[i].level
+          })
+          this.updateChildNodeLevel(node.childNodes[i])
+        }
+      }
+
+    }
   },
   created() {
     this.getMenus();
