@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 public class CodeGenerationV2 {
     public static void main(String[] args) {
-        Generation("jdbc:mysql://192.168.2.224:23306/cloud_construction_test?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT&nullCatalogMeansCurrent=true",
-                "construction",
-                "construction",
-                "detection_data_shake_record_folder","detection_data_shake_folder_file");
+        Generation("jdbc:mysql://61.50.112.66:53307/gzdt11_otms_dev?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true",
+                "gzdt11_otms_dev",
+                "0f0Ftzh8!",
+                "gzdt_otms_equipment_disease");
     }
 
     /**
@@ -28,12 +28,12 @@ public class CodeGenerationV2 {
                             //.enableSwagger()
                             //指定输出目录
 //                            .outputDir(System.getProperty("user.dir") + "/src/main/java");
-                            .outputDir("/Users/zhangyuhan/Work/WorkProject/installconstruction/construction-shake/shake-business/src/main/java");
+                            .outputDir("/Users/zhangyuhan/Work/WorkProject/gzdt11-otms/gzdt11-otms-web/yudao-module-gzdt-knowledgebase/yudao-module-gzdt-knowledgebase-biz/src/main/java");
                 })
                 .packageConfig(builder -> {
                     builder.entity("entity")//实体类包名
-                            .parent("com.ibuild.modular.shake")//父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
-                            .controller("controller")//控制层包名
+                            .parent("cn.iocoder.yudao.module.gzdt.knowledge")//父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
+                            .controller("controller.app")//控制层包名
                             .mapper("mapper")//mapper层包名
                             .xml("mapper.mapping")
                             //.other("dto")//生成dto目录 可不用
@@ -47,7 +47,7 @@ public class CodeGenerationV2 {
                     //设置要生成的表名
                     builder
                             .addInclude(tableName)
-                            .addTablePrefix("detection_data_")//设置表前缀过滤
+                            .addTablePrefix("gzdt_otms_")//设置表前缀过滤
                             .entityBuilder()
                             .enableLombok()
                             .enableChainModel()

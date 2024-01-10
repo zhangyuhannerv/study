@@ -23,12 +23,12 @@
 
   <script>
     $(function () {
-      let pdfSrc = '/pdf.js/pdfDir/01.pdf'
+      let pdfSrc = 'http://127.0.0.1:48080/admin-api/infra/file/previewById/1141'
       // 从后台接口读取||从静态资源服务器的url上读取
-      // $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + encodeURIComponent(pdfSrc))
+      $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + encodeURIComponent(pdfSrc))
 
       // 从本地路径读取
-      $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + pdfSrc)
+      // $("iframe").attr('src', '../pdfjs-2.12.313/web/viewer.html?file=' + pdfSrc)
     })
   </script>
 </body>
