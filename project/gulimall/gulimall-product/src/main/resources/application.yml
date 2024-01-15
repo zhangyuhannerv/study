@@ -4,6 +4,14 @@ spring:
     password: root
     url: jdbc:mysql://127.0.0.1:10000/gulimall_pms?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
+  # 从nacos里读
+  cloud:
+    alicloud:
+      access-key:
+      secret-key:
+      oss:
+        endpoint:
+
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:

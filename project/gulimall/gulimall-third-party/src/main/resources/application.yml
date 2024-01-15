@@ -1,0 +1,9 @@
+server:
+  port: 15000
+spring:
+  cloud:
+    alicloud:
+      access-key:
+      secret-key:
+      oss:
+        endpoint:
