@@ -8,7 +8,7 @@ public class CodeGenerationV2 {
         Generation("jdbc:mysql://61.50.112.66:53307/gzdt11_otms_dev?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true",
                 "gzdt11_otms_dev",
                 "0f0Ftzh8!",
-                "gzdt_otms_equipment_disease");
+                "gzdt_otms_problem_library");
     }
 
     /**
@@ -28,11 +28,11 @@ public class CodeGenerationV2 {
                             //.enableSwagger()
                             //指定输出目录
 //                            .outputDir(System.getProperty("user.dir") + "/src/main/java");
-                            .outputDir("/Users/zhangyuhan/Work/WorkProject/gzdt11-otms/gzdt11-otms-web/yudao-module-gzdt-knowledgebase/yudao-module-gzdt-knowledgebase-biz/src/main/java");
+                            .outputDir("/Users/zhangyuhan/Work/WorkProject/gzdt11-otms/gzdt11-otms-web/yudao-module-gzdt-problembase/yudao-module-gzdt-problembase-biz/src/main/java");
                 })
                 .packageConfig(builder -> {
                     builder.entity("entity")//实体类包名
-                            .parent("cn.iocoder.yudao.module.gzdt.knowledge")//父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
+                            .parent("cn.iocoder.yudao.module.gzdt.problembase")//父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
                             .controller("controller.app")//控制层包名
                             .mapper("mapper")//mapper层包名
                             .xml("mapper.mapping")

@@ -23,6 +23,14 @@ spring:
           filters:
             # 去掉api前缀
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 三方服务网关
+        - id: gulimall-third-party
+          uri: lb://gulimall-third-party
+          predicates:
+            - Path=/api/thirdparty/**
+          filters:
+            # 去掉api前缀
+            - RewritePath=/api/thirdparty/(?<segment>.*),/$\{segment}
         # 所有带有api前缀的请求无特殊条件都路由到renren-fast微服务
         - id: renren-fast
           uri: lb://renren-fast
