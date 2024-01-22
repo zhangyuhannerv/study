@@ -14,11 +14,11 @@ import java.util.Arrays;
 
 public class FileUploader {
     public static final String URL = "http://localhost:9000";
-    public static final String username = "admin";
-    public static final String password = "admin123456";
+    public static final String username = "gpRNbdaXtWHu5e1qPxZX";
+    public static final String password = "zButGTb3inDwy3DvjQo2TgzLUkKshgdm2VAWtxzV";
     public static final String bucket = "test-bucket-1";
 
-    public static final String path = "my-path/";
+    public static final String path = "my-path1/";
 
     public static final String fileName = "picture1.png";
     public static final String localFile = "/Users/zhangyuhan/MyDocument/picture/wallhaven-j3evpy.png";
@@ -45,7 +45,6 @@ public class FileUploader {
 
             // 因此建议用这个下载
             downloadFileByInputStream(minioClient);
-
         } catch (MinioException e) {
             System.out.println("Error occurred: " + e);
             System.out.println("HTTP trace: " + e.httpTrace());
@@ -75,7 +74,7 @@ public class FileUploader {
         return minioClient.uploadObject(
                 UploadObjectArgs.builder()
                         .bucket(bucket)
-                        .object(path + fileName)// 保存到minio里的路径和名称，可以不需要path，直接保存到名称，此时文件在桶下面
+                        .object(path + fileName)// 保存到minio里的路径和名称，可以不需要path，直接保存名称，此时文件在桶下面
                         .filename(localFile)// 本地磁盘的路径
                         .build());
     }
