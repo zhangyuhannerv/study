@@ -5,12 +5,10 @@ import com.study.common.utils.R;
 import com.study.gulimall.product.entity.BrandEntity;
 import com.study.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -55,23 +53,30 @@ public class BrandController {
      */
     @RequestMapping("/save")
     // @RequiresPermissions("product:brand:save")
-    public R save(@Valid @RequestBody BrandEntity brand, BindingResult result) {
-        if (result.hasErrors()) {
-            Map<String, String> map = new HashMap<>();
-            // 获取校验的错误结果
-            result.getFieldErrors().forEach(item -> {
-                // 字段错误提示
-                String message = item.getDefaultMessage();
-                // 字段名称
-                String field = item.getField();
-                map.put(field, message);
-            });
-            // 校验失败
-            return R.error(400, "提交的数据非法").put("data", map);
-        } else {
-            brandService.save(brand);
-            return R.ok();
-        }
+    public R save(@Valid @RequestBody BrandEntity brand
+//            , BindingResult result
+    ) {
+        // 抽取到统一异常处理里面了
+        // BindingResult注释掉就会抛出异常，不注释就不会抛出异常
+//        if (result.hasErrors()) {
+//            Map<String, String> map = new HashMap<>();
+//            // 获取校验的错误结果
+//            result.getFieldErrors().forEach(item -> {
+//                // 字段错误提示
+//                String message = item.getDefaultMessage();
+//                // 字段名称
+//                String field = item.getField();
+//                map.put(field, message);
+//            });
+//            // 校验失败
+//            return R.error(400, "提交的数据非法").put("data", map);
+//        } else {
+//            brandService.save(brand);
+//            return R.ok();
+//        }
+
+        brandService.save(brand);
+        return R.ok();
     }
 
     /**
