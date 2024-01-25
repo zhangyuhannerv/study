@@ -63,6 +63,14 @@
         align="center"
         label="品牌logo地址"
       >
+        <template slot-scope="scope">
+          <!-- <el-image
+            style="width: 100px; height: 80px"
+            :src="scope.row.logo"
+            fit="contain"
+          ></el-image> -->
+          <img :src="scope.row.logo" alt="加载失败" width="100px" />
+        </template>
       </el-table-column>
       <el-table-column
         prop="descript"
