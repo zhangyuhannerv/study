@@ -2,12 +2,14 @@ package com.study.gulimall.product.controller;
 
 import com.study.common.utils.PageUtils;
 import com.study.common.utils.R;
+import com.study.common.valid.AddGroup;
+import com.study.common.valid.UpdateGroup;
 import com.study.gulimall.product.entity.BrandEntity;
 import com.study.gulimall.product.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -53,7 +55,10 @@ public class BrandController {
      */
     @RequestMapping("/save")
     // @RequiresPermissions("product:brand:save")
-    public R save(@Valid @RequestBody BrandEntity brand
+    // 单独校验
+//    public R save(@Valid @RequestBody BrandEntity brand
+    // 分组校验
+    public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand
 //            , BindingResult result
     ) {
         // 抽取到统一异常处理里面了
@@ -84,7 +89,7 @@ public class BrandController {
      */
     @RequestMapping("/update")
     // @RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand) {
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
         brandService.updateById(brand);
 
         return R.ok();
