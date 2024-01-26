@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.study.common.valid.AddGroup;
 import com.study.common.valid.ListValue;
 import com.study.common.valid.UpdateGroup;
+import com.study.common.valid.UpdateStatusGroup;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -28,7 +29,7 @@ public class BrandEntity implements Serializable {
      */
     @TableId
     @Null(message = "新增不能指定品牌id", groups = {AddGroup.class})
-    @NotNull(message = "修改必须指定品牌id", groups = {UpdateGroup.class})
+    @NotNull(message = "修改必须指定品牌id", groups = {UpdateGroup.class, UpdateStatusGroup.class})
     private Long brandId;
     /**
      * 品牌名
@@ -51,7 +52,8 @@ public class BrandEntity implements Serializable {
     /**
      * 显示状态[0-不显示；1-显示]
      */
-    @ListValue(vals = {1, 2}, groups = {AddGroup.class})
+    @NotNull(groups = {AddGroup.class, UpdateStatusGroup.class})
+    @ListValue(vals = {0, 1}, groups = {AddGroup.class, UpdateStatusGroup.class})
     private Integer showStatus;
     /**
      * 检索首字母

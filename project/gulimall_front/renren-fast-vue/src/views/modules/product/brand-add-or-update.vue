@@ -96,7 +96,7 @@ export default {
         sort: [
           {
             validator: (row, value, callback) => {
-              if (!value) {
+              if (value != 0 && !value) {
                 callback(new Error("排序字段必须填写"));
               } else if (!Number.isInteger(value) || value < 0) {
                 callback(new Error("排序字段必须是整数且大于等于0"));
