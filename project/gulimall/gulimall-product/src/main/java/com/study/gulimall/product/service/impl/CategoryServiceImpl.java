@@ -10,10 +10,7 @@ import com.study.gulimall.product.entity.CategoryEntity;
 import com.study.gulimall.product.service.CategoryService;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -59,7 +56,25 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         baseMapper.deleteBatchIds(catIds);
     }
 
-    // 地柜查找所有某个菜单的所有层级子菜单
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        findParentPath(catelogId, paths);
+        Collections.reverse(paths);
+        return paths.toArray(new Long[0]);
+    }
+
+    private void findParentPath(Long catelogId, List<Long> paths) {
+        // 收集当前节点id
+        paths.add(catelogId);
+        CategoryEntity category = this.getById(catelogId);
+        if (category.getParentCid() != 0) {
+            findParentPath(category.getParentCid(), paths);
+        }
+    }
+
+
+    // 递归查找所有某个菜单的所有层级子菜单
     private List<CategoryEntity> getChildren(CategoryEntity root, List<CategoryEntity> all) {
         List<CategoryEntity> children = all.stream()
                 .filter(e -> Objects.equals(e.getParentCid(), root.getCatId()))
