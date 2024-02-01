@@ -12,6 +12,7 @@ import com.study.gulimall.product.service.CategoryBrandRelationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -39,6 +40,7 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void updateDetail(BrandEntity brand) {
         // 保证冗余字段的数据一致
         this.updateById(brand);

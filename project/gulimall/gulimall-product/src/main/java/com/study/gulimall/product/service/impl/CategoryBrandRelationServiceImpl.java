@@ -57,4 +57,9 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
                 new UpdateWrapper<CategoryBrandRelationEntity>().eq("brand_id", brandId));
     }
 
+    @Override
+    public void updateCategory(Long catId, String categoryName) {
+        this.baseMapper.updateCategory(catId, categoryName);
+    }
+
 }

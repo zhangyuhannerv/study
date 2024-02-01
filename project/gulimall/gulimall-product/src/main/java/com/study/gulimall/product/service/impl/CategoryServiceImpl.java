@@ -7,8 +7,12 @@ import com.study.common.utils.PageUtils;
 import com.study.common.utils.Query;
 import com.study.gulimall.product.dao.CategoryDao;
 import com.study.gulimall.product.entity.CategoryEntity;
+import com.study.gulimall.product.service.CategoryBrandRelationService;
 import com.study.gulimall.product.service.CategoryService;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -16,6 +20,8 @@ import java.util.stream.Collectors;
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+    @Autowired
+    CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -62,6 +68,20 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         findParentPath(catelogId, paths);
         Collections.reverse(paths);
         return paths.toArray(new Long[0]);
+    }
+
+    /**
+     * 级联更新所有关联的数据
+     *
+     * @param category
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateCascade(CategoryEntity category) {
+        this.updateById(category);
+        if (StringUtils.isNotBlank(category.getName())) {
+            categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+        }
     }
 
     private void findParentPath(Long catelogId, List<Long> paths) {
