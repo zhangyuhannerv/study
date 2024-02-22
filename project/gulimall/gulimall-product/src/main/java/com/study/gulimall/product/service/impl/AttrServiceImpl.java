@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.common.constant.ProductConstant;
 import com.study.common.utils.PageUtils;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -195,6 +197,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         LambdaQueryWrapper<AttrAttrgroupRelationEntity> ew = new LambdaQueryWrapper<>();
         ew.eq(AttrAttrgroupRelationEntity::getAttrGroupId, attrgroupId);
         List<AttrAttrgroupRelationEntity> entities = relationDao.selectList(ew);
+
+        if (CollectionUtils.isEmpty(entities)) {
+            return new ArrayList<>();
+        }
+
         List<Long> attrIds = entities.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
         Collection<AttrEntity> attrEntities = this.listByIds(attrIds);
         return (List<AttrEntity>) attrEntities;
