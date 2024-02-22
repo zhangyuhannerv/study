@@ -13,6 +13,9 @@ spring:
         endpoint:
 
 mybatis-plus:
+#    需要打印sql就解开注释
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     db-config:
