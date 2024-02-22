@@ -5,7 +5,12 @@
     :visible.sync="visible"
     @closed="dialogClose"
   >
-    <el-form :model="dataForm" :rules="dataRule" ref="dataForm" label-width="120px">
+    <el-form
+      :model="dataForm"
+      :rules="dataRule"
+      ref="dataForm"
+      label-width="120px"
+    >
       <!--       @keyup.enter.native="dataFormSubmit()" -->
       <el-form-item label="属性名" prop="attrName">
         <el-input v-model="dataForm.attrName" placeholder="属性名"></el-input>
@@ -45,7 +50,11 @@
         <category-cascader :catelogPath.sync="catelogPath"></category-cascader>
       </el-form-item>
       <el-form-item label="所属分组" prop="attrGroupId" v-if="type == 1">
-        <el-select ref="groupSelect" v-model="dataForm.attrGroupId" placeholder="请选择">
+        <el-select
+          ref="groupSelect"
+          v-model="dataForm.attrGroupId"
+          placeholder="请选择"
+        >
           <el-option
             v-for="item in attrGroups"
             :key="item.attrGroupId"
@@ -63,7 +72,7 @@
           :inactive-value="0"
         ></el-switch>
       </el-form-item>
-      <el-form-item label="快速展示" prop="showDesc" v-if="type == 1">
+      <el-form-item label="快速展示" prop="showDesc">
         <el-switch
           v-model="dataForm.showDesc"
           active-color="#13ce66"
@@ -162,8 +171,8 @@ export default {
       }
     };
   },
-  props:{
-    type:{
+  props: {
+    type: {
       type: Number,
       default: 1
     }
