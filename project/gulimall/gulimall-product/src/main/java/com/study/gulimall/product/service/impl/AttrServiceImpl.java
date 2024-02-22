@@ -108,7 +108,9 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
                 // 查询组
                 if (relationEntity != null) {
                     AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(relationEntity.getAttrGroupId());
-                    attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());
+                    if (attrGroupEntity != null) {
+                        attrRespVo.setGroupName(attrGroupEntity.getAttrGroupName());
+                    }
                 }
             }
 
@@ -216,6 +218,47 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
 
         }).collect(Collectors.toList());
         relationDao.deleteBatchRelation(entities);
+    }
+
+    /**
+     * 获取当前分组没有关联的所有属性
+     *
+     * @param params
+     * @param attrgroupId
+     * @return
+     */
+    @Override
+    public PageUtils getNoRelationAttr(Map<String, Object> params, Long attrgroupId) {
+        // 当前分组只能关联自己所属分类里面的属性
+        AttrGroupEntity attrGroupEntity = attrGroupDao.selectById(attrgroupId);
+        Long catelogId = attrGroupEntity.getCatelogId();
+        // 当前分组只能关联别的分组没有引用的属性
+        // 当前分类下的所有组
+        LambdaQueryWrapper<AttrGroupEntity> ew = new LambdaQueryWrapper<>();
+        ew.eq(AttrGroupEntity::getCatelogId, catelogId);
+        List<AttrGroupEntity> groupEntities = attrGroupDao.selectList(ew);
+        List<Long> groupIds = groupEntities.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
+
+        // 所有分组关联的所有属性
+        LambdaQueryWrapper<AttrAttrgroupRelationEntity> relationEw = new LambdaQueryWrapper<>();
+        relationEw.in(AttrAttrgroupRelationEntity::getAttrGroupId, groupIds);
+        List<AttrAttrgroupRelationEntity> relations = relationDao.selectList(relationEw);
+        List<Long> attrIds = relations.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
+
+        // 当前分类下的所有属性移除已经关联的属性
+        LambdaQueryWrapper<AttrEntity> attrEw = new LambdaQueryWrapper<>();
+        attrEw.eq(AttrEntity::getCatelogId, catelogId)
+                .eq(AttrEntity::getAttrType, ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode())
+                .notIn(CollectionUtils.isNotEmpty(attrIds), AttrEntity::getAttrId, attrIds);
+        String key = (String) params.get("key");
+        if (StringUtils.isNotBlank(key)) {
+            attrEw.and(e -> {
+                e.eq(AttrEntity::getAttrId, key).or().like(AttrEntity::getAttrName, key);
+            });
+        }
+        IPage<AttrEntity> page = this.page(new Query<AttrEntity>().getPage(params), attrEw);
+
+        return new PageUtils(page);
     }
 
 }
