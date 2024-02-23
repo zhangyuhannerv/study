@@ -4,6 +4,7 @@ import com.study.common.utils.PageUtils;
 import com.study.common.utils.R;
 import com.study.gulimall.product.entity.AttrEntity;
 import com.study.gulimall.product.entity.AttrGroupEntity;
+import com.study.gulimall.product.service.AttrAttrgroupRelationService;
 import com.study.gulimall.product.service.AttrGroupService;
 import com.study.gulimall.product.service.AttrService;
 import com.study.gulimall.product.service.CategoryService;
@@ -32,6 +33,14 @@ public class AttrGroupController {
     private CategoryService categoryService;
     @Autowired
     private AttrService attrService;
+    @Autowired
+    private AttrAttrgroupRelationService relationService;
+
+    @PostMapping("/attr/relation")
+    public R addRelation(@RequestBody List<AttrGroupRelationVo> vos) {
+        relationService.saveBatch(vos);
+        return R.ok();
+    }
 
     @GetMapping("/{attrgroupId}/attr/relation")
     public R attrRelation(@PathVariable("attrgroupId") Long attrgroupId) {
