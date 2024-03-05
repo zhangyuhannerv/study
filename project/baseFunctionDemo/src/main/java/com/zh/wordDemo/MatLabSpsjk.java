@@ -51,7 +51,7 @@ public class MatLabSpsjk {
 
             List<Double> newSp = dealForSPSJKForMatelab(oldSp);
             List<Double> newSjk = dealForSPSJKForMatelab(oldSjk);
-
+            System.out.println("计算完成");
         } catch (Exception e) {
             e.printStackTrace();
 
