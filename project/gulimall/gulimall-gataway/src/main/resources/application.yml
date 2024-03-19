@@ -4,6 +4,10 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
     gateway:
+      discovery:
+        locator:
+          lowerCaseServiceId: true
+          enabled: true
       routes:
         # 测试网关1
         - id: to-baidu # http://localhost:88/?url=baidu就会跳转到baidu
@@ -48,4 +52,4 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 server:
-  port: 88
+  port: 8890

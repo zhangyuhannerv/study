@@ -7,7 +7,7 @@ import com.study.common.valid.ListValue;
 import com.study.common.valid.UpdateGroup;
 import com.study.common.valid.UpdateStatusGroup;
 import lombok.Data;
-import org.hibernate.validator.constraints.URL;
+//import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -43,7 +43,7 @@ public class BrandEntity implements Serializable {
     // 如果在controller里指定了组：@Validated({AddGroup.class})，那么字段这里写了分组的生效，不写分组的不生效
     // 反过来，controller里只校验，没分组：@Validated，那么字段这里写了分组的不生效，不写分组的生效
 //    @URL(message = "logo必须是一个合法的url地址")// 不生效
-    @URL(message = "logo必须是一个合法的url地址", groups = {AddGroup.class, UpdateGroup.class})
+//    @URL(message = "logo必须是一个合法的url地址", groups = {AddGroup.class, UpdateGroup.class})
     private String logo;
     /**
      * 介绍

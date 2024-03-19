@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gulimall-member
+    name: gulimall-order
   cloud:
     nacos:
       config:
