@@ -53,22 +53,9 @@ public class ExcelUtil {
         return wb;
     }
 
-    public static String getCellStringValue(Cell cell) {
-        if (cell == null) {
-            return null;
-        }
-        switch (cell.getCellTypeEnum()) {
-            case STRING:
-                return cell.getStringCellValue();
-            case NUMERIC:
-                return String.valueOf(cell.getNumericCellValue());
-            default:
-                return "";
-        }
-    }
-
     /**
-     * 这是从别的地方摘取过来的获取原生的cell值
+     * 读取原生的cell值
+     * 不推荐使用这个，推荐使用下面那个，所有的cell的value值都读成字符串的
      *
      * @param cell
      * @return
@@ -110,17 +97,18 @@ public class ExcelUtil {
 
     /**
      * 将单元格内容转化为字符串
+     * 推荐使用这个
      */
     public static String convertCellValueToString(Cell cell) {
         if (null == cell) {
             return null;
         }
         String returnValue = null;
-        switch (cell.getCellType()) {
-            case Cell.CELL_TYPE_STRING:  //字符串
+        switch (cell.getCellTypeEnum()) {
+            case STRING:  //字符串
                 returnValue = cell.getStringCellValue();
                 break;
-            case Cell.CELL_TYPE_NUMERIC:
+            case NUMERIC:
                 double numericCellValue = cell.getNumericCellValue();
                 boolean isInteger = isIntegerForDouble(numericCellValue);
                 if (isInteger) {
@@ -130,16 +118,16 @@ public class ExcelUtil {
                     returnValue = Double.toString(numericCellValue);
                 }
                 break;
-            case Cell.CELL_TYPE_BOOLEAN: //布尔
+            case BOOLEAN: //布尔
                 boolean booleanCellValue = cell.getBooleanCellValue();
                 returnValue = Boolean.toString(booleanCellValue);
                 break;
-            case Cell.CELL_TYPE_BLANK: //空值
+            case BLANK: //空值
                 break;
-            case Cell.CELL_TYPE_FORMULA: //公式
+            case FORMULA: //公式
                 cell.getCellFormula();
                 break;
-            case Cell.CELL_TYPE_ERROR: //故障
+            case ERROR: //故障
                 break;
             default:
                 break;
