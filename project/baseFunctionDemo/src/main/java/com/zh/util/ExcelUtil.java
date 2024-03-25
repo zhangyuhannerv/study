@@ -1,24 +1,18 @@
 package com.zh.util;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import static org.apache.poi.ss.usermodel.CellType.FORMULA;
 
 /**
  * @ClassName ExcelUtil
@@ -75,6 +69,7 @@ public class ExcelUtil {
 
     /**
      * 这是从别的地方摘取过来的获取原生的cell值
+     *
      * @param cell
      * @return
      */
@@ -86,7 +81,7 @@ public class ExcelUtil {
         }
         DecimalFormat df = new DecimalFormat("#.###");
         CellType cellType = cell.getCellTypeEnum();
-        if (cellType == FORMULA) {
+        if (cellType == CellType.FORMULA) {
             cellType = cell.getCachedFormulaResultTypeEnum();
         }
         switch (cellType) {
@@ -112,4 +107,53 @@ public class ExcelUtil {
         }
         return value;
     }
+
+    /**
+     * 将单元格内容转化为字符串
+     */
+    public static String convertCellValueToString(Cell cell) {
+        if (null == cell) {
+            return null;
+        }
+        String returnValue = null;
+        switch (cell.getCellType()) {
+            case Cell.CELL_TYPE_STRING:  //字符串
+                returnValue = cell.getStringCellValue();
+                break;
+            case Cell.CELL_TYPE_NUMERIC:
+                double numericCellValue = cell.getNumericCellValue();
+                boolean isInteger = isIntegerForDouble(numericCellValue);
+                if (isInteger) {
+                    DecimalFormat df = new DecimalFormat("0");
+                    returnValue = df.format(numericCellValue);
+                } else {
+                    returnValue = Double.toString(numericCellValue);
+                }
+                break;
+            case Cell.CELL_TYPE_BOOLEAN: //布尔
+                boolean booleanCellValue = cell.getBooleanCellValue();
+                returnValue = Boolean.toString(booleanCellValue);
+                break;
+            case Cell.CELL_TYPE_BLANK: //空值
+                break;
+            case Cell.CELL_TYPE_FORMULA: //公式
+                cell.getCellFormula();
+                break;
+            case Cell.CELL_TYPE_ERROR: //故障
+                break;
+            default:
+                break;
+        }
+        return returnValue;
+    }
+
+    /**
+     * 判断是否为整数，是返回true，否则返回false.
+     */
+    public static boolean isIntegerForDouble(Double num) {
+        double eqs = 1e-10; //精度范围
+        return num - Math.floor(num) < eqs;
+    }
+
+
 }
