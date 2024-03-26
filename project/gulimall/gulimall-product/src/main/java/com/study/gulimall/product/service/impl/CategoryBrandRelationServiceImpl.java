@@ -1,5 +1,6 @@
 package com.study.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,11 +13,15 @@ import com.study.gulimall.product.dao.CategoryDao;
 import com.study.gulimall.product.entity.BrandEntity;
 import com.study.gulimall.product.entity.CategoryBrandRelationEntity;
 import com.study.gulimall.product.entity.CategoryEntity;
+import com.study.gulimall.product.service.BrandService;
 import com.study.gulimall.product.service.CategoryBrandRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service("categoryBrandRelationService")
@@ -25,6 +30,8 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     BrandDao brandDao;
     @Autowired
     CategoryDao categoryDao;
+    @Autowired
+    CategoryBrandRelationDao relationDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -60,6 +67,18 @@ public class CategoryBrandRelationServiceImpl extends ServiceImpl<CategoryBrandR
     @Override
     public void updateCategory(Long catId, String categoryName) {
         this.baseMapper.updateCategory(catId, categoryName);
+    }
+
+    @Override
+    public List<BrandEntity> getBrandsByCatId(Long catId) {
+        LambdaQueryWrapper<CategoryBrandRelationEntity> qw = new LambdaQueryWrapper<>();
+        qw.eq(CategoryBrandRelationEntity::getCatelogId, catId);
+        List<CategoryBrandRelationEntity> relationList = relationDao.selectList(qw);
+        List<BrandEntity> brandList = relationList.stream().map(item -> {
+            BrandEntity brand = brandDao.selectById(item.getBrandId());
+            return brand;
+        }).collect(Collectors.toList());
+        return brandList;
     }
 
 }
