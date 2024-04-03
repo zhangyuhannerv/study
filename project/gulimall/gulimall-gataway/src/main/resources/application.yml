@@ -35,6 +35,14 @@ spring:
           filters:
             # 去掉api前缀
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 库存服务的网关
+        - id: gulimall-ware
+          uri: lb://gulimall-ware
+          predicates:
+            - Path=/api/ware/**
+          filters:
+            # 去掉api前缀
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
         # 三方服务网关
         - id: gulimall-third-party
           uri: lb://gulimall-third-party
