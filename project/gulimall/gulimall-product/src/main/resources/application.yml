@@ -9,10 +9,12 @@ spring:
     password: root
     url: jdbc:mysql://127.0.0.1:10000/gulimall_pms?useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 mybatis-plus:
-#    需要打印sql就解开注释
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#需要打印sql就解开注释
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:/mapper/**/*.xml
   global-config:
     db-config:
