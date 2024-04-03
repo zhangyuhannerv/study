@@ -172,8 +172,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                     w.eq(SpuInfoEntity::getId, key).or().like(SpuInfoEntity::getSpuName, key);
                 })
                 .eq(StringUtils.isNotBlank(status), SpuInfoEntity::getPublishStatus, status)
-                .eq(StringUtils.isNotBlank(brandId), SpuInfoEntity::getBrandId, brandId)
-                .eq(StringUtils.isNotBlank(catelogId), SpuInfoEntity::getCatalogId, catelogId);
+                .eq(StringUtils.isNotBlank(brandId) && !"0".equals(brandId), SpuInfoEntity::getBrandId, brandId)
+                .eq(StringUtils.isNotBlank(catelogId) && !"0".equals(catelogId), SpuInfoEntity::getCatalogId, catelogId);
         IPage<SpuInfoEntity> page = this.page(new Query<SpuInfoEntity>().getPage(params), qw);
         return new PageUtils(page);
     }
