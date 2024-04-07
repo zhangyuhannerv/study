@@ -64,6 +64,9 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
             this.save(purchaseEntity);
             purchaseId = purchaseEntity.getId();
         }
+
+        // todo 确认采购单状态是0或者1才可以合并
+
         List<Long> items = mergeVo.getItems();
         Long finalPurchaseId = purchaseId;
         List<PurchaseDetailEntity> collect = items.stream().map(i -> {
@@ -81,6 +84,40 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
         purchaseEntity.setId(purchaseId);
         purchaseEntity.setUpdateTime(new Date());
         this.updateById(purchaseEntity);
+    }
+
+    /**
+     * @param ids 采购单id
+     */
+    @Override
+    @Transactional
+    public void received(List<Long> ids) {
+        // 确认当前采购单是新建或者已分配状态
+        List<PurchaseEntity> purchaseEntities = baseMapper.selectBatchIds(ids);
+        List<PurchaseEntity> collect = purchaseEntities.stream()
+                .filter(item -> item.getStatus() == WareConstant.PurchaseStatusEnum.CREATED.getCode()
+                        || item.getStatus() == WareConstant.PurchaseStatusEnum.ASSIGNED.getCode())
+                .map(item -> {
+                    item.setStatus(WareConstant.PurchaseStatusEnum.RECEIVE.getCode());
+                    item.setUpdateTime(new Date());
+                    return item;
+                }).collect(Collectors.toList());
+        // 改变采购单的状态
+        updateBatchById(collect);
+
+        // 改变采购单所属采购项的状态
+        collect.forEach(item -> {
+            List<PurchaseDetailEntity> entities = purchaseDetailService.listByPurchaseId(item.getId());
+            List<PurchaseDetailEntity> detailEntities = entities.stream().map(entity -> {
+                PurchaseDetailEntity purchaseDetailEntity = new PurchaseDetailEntity();
+
+                purchaseDetailEntity.setId(entity.getId());
+                purchaseDetailEntity.setStatus(WareConstant.PurchaseDetailStatusEnum.BUYING.getCode());
+
+                return purchaseDetailEntity;
+            }).collect(Collectors.toList());
+            purchaseDetailService.updateBatchById(detailEntities);
+        });
     }
 
 }

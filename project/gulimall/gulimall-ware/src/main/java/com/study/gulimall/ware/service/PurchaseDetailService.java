@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.study.common.utils.PageUtils;
 import com.study.gulimall.ware.entity.PurchaseDetailEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ *
  *
  * @author ZhangYuhan
  * @email zhangyuhannerv@gmail.com
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface PurchaseDetailService extends IService<PurchaseDetailEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<PurchaseDetailEntity> listByPurchaseId(Long id);
 }
 
