@@ -178,5 +178,11 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/twitchease_emd-3.0.0.jar</systemPath>
         </dependency>
+
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.22</version>
+        </dependency>
     </dependencies>
 </project>
