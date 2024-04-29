@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 public class CodeGenerationV2 {
     public static void main(String[] args) {
-        Generation("jdbc:mysql://61.50.112.66:53307/gzdt11_otms_dev?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true",
+        Generation("jdbc:mysql://61.48.40.174:53307/gzdt11_otms_dev?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&nullCatalogMeansCurrent=true",
                 "gzdt11_otms_dev",
                 "0f0Ftzh8!",
-                "gzdt_otms_problem_library");
+                "gzdt_otms_work_order");
     }
 
     /**
