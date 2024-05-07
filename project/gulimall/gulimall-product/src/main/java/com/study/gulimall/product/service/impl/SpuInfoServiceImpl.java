@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.study.common.to.SkuReductionTo;
 import com.study.common.to.SpuBoundTo;
+import com.study.common.to.es.SkuEsModule;
 import com.study.common.utils.PageUtils;
 import com.study.common.utils.Query;
 import com.study.common.utils.R;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +47,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     SkuSaleAttrValueService skuSaleAttrValueService;
     @Autowired
     CouponFeignService couponFeignService;
+    @Autowired
+    BrandService brandService;
+    @Autowired
+    CategoryService categoryService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -176,6 +182,37 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                 .eq(StringUtils.isNotBlank(catelogId) && !"0".equals(catelogId), SpuInfoEntity::getCatalogId, catelogId);
         IPage<SpuInfoEntity> page = this.page(new Query<SpuInfoEntity>().getPage(params), qw);
         return new PageUtils(page);
+    }
+
+    @Override
+    public void up(Long spuId) {
+        List<SkuEsModule> upProducts = new ArrayList<>();
+        // todo 查询当前sku所有的可以被检索的规格属性
+        // 1.查出当前spuId对应的所有sku信息,品牌的名字
+        List<SkuInfoEntity> skus = skuInfoService.getSkusBySpuId(spuId);
+        // 2.封装每个sku的信息
+        List<SkuEsModule> esModuleList = skus.stream().map(sku -> {
+            // 组装需要的数据
+            SkuEsModule esModule = new SkuEsModule();
+            BeanUtils.copyProperties(sku, esModule);
+
+            esModule.setSkuPrice(sku.getPrice());
+            esModule.setSkuImg(sku.getSkuDefaultImg());
+            // todo 发送远程调用，库存系统查询是否有库存
+            // todo 热度评分，这里默认给0
+            // 3.查询品牌和分类的名字信息
+            BrandEntity brand = brandService.getById(esModule.getBrandId());
+            esModule.setBrandName(brand.getName());
+            esModule.setBrandImg(brand.getLogo());
+
+            CategoryEntity category = categoryService.getById(esModule.getCatalogId());
+            esModule.setCatalogName(category.getName());
+
+
+            return esModule;
+        }).collect(Collectors.toList());
+
+        // todo 5.将数据发送给es进行保存
     }
 
 

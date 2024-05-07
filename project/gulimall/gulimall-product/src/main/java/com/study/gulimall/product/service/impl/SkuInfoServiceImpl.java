@@ -12,6 +12,7 @@ import com.study.gulimall.product.service.SkuInfoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -56,6 +57,13 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public List<SkuInfoEntity> getSkusBySpuId(Long spuId) {
+        LambdaQueryWrapper<SkuInfoEntity> qw = new LambdaQueryWrapper<>();
+        qw.eq(SkuInfoEntity::getSpuId, spuId);
+        return baseMapper.selectList(qw);
     }
 
 }
