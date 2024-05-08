@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.study.common.to.SkuHasStockTo;
 import com.study.common.to.SkuReductionTo;
 import com.study.common.to.SpuBoundTo;
 import com.study.common.to.es.SkuEsModule;
@@ -13,6 +14,7 @@ import com.study.common.utils.R;
 import com.study.gulimall.product.dao.SpuInfoDao;
 import com.study.gulimall.product.entity.*;
 import com.study.gulimall.product.feign.CouponFeignService;
+import com.study.gulimall.product.feign.WareFeignService;
 import com.study.gulimall.product.service.*;
 import com.study.gulimall.product.vo.*;
 import org.apache.commons.lang3.StringUtils;
@@ -22,10 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -51,6 +50,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     BrandService brandService;
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    WareFeignService wareFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -187,10 +188,38 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Override
     public void up(Long spuId) {
         List<SkuEsModule> upProducts = new ArrayList<>();
-        // todo 查询当前sku所有的可以被检索的规格属性
+        // 查询当前sku所有的可以被检索的规格属性
+        List<ProductAttrValueEntity> baseAttrs = productAttrValueService.baseAttrListForSpu(spuId);
+        List<Long> attrIds = baseAttrs.stream().map(ProductAttrValueEntity::getAttrId).collect(Collectors.toList());
+
+        List<Long> searchAttrIds = attrService.selectSearchAttrIds(attrIds);
+        Set<Long> idSet = new HashSet<>(searchAttrIds);
+
+        List<SkuEsModule.Attrs> attrsList = baseAttrs.stream()
+                .filter(item -> idSet.contains(item.getId()))
+                .map(item -> {
+                    SkuEsModule.Attrs attrs = new SkuEsModule.Attrs();
+                    BeanUtils.copyProperties(item, attrs);
+                    return attrs;
+                }).collect(Collectors.toList());
+
         // 1.查出当前spuId对应的所有sku信息,品牌的名字
         List<SkuInfoEntity> skus = skuInfoService.getSkusBySpuId(spuId);
+
+        // 发送远程调用，库存系统查询是否有库存
+        List<Long> skuIds = skus.stream().map(SkuInfoEntity::getSkuId).collect(Collectors.toList());
+
+        Map<Long, Boolean> stockMap = null;
+        try {
+            R<List<SkuHasStockTo>> skusHasStock = wareFeignService.getSkusHasStock(skuIds);
+            stockMap = skusHasStock.getData()
+                    .stream().collect(Collectors.toMap(SkuHasStockTo::getSkuId, SkuHasStockTo::getHasStock));
+        } catch (Exception e) {
+            log.error("库存查询服务异常,原因:{}", e);
+        }
+
         // 2.封装每个sku的信息
+        Map<Long, Boolean> finalStockMap = stockMap;
         List<SkuEsModule> esModuleList = skus.stream().map(sku -> {
             // 组装需要的数据
             SkuEsModule esModule = new SkuEsModule();
@@ -198,8 +227,10 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
             esModule.setSkuPrice(sku.getPrice());
             esModule.setSkuImg(sku.getSkuDefaultImg());
-            // todo 发送远程调用，库存系统查询是否有库存
-            // todo 热度评分，这里默认给0
+            // 设置库存信息
+            esModule.setHasStock(finalStockMap == null || finalStockMap.get(sku.getSkuId()));
+            // 热度评分，这里默认给0
+            esModule.setHotScore(0L);
             // 3.查询品牌和分类的名字信息
             BrandEntity brand = brandService.getById(esModule.getBrandId());
             esModule.setBrandName(brand.getName());
@@ -207,7 +238,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
             CategoryEntity category = categoryService.getById(esModule.getCatalogId());
             esModule.setCatalogName(category.getName());
-
+            // 设置检索属性
+            esModule.setAttrs(attrsList);
 
             return esModule;
         }).collect(Collectors.toList());
