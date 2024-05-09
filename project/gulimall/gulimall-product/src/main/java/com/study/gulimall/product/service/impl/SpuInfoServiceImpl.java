@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.study.common.constant.ProductConstant;
 import com.study.common.to.SkuHasStockTo;
 import com.study.common.to.SkuReductionTo;
 import com.study.common.to.SpuBoundTo;
@@ -14,6 +15,7 @@ import com.study.common.utils.R;
 import com.study.gulimall.product.dao.SpuInfoDao;
 import com.study.gulimall.product.entity.*;
 import com.study.gulimall.product.feign.CouponFeignService;
+import com.study.gulimall.product.feign.SearchFeignService;
 import com.study.gulimall.product.feign.WareFeignService;
 import com.study.gulimall.product.service.*;
 import com.study.gulimall.product.vo.*;
@@ -52,6 +54,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     CategoryService categoryService;
     @Autowired
     WareFeignService wareFeignService;
+    @Autowired
+    SearchFeignService searchFeignService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -244,7 +248,17 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             return esModule;
         }).collect(Collectors.toList());
 
-        // todo 5.将数据发送给es进行保存
+        // 5.将数据发送给es进行保存
+        R r = searchFeignService.productStatusUp(esModuleList);
+        if (r.getCode() == 0) {
+            // 远程调用成功
+            // 修改当前spu的状态
+
+            this.baseMapper.updateSpuStatus(spuId, ProductConstant.StatusEnum.SPU_UP.getCode());
+        } else {
+            // 远程调用失败
+            // 重复调用的问题？接口幂等性、重试机制
+        }
     }
 
 
