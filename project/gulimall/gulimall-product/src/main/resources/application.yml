@@ -12,6 +12,8 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  thymeleaf:
+    cache: false
 mybatis-plus:
 #需要打印sql就解开注释
   configuration:
