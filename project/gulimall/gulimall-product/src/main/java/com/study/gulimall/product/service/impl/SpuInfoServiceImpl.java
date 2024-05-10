@@ -200,7 +200,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         Set<Long> idSet = new HashSet<>(searchAttrIds);
 
         List<SkuEsModule.Attrs> attrsList = baseAttrs.stream()
-                .filter(item -> idSet.contains(item.getId()))
+                .filter(item -> idSet.contains(item.getAttrId()))
                 .map(item -> {
                     SkuEsModule.Attrs attrs = new SkuEsModule.Attrs();
                     BeanUtils.copyProperties(item, attrs);
@@ -215,9 +215,9 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
         Map<Long, Boolean> stockMap = null;
         try {
-            R<List<SkuHasStockTo>> skusHasStock = wareFeignService.getSkusHasStock(skuIds);
-            stockMap = skusHasStock.getData()
-                    .stream().collect(Collectors.toMap(SkuHasStockTo::getSkuId, SkuHasStockTo::getHasStock));
+            List<SkuHasStockTo> skusHasStock = wareFeignService.getSkusHasStock(skuIds);
+            stockMap = skusHasStock.stream()
+                    .collect(Collectors.toMap(SkuHasStockTo::getSkuId, SkuHasStockTo::getHasStock));
         } catch (Exception e) {
             log.error("库存查询服务异常,原因:{}", e);
         }

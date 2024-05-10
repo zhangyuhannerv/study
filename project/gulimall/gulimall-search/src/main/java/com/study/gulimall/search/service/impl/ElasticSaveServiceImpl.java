@@ -13,6 +13,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@Service
 public class ElasticSaveServiceImpl implements ElasticSaveService {
     @Autowired
     RestHighLevelClient restHighLevelClient;
@@ -49,9 +51,10 @@ public class ElasticSaveServiceImpl implements ElasticSaveService {
         List<String> collect = Arrays.stream(bulk.getItems())
                 .filter(BulkItemResponse::isFailed)
                 .map(BulkItemResponse::getId).collect(Collectors.toList());
+        if (!collect.isEmpty()) {
+            log.error("商品上架错误:{}", collect);
+        }
 
-        log.error("商品上架错误:{}", collect);
-
-        return bulk.hasFailures();
+        return !bulk.hasFailures();
     }
 }

@@ -18,10 +18,13 @@ import java.util.Map;
  *
  * @author Mark sunlightcs@gmail.com
  */
-public class R<T> extends HashMap<String, Object> {
+public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
-    private T data;
+    public R() {
+        put("code", 0);
+        put("msg", "success");
+    }
 
     public static R error() {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
@@ -54,12 +57,6 @@ public class R<T> extends HashMap<String, Object> {
         return new R();
     }
 
-    public static <T> R<T> okData(T data) {
-        R<T> r = new R<>();
-        r.setData(data);
-        return r;
-    }
-
     public R put(String key, Object value) {
         super.put(key, value);
         return this;
@@ -70,11 +67,4 @@ public class R<T> extends HashMap<String, Object> {
         return (Integer) this.get("code");
     }
 
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
 }
