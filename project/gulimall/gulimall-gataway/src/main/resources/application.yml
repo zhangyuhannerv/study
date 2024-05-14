@@ -59,5 +59,10 @@ spring:
           # 重写路径，将api替换为renren-fast
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+        # 商品页面网关
+        - id: gulimall-host-route
+          uri: lb://gulimall-product
+          predicates:
+            - Host==**.gulimall.com,gulimall.com
 server:
   port: 8890
