@@ -1,5 +1,7 @@
 package com.study.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -13,10 +15,12 @@ import com.study.gulimall.product.service.CategoryService;
 import com.study.gulimall.product.vo.Catalog2Vo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
@@ -24,6 +28,8 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
     @Autowired
     CategoryBrandRelationService categoryBrandRelationService;
+    @Autowired
+    StringRedisTemplate stringRedisTemplate;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -95,47 +101,87 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     @Override
     public Map<String, List<Catalog2Vo>> getCatalogJson() {
-        // 在数据库查询所有
-        List<CategoryEntity> selectList = baseMapper.selectList(null);
+        // 空结果缓存，解决缓存穿透
+        // 设置过期时间+随机值，解决缓存雪崩
+        // 枷锁，解决缓存击穿问题
 
-        // 查出所有1级分类
-        List<CategoryEntity> level1Categorys = getByParentCid(selectList, 0L);
+        // 放入缓存，缓存中存的所有数据都是json字符串
+        // json跨语言，跨平台兼容
+        String key = "catalogJSON";
+        String catalogJSON = stringRedisTemplate.opsForValue().get(key);
+        if (StringUtils.isBlank(catalogJSON)) {
+            // 缓存中没有，从数据库中查询
+            return getCatalogJsonFromDb();
+        }
 
-        // 封装数据
-        Map<String, List<Catalog2Vo>> collect = level1Categorys.stream().collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
-            // 查询当前一级分类下的所有二级分类
-            List<CategoryEntity> categoryEntities = getByParentCid(selectList, v.getCatId());
+        // 缓存中有，转为指定的对象
 
-            // 封装数据
-            List<Catalog2Vo> catalog2Vos = new ArrayList<>();
+        return JSON.parseObject(catalogJSON, new TypeReference<Map<String, List<Catalog2Vo>>>() {
+        });
 
-            if (!categoryEntities.isEmpty()) {
-                catalog2Vos = categoryEntities.stream().map(l2 -> {
-                    Catalog2Vo catalog2Vo = new Catalog2Vo(v.getCatId().toString(), null, l2.getCatId().toString(), l2.getName());
+    }
 
-                    // 找当前分类的三级分类封装成vo
-                    List<CategoryEntity> level3Catalog = getByParentCid(selectList, l2.getCatId());
-
-                    List<Catalog2Vo.Catalog3Vo> catalog3VoList = new ArrayList<>();
-                    if (!level3Catalog.isEmpty()) {
-                        catalog3VoList = level3Catalog.stream().map(l3 -> {
-                            Catalog2Vo.Catalog3Vo catalog3Vo =
-                                    new Catalog2Vo.Catalog3Vo(l2.getCatId().toString(), l3.getCatId().toString(), l3.getName());
-
-                            return catalog3Vo;
-                        }).collect(Collectors.toList());
-                    }
-
-                    catalog2Vo.setCatalog3List(catalog3VoList);
-
-                    return catalog2Vo;
-                }).collect(Collectors.toList());
+    /**
+     * 从数据库查询db，封装整个分类数据
+     *
+     * @return
+     */
+    public synchronized Map<String, List<Catalog2Vo>> getCatalogJsonFromDb() {
+        // 一定要保证查数据库，查完数据库放入缓存是一个原子操作
+        synchronized (this) {
+            String key = "catalogJSON";
+            if (stringRedisTemplate.hasKey(key)) {
+                String catalogJSON = stringRedisTemplate.opsForValue().get(key);
+                return JSON.parseObject(catalogJSON, new TypeReference<Map<String, List<Catalog2Vo>>>() {
+                });
             }
 
-            return catalog2Vos;
-        }));
+            // 在数据库查询所有
+            List<CategoryEntity> selectList = baseMapper.selectList(null);
 
-        return collect;
+            // 查出所有1级分类
+            List<CategoryEntity> level1Categorys = getByParentCid(selectList, 0L);
+
+            // 封装数据
+            Map<String, List<Catalog2Vo>> collect = level1Categorys.stream().collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
+                // 查询当前一级分类下的所有二级分类
+                List<CategoryEntity> categoryEntities = getByParentCid(selectList, v.getCatId());
+
+                // 封装数据
+                List<Catalog2Vo> catalog2Vos = new ArrayList<>();
+
+                if (!categoryEntities.isEmpty()) {
+                    catalog2Vos = categoryEntities.stream().map(l2 -> {
+                        Catalog2Vo catalog2Vo = new Catalog2Vo(v.getCatId().toString(), null, l2.getCatId().toString(), l2.getName());
+
+                        // 找当前分类的三级分类封装成vo
+                        List<CategoryEntity> level3Catalog = getByParentCid(selectList, l2.getCatId());
+
+                        List<Catalog2Vo.Catalog3Vo> catalog3VoList = new ArrayList<>();
+                        if (!level3Catalog.isEmpty()) {
+                            catalog3VoList = level3Catalog.stream().map(l3 -> {
+                                Catalog2Vo.Catalog3Vo catalog3Vo =
+                                        new Catalog2Vo.Catalog3Vo(l2.getCatId().toString(), l3.getCatId().toString(), l3.getName());
+
+                                return catalog3Vo;
+                            }).collect(Collectors.toList());
+                        }
+
+                        catalog2Vo.setCatalog3List(catalog3VoList);
+
+                        return catalog2Vo;
+                    }).collect(Collectors.toList());
+                }
+
+                return catalog2Vos;
+            }));
+
+            // 数据库中查到的数据放入缓存
+            // 将查出的对象转为json放入缓存
+            String jsonString = JSON.toJSONString(collect);
+            stringRedisTemplate.opsForValue().set(key, jsonString, 1, TimeUnit.DAYS);
+            return collect;
+        }
     }
 
     private List<CategoryEntity> getByParentCid(List<CategoryEntity> selectdList, Long parentCid) {
