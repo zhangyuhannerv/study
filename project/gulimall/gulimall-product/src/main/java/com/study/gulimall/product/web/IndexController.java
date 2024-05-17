@@ -5,11 +5,14 @@ import com.study.gulimall.product.service.CategoryService;
 import com.study.gulimall.product.vo.Catalog2Vo;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
+import org.redisson.api.RReadWriteLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -24,6 +27,8 @@ public class IndexController {
     CategoryService categoryService;
     @Autowired
     RedissonClient redissonClient;
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @GetMapping({"/", "/index.html"})
     public String indexPage(Model model) {
@@ -71,13 +76,65 @@ public class IndexController {
         try {
             log.info("加锁成功，执行业务。线程id:{}", Thread.currentThread().getId());
             TimeUnit.SECONDS.sleep(30);
+            return "hello";
         } catch (Exception e) {
-            log.error("业务执行失败，{}", e.getMessage());
+            throw new RuntimeException(e);
         } finally {
             // 解锁
             log.info("释放锁");
             lock.unlock();
         }
-        return "hello";
+    }
+
+    /**
+     * 测试读写锁
+     *
+     * @return
+     */
+    @RequestMapping("/write")
+    @ResponseBody
+    public String write() {
+        // 读写锁的用法
+        // 改数据加写锁
+        // 读数据加读锁
+        // 保证一定能读到最新数据。
+        // 修改期间，写锁是一个排他锁（互斥锁），相同的写锁只能存在一个，如果有多个请求都要加同一个写锁，那么就得排好队竞争
+        // 读锁是一个共享锁。在没有写锁存在的情况下，和没加锁效果是一样的,多个线程能同时读到。但是一旦要有写锁，多个线程就会阻塞，直到等到写锁解锁
+        RReadWriteLock lock = redissonClient.getReadWriteLock("rw-lock");
+        // 获取写锁
+        RLock rLock = lock.writeLock();
+        String key = "writeValue";
+        try {
+            // 加写锁
+            rLock.lock();
+            String uuid = UUID.randomUUID().toString();
+            TimeUnit.SECONDS.sleep(30);
+            redisTemplate.opsForValue().set(key, uuid);
+            return uuid;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            rLock.unlock();
+        }
+    }
+
+    @RequestMapping("/read")
+    @ResponseBody
+    public String read() {
+        // 读写锁是同一把锁
+        RReadWriteLock lock = redissonClient.getReadWriteLock("rw-lock");
+        // 获取读锁
+        RLock rLock = lock.readLock();
+        try {
+            // 加读锁
+            rLock.lock();
+            String key = "writeValue";
+            return redisTemplate.opsForValue().get(key);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            rLock.unlock();
+        }
+
     }
 }
