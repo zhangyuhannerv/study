@@ -6,6 +6,7 @@ import com.study.gulimall.product.vo.Catalog2Vo;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
 import org.redisson.api.RReadWriteLock;
+import org.redisson.api.RSemaphore;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -88,6 +89,11 @@ public class IndexController {
 
     /**
      * 测试读写锁
+     * 读+读，相当于无锁，并发读，会同时加锁成功，只会在redis记录好各个读锁，无其他作用。
+     * 写+读，读锁等待写锁释放
+     * 写+写，阻塞方式，下一个写锁必须等待上一个写锁释放
+     * 读+写，有读锁，写也需要等待，等待读锁释放后才能写
+     * 只要有写的存在，无论是先写，后写，还是写写，都必须等待
      *
      * @return
      */
@@ -136,5 +142,46 @@ public class IndexController {
             rLock.unlock();
         }
 
+    }
+
+    /**
+     * 测试信号量
+     * 以车库停车为例子
+     * 3车位
+     * 来一辆占一个，走了一个那就释放一个
+     * 类似这种场景就可以用信号量
+     */
+    @GetMapping("/park")
+    @ResponseBody
+    public String park() throws InterruptedException {
+        // 同一个名字就对应同一个分布式信号量
+        RSemaphore park = redissonClient.getSemaphore("park");
+        // 获取一个信号，可以理解为获取一个值(占一个车位）
+        // 只有获取到才能向下走，返回ok
+        // 获取不到就会一直阻塞等待,直到获取成功
+        // redis设置key为park，值为3作为测试。每次acquire()，都使park-1，park为0后再acquire()就会阻塞等待，直到release()使park+1
+        park.acquire();
+        return "ok";
+
+
+        // 非阻塞式等待，可以用来给接口限流
+//        boolean b = park.tryAcquire();
+//        if (b) {
+//            // 执行业务
+//            //...
+//            // 业务执行完毕，释放
+//            park.release();
+//        } else {
+//            return "系统繁忙";
+//        }
+    }
+
+    @GetMapping("/go")
+    @ResponseBody
+    public String go() throws InterruptedException {
+        // 同一个名字就对应同一个分布式信号量
+        RSemaphore park = redissonClient.getSemaphore("park");
+        park.release();// 释放一个车位
+        return "ok";
     }
 }
