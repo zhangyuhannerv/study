@@ -4,15 +4,13 @@ import com.study.gulimall.product.entity.CategoryEntity;
 import com.study.gulimall.product.service.CategoryService;
 import com.study.gulimall.product.vo.Catalog2Vo;
 import lombok.extern.slf4j.Slf4j;
-import org.redisson.api.RLock;
-import org.redisson.api.RReadWriteLock;
-import org.redisson.api.RSemaphore;
-import org.redisson.api.RedissonClient;
+import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -149,6 +147,7 @@ public class IndexController {
      * 以车库停车为例子
      * 3车位
      * 来一辆占一个，走了一个那就释放一个
+     * redis设置key为park，值为3作为测试
      * 类似这种场景就可以用信号量
      */
     @GetMapping("/park")
@@ -183,5 +182,28 @@ public class IndexController {
         RSemaphore park = redissonClient.getSemaphore("park");
         park.release();// 释放一个车位
         return "ok";
+    }
+
+    /**
+     * 闭锁
+     * 以放假锁门为例
+     * 有5个班，5个班的人都走了，门卫才能锁门
+     * redis里设置一个key为door，value为5的数据作为测试
+     */
+    @GetMapping("/lockDoor")
+    @ResponseBody
+    public String lockDoor() throws InterruptedException {
+        RCountDownLatch door = redissonClient.getCountDownLatch("door");
+        door.await();// 等待闭锁都完成
+        return "都走了，锁门";
+    }
+
+    @GetMapping("/gogogo/{id}")
+    @ResponseBody
+    public String gogogo(@PathVariable Long id) {
+        RCountDownLatch door = redissonClient.getCountDownLatch("door");
+        // redis里设置一个key为door，value为5的数据作为测试
+        door.countDown();
+        return id + "班的人都走了...";
     }
 }
