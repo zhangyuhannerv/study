@@ -15,6 +15,8 @@ import com.study.gulimall.product.service.CategoryService;
 import com.study.gulimall.product.vo.Catalog2Vo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -33,6 +35,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     CategoryBrandRelationService categoryBrandRelationService;
     @Autowired
     StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    RedissonClient redisson;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -116,8 +120,10 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
             // 缓存中没有，从数据库中查询
             // 本地锁
 //            return getCatalogJsonFromLocalLock();
-            // 分布式锁（1阶段）
-            return getCatalogJsonFromRedisLockLevel1();
+            // 分布式锁（1阶段,直接使用redis）
+//            return getCatalogJsonFromRedisLockLevel1();
+            // 分布式锁（2阶段,使用redisson）
+            return getCatalogJsonFromRedisLockLevel2();
         }
 
         // 缓存中有，转为指定的对象
@@ -128,7 +134,36 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     /**
-     * 分布式锁（一阶段）
+     * 分布式锁（二阶段，使用redisson）
+     * 这基本上是最终版了
+     * 但是还要考虑一个问题：缓存里的数据如何和数据库保持一致，即缓存一致性的问题
+     * 通用的两种解决方案
+     * 1）双写模式：改数据库，再改缓存
+     * 2）失效模式：改数据库，再删除缓存，等待下次主动查询进行更新，好处多多，用这个
+     * 当前系统缓存一致性的解决方案：
+     * 1）缓存的所有数据都有过期时间，这样即使有脏数据，当缓存过期后查询的时候也能触发主动更新
+     * 2）读写数据的时候，加上分布式的读写锁。不是全加，经常写的数据或对数据一致性要求不高的场景不推荐加，影响性能
+     *
+     * @return
+     */
+    public Map<String, List<Catalog2Vo>> getCatalogJsonFromRedisLockLevel2() {
+        // 锁定名字一样，锁就一样。一定要注意锁的名字，不同的业务，要取不同的名字
+        // 因此锁的粒度，越细。业务越不会重用同一把锁，系统越快
+        // 约定，锁的粒度：
+        // 具体缓存某个数据（比如11号商品）：product-11-lock,product-12-lock.....每个商品都有自己的锁，而不是product-lock。锁住所有的商品查询接口
+        RLock lock = redisson.getLock("catalogJson-lock");
+        lock.lock();
+        Map<String, List<Catalog2Vo>> catalogJsonFromDb = null;
+        try {
+            catalogJsonFromDb = getCatalogJsonFromDb();
+        } finally {
+            lock.unlock();
+        }
+        return catalogJsonFromDb;
+    }
+
+    /**
+     * 分布式锁（一阶段，直接使用redis）
      */
 
     public Map<String, List<Catalog2Vo>> getCatalogJsonFromRedisLockLevel1() {
