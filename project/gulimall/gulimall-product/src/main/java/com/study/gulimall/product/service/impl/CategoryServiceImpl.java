@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
@@ -99,8 +100,26 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }
     }
 
+    // 每一个需要缓存的数据我们都要指定要放到哪个名字的缓存【可以理解为：缓存的分区，推荐按照业务类型来分】
+    // @Cacheable的默认行为：
+    // 缓存中有方法的话就不会调用了
+    // key:默认自动生成的,缓存的名字（category）::SimpleKey []
+    // value：默认使用jdk序列化机制将序列化后的数据存储到redis
+    // ttl:默认时间是-1，永不过期
+    //
+    // 自定义修改：
+    // 修改缓存key：key属性手动指定，接收spel表达式
+    // 修改缓存ttl: 通过配置文件里的spring.cache.redis.time-to-live: 3600000，设置过期时间为1小时
+    // 修改value为json格式
+
+    // @Cacheable代表当前方法的结果需要缓存，如果缓存中有，那么方法就不调用了；如果缓存中没有，会调用方法，最后将方法的结果放入缓存
+    // 手动指定key的名称
+//    @Cacheable(value = {"category"}, key = "'Level1Categorys'")
+    // 使用方法名称作为key
+    @Cacheable(value = {"category"}, key = "#root.method.name")
     @Override
     public List<CategoryEntity> getLevel1Categorys() {
+        System.out.println("调用方法了");
         LambdaQueryWrapper<CategoryEntity> qw = new LambdaQueryWrapper<>();
         qw.eq(CategoryEntity::getParentCid, 0);
         return baseMapper.selectList(qw);
