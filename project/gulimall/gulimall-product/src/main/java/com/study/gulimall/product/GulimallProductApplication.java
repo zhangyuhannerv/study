@@ -9,7 +9,6 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "com.study.gulimall.product.feign")
-@EnableCaching
 public class GulimallProductApplication {
 
     public static void main(String[] args) {

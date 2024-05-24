@@ -110,7 +110,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     // 自定义修改：
     // 修改缓存key：key属性手动指定，接收spel表达式
     // 修改缓存ttl: 通过配置文件里的spring.cache.redis.time-to-live: 3600000，设置过期时间为1小时
-    // 修改value为json格式
+    // 修改value为json格式：想改缓存更具体的配置，只需要给容器中放一个RedisCacheConfiguration即可，详见MyCacheConfig
 
     // @Cacheable代表当前方法的结果需要缓存，如果缓存中有，那么方法就不调用了；如果缓存中没有，会调用方法，最后将方法的结果放入缓存
     // 手动指定key的名称
