@@ -21,7 +21,7 @@ spring:
     type: redis
     redis:
       time-to-live: 3600000 # 毫秒为单位，此时为3600秒，1小时
-      key-prefix: CACHE_ # 给每个key都加个前缀，例子：CACHE_category::getLevel1Categorys
+      key-prefix: ${spring.application.name}_cache_ # 给每个key都加个前缀，例子：CACHE_category::getLevel1Categorys
       use-key-prefix: true # 是否让key-prefix生效。默认是true
       cache-null-values: true # 是否缓存空值。默认是true，解决缓存穿透问题
 mybatis-plus:

@@ -40,7 +40,7 @@ public class IndexController {
     @GetMapping("/index/catalog.json")
     @ResponseBody
     public Map<String, List<Catalog2Vo>> getCatalogJson() {
-        return categoryService.getCatalogJson();
+        return categoryService.getCatalogJsonAutoCache();
     }
 
     @GetMapping("/testRedissonLock")

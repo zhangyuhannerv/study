@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -88,9 +89,23 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 级联更新所有关联的数据
+     * @CachePut是双写模式更新缓存的注解：不推荐使用
+     * @CacheEvict是缓存失效模式的注解：修改完数据，删除缓存
+     * 约定：存储统一类型的数据，都可以指定成同一个分区。这样做的好处是，修改这类数据，可以通过注解删除该分区的所有缓存
+     * 同时，推荐配置里不启用缓存前缀，就用分区名称作为缓存的前缀（这是老师说的，个人觉得，还是启用比较好）
      *
      * @param category
      */
+
+    // 删除某个分区的某个key
+//    @CacheEvict(value = "category", key = "'getLevel1Categorys'")
+    // 组合注解,能够进行多种缓存操作，现在用它来删除多个key
+//    @Caching(evict = {
+//            @CacheEvict(value = "category", key = "'getLevel1Categorys'"),
+//            @CacheEvict(value = "category", key = "'getCatalogJsonAutoCache'")
+//    })
+    // 删除某个分区的所有缓存
+    @CacheEvict(value = "category", allEntries = true)
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateCascade(CategoryEntity category) {
@@ -125,8 +140,53 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return baseMapper.selectList(qw);
     }
 
+    @Cacheable(value = "category", key = "#root.methodName")
     @Override
-    public Map<String, List<Catalog2Vo>> getCatalogJson() {
+    public Map<String, List<Catalog2Vo>> getCatalogJsonAutoCache() {
+        // 在数据库查询所有
+        List<CategoryEntity> selectList = baseMapper.selectList(null);
+
+        // 查出所有1级分类
+        List<CategoryEntity> level1Categorys = getByParentCid(selectList, 0L);
+
+        // 封装数据
+        Map<String, List<Catalog2Vo>> collect = level1Categorys.stream().collect(Collectors.toMap(k -> k.getCatId().toString(), v -> {
+            // 查询当前一级分类下的所有二级分类
+            List<CategoryEntity> categoryEntities = getByParentCid(selectList, v.getCatId());
+
+            // 封装数据
+            List<Catalog2Vo> catalog2Vos = new ArrayList<>();
+
+            if (!categoryEntities.isEmpty()) {
+                catalog2Vos = categoryEntities.stream().map(l2 -> {
+                    Catalog2Vo catalog2Vo = new Catalog2Vo(v.getCatId().toString(), null, l2.getCatId().toString(), l2.getName());
+
+                    // 找当前分类的三级分类封装成vo
+                    List<CategoryEntity> level3Catalog = getByParentCid(selectList, l2.getCatId());
+
+                    List<Catalog2Vo.Catalog3Vo> catalog3VoList = new ArrayList<>();
+                    if (!level3Catalog.isEmpty()) {
+                        catalog3VoList = level3Catalog.stream().map(l3 -> {
+                            Catalog2Vo.Catalog3Vo catalog3Vo =
+                                    new Catalog2Vo.Catalog3Vo(l2.getCatId().toString(), l3.getCatId().toString(), l3.getName());
+
+                            return catalog3Vo;
+                        }).collect(Collectors.toList());
+                    }
+
+                    catalog2Vo.setCatalog3List(catalog3VoList);
+
+                    return catalog2Vo;
+                }).collect(Collectors.toList());
+            }
+
+            return catalog2Vos;
+        }));
+        return collect;
+    }
+
+    @Override
+    public Map<String, List<Catalog2Vo>> getCatalogJsonManualCache() {
         // 空结果缓存，解决缓存穿透
         // 设置过期时间+随机值，解决缓存雪崩
         // 枷锁，解决缓存击穿问题
