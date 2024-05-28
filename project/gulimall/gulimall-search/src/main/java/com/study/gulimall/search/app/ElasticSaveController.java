@@ -1,4 +1,4 @@
-package com.study.gulimall.search.controller;
+package com.study.gulimall.search.app;
 
 import com.study.common.exception.BizCodeEnum;
 import com.study.common.to.es.SkuEsModule;
