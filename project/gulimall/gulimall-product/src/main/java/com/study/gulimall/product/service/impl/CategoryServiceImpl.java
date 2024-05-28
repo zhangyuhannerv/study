@@ -89,12 +89,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
 
     /**
      * 级联更新所有关联的数据
-     * @CachePut是双写模式更新缓存的注解：不推荐使用
-     * @CacheEvict是缓存失效模式的注解：修改完数据，删除缓存
-     * 约定：存储统一类型的数据，都可以指定成同一个分区。这样做的好处是，修改这类数据，可以通过注解删除该分区的所有缓存
-     * 同时，推荐配置里不启用缓存前缀，就用分区名称作为缓存的前缀（这是老师说的，个人觉得，还是启用比较好）
      *
      * @param category
+     * @CachePut是双写模式更新缓存的注解：不推荐使用
+     * @CacheEvict是缓存失效模式的注解：修改完数据，删除缓存 约定：存储统一类型的数据，都可以指定成同一个分区。这样做的好处是，修改这类数据，可以通过注解删除该分区的所有缓存
+     * 同时，推荐配置里不启用缓存前缀，就用分区名称作为缓存的前缀（这是老师说的，个人觉得，还是启用比较好）
      */
 
     // 删除某个分区的某个key
@@ -115,6 +114,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         }
     }
 
+    // 常规数据：使用@Cacheable进行缓存，能极大简化缓存代码
+    // 特殊数据：缓存一致性要求很高，微服务并发量很大等等，参考getCatalogJsonManualCache()，手动加锁
     // 每一个需要缓存的数据我们都要指定要放到哪个名字的缓存【可以理解为：缓存的分区，推荐按照业务类型来分】
     // @Cacheable的默认行为：
     // 缓存中有方法的话就不会调用了
@@ -131,7 +132,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     // 手动指定key的名称
 //    @Cacheable(value = {"category"}, key = "'Level1Categorys'")
     // 使用方法名称作为key
-    @Cacheable(value = {"category"}, key = "#root.method.name")
+    @Cacheable(value = {"category"}, key = "#root.method.name", sync = true)
     @Override
     public List<CategoryEntity> getLevel1Categorys() {
         System.out.println("调用方法了");
@@ -140,7 +141,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return baseMapper.selectList(qw);
     }
 
-    @Cacheable(value = "category", key = "#root.methodName")
+    @Cacheable(value = "category", key = "#root.methodName", sync = true)
     @Override
     public Map<String, List<Catalog2Vo>> getCatalogJsonAutoCache() {
         // 在数据库查询所有
