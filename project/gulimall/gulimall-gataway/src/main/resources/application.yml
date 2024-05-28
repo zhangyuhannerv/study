@@ -60,9 +60,14 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
         # 商品页面网关
-        - id: gulimall-host-route
+        - id: gulimall-product-route
           uri: lb://gulimall-product
           predicates:
-            - Host==**.gulimall.com,gulimall.com
+            - Host=gulimall.com
+        # 搜索页面网关
+        - id: gulimall-search-route
+          uri: lb://gulimall-search
+          predicates:
+            - Host=search.gulimall.com
 server:
   port: 8890
