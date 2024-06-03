@@ -2,6 +2,7 @@ package com.study.gulimall.search.web;
 
 import com.study.gulimall.search.service.MallSearchService;
 import com.study.gulimall.search.vo.SearchParam;
+import com.study.gulimall.search.vo.SearchResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,9 @@ public class SearchController {
     @GetMapping({"/list.html"})
     public String indexPage(SearchParam searchParam,
                             Model model) {
-        Object object = mallSearchService.search(searchParam);
+        // 根据页面传递过来的参数去es中检索商品
+        SearchResult result = mallSearchService.search(searchParam);
+        model.addAttribute("result", result);
         return "list";
     }
 }
