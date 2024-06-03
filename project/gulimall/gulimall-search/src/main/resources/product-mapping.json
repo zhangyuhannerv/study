@@ -1,3 +1,4 @@
+# 商品映射信息（旧，弃用）
 PUT product
 {
     "mappings":{
