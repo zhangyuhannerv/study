@@ -25,7 +25,7 @@ public class SearchParam {
      * skuPrice 价格区间，以_拼接
      * skuPrice=1_500/_500/500_
      */
-    private Integer hasStock;// 是否只显示有货
+    private Integer hasStock = 1;// 是否只显示有货(0:无库存 1:有库存),默认查询有库存的
     private String skuPrice;// 价格区间
 
     private List<Long> brandId;// 品牌id,可以传多个:url?brandId=1&brandId=2&brandId=3
