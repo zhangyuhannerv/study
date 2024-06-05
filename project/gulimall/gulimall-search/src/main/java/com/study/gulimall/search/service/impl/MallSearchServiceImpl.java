@@ -5,6 +5,7 @@ import com.study.gulimall.search.constant.EsConstant;
 import com.study.gulimall.search.service.MallSearchService;
 import com.study.gulimall.search.vo.SearchParam;
 import com.study.gulimall.search.vo.SearchResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequest;
@@ -15,12 +16,15 @@ import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
+@Slf4j
 public class MallSearchServiceImpl implements MallSearchService {
     @Autowired
     RestHighLevelClient elasticSearchClient;
@@ -100,7 +104,7 @@ public class MallSearchServiceImpl implements MallSearchService {
 
         // 第五个filter，价格区间：1_500;_500,1_三种方式
         if (StringUtils.isNotBlank(param.getSkuPrice())) {
-            String[] s = param.getSkuPrice().split("_");
+            String[] s = param.getSkuPrice().split("_", -1);
             RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery("skuPrice");
             if (s.length == 2) {
                 if (StringUtils.isNotBlank(s[0])) {
@@ -120,6 +124,29 @@ public class MallSearchServiceImpl implements MallSearchService {
         sourceBuilder.query(boolQuery);
 
         // 排序，分页，高亮
+        // 排序
+        if (StringUtils.isNotBlank(param.getSort())) {
+            /**
+             * sort=saleCount_asc/desc 销量
+             * sort=skuPrice_asc/desc 价格
+             * sort=hotScore_asc/desc 综合评分（热度分）
+             */
+            String[] s = param.getSort().split("_");
+            sourceBuilder.sort(s[0], "asc".equalsIgnoreCase(s[1]) ? SortOrder.ASC : SortOrder.DESC);
+        }
+
+        // 分页
+        sourceBuilder.from((param.getPageNum() - 1) * EsConstant.PRODUCT_PAGE_SIZE);
+        sourceBuilder.size(EsConstant.PRODUCT_PAGE_SIZE);
+        // 高亮
+        if (StringUtils.isNotBlank(param.getKeyword())) {
+            HighlightBuilder highlightBuilder = new HighlightBuilder();
+            highlightBuilder.field("skuTitle");
+            highlightBuilder.preTags("<b style='color:red'>");
+            highlightBuilder.postTags("</b>");
+            sourceBuilder.highlighter(highlightBuilder);
+        }
+
 
         // 聚合分析
 

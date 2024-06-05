@@ -34,6 +34,6 @@ public class SearchParam {
     /**
      * 分页相关
      */
-    private Integer pageNum; // 页码
+    private Integer pageNum = 1; // 页码（默认第一页）
 
 }
