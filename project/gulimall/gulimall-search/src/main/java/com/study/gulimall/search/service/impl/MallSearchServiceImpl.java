@@ -29,6 +29,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -80,6 +82,15 @@ public class MallSearchServiceImpl implements MallSearchService {
             for (SearchHit hit : hits_arr) {
                 String sourceAsString = hit.getSourceAsString();
                 SkuEsModule skuEsModule = JSON.parseObject(sourceAsString, SkuEsModule.class);
+
+                // 封装高亮的信息
+                if (StringUtils.isNotBlank(searchParam.getKeyword())) {
+                    Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+                    HighlightField skuTitle = highlightFields.get("skuTitle");
+                    String skuTitleString = skuTitle.fragments()[0].string();
+                    skuEsModule.setSkuTitle(skuTitleString);
+                }
+
                 skuEsModules.add(skuEsModule);
             }
         }
@@ -170,7 +181,7 @@ public class MallSearchServiceImpl implements MallSearchService {
         searchResult.setTotalPages(totalPages);
 
 
-        return null;
+        return searchResult;
     }
 
     /**
