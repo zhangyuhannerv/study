@@ -786,7 +786,8 @@
                         <div class="sl_value_logo">
                             <ul>
                                 <li th:each="brand:${result.getBrands()}">
-                                    <a href="#">
+                                    <a href="#"
+                                       th:href="${'javascript:searchProducts(&quot;brandId&quot;,'+brand.getBrandId()+')'}">
                                         <img th:src="${brand.getBrandImg()}" alt="">
                                         <div th:text="${brand.getBrandName()}">
                                             华为(HUAWEI)
@@ -817,7 +818,9 @@
                     <div class="sl_value">
                         <ul>
                             <li th:each="catalog:${result.getCatalogs()}">
-                                <a href="#" th:text="${catalog.getCatalogName()}">5.56英寸及以上</a>
+                                <a href="#"
+                                   th:href="${'javascript:searchProducts(&quot;catalog3Id&quot;,'+catalog.getCatalogId()+')'}"
+                                   th:text="${catalog.getCatalogName()}">5.56英寸及以上</a>
                             </li>
                         </ul>
                     </div>
@@ -841,7 +844,12 @@
                     </div>
                     <div class="sl_value">
                         <ul>
-                            <li th:each="val:${attr.getAttrValue()}"><a href="#" th:text="${val}">5.56英寸及以上</a>
+                            <li th:each="val:${attr.getAttrValue()}">
+                                <a href="#"
+                                   th:href="${'javascript:searchProducts(&quot;attrs&quot;,&quot;'+attr.getAttrId()+'_'+val+'&quot;)'}"
+                                   th:text="${val}">
+                                    5.56英寸及以上
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -1990,6 +1998,16 @@
     }, function () {
         $(this).css("color", "#727272")
     })
+
+    function searchProducts(name, value) {
+        let href = location.href
+        if (href.indexOf('?') !== -1) {
+            href += `&${name}=${value}`
+        } else {
+            href += `?${name}=${value}`
+        }
+        location.href = href
+    }
 </script>
 </body>
 </html>
