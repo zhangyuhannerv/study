@@ -1047,11 +1047,9 @@
                     <!--综合排序-->
                     <div class="filter_top">
                         <div class="filter_top_left">
-                            <a href="#">综合排序</a>
-                            <a href="#">销量</a>
-                            <a href="#">价格</a>
-                            <a href="#">评论分</a>
-                            <a href="#">上架时间</a>
+                            <a class="sort_a" sort="hotScore" href="#">综合排序</a>
+                            <a class="sort_a" sort="saleCount" href="#">销量</a>
+                            <a class="sort_a" sort="skuPrice" href=" #">价格</a>
                         </div>
                         <div class="filter_top_right">
                             <span class="fp-text">
@@ -2035,6 +2033,58 @@
             href += `&pageNum=${pn}`
         }
         location.href = href
+        return false
+    })
+
+    $(".sort_a").click(function () {
+        // 改变样式
+        $(".sort_a").css({
+            'color': '#333',
+            'border-color': '#ccc',
+            'background': '#fff'
+        })
+        $(this).css({
+            'color': '#fff',
+            'border-color': '#e4393c',
+            'background': '#e4393c'
+        })
+
+        // 改变升降序
+        // 每次点击，要么加上desc类名，要么去掉
+        $(this).toggleClass('desc')
+
+
+        // 去掉兄弟元素的上下字符串
+        $(".sort_a").each(function () {
+            let text = $(this).text()
+            text = text.replace('↓', '')
+            text = text.replace('↑', '')
+            $(this).text(text)
+        })
+
+        // 拼接上下字符串
+        let text = $(this).text()
+        text = text.replace('↓', '')
+        text = text.replace('↑', '')
+        if ($(this).hasClass('desc')) {
+            // 降序
+            text += '↓'
+        } else {
+            // 升序
+            text += '↑'
+        }
+        $(this).text(text)
+
+        // 跳转到指定位置
+        let sort = $(this).attr('sort')
+        if ($(this).hasClass('desc')) {
+            sort += '_desc'
+        } else {
+            sort += '_asc'
+        }
+        location.href = updateQueryParam('sort', sort, location.href)
+
+        // 禁用元素的默认行为
         return false
     })
 
