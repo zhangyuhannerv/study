@@ -1046,10 +1046,34 @@
                 <div class="filter">
                     <!--综合排序-->
                     <div class="filter_top">
-                        <div class="filter_top_left">
-                            <a class="sort_a" sort="hotScore" href="#">综合排序</a>
-                            <a class="sort_a" sort="saleCount" href="#">销量</a>
-                            <a class="sort_a" sort="skuPrice" href=" #">价格</a>
+                        <div class="filter_top_left" th:with="p = ${param.sort}">
+                            <a th:class="${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') && #strings.startsWith(p,'hotScore'))?'sort_a desc':'sort_a'}"
+                               th:attr="style=${(#strings.isEmpty(p) || #strings.startsWith(p,'hotScore'))?
+                               'color: #fff;border-color: #e4393c;background: #e4393c':
+                               'color: #333;border-color: #ccc;background: #fff'}"
+                               sort="hotScore"
+                               href="#">
+                                综合排序[[${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') &&
+                                #strings.startsWith(p,'hotScore'))?'↓':'↑'}]]
+                            </a>
+                            <a th:class="${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') && #strings.startsWith(p,'saleCount'))?'sort_a desc':'sort_a'}"
+                               th:attr="style=${(!#strings.isEmpty(p) && #strings.startsWith(p,'saleCount'))?
+                               'color: #fff;border-color: #e4393c;background: #e4393c':
+                               'color: #333;border-color: #ccc;background: #fff'}"
+                               sort="saleCount"
+                               href="#">
+                                销量[[${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') &&
+                                #strings.startsWith(p,'saleCount'))?'↓':'↑'}]]
+                            </a>
+                            <a th:class="${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') && #strings.startsWith(p,'skuPrice'))?'sort_a desc':'sort_a'}"
+                               th:attr="style=${(!#strings.isEmpty(p) && #strings.startsWith(p,'skuPrice'))?
+                               'color: #fff;border-color: #e4393c;background: #e4393c':
+                               'color: #333;border-color: #ccc;background: #fff'}"
+                               sort="skuPrice"
+                               href=" #">
+                                价格[[${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') &&
+                                #strings.startsWith(p,'skuPrice'))?'↓':'↑'}]]
+                            </a>
                         </div>
                         <div class="filter_top_right">
                             <span class="fp-text">
