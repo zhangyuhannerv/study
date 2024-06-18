@@ -1046,7 +1046,7 @@
                 <div class="filter">
                     <!--综合排序-->
                     <div class="filter_top">
-                        <div class="filter_top_left" th:with="p = ${param.sort}">
+                        <div class="filter_top_left" th:with="p = ${param.sort},priceRange = ${param.skuPrice}">
                             <a th:class="${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') && #strings.startsWith(p,'hotScore'))?'sort_a desc':'sort_a'}"
                                th:attr="style=${(#strings.isEmpty(p) || #strings.startsWith(p,'hotScore'))?
                                'color: #fff;border-color: #e4393c;background: #e4393c':
@@ -1074,6 +1074,12 @@
                                 价格[[${(!#strings.isEmpty(p) && #strings.endsWith(p,'desc') &&
                                 #strings.startsWith(p,'skuPrice'))?'↓':'↑'}]]
                             </a>
+                            <input id="skuPriceFrom" style="width: 100px;margin-left: 15px" type="number"
+                                   th:value="${#strings.isEmpty(priceRange)?'':#strings.substringBefore(priceRange,'_')}">
+                            -
+                            <input id="skuPriceTo" style="width: 100px" type="number"
+                                   th:value="${#strings.isEmpty(priceRange)?'':#strings.substringAfter(priceRange,'_')}">
+                            <button id="skuPriceSearchBtn">确定</button>
                         </div>
                         <div class="filter_top_right">
                             <span class="fp-text">
@@ -1180,9 +1186,10 @@
                                         货到付款
                                     </a>
                                 </li>
-                                <li>
+                                <li th:with="check=${param.hasStock}">
                                     <a href="#">
-                                        <i></i>
+                                        <input id="showHasStock" type="checkbox"
+                                               th:checked="${#strings.equals(check,'1')}">
                                         仅显示有货
                                     </a>
                                 </li>
@@ -2025,13 +2032,7 @@
     })
 
     function searchProducts(name, value) {
-        let href = location.href
-        if (href.indexOf('?') !== -1) {
-            href += `&${name}=${value}`
-        } else {
-            href += `?${name}=${value}`
-        }
-        location.href = href
+        location.href = updateQueryParam(name, value, location.href)
     }
 
     function searchByKeyword() {
@@ -2109,6 +2110,24 @@
         location.href = updateQueryParam('sort', sort, location.href)
 
         // 禁用元素的默认行为
+        return false
+    })
+
+    $("#skuPriceSearchBtn").click(function () {
+        // 价格区间
+        let from = $("#skuPriceFrom").val()
+        let to = $("#skuPriceTo").val()
+        let query = from + "_" + to
+        location.href = updateQueryParam("skuPrice", query, location.href)
+    })
+
+    $("#showHasStock").change(function () {
+        let val = $(this).prop('checked')
+        if (val) {
+            location.href = updateQueryParam('hasStock', 1, location.href)
+        } else {
+            location.href = updateQueryParam('hasStock', '', location.href)
+        }
         return false
     })
 
