@@ -223,6 +223,11 @@ public class MallSearchServiceImpl implements MallSearchService {
                 try {
                     // 重新编个码，解决中文乱码问题
                     encode = URLEncoder.encode(attr, "utf-8");
+                    // 前端会将空格编码为%20
+                    // 而后端会将空格编码为+
+                    // 为了保持前后端编码一致的问题
+                    // 所以要再做一层替换
+                    encode = encode.replace("+", "%20");// 浏览器对空格的编码和java不一样
                 } catch (UnsupportedEncodingException e) {
                     throw new RuntimeException(e);
                 }

@@ -763,6 +763,15 @@
                 <a href="#">游戏手机</a>
             </div>
         </div>
+        <!--遍历面包屑-->
+        <div class="JD_ipone_one c">
+            <a th:each="nav:${result.getNavs()}"
+               th:href="${nav.getLink()}"
+            >
+                <span th:text="${nav.getNavName()}"></span>:
+                <span th:text="${nav.getNavValue()}"></span> x
+            </a>
+        </div>
         <i><img src="search/image/right-@1x.png" alt=""></i>
     </div>
 </div>
@@ -2032,19 +2041,29 @@
     })
 
     function searchProducts(name, value) {
-        location.href = updateQueryParam(name, value, location.href)
+        if (name === 'attrs') {
+            location.href = updateQueryParam(name, value, location.href, true)
+        } else {
+            location.href = updateQueryParam(name, value, location.href)
+
+        }
     }
 
     function searchByKeyword() {
-        searchProducts("keyword", $("#keyword_input").val())
+        location.href = updateQueryParam("keyword", $("#keyword_input").val(), location.href)
     }
 
-    function updateQueryParam(key, value, uri) {
+    function updateQueryParam(key, value, uri, forceAdd = false) {
         var re = new RegExp("([?&])" + key + "=([^&]*)", "i");
         var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-        if (uri.match(re)) {
+        if (forceAdd) {
+            // 强制拼接参数
+            return uri + separator + key + "=" + value;
+        } else if (uri.match(re)) {
+            // 匹配到就替换参数
             return uri.replace(re, "$1" + key + "=" + value);
         } else {
+            // 没匹配到就拼接参数
             return uri + separator + key + "=" + value;
         }
     }
