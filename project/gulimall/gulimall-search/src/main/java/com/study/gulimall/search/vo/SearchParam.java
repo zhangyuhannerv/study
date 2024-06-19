@@ -37,4 +37,6 @@ public class SearchParam {
      */
     private Integer pageNum = 1; // 页码（默认第一页）
 
+    private String _queryString;// 原生的所有查询条件
+
 }
