@@ -1,8 +1,8 @@
-package java_genericity.generic_WildcardType.wildcardType_LowerLimit;
+package com.study.zyh.javase.java_genericity.generic_WildcardType.wildcardType_LowerLimit;
 
-import java_genericity.generic_WildcardType.wildcardType_UpperLimit.Animal;
-import java_genericity.generic_WildcardType.wildcardType_UpperLimit.Cat;
-import java_genericity.generic_WildcardType.wildcardType_UpperLimit.MiniCat;
+import com.study.zyh.javase.java_genericity.generic_WildcardType.wildcardType_UpperLimit.Animal;
+import com.study.zyh.javase.java_genericity.generic_WildcardType.wildcardType_UpperLimit.Cat;
+import com.study.zyh.javase.java_genericity.generic_WildcardType.wildcardType_UpperLimit.MiniCat;
 
 import java.util.ArrayList;
 import java.util.List;

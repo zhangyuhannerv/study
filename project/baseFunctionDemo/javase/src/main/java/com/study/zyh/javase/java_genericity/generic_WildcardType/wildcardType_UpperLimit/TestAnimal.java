@@ -1,4 +1,4 @@
-package java_genericity.generic_WildcardType.wildcardType_UpperLimit;
+package com.study.zyh.javase.java_genericity.generic_WildcardType.wildcardType_UpperLimit;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package java_genericity.generic_interface;
+package com.study.zyh.javase.java_genericity.generic_interface;
 
 /**
  * 泛型接口

@@ -1,4 +1,4 @@
-package java_genericity.generic_reflect;
+package com.study.zyh.javase.java_genericity.generic_reflect;
 
 import java.lang.reflect.Constructor;
 

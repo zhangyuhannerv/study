@@ -1,4 +1,4 @@
-package java_genericity.generic_typeErasure;
+package com.study.zyh.javase.java_genericity.generic_typeErasure;
 
 /**
  * @ClassName ErasureNumber

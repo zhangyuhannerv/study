@@ -1,4 +1,4 @@
-package java_genericity.generic_WildcardType.wildcardType_BaseUse;
+package com.study.zyh.javase.java_genericity.generic_WildcardType.wildcardType_BaseUse;
 
 /**
  * @ClassName Test
