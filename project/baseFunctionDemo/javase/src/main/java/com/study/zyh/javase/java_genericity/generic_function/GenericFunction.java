@@ -1,9 +1,7 @@
-package java_genericity.generic_function;
+package com.study.zyh.javase.java_genericity.generic_function;
 
-import java_genericity.generic_class.GenericClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
