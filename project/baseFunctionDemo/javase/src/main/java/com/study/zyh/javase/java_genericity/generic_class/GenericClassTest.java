@@ -10,7 +10,7 @@ package java_genericity.generic_class;
 public class GenericClassTest {
     public static void main(String[] args) {
         // 泛型类在创建对象的时候，来指定操作的具体数据类型
-        GenericClass<String> obj1 = new GenericClass<>();
+        GenericClass<String> obj1 = new java_genericity.generic_class.GenericClass<>();
         String t1 = obj1.getT(); // 直接返回String
         System.out.println(t1);
         System.out.println(obj1);
