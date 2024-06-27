@@ -14,6 +14,12 @@ public class CompletableFutureTest {
 //        fun2();
 //        fun3();
 //        fun4();
+//        fun5();
+//        fun6();
+//        fun7();
+//        fun8();
+//        fun9();
+        fun10();
     }
 
     public static void fun1() {
@@ -84,6 +90,128 @@ public class CompletableFutureTest {
     }
 
     public static void fun5() {
+        // 线程串行化
+        // thenRun,不能获取到上一步的执行结果，同时自已运行也没有返回结果
+        CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程:" + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("运行结果:" + i);
+            return i;
+        }, service).thenRunAsync(() -> {
+            System.out.println("任务2启动了...");
+        }, service);
+        System.out.println("main...end...");
+    }
+
+    public static void fun6() {
+        // 线程串行化
+        // thenAccept,能获取到上一步的执行结果，但是自已运行没有返回结果
+        CompletableFuture<Void> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程:" + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("运行结果:" + i);
+            return i;
+        }, service).thenAcceptAsync(res -> {
+            System.out.println("上一步的返回结果" + res);
+            System.out.println("任务2启动了...");
+        }, service);
+        System.out.println("main...end...");
+    }
+
+    public static void fun7() throws ExecutionException, InterruptedException {
+        // 线程串行化
+        // thenApply,既能获取到上一步的执行结果，又能有返回值
+        CompletableFuture<Integer> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println("当前线程:" + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("运行结果:" + i);
+            return i;
+        }, service).thenApplyAsync(res -> {
+            System.out.println("上一步的返回结果" + res);
+            System.out.println("任务2启动了...");
+            return 20;
+        }, service);
+        Integer i = future.get();
+        System.out.println("main...end..." + i);
+    }
+
+    public static void fun8() {
+        // 组合任务,两个任务都完成才能执行第三个
+        // runAfterBoth不能感知到运行结果,同时也没有返回值
+        CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程:" + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("任务1运行结果:" + i);
+            return i;
+        }, service);
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程:" + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, service);
+
+        future1.runAfterBothAsync(future2, () -> {
+            System.out.println("任务3开始...");
+            System.out.println("任务3结束...");
+        }, service);
+
+        System.out.println("main...end...");
+
+    }
+
+    public static void fun9() {
+        // 组合任务,两个任务都完成才能执行第三个
+        // thenAcceptBoth能感知到运行结果,但是没有返回值
+        CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程:" + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("任务1运行结果:" + i);
+            return i;
+        }, service);
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程:" + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, service);
+
+        future1.thenAcceptBothAsync(future2, (f1, f2) -> {
+            System.out.println("任务3开始...");
+            System.out.println("任务1的结果：" + f1);
+            System.out.println("任务2的结果：" + f2);
+            System.out.println("任务3结束...");
+        }, service);
+
+        System.out.println("main...end...");
+
+    }
+
+    public static void fun10() throws ExecutionException, InterruptedException {
+        // 组合任务,两个任务都完成才能执行第三个
+        // thenCombine能感知到运行结果,同时自身有返回值
+        CompletableFuture<Integer> future1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务1线程:" + Thread.currentThread().getId());
+            int i = 10 / 2;
+            System.out.println("任务1运行结果:" + i);
+            return i;
+        }, service);
+
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("任务2线程:" + Thread.currentThread().getId());
+            System.out.println("任务2结束");
+            return "hello";
+        }, service);
+
+        CompletableFuture<String> future = future1.thenCombineAsync(future2, (f1, f2) -> {
+            System.out.println("任务3开始...");
+            System.out.println("任务1的结果：" + f1);
+            System.out.println("任务2的结果：" + f2);
+            System.out.println("任务3结束...");
+            return f1 + f2 + "haha";
+        }, service);
+
+        System.out.println("main...end..." + future.get());
 
     }
 }
