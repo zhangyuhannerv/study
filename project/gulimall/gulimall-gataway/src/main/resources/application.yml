@@ -63,7 +63,7 @@ spring:
         - id: gulimall-product-route
           uri: lb://gulimall-product
           predicates:
-            - Host=gulimall.com
+            - Host=gulimall.com,item.gulimall.com
         # 搜索页面网关
         - id: gulimall-search-route
           uri: lb://gulimall-search
