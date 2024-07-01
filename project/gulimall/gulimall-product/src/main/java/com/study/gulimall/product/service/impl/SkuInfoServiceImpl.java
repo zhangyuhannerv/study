@@ -8,8 +8,11 @@ import com.study.common.utils.PageUtils;
 import com.study.common.utils.Query;
 import com.study.gulimall.product.dao.SkuInfoDao;
 import com.study.gulimall.product.entity.SkuInfoEntity;
+import com.study.gulimall.product.service.SkuImagesService;
 import com.study.gulimall.product.service.SkuInfoService;
+import com.study.gulimall.product.vo.SkuItemVo;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.Map;
 
 @Service("skuInfoService")
 public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> implements SkuInfoService {
+    @Autowired
+    SkuImagesService skuImagesService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -64,6 +69,22 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         LambdaQueryWrapper<SkuInfoEntity> qw = new LambdaQueryWrapper<>();
         qw.eq(SkuInfoEntity::getSpuId, spuId);
         return baseMapper.selectList(qw);
+    }
+
+    @Override
+    public SkuItemVo item(Long skuId) {
+        SkuItemVo vo = new SkuItemVo();
+        // sku基本信息获取 pms_sku_info
+        SkuInfoEntity skuInfoEntity = getById(skuId);
+        vo.setInfo(skuInfoEntity);
+        // sku的图信息获取 pms_sku_images
+
+        // spu的销售属性组合
+
+        // 获取spu的介绍
+
+        // 获取spu的规格参数信息
+        return vo;
     }
 
 }
