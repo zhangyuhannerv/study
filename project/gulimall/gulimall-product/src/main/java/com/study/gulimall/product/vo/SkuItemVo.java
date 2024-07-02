@@ -19,25 +19,4 @@ public class SkuItemVo {
     private SpuInfoDescEntity desp;
     // 获取spu的规格参数信息
     private List<SpuItemAttrGroupVo> groupAttrs;
-
-    @Data
-
-    public static class SkuItemSaleAttrsVo {
-        private Long attrId;
-        private String attrName;
-        private List<String> attrValues;
-    }
-
-    @Data
-    public static class SpuItemAttrGroupVo {
-        private String groupName;
-        private List<SpuBaseAttrVo> attrs;
-    }
-
-    @Data
-    public static class SpuBaseAttrVo {
-        private String attrName;
-        private String attrValue;
-    }
-
 }
