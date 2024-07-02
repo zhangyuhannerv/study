@@ -10,10 +10,8 @@ import com.study.gulimall.product.dao.SkuInfoDao;
 import com.study.gulimall.product.entity.SkuImagesEntity;
 import com.study.gulimall.product.entity.SkuInfoEntity;
 import com.study.gulimall.product.entity.SpuInfoDescEntity;
-import com.study.gulimall.product.service.AttrGroupService;
-import com.study.gulimall.product.service.SkuImagesService;
-import com.study.gulimall.product.service.SkuInfoService;
-import com.study.gulimall.product.service.SpuInfoDescService;
+import com.study.gulimall.product.service.*;
+import com.study.gulimall.product.vo.SkuItemSaleAttrsVo;
 import com.study.gulimall.product.vo.SkuItemVo;
 import com.study.gulimall.product.vo.SpuItemAttrGroupVo;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +30,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     SpuInfoDescService spuInfoDescService;
     @Autowired
     AttrGroupService attrGroupService;
+    @Autowired
+    SkuSaleAttrValueService skuSaleAttrValueService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -94,7 +94,10 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         // sku的图信息获取 pms_sku_images
         List<SkuImagesEntity> images = skuImagesService.getImagesBySkuId(skuId);
         vo.setImages(images);
+
         // spu的销售属性组合
+        List<SkuItemSaleAttrsVo> saleAttrsVos = skuSaleAttrValueService.getSaleAttrsBySpuId(spuId);
+        vo.setSaleAttr(saleAttrsVos);
 
         // 获取spu的介绍
         SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(spuId);
