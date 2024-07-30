@@ -608,9 +608,9 @@
                     <div class="box-attr clear" th:each="attr:${item.getSaleAttr()}">
                         <dl>
                             <dt>选择[[${attr.getAttrName()}]]</dt>
-                            <dd th:each="val:${#strings.listSplit(attr.getAttrValues(),',')}">
-                                <a href="item/#">
-                                    [[${val}]]
+                            <dd th:each="vals:${attr.getAttrValues()}">
+                                <a th:attr="skus=${vals.getSkuIds()},class=${#lists.contains(#strings.listSplit(vals.getSkuIds(),','),item.getInfo().getSkuId().toString())?'sku_attr_value checked':'sku_attr_value'}">
+                                    [[${vals.attrValue}]]
                                 </a>
                             </dd>
                         </dl>
@@ -929,11 +929,11 @@
                                     </div>
                                 </dl>
                             </div>
-<!--                            <div class="package-list">
-                                <h3>包装清单</h3>
-                                <p>手机（含内置电池） X 1、5A大电流华为SuperCharge充电器X 1、5A USB数据线 X 1、半入耳式线控耳机
-                                    X 1、快速指南X 1、三包凭证 X 1、取卡针 X 1、保护壳 X 1</p>
-                            </div>-->
+                            <!--                            <div class="package-list">
+                                                            <h3>包装清单</h3>
+                                                            <p>手机（含内置电池） X 1、5A大电流华为SuperCharge充电器X 1、5A USB数据线 X 1、半入耳式线控耳机
+                                                                X 1、快速指南X 1、三包凭证 X 1、取卡针 X 1、保护壳 X 1</p>
+                                                        </div>-->
                         </div>
                     </li>
                     <!--包装-->
@@ -1304,6 +1304,34 @@
 <script src="item/js/jquery1.9.js" type="text/javascript" charset="utf-8"></script>
 <script src="item/js/js.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
+    $(".sku_attr_value").click(function () {
+        let skus = []
+        // 点击的元素添加自定义属性，为了识别是我们刚才点击的
+        $(this).addClass('click')
+        let curr = $(this).attr('skus').split(',');
+        // 当前被点击所有sku组合数组放进去
+        skus.push(curr)
+        // 去掉同一行的所有checked
+        $(this).parent().parent().find('.sku_attr_value').removeClass('checked')
+        // 获取到所有的checked的dom
+        $('a[class="sku_attr_value checked"]').each(function () {
+            skus.push($(this).attr('skus').split(','))
+        })
+        // 取出他们的交集，得到唯一的skuId
+        let filterEle = skus[0]
+        for (let i = 1; i < skus.length; i++) {
+            filterEle = $(filterEle).filter(skus[i])
+
+        }
+        // 跳转页面
+        location.href = `http://item.gulimall.com:24000/${filterEle[0]}.html`
+    })
+
+    $(function () {
+        $(".sku_attr_value").parent().css({'border': 'solid 1px #ccc'})
+        $(".sku_attr_value.checked").parent().css({'border': 'solid 1px red'})
+    })
+
 </script>
 
 </html>
